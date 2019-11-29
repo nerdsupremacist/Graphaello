@@ -1,0 +1,376 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
+		0E5758812390AD52005834EF /* XcodeProj in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758802390AD52005834EF /* XcodeProj */; };
+		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
+		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
+		0E5758892390AF02005834EF /* IntegrateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758882390AF02005834EF /* IntegrateCommand.swift */; };
+		0E57588B2390AF0E005834EF /* CodegenCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57588A2390AF0E005834EF /* CodegenCommand.swift */; };
+		0E57588D2390B110005834EF /* ProjectPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57588C2390B110005834EF /* ProjectPath.swift */; };
+		0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57588E23911DAC005834EF /* GraphQLError.swift */; };
+		0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57589023911FBA005834EF /* Optional+Extensions.swift */; };
+		0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758922391212E005834EF /* GraphQLCommands.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0E5758732390ACBA005834EF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0E5758752390ACBA005834EF /* GraphQLCLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GraphQLCLI; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		0E5758882390AF02005834EF /* IntegrateCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateCommand.swift; sourceTree = "<group>"; };
+		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
+		0E57588C2390B110005834EF /* ProjectPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectPath.swift; sourceTree = "<group>"; };
+		0E57588E23911DAC005834EF /* GraphQLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLError.swift; sourceTree = "<group>"; };
+		0E57589023911FBA005834EF /* Optional+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions.swift"; sourceTree = "<group>"; };
+		0E5758922391212E005834EF /* GraphQLCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLCommands.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0E5758722390ACBA005834EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E5758812390AD52005834EF /* XcodeProj in Frameworks */,
+				0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */,
+				0E5758872390AEDD005834EF /* CLIKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0E57586C2390ACBA005834EF = {
+			isa = PBXGroup;
+			children = (
+				0E5758772390ACBA005834EF /* GraphQLCLI */,
+				0E5758762390ACBA005834EF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0E5758762390ACBA005834EF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E5758752390ACBA005834EF /* GraphQLCLI */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0E5758772390ACBA005834EF /* GraphQLCLI */ = {
+			isa = PBXGroup;
+			children = (
+				0E5758782390ACBA005834EF /* main.swift */,
+				0E5758882390AF02005834EF /* IntegrateCommand.swift */,
+				0E5758922391212E005834EF /* GraphQLCommands.swift */,
+				0E57588A2390AF0E005834EF /* CodegenCommand.swift */,
+				0E57588C2390B110005834EF /* ProjectPath.swift */,
+				0E57588E23911DAC005834EF /* GraphQLError.swift */,
+				0E57589023911FBA005834EF /* Optional+Extensions.swift */,
+			);
+			path = GraphQLCLI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0E5758742390ACBA005834EF /* GraphQLCLI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E57587C2390ACBA005834EF /* Build configuration list for PBXNativeTarget "GraphQLCLI" */;
+			buildPhases = (
+				0E5758712390ACBA005834EF /* Sources */,
+				0E5758722390ACBA005834EF /* Frameworks */,
+				0E5758732390ACBA005834EF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GraphQLCLI;
+			packageProductDependencies = (
+				0E5758802390AD52005834EF /* XcodeProj */,
+				0E5758832390ADA9005834EF /* SourceKittenFramework */,
+				0E5758862390AEDD005834EF /* CLIKit */,
+			);
+			productName = GraphQLCLI;
+			productReference = 0E5758752390ACBA005834EF /* GraphQLCLI */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0E57586D2390ACBA005834EF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = "Mathias Quintero";
+				TargetAttributes = {
+					0E5758742390ACBA005834EF = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 0E5758702390ACBA005834EF /* Build configuration list for PBXProject "GraphQLCLI" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0E57586C2390ACBA005834EF;
+			packageReferences = (
+				0E57587F2390AD52005834EF /* XCRemoteSwiftPackageReference "xcodeproj" */,
+				0E5758822390ADA9005834EF /* XCRemoteSwiftPackageReference "SourceKitten" */,
+				0E5758852390AEDD005834EF /* XCRemoteSwiftPackageReference "CLIKit" */,
+			);
+			productRefGroup = 0E5758762390ACBA005834EF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0E5758742390ACBA005834EF /* GraphQLCLI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0E5758712390ACBA005834EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
+				0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */,
+				0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */,
+				0E57588B2390AF0E005834EF /* CodegenCommand.swift in Sources */,
+				0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */,
+				0E5758792390ACBA005834EF /* main.swift in Sources */,
+				0E5758892390AF02005834EF /* IntegrateCommand.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0E57587A2390ACBA005834EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0E57587B2390ACBA005834EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		0E57587D2390ACBA005834EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KJPP698PR3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		0E57587E2390ACBA005834EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KJPP698PR3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0E5758702390ACBA005834EF /* Build configuration list for PBXProject "GraphQLCLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E57587A2390ACBA005834EF /* Debug */,
+				0E57587B2390ACBA005834EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E57587C2390ACBA005834EF /* Build configuration list for PBXNativeTarget "GraphQLCLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E57587D2390ACBA005834EF /* Debug */,
+				0E57587E2390ACBA005834EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0E57587F2390AD52005834EF /* XCRemoteSwiftPackageReference "xcodeproj" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tuist/xcodeproj.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.5.0;
+			};
+		};
+		0E5758822390ADA9005834EF /* XCRemoteSwiftPackageReference "SourceKitten" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/SourceKitten.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.27.0;
+			};
+		};
+		0E5758852390AEDD005834EF /* XCRemoteSwiftPackageReference "CLIKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apparata/CLIKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0E5758802390AD52005834EF /* XcodeProj */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E57587F2390AD52005834EF /* XCRemoteSwiftPackageReference "xcodeproj" */;
+			productName = XcodeProj;
+		};
+		0E5758832390ADA9005834EF /* SourceKittenFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E5758822390ADA9005834EF /* XCRemoteSwiftPackageReference "SourceKitten" */;
+			productName = SourceKittenFramework;
+		};
+		0E5758862390AEDD005834EF /* CLIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E5758852390AEDD005834EF /* XCRemoteSwiftPackageReference "CLIKit" */;
+			productName = CLIKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 0E57586D2390ACBA005834EF /* Project object */;
+}
