@@ -1,0 +1,125 @@
+// swiftlint:disable all
+// This file was automatically generated and should not be edited.
+
+import Apollo
+import Foundation
+import SwiftUI
+
+private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
+    typealias ContentFactory = (Query.Data) -> Content
+
+    let client: ApolloClient
+    let query: Query
+    let factory: ContentFactory
+    
+    @State private var isLoading: Bool = false
+    @State private var value: Query.Data? = nil
+    @State private var error: String? = nil
+    @State private var cancellable: Cancellable? = nil
+    
+    var body: some View {
+        return VStack {
+            error.map { Text("Error: \($0)") }
+            value.map(factory)
+            isLoading ? Text("Loading") : nil
+        }.onAppear {
+            self.cancellable = self.client.fetch(query: self.query) { result in
+                defer {
+                    self.cancellable = nil
+                    self.isLoading = false
+                }
+                switch result {
+                case .success(let result):
+                    self.value = result.data
+                    self.error = result.errors?.map { $0.description }.joined(separator: ", ")
+                case .failure(let error):
+                    self.error = error.localizedDescription
+                }
+            }
+            self.isLoading = true
+        }.onDisappear {
+            self.cancellable?.cancel()
+        }
+    }
+}
+
+public struct GraphQLPath<Value> {
+    fileprivate init() { }
+}
+
+public protocol Fragment {
+    associatedtype UnderlyingType
+}
+
+extension Array: Fragment where Element: Fragment {
+    public typealias UnderlyingType = [Element.UnderlyingType]
+}
+
+extension Optional: Fragment where Wrapped: Fragment {
+    public typealias UnderlyingType = Wrapped.UnderlyingType?
+}
+
+public struct GraphQLFragmentPath<UnderlyingType> {
+    fileprivate init() { }
+}
+
+extension GraphQLFragmentPath {
+
+    var fragment: GraphQLFragmentPath<UnderlyingType> {
+        return self
+    }
+
+}
+
+enum GraphQLArgument<Value> {
+    case value(Value)
+    case argument
+}
+
+@propertyWrapper
+public struct GraphQL<Value> {
+    var wrappedValue: Value
+
+    init(_ path: @autoclosure () -> GraphQLPath<Value>) {
+        fatalError("Initializer with path only should never be used")
+    }
+
+    fileprivate init(_ wrappedValue: Value) {
+        self.wrappedValue = wrappedValue
+    }
+}
+
+extension GraphQL where Value: Fragment {
+    init(_ path: @autoclosure () -> GraphQLFragmentPath<Value.UnderlyingType>) {
+        fatalError("Initializer with path only should never be used")
+    }
+
+    fileprivate init(_ wrappedValue: Value) {
+        self.wrappedValue = wrappedValue
+    }
+}
+
+{% for api in apis %}
+struct {{ api.name }} {
+    let client: ApolloClient
+    {% for type in api.types %}
+    enum {{ type.name }} { {% for field in type.fields %}{% if field.type|isFragment %}
+        static let {{field.name}} = GraphQLFragmentPath<{{ field.type|swiftType }}>()
+        {% else %}
+        static let {{field.name}} = GraphQLPath<{{ field.type|swiftType }}>()
+        {% endif %}{% endfor %}
+        static let fragment = GraphQLFragmentPath<{{type.name}}>()
+    }
+    {% endfor %}
+}
+
+{% for type in api.types %}
+extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }} {
+    {% for field in type.fields %}{% if field.type|isFragment %}
+    var {{field.name}}: GraphQLFragmentPath<{{ field.type|swiftType }}> { .init() }
+    {% else %}
+    var {{field.name}}: GraphQLPath<{{ field.type|swiftType }}> { .init() }
+    {% endif %}{% endfor %}
+}
+{% endfor %}
+{% endfor %}

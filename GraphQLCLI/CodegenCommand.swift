@@ -10,6 +10,8 @@ import Foundation
 import CLIKit
 import XcodeProj
 import SourceKittenFramework
+import Stencil
+import PathKit
 
 class CodegenCommand : Command {
 
@@ -24,15 +26,33 @@ class CodegenCommand : Command {
     func run() throws {
         let projectPath = try project.path()
         let project = try XcodeProj(pathString: projectPath.string)
-
         let sourcesPath = projectPath.deletingLastComponent.string
-
-        let sourceFiles = try project.pbxproj
-            .buildFiles
-            .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath))?.string }
-            .compactMap { File(path: $0) }
-            .map { try Structure(file: $0) }
-
-        print(sourceFiles)
+        
+        let apis = try project.apis(sourcesPath: sourcesPath)
+        
+        let loader = FileSystemLoader(paths: [Path.templates])
+        
+        let ext = Extension()
+        
+        ext.registerFilter("isFragment") { value in
+            guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
+            return value.isFragment
+        }
+        
+        ext.registerFilter("swiftType") { value in
+            guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
+            return value.swiftType
+        }
+        
+        let environment = Environment(loader: loader, extensions: [ext])
+        let file = try environment.renderTemplate(name: "GraphQL.swift.stencil", context: ["apis" : apis])
+        print(file)
+        
+//        let sourceFiles = try project.pbxproj
+//            .buildFiles
+//            .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath)) }
+//            .filter { $0.extension == "swift" }
+//            .map { $0.string }
+//            .filter { !$0.contains("GraphQL Stuff") }
     }
 }

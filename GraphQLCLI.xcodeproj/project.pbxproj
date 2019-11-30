@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
-		0E5758812390AD52005834EF /* XcodeProj in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758802390AD52005834EF /* XcodeProj */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
 		0E5758892390AF02005834EF /* IntegrateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758882390AF02005834EF /* IntegrateCommand.swift */; };
@@ -17,17 +16,25 @@
 		0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57588E23911DAC005834EF /* GraphQLError.swift */; };
 		0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57589023911FBA005834EF /* Optional+Extensions.swift */; };
 		0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758922391212E005834EF /* GraphQLCommands.swift */; };
+		0E68B1EE23913E8E00474D36 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B1ED23913E8E00474D36 /* Schema.swift */; };
+		0E68B1F0239144DF00474D36 /* Project+apis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B1EF239144DF00474D36 /* Project+apis.swift */; };
+		0E68B1FE23915CF900474D36 /* Stencil in Frameworks */ = {isa = PBXBuildFile; productRef = 0E68B1FD23915CF900474D36 /* Stencil */; };
+		0E68B20423915E8000474D36 /* XcodeProj in Frameworks */ = {isa = PBXBuildFile; productRef = 0E68B20323915E8000474D36 /* XcodeProj */; };
+		0E68B20723915EDD00474D36 /* PathKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E68B20623915EDD00474D36 /* PathKit */; };
+		0E68B20D239166B700474D36 /* Path+templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B20C239166B700474D36 /* Path+templates.swift */; };
+		0E68B21023916A6900474D36 /* templates in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E68B20F2391679A00474D36 /* templates */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		0E5758732390ACBA005834EF /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 7;
 			files = (
+				0E68B21023916A6900474D36 /* templates in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -40,6 +47,10 @@
 		0E57588E23911DAC005834EF /* GraphQLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLError.swift; sourceTree = "<group>"; };
 		0E57589023911FBA005834EF /* Optional+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions.swift"; sourceTree = "<group>"; };
 		0E5758922391212E005834EF /* GraphQLCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLCommands.swift; sourceTree = "<group>"; };
+		0E68B1ED23913E8E00474D36 /* Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schema.swift; sourceTree = "<group>"; };
+		0E68B1EF239144DF00474D36 /* Project+apis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+apis.swift"; sourceTree = "<group>"; };
+		0E68B20C239166B700474D36 /* Path+templates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Path+templates.swift"; sourceTree = "<group>"; };
+		0E68B20F2391679A00474D36 /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = templates; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,9 +58,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E5758812390AD52005834EF /* XcodeProj in Frameworks */,
+				0E68B1FE23915CF900474D36 /* Stencil in Frameworks */,
 				0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */,
+				0E68B20723915EDD00474D36 /* PathKit in Frameworks */,
 				0E5758872390AEDD005834EF /* CLIKit in Frameworks */,
+				0E68B20423915E8000474D36 /* XcodeProj in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +95,10 @@
 				0E57588C2390B110005834EF /* ProjectPath.swift */,
 				0E57588E23911DAC005834EF /* GraphQLError.swift */,
 				0E57589023911FBA005834EF /* Optional+Extensions.swift */,
+				0E68B1ED23913E8E00474D36 /* Schema.swift */,
+				0E68B1EF239144DF00474D36 /* Project+apis.swift */,
+				0E68B20C239166B700474D36 /* Path+templates.swift */,
+				0E68B20F2391679A00474D36 /* templates */,
 			);
 			path = GraphQLCLI;
 			sourceTree = "<group>";
@@ -103,9 +120,11 @@
 			);
 			name = GraphQLCLI;
 			packageProductDependencies = (
-				0E5758802390AD52005834EF /* XcodeProj */,
 				0E5758832390ADA9005834EF /* SourceKittenFramework */,
 				0E5758862390AEDD005834EF /* CLIKit */,
+				0E68B1FD23915CF900474D36 /* Stencil */,
+				0E68B20323915E8000474D36 /* XcodeProj */,
+				0E68B20623915EDD00474D36 /* PathKit */,
 			);
 			productName = GraphQLCLI;
 			productReference = 0E5758752390ACBA005834EF /* GraphQLCLI */;
@@ -136,9 +155,11 @@
 			);
 			mainGroup = 0E57586C2390ACBA005834EF;
 			packageReferences = (
-				0E57587F2390AD52005834EF /* XCRemoteSwiftPackageReference "xcodeproj" */,
 				0E5758822390ADA9005834EF /* XCRemoteSwiftPackageReference "SourceKitten" */,
 				0E5758852390AEDD005834EF /* XCRemoteSwiftPackageReference "CLIKit" */,
+				0E68B1FC23915CF900474D36 /* XCRemoteSwiftPackageReference "Stencil" */,
+				0E68B20223915E8000474D36 /* XCRemoteSwiftPackageReference "xcodeproj" */,
+				0E68B20523915EDD00474D36 /* XCRemoteSwiftPackageReference "PathKit" */,
 			);
 			productRefGroup = 0E5758762390ACBA005834EF /* Products */;
 			projectDirPath = "";
@@ -154,9 +175,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E68B20D239166B700474D36 /* Path+templates.swift in Sources */,
+				0E68B1EE23913E8E00474D36 /* Schema.swift in Sources */,
 				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
 				0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */,
 				0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */,
+				0E68B1F0239144DF00474D36 /* Project+apis.swift in Sources */,
 				0E57588B2390AF0E005834EF /* CodegenCommand.swift in Sources */,
 				0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */,
 				0E5758792390ACBA005834EF /* main.swift in Sources */,
@@ -285,6 +309,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = KJPP698PR3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -297,6 +322,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = KJPP698PR3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -328,14 +354,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0E57587F2390AD52005834EF /* XCRemoteSwiftPackageReference "xcodeproj" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tuist/xcodeproj.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.5.0;
-			};
-		};
 		0E5758822390ADA9005834EF /* XCRemoteSwiftPackageReference "SourceKitten" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jpsim/SourceKitten.git";
@@ -352,14 +370,33 @@
 				minimumVersion = 0.3.4;
 			};
 		};
+		0E68B1FC23915CF900474D36 /* XCRemoteSwiftPackageReference "Stencil" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nerdsupremacist/Stencil.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.13.2;
+			};
+		};
+		0E68B20223915E8000474D36 /* XCRemoteSwiftPackageReference "xcodeproj" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tuist/xcodeproj.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.5.0;
+			};
+		};
+		0E68B20523915EDD00474D36 /* XCRemoteSwiftPackageReference "PathKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kylef/PathKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0E5758802390AD52005834EF /* XcodeProj */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0E57587F2390AD52005834EF /* XCRemoteSwiftPackageReference "xcodeproj" */;
-			productName = XcodeProj;
-		};
 		0E5758832390ADA9005834EF /* SourceKittenFramework */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0E5758822390ADA9005834EF /* XCRemoteSwiftPackageReference "SourceKitten" */;
@@ -369,6 +406,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E5758852390AEDD005834EF /* XCRemoteSwiftPackageReference "CLIKit" */;
 			productName = CLIKit;
+		};
+		0E68B1FD23915CF900474D36 /* Stencil */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E68B1FC23915CF900474D36 /* XCRemoteSwiftPackageReference "Stencil" */;
+			productName = Stencil;
+		};
+		0E68B20323915E8000474D36 /* XcodeProj */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E68B20223915E8000474D36 /* XCRemoteSwiftPackageReference "xcodeproj" */;
+			productName = XcodeProj;
+		};
+		0E68B20623915EDD00474D36 /* PathKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E68B20523915EDD00474D36 /* XCRemoteSwiftPackageReference "PathKit" */;
+			productName = PathKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
