@@ -9,12 +9,13 @@
 import Foundation
 import CLIKit
 
-enum GraphQLError: Error {
+enum GraphQLError: Error, CustomStringConvertible {
     case pathDoesNotExist(String)
     case noProjectFound(at: Path)
     case fileIsNotAProject(Path)
+    case parseError(SourceCode, function: String = #function)
 
-    var localizedDescription: String {
+    var description: String {
         switch self {
         case .pathDoesNotExist(let path):
             return "Given path does not exist: \(path)"
@@ -22,6 +23,12 @@ enum GraphQLError: Error {
             return "There is no Xcode Project in the provided folder: \(path.string)"
         case .fileIsNotAProject(let path):
             return "The file provided is not an Xcode Project: \(path.string)"
+        case .parseError(let code, let function):
+            return "Error parsing \(function): \n\(code.content) "
         }
+    }
+
+    var localizedDescription: String {
+        return description
     }
 }

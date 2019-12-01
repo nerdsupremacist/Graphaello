@@ -9,5 +9,10 @@
 import Foundation
 import CLIKit
 
-let command = try CommandLineParser().parse(command: GraphQLCommands())
-try command.run()
+do {
+    let command = try CommandLineParser().parse(command: GraphQLCommands())
+    try command.run()
+} catch {
+    print(error)
+    exit(-1)
+}

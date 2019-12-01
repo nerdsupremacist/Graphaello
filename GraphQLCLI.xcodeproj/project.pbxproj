@@ -24,6 +24,13 @@
 		0E68B20D239166B700474D36 /* Path+templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B20C239166B700474D36 /* Path+templates.swift */; };
 		0E68B21023916A6900474D36 /* templates in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E68B20F2391679A00474D36 /* templates */; };
 		0E7A0E122393F91F007F5AE9 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 0E7A0E112393F91F007F5AE9 /* SwiftFormat */; };
+		0E7A0E16239442DB007F5AE9 /* Codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E15239442DB007F5AE9 /* Codegen.swift */; };
+		0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1723944341007F5AE9 /* Environment+custom.swift */; };
+		0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1923944401007F5AE9 /* Struct.swift */; };
+		0E7A0E1E23944602007F5AE9 /* Project+temporaryStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1D23944602007F5AE9 /* Project+temporaryStructs.swift */; };
+		0E7A0E2023944B26007F5AE9 /* StructuredFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1F23944B26007F5AE9 /* StructuredFile.swift */; };
+		0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */; };
+		0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E2323944D98007F5AE9 /* SourceCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +59,13 @@
 		0E68B1EF239144DF00474D36 /* Project+apis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+apis.swift"; sourceTree = "<group>"; };
 		0E68B20C239166B700474D36 /* Path+templates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Path+templates.swift"; sourceTree = "<group>"; };
 		0E68B20F2391679A00474D36 /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = templates; sourceTree = "<group>"; };
+		0E7A0E15239442DB007F5AE9 /* Codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codegen.swift; sourceTree = "<group>"; };
+		0E7A0E1723944341007F5AE9 /* Environment+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+custom.swift"; sourceTree = "<group>"; };
+		0E7A0E1923944401007F5AE9 /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
+		0E7A0E1D23944602007F5AE9 /* Project+temporaryStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+temporaryStructs.swift"; sourceTree = "<group>"; };
+		0E7A0E1F23944B26007F5AE9 /* StructuredFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredFile.swift; sourceTree = "<group>"; };
+		0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedStruct.swift; sourceTree = "<group>"; };
+		0E7A0E2323944D98007F5AE9 /* SourceCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,11 +108,18 @@
 				0E5758882390AF02005834EF /* IntegrateCommand.swift */,
 				0E5758922391212E005834EF /* GraphQLCommands.swift */,
 				0E57588A2390AF0E005834EF /* CodegenCommand.swift */,
+				0E7A0E15239442DB007F5AE9 /* Codegen.swift */,
+				0E7A0E1723944341007F5AE9 /* Environment+custom.swift */,
 				0E57588C2390B110005834EF /* ProjectPath.swift */,
 				0E57588E23911DAC005834EF /* GraphQLError.swift */,
 				0E57589023911FBA005834EF /* Optional+Extensions.swift */,
 				0E68B1ED23913E8E00474D36 /* Schema.swift */,
 				0E68B1EF239144DF00474D36 /* Project+apis.swift */,
+				0E7A0E1923944401007F5AE9 /* Struct.swift */,
+				0E7A0E1D23944602007F5AE9 /* Project+temporaryStructs.swift */,
+				0E7A0E1F23944B26007F5AE9 /* StructuredFile.swift */,
+				0E7A0E2323944D98007F5AE9 /* SourceCode.swift */,
+				0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */,
 				0E68B20C239166B700474D36 /* Path+templates.swift */,
 				0E68B20F2391679A00474D36 /* templates */,
 			);
@@ -179,14 +200,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */,
 				0E68B20D239166B700474D36 /* Path+templates.swift in Sources */,
 				0E68B1EE23913E8E00474D36 /* Schema.swift in Sources */,
+				0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */,
 				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
 				0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */,
+				0E7A0E2023944B26007F5AE9 /* StructuredFile.swift in Sources */,
+				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
+				0E7A0E1E23944602007F5AE9 /* Project+temporaryStructs.swift in Sources */,
 				0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */,
 				0E68B1F0239144DF00474D36 /* Project+apis.swift in Sources */,
+				0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */,
 				0E57588B2390AF0E005834EF /* CodegenCommand.swift in Sources */,
 				0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */,
+				0E7A0E16239442DB007F5AE9 /* Codegen.swift in Sources */,
 				0E5758792390ACBA005834EF /* main.swift in Sources */,
 				0E5758892390AF02005834EF /* IntegrateCommand.swift in Sources */,
 			);

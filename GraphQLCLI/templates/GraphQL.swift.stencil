@@ -43,23 +43,23 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
     }
 }
 
-public struct GraphQLPath<Value> {
+struct GraphQLPath<Value> {
     fileprivate init() { }
 }
 
-public protocol Fragment {
+protocol Fragment {
     associatedtype UnderlyingType
 }
 
 extension Array: Fragment where Element: Fragment {
-    public typealias UnderlyingType = [Element.UnderlyingType]
+    typealias UnderlyingType = [Element.UnderlyingType]
 }
 
 extension Optional: Fragment where Wrapped: Fragment {
-    public typealias UnderlyingType = Wrapped.UnderlyingType?
+    typealias UnderlyingType = Wrapped.UnderlyingType?
 }
 
-public struct GraphQLFragmentPath<UnderlyingType> {
+struct GraphQLFragmentPath<UnderlyingType> {
     fileprivate init() { }
 }
 
