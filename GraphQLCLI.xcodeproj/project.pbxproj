@@ -23,6 +23,7 @@
 		0E68B20723915EDD00474D36 /* PathKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E68B20623915EDD00474D36 /* PathKit */; };
 		0E68B20D239166B700474D36 /* Path+templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B20C239166B700474D36 /* Path+templates.swift */; };
 		0E68B21023916A6900474D36 /* templates in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E68B20F2391679A00474D36 /* templates */; };
+		0E7A0E122393F91F007F5AE9 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 0E7A0E112393F91F007F5AE9 /* SwiftFormat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E68B1FE23915CF900474D36 /* Stencil in Frameworks */,
+				0E7A0E122393F91F007F5AE9 /* SwiftFormat in Frameworks */,
 				0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */,
 				0E68B20723915EDD00474D36 /* PathKit in Frameworks */,
 				0E5758872390AEDD005834EF /* CLIKit in Frameworks */,
@@ -125,6 +127,7 @@
 				0E68B1FD23915CF900474D36 /* Stencil */,
 				0E68B20323915E8000474D36 /* XcodeProj */,
 				0E68B20623915EDD00474D36 /* PathKit */,
+				0E7A0E112393F91F007F5AE9 /* SwiftFormat */,
 			);
 			productName = GraphQLCLI;
 			productReference = 0E5758752390ACBA005834EF /* GraphQLCLI */;
@@ -160,6 +163,7 @@
 				0E68B1FC23915CF900474D36 /* XCRemoteSwiftPackageReference "Stencil" */,
 				0E68B20223915E8000474D36 /* XCRemoteSwiftPackageReference "xcodeproj" */,
 				0E68B20523915EDD00474D36 /* XCRemoteSwiftPackageReference "PathKit" */,
+				0E7A0E102393F91F007F5AE9 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
 			);
 			productRefGroup = 0E5758762390ACBA005834EF /* Products */;
 			projectDirPath = "";
@@ -394,6 +398,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		0E7A0E102393F91F007F5AE9 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/SwiftFormat.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.42.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -421,6 +433,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E68B20523915EDD00474D36 /* XCRemoteSwiftPackageReference "PathKit" */;
 			productName = PathKit;
+		};
+		0E7A0E112393F91F007F5AE9 /* SwiftFormat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E7A0E102393F91F007F5AE9 /* XCRemoteSwiftPackageReference "SwiftFormat" */;
+			productName = SwiftFormat;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

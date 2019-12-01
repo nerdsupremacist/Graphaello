@@ -72,12 +72,29 @@ extension GraphQLFragmentPath {
 }
 
 enum GraphQLArgument<Value> {
+    enum QueryArgument {
+        case withDefault(Value)
+        case forced
+    }
+
     case value(Value)
-    case argument
+    case argument(QueryArgument)
+}
+
+extension GraphQLArgument {
+
+    static var argument: GraphQLArgument<Value> {
+        return .argument(.forced)
+    }
+
+    static func argument(default value: Value) -> GraphQLArgument<Value> {
+        return .argument(.withDefault(value))
+    }
+
 }
 
 @propertyWrapper
-public struct GraphQL<Value> {
+struct GraphQL<Value> {
     var wrappedValue: Value
 
     init(_ path: @autoclosure () -> GraphQLPath<Value>) {
@@ -102,24 +119,32 @@ extension GraphQL where Value: Fragment {
 {% for api in apis %}
 struct {{ api.name }} {
     let client: ApolloClient
+
+    {% for field in api.query.fields %}
+        {% include "Field.stencil" %}
+    {% endfor %}
+
     {% for type in api.types %}
-    enum {{ type.name }} { {% for field in type.fields %}{% if field.type|isFragment %}
-        static let {{field.name}} = GraphQLFragmentPath<{{ field.type|swiftType }}>()
-        {% else %}
-        static let {{field.name}} = GraphQLPath<{{ field.type|swiftType }}>()
-        {% endif %}{% endfor %}
-        static let fragment = GraphQLFragmentPath<{{type.name}}>()
+    enum {{ type.name }} {
+        {% for field in type.fields %}
+            {% include "Field.stencil" %}
+        {% endfor %}
+        static let fragment: GraphQLFragmentPath<{{type.name}}> = .init()
     }
     {% endfor %}
 }
 
 {% for type in api.types %}
 extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }} {
-    {% for field in type.fields %}{% if field.type|isFragment %}
-    var {{field.name}}: GraphQLFragmentPath<{{ field.type|swiftType }}> { .init() }
-    {% else %}
-    var {{field.name}}: GraphQLPath<{{ field.type|swiftType }}> { .init() }
-    {% endif %}{% endfor %}
+    {% for field in type.fields %}
+        {% include "ComputedField.stencil" %}
+    {% endfor %}
+}
+
+extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }}? {
+    {% for field in type.fields %}
+        {% include "ComputedField.stencil" %}
+    {% endfor %}
 }
 {% endfor %}
 {% endfor %}

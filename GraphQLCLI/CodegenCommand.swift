@@ -9,7 +9,7 @@
 import Foundation
 import CLIKit
 import XcodeProj
-import SourceKittenFramework
+import SwiftFormat
 import Stencil
 import PathKit
 
@@ -39,14 +39,26 @@ class CodegenCommand : Command {
             return value.isFragment
         }
         
-        ext.registerFilter("swiftType") { value in
+        ext.registerFilter("swiftType") { value, arguments in
             guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
-            return value.swiftType
+            return value.swiftType(api: (arguments.first as? API)?.name)
+        }
+
+        ext.registerFilter("pathClass") { value in
+            guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
+            return value.isFragment ? "GraphQLFragmentPath" : "GraphQLPath"
+        }
+
+        ext.registerFilter("hasArguments") { value in
+            guard let value = value as? Schema.GraphQLType.Field else { return nil }
+            return !value.arguments.isEmpty
         }
         
         let environment = Environment(loader: loader, extensions: [ext])
         let file = try environment.renderTemplate(name: "GraphQL.swift.stencil", context: ["apis" : apis])
-        print(file)
+        let formatted = try format(file)
+
+        print(formatted)
         
 //        let sourceFiles = try project.pbxproj
 //            .buildFiles

@@ -113,20 +113,27 @@ extension Schema.GraphQLType {
 
 extension Schema.GraphQLType.Field.TypeReference {
 
-    var swiftType: String {
+    func swiftType(api: String?) -> String {
         switch self {
+
         case .concrete(let definition):
-            return definition.name.map { $0 + "?" } ?? "Any"
+            guard let name = definition.name else { return "Any" }
+            guard let api = api, case .object = definition.kind else {
+                return "\(name)?"
+            }
+            return "\(api).\(name)?"
+
         case .complex(let definition, let ofType):
             switch definition.kind {
             case .list:
-                return "[\(ofType.swiftType)]?"
+                return "[\(ofType.swiftType(api: api))]?"
             case .nonNull:
-                return String(ofType.swiftType.dropLast())
+                return String(ofType.swiftType(api: api).dropLast())
             case .scalar, .object, .enum:
-                return ofType.swiftType
+                return ofType.swiftType(api: api)
             }
         }
+
     }
 
     var isFragment: Bool {
