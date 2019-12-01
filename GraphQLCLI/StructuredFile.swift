@@ -18,12 +18,24 @@ struct StructuredFile {
     }
 }
 
+extension SourceCode {
+
+    fileprivate func structs() -> [SourceCode] {
+        let kind = try? self.kind()
+        let substructure = (try? self.substructure()) ?? []
+        if kind == .struct {
+            return [self] + substructure.flatMap { $0.structs() }
+        } else {
+            return substructure.flatMap { $0.structs() }
+        }
+    }
+
+}
+
 extension StructuredFile {
 
     func structs() throws -> [ParsedStruct] {
-        return try code.substructure()
-            .filter { try $0.kind() == .struct }
-            .map { try ParsedStruct(code: $0) }
+        return try code.structs().map { try ParsedStruct(code: $0) }
     }
 
 }
