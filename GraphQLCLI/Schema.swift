@@ -133,7 +133,6 @@ extension Schema.GraphQLType.Field.TypeReference {
                 return ofType.swiftType(api: api)
             }
         }
-
     }
 
     var isFragment: Bool {
@@ -142,6 +141,20 @@ extension Schema.GraphQLType.Field.TypeReference {
             return definition.kind != .scalar
         case .complex(_, let ofType):
             return ofType.isFragment
+        }
+    }
+    
+    var optional: Schema.GraphQLType.Field.TypeReference {
+        switch self {
+        case .concrete:
+            return self
+        case .complex(let definition, let ofType):
+            switch definition.kind {
+            case .nonNull:
+                return ofType
+            case .list, .scalar, .object, .enum:
+                return self
+            }
         }
     }
     

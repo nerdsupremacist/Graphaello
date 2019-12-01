@@ -54,6 +54,11 @@ class CodegenCommand : Command {
             return !value.arguments.isEmpty
         }
         
+        ext.registerFilter("optionalType") { value in
+            guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
+            return value.optional
+        }
+        
         let environment = Environment(loader: loader, extensions: [ext])
         let file = try environment.renderTemplate(name: "GraphQL.swift.stencil", context: ["apis" : apis])
         let formatted = try format(file)
