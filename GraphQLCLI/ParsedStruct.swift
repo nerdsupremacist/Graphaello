@@ -29,7 +29,9 @@ struct ParsedProperty {
         self.code = code
         name = try code.name()
         type = try code.typeName()
-        attributes = try (try? code.attributes())?.map { try ParsedAttribute(code: $0) } ?? []
+        attributes = try code
+            .optional { try $0.attributes() }?
+            .map { try ParsedAttribute(code: $0) } ?? []
     }
 }
 
@@ -43,7 +45,7 @@ struct ParsedStruct {
         name = try code.name()
         properties = try code
             .substructure()
-            .filter { (try? $0.kind()) == .some(.varInstance) }
+            .filter { try $0.kind() == .varInstance }
             .map { try ParsedProperty(code: $0) }
     }
 }

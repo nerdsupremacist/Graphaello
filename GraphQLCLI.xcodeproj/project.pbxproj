@@ -31,6 +31,7 @@
 		0E7A0E2023944B26007F5AE9 /* StructuredFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1F23944B26007F5AE9 /* StructuredFile.swift */; };
 		0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */; };
 		0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E2323944D98007F5AE9 /* SourceCode.swift */; };
+		0EBE9A782395116C00A705B4 /* Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBE9A772395116C00A705B4 /* Kind.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,6 +67,7 @@
 		0E7A0E1F23944B26007F5AE9 /* StructuredFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredFile.swift; sourceTree = "<group>"; };
 		0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedStruct.swift; sourceTree = "<group>"; };
 		0E7A0E2323944D98007F5AE9 /* SourceCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCode.swift; sourceTree = "<group>"; };
+		0EBE9A772395116C00A705B4 /* Kind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kind.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				0E7A0E2323944D98007F5AE9 /* SourceCode.swift */,
 				0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */,
 				0E68B20C239166B700474D36 /* Path+templates.swift */,
+				0EBE9A772395116C00A705B4 /* Kind.swift */,
 				0E68B20F2391679A00474D36 /* templates */,
 			);
 			path = GraphQLCLI;
@@ -211,6 +214,7 @@
 				0E7A0E1E23944602007F5AE9 /* Project+temporaryStructs.swift in Sources */,
 				0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */,
 				0E68B1F0239144DF00474D36 /* Project+apis.swift in Sources */,
+				0EBE9A782395116C00A705B4 /* Kind.swift in Sources */,
 				0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */,
 				0E57588B2390AF0E005834EF /* CodegenCommand.swift in Sources */,
 				0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */,

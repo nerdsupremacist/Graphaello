@@ -20,13 +20,13 @@ struct StructuredFile {
 
 extension SourceCode {
 
-    fileprivate func structs() -> [SourceCode] {
-        let kind = try? self.kind()
-        let substructure = (try? self.substructure()) ?? []
+    fileprivate func structs() throws -> [SourceCode] {
+        let kind = try optional { try $0.kind() }
+        let substructure = try optional { try $0.substructure() } ?? []
         if kind == .struct {
-            return [self] + substructure.flatMap { $0.structs() }
+            return try substructure.flatMap { try $0.structs() } + [self]
         } else {
-            return substructure.flatMap { $0.structs() }
+            return try substructure.flatMap { try $0.structs() }
         }
     }
 

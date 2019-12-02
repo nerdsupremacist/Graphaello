@@ -16,89 +16,121 @@ struct SourceCode {
 
 extension SourceCode {
 
-    func content() throws -> String {
-        let start = try offset()
-        let length = try self.length()
-        let substring = file.contents.bridge().substringStartingLinesWithByteRange(start: Int(start), length: Int(length))
-        return try substring?
-            .removingCommonLeadingWhitespaceFromLines() ?! GraphQLError.parseError(self)
+    var content: String {
+        do {
+            let start = try offset()
+            let length = try self.length()
+            let substring = file.contents.bridge().substringStartingLinesWithByteRange(start: Int(start), length: Int(length))
+            return substring?
+                .removingCommonLeadingWhitespaceFromLines() ?? file.contents
+        } catch {
+            return file.contents
+        }
     }
 
 }
 
 extension SourceCode {
+
+    func optional<T>(decode: (SourceCode) throws -> T) rethrows -> T? {
+        do {
+            return try decode(self)
+        } catch ParseError.missingKey {
+            return nil
+        }
+    }
+
+}
+
+extension SourceCode {
+
+    func decode<Type: SourceKitRepresentable>(key: String) throws -> Type {
+        let value = try dictionary[key] ?! ParseError.missingKey(key, in: self)
+        return try value as? Type ?! ParseError.valueNotTransformable(value, to: Type.self, in: self)
+    }
+
+    func decode<Type: SourceKitRepresentable>(key: SwiftDocKey) throws -> Type {
+        return try decode(key: key.rawValue)
+    }
+
+
+    func decodeArray<Type: SourceKitRepresentable>(key: String) throws -> [Type] {
+        return try decode(key: key)
+    }
+
+    func decodeArray<Type: SourceKitRepresentable>(key: SwiftDocKey) throws -> [Type] {
+        return try decode(key: key)
+    }
+}
+
+extension SourceCode {
+
     func annotatedDeclaration() throws -> String {
-        try dictionary[SwiftDocKey.annotatedDeclaration.rawValue] as? String ?! GraphQLError.parseError(self)
+        try decode(key: .annotatedDeclaration)
     }
 
     func bodyLength() throws -> Int64 {
-        try dictionary[SwiftDocKey.bodyLength.rawValue] as? Int64 ?! GraphQLError.parseError(self)
+        try decode(key: .bodyLength)
     }
 
     func bodyOffset() throws -> Int64 {
-        try dictionary[SwiftDocKey.bodyOffset.rawValue] as? Int64 ?! GraphQLError.parseError(self)
+        try decode(key: .bodyOffset)
     }
 
     func diagnosticStage() throws -> String {
-        try dictionary[SwiftDocKey.diagnosticStage.rawValue] as? String ?! GraphQLError.parseError(self)
+        try decode(key: .diagnosticStage)
     }
 
     func elements() throws -> [SourceCode] {
-        let array = dictionary[SwiftDocKey.elements.rawValue] as? [[String: SourceKitRepresentable]]
-        return try array?.map { SourceCode(file: file, dictionary: $0) } ?! GraphQLError.parseError(self)
+        return try decodeArray(key: .elements).map { SourceCode(file: file, dictionary: $0) }
     }
 
     func fullXMLDocs() throws -> String {
-        try dictionary[SwiftDocKey.fullXMLDocs.rawValue] as? String ?! GraphQLError.parseError(self)
+        try decode(key: .fullXMLDocs)
     }
 
-    func kind() throws -> SwiftDeclarationKind {
-        try (dictionary[SwiftDocKey.kind.rawValue] as? String).flatMap(SwiftDeclarationKind.init(rawValue:))  ?! GraphQLError.parseError(self)
+    func kind() throws -> Kind {
+        return Kind(rawValue: try decode(key: .kind))
     }
 
     func length() throws -> Int64 {
-        try dictionary[SwiftDocKey.length.rawValue] as? Int64 ?! GraphQLError.parseError(self)
+        try decode(key: .length)
     }
 
     func name() throws -> String {
-        try dictionary[SwiftDocKey.name.rawValue] as? String ?! GraphQLError.parseError(self)
+        try decode(key: .name)
     }
 
     func nameLength() throws -> Int64 {
-        try dictionary[SwiftDocKey.nameLength.rawValue] as? Int64 ?! GraphQLError.parseError(self)
+        try decode(key: .nameLength)
     }
 
     func nameOffset() throws -> Int64 {
-        try dictionary[SwiftDocKey.nameOffset.rawValue] as? Int64 ?! GraphQLError.parseError(self)
+        try decode(key: .nameOffset)
     }
 
     func offset() throws -> Int64 {
-        try dictionary[SwiftDocKey.offset.rawValue] as? Int64 ?! GraphQLError.parseError(self)
+        try decode(key: .offset)
     }
 
     func substructure() throws -> [SourceCode] {
-        let array = dictionary[SwiftDocKey.substructure.rawValue] as? [[String: SourceKitRepresentable]]
-        return try array?.map { SourceCode(file: file, dictionary: $0) } ?! GraphQLError.parseError(self)
-    }
-
-    func syntaxMap() throws -> NSData {
-        try dictionary[SwiftDocKey.syntaxMap.rawValue] as? NSData ?! GraphQLError.parseError(self)
+        return try decodeArray(key: .substructure).map { SourceCode(file: file, dictionary: $0) }
     }
 
     func typeName() throws -> String {
-        try dictionary[SwiftDocKey.typeName.rawValue] as? String ?! GraphQLError.parseError(self)
+        try decode(key: .typeName)
     }
 
     func inheritedtypes() throws -> [SourceKitRepresentable] {
-        try dictionary[SwiftDocKey.inheritedtypes.rawValue] as? [SourceKitRepresentable] ?! GraphQLError.parseError(self)
+        try decode(key: .inheritedtypes)
     }
 
     func attributes() throws -> [SourceCode] {
-        let array = dictionary["key.attributes"] as? [[String: SourceKitRepresentable]]
-        return try array?.map { SourceCode(file: file, dictionary: $0) } ?! GraphQLError.parseError(self)
+        return try decodeArray(key: "key.attributes").map { SourceCode(file: file, dictionary: $0) }
     }
 
     func attribute() throws -> SwiftDeclarationAttributeKind {
-        return try (dictionary["key.attribute"] as? String).flatMap(SwiftDeclarationAttributeKind.init(rawValue:)) ?! GraphQLError.parseError(self)
+        return SwiftDeclarationAttributeKind(rawValue: try decode(key: "key.attribute")) ?? ._custom
     }
+
 }

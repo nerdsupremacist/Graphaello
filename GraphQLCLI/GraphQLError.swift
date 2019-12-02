@@ -8,12 +8,43 @@
 
 import Foundation
 import CLIKit
+import SourceKittenFramework
+
+enum ParseError: Error, CustomStringConvertible {
+    case missingKey(String, in: SourceCode)
+    case valueNotTransformable(SourceKitRepresentable, to: SourceKitRepresentable.Type, in: SourceCode)
+
+    var description: String {
+        switch self {
+
+        case .missingKey(let key, let code):
+            return """
+            Missing Key \(key)
+            in {\(code.dictionary.keys.joined(separator: ", "))}
+
+            Code:
+            \(code.content)
+            """
+        case .valueNotTransformable(let value, let type, let code):
+            return """
+            Value \(value)
+            cannot be converted to \(type)
+
+            Code:
+            \(code.content)
+            """
+        }
+    }
+
+    var localizedDescription: String {
+        return description
+    }
+}
 
 enum GraphQLError: Error, CustomStringConvertible {
     case pathDoesNotExist(String)
     case noProjectFound(at: Path)
     case fileIsNotAProject(Path)
-    case parseError(SourceCode, function: String = #function)
 
     var description: String {
         switch self {
@@ -23,8 +54,6 @@ enum GraphQLError: Error, CustomStringConvertible {
             return "There is no Xcode Project in the provided folder: \(path.string)"
         case .fileIsNotAProject(let path):
             return "The file provided is not an Xcode Project: \(path.string)"
-        case .parseError(let code, let function):
-            return "Error parsing \(function): \n\(code.content) "
         }
     }
 
