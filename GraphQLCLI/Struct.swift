@@ -9,14 +9,43 @@
 import Foundation
 import SourceKittenFramework
 
-struct Struct {
-    enum PropertyType {
-        case argument(type: String)
-        case fragment(object: String, path: [String])
-        case query(path: [String])
+struct GraphQLPath {
+    enum Target {
+        case query
+        case object(String)
     }
 
-    let file: File
+    enum Component {
+        enum Argument {
+            enum QueryArgument {
+                case withDefault(SourceCode)
+                case forced
+            }
+
+            case value(SourceCode)
+            case argument(QueryArgument)
+        }
+
+        case property(String)
+        case fragment
+        case call(String, call: [String : Argument])
+    }
+
+    let code: SourceCode
+    let apiName: String
+    let target: Target
+    let path: [Component]
+}
+
+struct Property {
+    let code: SourceCode
     let name: String
-    let properties: [String : PropertyType]
+    let type: String
+    let graphqlPath: GraphQLPath?
+}
+
+struct Struct {
+    let code: SourceCode
+    let name: String
+    let properties: [Property]
 }
