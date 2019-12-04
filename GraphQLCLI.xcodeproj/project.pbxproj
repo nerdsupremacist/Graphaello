@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E4A1E5223984CD600EA2CF8 /* Codegen+validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5123984CD600EA2CF8 /* Codegen+validated.swift */; };
+		0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -86,6 +88,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E4A1E5123984CD600EA2CF8 /* Codegen+validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codegen+validated.swift"; sourceTree = "<group>"; };
+		0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLPathValidationError.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* GraphQLCLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GraphQLCLI; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 			children = (
 				0E57588A2390AF0E005834EF /* CodegenCommand.swift */,
 				0E7A0E15239442DB007F5AE9 /* Codegen.swift */,
+				0E4A1E5123984CD600EA2CF8 /* Codegen+validated.swift */,
 				0ECF25D8239804A8001C75F8 /* Schema */,
 				0ECF25CF239803D0001C75F8 /* Source Code + Parsing */,
 			);
@@ -220,6 +225,7 @@
 			children = (
 				0E57588E23911DAC005834EF /* GraphQLError.swift */,
 				0ECF25D123980422001C75F8 /* ParseError.swift */,
+				0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */,
 				0ECF25E1239805AB001C75F8 /* Argument.swift in Sources */,
 				0ECF25F82398088A001C75F8 /* SourceCode+decode.swift in Sources */,
 				0ECF25FB239809C5001C75F8 /* Property.swift in Sources */,
@@ -426,6 +433,7 @@
 				0E7A0E2023944B26007F5AE9 /* StructuredFile.swift in Sources */,
 				0ECF25DF23980562001C75F8 /* Field.swift in Sources */,
 				0ECF260823980AA4001C75F8 /* GraphQLPath+parsing.swift in Sources */,
+				0E4A1E5223984CD600EA2CF8 /* Codegen+validated.swift in Sources */,
 				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
 				0ECF260A23980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift in Sources */,
 				0ECF25E7239806EF001C75F8 /* API.swift in Sources */,

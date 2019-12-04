@@ -26,6 +26,15 @@ extension Schema.GraphQLType.Field {
 }
 
 extension Schema.GraphQLType.Field.TypeReference {
+    
+    var underlyingTypeName: String {
+        switch self {
+        case .concrete(let definition):
+            return definition.name ?? "Any"
+        case .complex(_, let ofType):
+            return ofType.underlyingTypeName
+        }
+    }
 
     func swiftType(api: String?) -> String {
         switch self {

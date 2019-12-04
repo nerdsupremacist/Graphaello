@@ -20,6 +20,10 @@ extension Schema {
 
 extension Schema.GraphQLType {
 
+    var isScalar: Bool {
+        return kind == .scalar
+    }
+    
     var includeInReport: Bool {
         return kind == .object && !name.starts(with: "__")
     }

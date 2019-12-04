@@ -13,7 +13,9 @@ class API {
 
     let query: Schema.GraphQLType
 
-    var types: [Schema.GraphQLType]
+    let types: [Schema.GraphQLType]
+    
+    let scalars: [Schema.GraphQLType]
 
     init(name: String, schema: Schema) {
         self.name = name
@@ -23,5 +25,7 @@ class API {
         self.types = schema.types
             .filter { $0.includeInReport }
             .filter { $0.name != schema.queryType.name }
+        
+        self.scalars = schema.types.filter { $0.isScalar }
     }
 }
