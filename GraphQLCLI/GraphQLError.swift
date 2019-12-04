@@ -15,7 +15,7 @@ enum ParseError: Error, CustomStringConvertible {
     case missingKey(String, in: SourceCode)
     case valueNotTransformable(SourceKitRepresentable, to: SourceKitRepresentable.Type, in: SourceCode)
     case expectedSingleSubtructure(in: [SourceCode])
-    case unexpectedExpressionInGraphQLPath(expression: ExprSyntax)
+    case cannotInstantiateObjectFromExpression(ExprSyntax, type: Any.Type)
     case expectedBaseForCalls(expression: ExprSyntax)
 
     var description: String {
@@ -44,9 +44,9 @@ enum ParseError: Error, CustomStringConvertible {
 
             Found: \(code.enumerated().map { "\($0.offset + 1) -> \n\($0.element.content)" }.joined(separator: "\n\n"))
             """
-        case .unexpectedExpressionInGraphQLPath(let expression):
+        case .cannotInstantiateObjectFromExpression(let expression, let type):
             return """
-            Unexpected Expression used inside GraphQL Path:
+            Cannot instantiate \(type) from expression:
 
             \(expression)
             """

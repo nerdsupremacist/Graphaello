@@ -27,8 +27,9 @@ class CodegenCommand : Command {
         let sourcesPath = projectPath.deletingLastComponent.string
         
         let apis = try project.apis(sourcesPath: sourcesPath)
-
-        let structs = try project.scanStructs(sourcesPath: sourcesPath)
+        let structs = try project
+            .scanStructs(sourcesPath: sourcesPath)
+            .filter { $0.hasGraphQLValues }
 
         let codegen = Codegen(apis: apis)
         let formatted = try codegen.generate()

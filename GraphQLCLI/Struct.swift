@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SourceKittenFramework
+import SwiftSyntax
 
 struct GraphQLPath {
     enum Target {
@@ -18,11 +18,11 @@ struct GraphQLPath {
     enum Component {
         enum Argument {
             enum QueryArgument {
-                case withDefault(SourceCode)
+                case withDefault(ExprSyntax)
                 case forced
             }
 
-            case value(SourceCode)
+            case value(ExprSyntax)
             case argument(QueryArgument)
         }
 
@@ -37,14 +37,20 @@ struct GraphQLPath {
 }
 
 struct Property {
-    let code: SourceCode
     let name: String
     let type: String
     let graphqlPath: GraphQLPath?
 }
 
 struct Struct {
-    let code: SourceCode
     let name: String
     let properties: [Property]
+}
+
+extension Struct {
+
+    var hasGraphQLValues: Bool {
+        return properties.contains { $0.graphqlPath != nil }
+    }
+
 }

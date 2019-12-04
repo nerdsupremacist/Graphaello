@@ -10,11 +10,79 @@ import Foundation
 import SwiftSyntax
 import SourceKittenFramework
 
+extension GraphQLPath.Component.Argument.QueryArgument {
+
+    // TODO: check that we're using the correct expression based on base of member access/argument names
+
+    private init(expression: FunctionCallExprSyntax) throws {
+        if let calledMember = expression.calledExpression as? MemberAccessExprSyntax,
+            calledMember.name.text == "withDefault" {
+
+            guard let argument = Array(expression.argumentList).single() else { fatalError() }
+            self = .withDefault(argument.expression)
+        } else {
+            self = .withDefault(expression)
+        }
+    }
+
+    private init(expression: MemberAccessExprSyntax) throws {
+        if expression.name.text == "forced" {
+            self = .forced
+        } else {
+            self = .withDefault(expression)
+        }
+    }
+
+    init(expression: ExprSyntax) throws {
+        switch expression {
+        case let expression as MemberAccessExprSyntax:
+            try self.init(expression: expression)
+        case let expression as FunctionCallExprSyntax:
+            try self.init(expression: expression)
+        default:
+            self = .withDefault(expression)
+        }
+    }
+
+}
+
 extension GraphQLPath.Component.Argument {
 
+    private init(calledMember: MemberAccessExprSyntax, argument: FunctionCallArgumentSyntax?) throws {
+        switch (calledMember.name.text, argument?.expression) {
+        case ("value", .some(let expression)):
+            self = .value(expression)
+        case ("argument", .some(let expression)):
+            self = .argument(try .init(expression: expression))
+        case ("argument", .none):
+            self = .argument(.forced)
+        default:
+            throw ParseError.cannotInstantiateObjectFromExpression(calledMember, type: GraphQLPath.Component.Argument.self)
+        }
+    }
+
+    private init(expression: FunctionCallExprSyntax) throws {
+        guard let calledMember = expression.calledExpression as? MemberAccessExprSyntax else { fatalError() }
+        try self.init(calledMember: calledMember, argument: Array(expression.argumentList).single())
+    }
+
+    private init(expression: MemberAccessExprSyntax) throws {
+        try self.init(calledMember: expression, argument: nil)
+    }
+
+    private init(expression: ExprSyntax) throws {
+        switch expression {
+        case let expression as FunctionCallExprSyntax:
+            try self.init(expression: expression)
+        case let expression as MemberAccessExprSyntax:
+            try self.init(expression: expression)
+        default:
+            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: GraphQLPath.Component.Argument.self)
+        }
+    }
+
     init(argument: FunctionCallArgumentSyntax) throws {
-        // TODO:
-        self = .argument(.forced)
+        try self.init(expression: argument.expression)
     }
 
 }
@@ -80,7 +148,7 @@ extension GraphQLPath {
         case let expression as FunctionCallExprSyntax:
             try self.init(expression: expression)
         default:
-            throw ParseError.unexpectedExpressionInGraphQLPath(expression: expression)
+            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: GraphQLPath.self)
         }
     }
 
@@ -116,8 +184,7 @@ extension GraphQLPath {
 extension Property {
 
     init(from parsed: ParsedProperty) throws {
-        self.init(code: parsed.code,
-                  name: parsed.name,
+        self.init(name: parsed.name,
                   type: parsed.type,
                   graphqlPath: try parsed.attributes.compactMap { try GraphQLPath(from: $0) }.first)
     }
@@ -127,8 +194,7 @@ extension Property {
 extension Struct {
 
     init(from parsed: ParsedStruct) throws {
-        self.init(code: parsed.code,
-                  name: parsed.name,
+        self.init(name: parsed.name,
                   properties: try parsed.properties.map { try Property(from: $0) })
     }
 
