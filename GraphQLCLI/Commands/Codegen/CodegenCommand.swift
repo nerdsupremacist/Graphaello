@@ -31,7 +31,7 @@ class CodegenCommand : Command {
             .scanStructs(sourcesPath: sourcesPath)
             .filter { $0.hasGraphQLValues }
 
-        let codegen = try Codegen(apis: apis, structs: structs).validated()
+        let codegen = try ProjectState(apis: apis, structs: structs).validated()
 
         let formatted = try codegen.generate()
         print(formatted)

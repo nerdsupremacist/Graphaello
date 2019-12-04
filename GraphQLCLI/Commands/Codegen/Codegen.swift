@@ -2,7 +2,7 @@
 //  Codegen.swift
 //  GraphQLCLI
 //
-//  Created by Mathias Quintero on 12/1/19.
+//  Created by Mathias Quintero on 04.12.19.
 //  Copyright © 2019 Mathias Quintero. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import Stencil
 
 struct Codegen {
     let apis: [API]
-    let structs: [Struct]
+    // TODO: Fragments
 }
 
 extension Codegen {

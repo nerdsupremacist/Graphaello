@@ -1,5 +1,5 @@
 //
-//  Codegen+validate.swift
+//  ProjectState+validate.swift
 //  GraphQLCLI
 //
 //  Created by Mathias Quintero on 04.12.19.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-extension Codegen {
+extension ProjectState {
     
-    func validated() throws -> Codegen {
-        return Codegen(apis: apis,
+    func validated() throws -> ProjectState {
+        return ProjectState(apis: apis,
                        structs: try structs.map { try $0.validated(apis: apis) })
     }
     

@@ -1,5 +1,5 @@
 //
-//  Project+apis.swift
+//  Project+scanAPIs.swift
 //  GraphQLCLI
 //
 //  Created by Mathias Quintero on 29.11.19.
@@ -23,7 +23,7 @@ private struct WrappedSchema: Codable {
 
 extension XcodeProj {
     
-    func apis(sourcesPath: String) throws -> [API] {
+    func scanAPIs(sourcesPath: String) throws -> [API] {
         return try pbxproj
             .buildFiles
             .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath)) }

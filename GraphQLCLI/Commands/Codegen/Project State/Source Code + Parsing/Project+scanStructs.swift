@@ -1,5 +1,5 @@
 //
-//  Project+temporaryStruct.swift
+//  Project+scanStructs.swift
 //  GraphQLCLI
 //
 //  Created by Mathias Quintero on 12/1/19.

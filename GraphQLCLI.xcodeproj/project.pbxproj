@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E4A1E5223984CD600EA2CF8 /* Codegen+validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5123984CD600EA2CF8 /* Codegen+validated.swift */; };
+		0E4A1E5223984CD600EA2CF8 /* ProjectState+validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5123984CD600EA2CF8 /* ProjectState+validated.swift */; };
 		0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */; };
+		0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5823985F9200EA2CF8 /* Project+State.swift */; };
+		0E4A1E5B2398606300EA2CF8 /* Codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5A2398606300EA2CF8 /* Codegen.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -18,14 +20,14 @@
 		0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57589023911FBA005834EF /* Optional+Extensions.swift */; };
 		0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758922391212E005834EF /* GraphQLCommands.swift */; };
 		0E68B1EE23913E8E00474D36 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B1ED23913E8E00474D36 /* Schema.swift */; };
-		0E68B1F0239144DF00474D36 /* Project+apis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B1EF239144DF00474D36 /* Project+apis.swift */; };
+		0E68B1F0239144DF00474D36 /* Project+scanAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B1EF239144DF00474D36 /* Project+scanAPIs.swift */; };
 		0E68B1FE23915CF900474D36 /* Stencil in Frameworks */ = {isa = PBXBuildFile; productRef = 0E68B1FD23915CF900474D36 /* Stencil */; };
 		0E68B20423915E8000474D36 /* XcodeProj in Frameworks */ = {isa = PBXBuildFile; productRef = 0E68B20323915E8000474D36 /* XcodeProj */; };
 		0E68B20723915EDD00474D36 /* PathKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E68B20623915EDD00474D36 /* PathKit */; };
 		0E68B20D239166B700474D36 /* Path+templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68B20C239166B700474D36 /* Path+templates.swift */; };
 		0E68B21023916A6900474D36 /* templates in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E68B20F2391679A00474D36 /* templates */; };
 		0E7A0E122393F91F007F5AE9 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 0E7A0E112393F91F007F5AE9 /* SwiftFormat */; };
-		0E7A0E16239442DB007F5AE9 /* Codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E15239442DB007F5AE9 /* Codegen.swift */; };
+		0E7A0E16239442DB007F5AE9 /* ProjectState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E15239442DB007F5AE9 /* ProjectState.swift */; };
 		0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1723944341007F5AE9 /* Environment+custom.swift */; };
 		0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1923944401007F5AE9 /* Struct.swift */; };
 		0E7A0E1E23944602007F5AE9 /* Project+scanStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */; };
@@ -88,8 +90,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E4A1E5123984CD600EA2CF8 /* Codegen+validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codegen+validated.swift"; sourceTree = "<group>"; };
+		0E4A1E5123984CD600EA2CF8 /* ProjectState+validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectState+validated.swift"; sourceTree = "<group>"; };
 		0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLPathValidationError.swift; sourceTree = "<group>"; };
+		0E4A1E5823985F9200EA2CF8 /* Project+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State.swift"; sourceTree = "<group>"; };
+		0E4A1E5A2398606300EA2CF8 /* Codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codegen.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* GraphQLCLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GraphQLCLI; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -98,10 +102,10 @@
 		0E57589023911FBA005834EF /* Optional+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions.swift"; sourceTree = "<group>"; };
 		0E5758922391212E005834EF /* GraphQLCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLCommands.swift; sourceTree = "<group>"; };
 		0E68B1ED23913E8E00474D36 /* Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schema.swift; sourceTree = "<group>"; };
-		0E68B1EF239144DF00474D36 /* Project+apis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+apis.swift"; sourceTree = "<group>"; };
+		0E68B1EF239144DF00474D36 /* Project+scanAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+scanAPIs.swift"; sourceTree = "<group>"; };
 		0E68B20C239166B700474D36 /* Path+templates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Path+templates.swift"; sourceTree = "<group>"; };
 		0E68B20F2391679A00474D36 /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = templates; sourceTree = "<group>"; };
-		0E7A0E15239442DB007F5AE9 /* Codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codegen.swift; sourceTree = "<group>"; };
+		0E7A0E15239442DB007F5AE9 /* ProjectState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectState.swift; sourceTree = "<group>"; };
 		0E7A0E1723944341007F5AE9 /* Environment+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+custom.swift"; sourceTree = "<group>"; };
 		0E7A0E1923944401007F5AE9 /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
 		0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+scanStructs.swift"; sourceTree = "<group>"; };
@@ -157,6 +161,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E4A1E5723985F7A00EA2CF8 /* Project State */ = {
+			isa = PBXGroup;
+			children = (
+				0E7A0E15239442DB007F5AE9 /* ProjectState.swift */,
+				0E4A1E5123984CD600EA2CF8 /* ProjectState+validated.swift */,
+				0E4A1E5823985F9200EA2CF8 /* Project+State.swift */,
+				0ECF25D8239804A8001C75F8 /* Schema */,
+				0ECF25CF239803D0001C75F8 /* Source Code + Parsing */,
+			);
+			path = "Project State";
+			sourceTree = "<group>";
+		};
 		0E57586C2390ACBA005834EF = {
 			isa = PBXGroup;
 			children = (
@@ -212,10 +228,8 @@
 			isa = PBXGroup;
 			children = (
 				0E57588A2390AF0E005834EF /* CodegenCommand.swift */,
-				0E7A0E15239442DB007F5AE9 /* Codegen.swift */,
-				0E4A1E5123984CD600EA2CF8 /* Codegen+validated.swift */,
-				0ECF25D8239804A8001C75F8 /* Schema */,
-				0ECF25CF239803D0001C75F8 /* Source Code + Parsing */,
+				0E4A1E5A2398606300EA2CF8 /* Codegen.swift */,
+				0E4A1E5723985F7A00EA2CF8 /* Project State */,
 			);
 			path = Codegen;
 			sourceTree = "<group>";
@@ -250,7 +264,7 @@
 		0ECF25D8239804A8001C75F8 /* Schema */ = {
 			isa = PBXGroup;
 			children = (
-				0E68B1EF239144DF00474D36 /* Project+apis.swift */,
+				0E68B1EF239144DF00474D36 /* Project+scanAPIs.swift */,
 				0ECF25D9239804F5001C75F8 /* Model */,
 			);
 			path = Schema;
@@ -414,6 +428,7 @@
 				0ECF25F82398088A001C75F8 /* SourceCode+decode.swift in Sources */,
 				0ECF25FB239809C5001C75F8 /* Property.swift in Sources */,
 				0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */,
+				0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */,
 				0E68B20D239166B700474D36 /* Path+templates.swift in Sources */,
 				0ECF25F42398084A001C75F8 /* SourceCode+optional.swift in Sources */,
 				0ECF25EF239807C5001C75F8 /* ParsedAttribute.swift in Sources */,
@@ -421,6 +436,7 @@
 				0ECF25E523980648001C75F8 /* Definition.swift in Sources */,
 				0ECF25F62398085E001C75F8 /* SourceCode+singleExpression.swift in Sources */,
 				0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */,
+				0E4A1E5B2398606300EA2CF8 /* Codegen.swift in Sources */,
 				0ECF260323980A0C001C75F8 /* GraphQLPath+Component+Argument.swift in Sources */,
 				0ECF260C23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift in Sources */,
 				0ECF25BD2396B8EE001C75F8 /* SourceCode+syntaxTree.swift in Sources */,
@@ -433,7 +449,7 @@
 				0E7A0E2023944B26007F5AE9 /* StructuredFile.swift in Sources */,
 				0ECF25DF23980562001C75F8 /* Field.swift in Sources */,
 				0ECF260823980AA4001C75F8 /* GraphQLPath+parsing.swift in Sources */,
-				0E4A1E5223984CD600EA2CF8 /* Codegen+validated.swift in Sources */,
+				0E4A1E5223984CD600EA2CF8 /* ProjectState+validated.swift in Sources */,
 				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
 				0ECF260A23980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift in Sources */,
 				0ECF25E7239806EF001C75F8 /* API.swift in Sources */,
@@ -443,14 +459,14 @@
 				0E7A0E1E23944602007F5AE9 /* Project+scanStructs.swift in Sources */,
 				0ECF25FD239809CF001C75F8 /* GraphQLPath.swift in Sources */,
 				0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */,
-				0E68B1F0239144DF00474D36 /* Project+apis.swift in Sources */,
+				0E68B1F0239144DF00474D36 /* Project+scanAPIs.swift in Sources */,
 				0ECF25ED239807B6001C75F8 /* ParsedProperty.swift in Sources */,
 				0ECF25FF239809E5001C75F8 /* GraphQLPath+Component.swift in Sources */,
 				0EBE9A782395116C00A705B4 /* SourceCode+Kind.swift in Sources */,
 				0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */,
 				0E57588B2390AF0E005834EF /* CodegenCommand.swift in Sources */,
 				0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */,
-				0E7A0E16239442DB007F5AE9 /* Codegen.swift in Sources */,
+				0E7A0E16239442DB007F5AE9 /* ProjectState.swift in Sources */,
 				0ECF25F223980815001C75F8 /* SourceCode+content.swift in Sources */,
 				0E5758792390ACBA005834EF /* main.swift in Sources */,
 				0ECF25DB2398050E001C75F8 /* GraphQLType.swift in Sources */,
