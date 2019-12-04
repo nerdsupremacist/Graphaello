@@ -35,7 +35,11 @@ extension GraphQLPath.Component.Argument.QueryArgument {
         if let calledMember = expression.calledExpression as? MemberAccessExprSyntax,
             calledMember.name.text == "withDefault" {
 
-            guard let argument = Array(expression.argumentList).single() else { fatalError() }
+            guard let argument = Array(expression.argumentList).single() else {
+                throw ParseError.cannotInstantiateObjectFromExpression(expression,
+                                                                       type: GraphQLPath.Component.Argument.QueryArgument.self)
+
+            }
             self = .withDefault(argument.expression)
         } else {
             self = .withDefault(expression)

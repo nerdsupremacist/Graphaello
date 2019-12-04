@@ -31,7 +31,9 @@ extension GraphQLPath.Component.Argument {
     }
 
     private init(expression: FunctionCallExprSyntax) throws {
-        guard let calledMember = expression.calledExpression as? MemberAccessExprSyntax else { fatalError() }
+        guard let calledMember = expression.calledExpression as? MemberAccessExprSyntax else {
+            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: GraphQLPath.Component.Argument.self)
+        }
         try self.init(calledMember: calledMember, argument: Array(expression.argumentList).single())
     }
     

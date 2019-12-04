@@ -50,7 +50,10 @@ extension GraphQLPath {
     }
 
     private init(expression: FunctionCallExprSyntax) throws {
-        guard let called = expression.calledExpression as? MemberAccessExprSyntax else { fatalError() }
+        guard let called = expression.calledExpression as? MemberAccessExprSyntax else {
+            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: GraphQLPath.self)
+        }
+
         switch called.base {
         case .some(let base as IdentifierExprSyntax):
             self = try GraphQLPath(apiName: base.identifier.text,
