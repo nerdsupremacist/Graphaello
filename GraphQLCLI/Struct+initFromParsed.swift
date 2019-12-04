@@ -55,7 +55,7 @@ extension GraphQLPath {
         case .some(let base):
             self = try GraphQLPath(expression: base).appending(expression: expression)
         default:
-            fatalError()
+            throw ParseError.expectedBaseForCalls(expression: expression)
         }
     }
 
@@ -69,7 +69,7 @@ extension GraphQLPath {
         case .some(let base):
             self = try GraphQLPath(expression: base).appending(name: called.name, arguments: expression.argumentList)
         default:
-            fatalError()
+            throw ParseError.expectedBaseForCalls(expression: expression)
         }
     }
 
@@ -80,7 +80,7 @@ extension GraphQLPath {
         case let expression as FunctionCallExprSyntax:
             try self.init(expression: expression)
         default:
-            fatalError()
+            throw ParseError.unexpectedExpressionInGraphQLPath(expression: expression)
         }
     }
 

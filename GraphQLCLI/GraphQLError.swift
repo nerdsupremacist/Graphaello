@@ -8,12 +8,15 @@
 
 import Foundation
 import CLIKit
+import SwiftSyntax
 import SourceKittenFramework
 
 enum ParseError: Error, CustomStringConvertible {
     case missingKey(String, in: SourceCode)
     case valueNotTransformable(SourceKitRepresentable, to: SourceKitRepresentable.Type, in: SourceCode)
     case expectedSingleSubtructure(in: [SourceCode])
+    case unexpectedExpressionInGraphQLPath(expression: ExprSyntax)
+    case expectedBaseForCalls(expression: ExprSyntax)
 
     var description: String {
         switch self {
@@ -40,6 +43,18 @@ enum ParseError: Error, CustomStringConvertible {
             Expected expression to be a single structure.
 
             Found: \(code.enumerated().map { "\($0.offset + 1) -> \n\($0.element.content)" }.joined(separator: "\n\n"))
+            """
+        case .unexpectedExpressionInGraphQLPath(let expression):
+            return """
+            Unexpected Expression used inside GraphQL Path:
+
+            \(expression)
+            """
+        case .expectedBaseForCalls(let expression):
+            return """
+            Expected a base for a method or member access call:
+
+            \(expression)
             """
         }
     }
