@@ -33,15 +33,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7DA410AB-56A6-4847-A7A4-A6BF7E8F7A01"
+            uuid = "E985CE88-C6C4-4BA4-A5A3-A58974A9CD24"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GraphQLCLI/CodegenCommand.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "run()"
             landmarkType = "7">
          </BreakpointContent>

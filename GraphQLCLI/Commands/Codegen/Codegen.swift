@@ -12,6 +12,7 @@ import Stencil
 
 struct Codegen {
     let apis: [API]
+    let structs: [Struct]
 }
 
 extension Codegen {

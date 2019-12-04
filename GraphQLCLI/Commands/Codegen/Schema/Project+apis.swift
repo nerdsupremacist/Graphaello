@@ -41,7 +41,7 @@ extension XcodeProj {
 
 extension Path {
     
-    var apiName: String? {
+    fileprivate var apiName: String? {
         let range = NSRange(lastComponent.startIndex..<lastComponent.endIndex, in: lastComponent)
         let match = graphqlFileRegex.matches(in: lastComponent, options: .anchored, range: range)
         guard match.count == 1 else { return nil }
