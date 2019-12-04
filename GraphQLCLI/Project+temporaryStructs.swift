@@ -13,7 +13,7 @@ import SourceKittenFramework
 
 extension XcodeProj {
 
-    func scanStructs(sourcesPath: String) throws -> [ParsedStruct] {
+    func scanStructs(sourcesPath: String) throws -> [Struct] {
         return try pbxproj
             .buildFiles
             .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath)) }
@@ -23,6 +23,7 @@ extension XcodeProj {
             .compactMap { File(path: $0) }
             .map { try StructuredFile(file: $0) }
             .flatMap { try $0.structs() }
+            .map { try Struct(from: $0) }
     }
 
 }

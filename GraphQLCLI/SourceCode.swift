@@ -20,12 +20,50 @@ extension SourceCode {
         do {
             let start = try offset()
             let length = try self.length()
-            let substring = file.contents.bridge().substringStartingLinesWithByteRange(start: Int(start), length: Int(length))
-            return substring?
-                .removingCommonLeadingWhitespaceFromLines() ?? file.contents
+            return file.content(start: start, length: length)
         } catch {
             return file.contents
         }
+    }
+
+    func body() throws -> SourceCode {
+        let start = try bodyOffset()
+        let length = try bodyLength()
+        let body = file.content(start: start, length: length)
+        return try SourceCode(content: body)
+    }
+
+}
+
+extension File {
+
+    func content(start: Int64, length: Int64) -> String {
+        let nsRange = NSRange(location: Int(start), length: Int(length))
+        let range = Range(nsRange, in: contents)
+        return range.map { String(contents[$0]) } ?? contents
+    }
+
+}
+
+extension SourceCode {
+
+    init(file: File) throws {
+        self.init(file: file,
+                  dictionary: try Structure(file: file).dictionary)
+    }
+
+    init(content: String) throws {
+        try self.init(file: File(contents: content))
+    }
+
+}
+
+extension SourceCode {
+
+    static func singleExpression(content: String) throws -> SourceCode {
+        let code = try SourceCode(content: content)
+        let substructure = try code.substructure()
+        return try substructure.single() ?! ParseError.expectedSingleSubtructure(in: substructure)
     }
 
 }

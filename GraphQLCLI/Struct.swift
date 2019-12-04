@@ -28,10 +28,9 @@ struct GraphQLPath {
 
         case property(String)
         case fragment
-        case call(String, call: [String : Argument])
+        case call(String, [String : Argument])
     }
 
-    let code: SourceCode
     let apiName: String
     let target: Target
     let path: [Component]

@@ -13,6 +13,7 @@ import SourceKittenFramework
 enum ParseError: Error, CustomStringConvertible {
     case missingKey(String, in: SourceCode)
     case valueNotTransformable(SourceKitRepresentable, to: SourceKitRepresentable.Type, in: SourceCode)
+    case expectedSingleSubtructure(in: [SourceCode])
 
     var description: String {
         switch self {
@@ -32,6 +33,13 @@ enum ParseError: Error, CustomStringConvertible {
 
             Code:
             \(code.content)
+            """
+
+        case .expectedSingleSubtructure(let code):
+            return """
+            Expected expression to be a single structure.
+
+            Found: \(code.enumerated().map { "\($0.offset + 1) -> \n\($0.element.content)" }.joined(separator: "\n\n"))
             """
         }
     }

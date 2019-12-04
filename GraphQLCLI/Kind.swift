@@ -55,4 +55,6 @@ extension Kind {
     static let varLocal = Kind(rawValue: "source.lang.swift.decl.var.local")
     static let varParameter = Kind(rawValue: "source.lang.swift.decl.var.parameter")
     static let varStatic = Kind(rawValue: "source.lang.swift.decl.var.static")
+
+    static let functionCall = Kind(rawValue: "source.lang.swift.expr.call")
 }

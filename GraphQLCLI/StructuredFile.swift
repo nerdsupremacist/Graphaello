@@ -13,8 +13,7 @@ struct StructuredFile {
     let code: SourceCode
 
     init(file: File) throws {
-        code = SourceCode(file: file,
-                          dictionary: try Structure(file: file).dictionary)
+        code = try SourceCode(file: file)
     }
 }
 
