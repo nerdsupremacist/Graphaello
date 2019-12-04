@@ -183,14 +183,14 @@
 			path = GraphQLCLI;
 			sourceTree = "<group>";
 		};
-		0ECF25CF239803D0001C75F8 /* Source Code Parsing */ = {
+		0ECF25CF239803D0001C75F8 /* Source Code + Parsing */ = {
 			isa = PBXGroup;
 			children = (
 				0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */,
 				0ECF25F9239808FF001C75F8 /* Struct */,
 				0ECF25EA23980792001C75F8 /* Intermediate Representation */,
 			);
-			path = "Source Code Parsing";
+			path = "Source Code + Parsing";
 			sourceTree = "<group>";
 		};
 		0ECF25D0239803E7001C75F8 /* Extensions */ = {
@@ -210,7 +210,7 @@
 				0E57588A2390AF0E005834EF /* CodegenCommand.swift */,
 				0E7A0E15239442DB007F5AE9 /* Codegen.swift */,
 				0ECF25D8239804A8001C75F8 /* Schema */,
-				0ECF25CF239803D0001C75F8 /* Source Code Parsing */,
+				0ECF25CF239803D0001C75F8 /* Source Code + Parsing */,
 			);
 			path = Codegen;
 			sourceTree = "<group>";
