@@ -26,12 +26,7 @@ class CodegenCommand : Command {
         let project = try XcodeProj(pathString: projectPath.string)
         let sourcesPath = projectPath.deletingLastComponent.string
         
-        let apis = try project.apis(sourcesPath: sourcesPath)
-        let structs = try project
-            .scanStructs(sourcesPath: sourcesPath)
-            .filter { $0.hasGraphQLValues }
-
-        let codegen = try ProjectState(apis: apis, structs: structs).validated()
+        let codegen = try project.state(sourcesPath: sourcesPath).validated().codegen()
 
         let formatted = try codegen.generate()
         print(formatted)

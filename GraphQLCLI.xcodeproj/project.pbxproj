@@ -11,6 +11,7 @@
 		0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */; };
 		0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5823985F9200EA2CF8 /* Project+State.swift */; };
 		0E4A1E5B2398606300EA2CF8 /* Codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5A2398606300EA2CF8 /* Codegen.swift */; };
+		0E4A1E5D239860D800EA2CF8 /* ProjectState+codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5C239860D800EA2CF8 /* ProjectState+codegen.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -94,6 +95,7 @@
 		0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLPathValidationError.swift; sourceTree = "<group>"; };
 		0E4A1E5823985F9200EA2CF8 /* Project+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State.swift"; sourceTree = "<group>"; };
 		0E4A1E5A2398606300EA2CF8 /* Codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codegen.swift; sourceTree = "<group>"; };
+		0E4A1E5C239860D800EA2CF8 /* ProjectState+codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectState+codegen.swift"; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* GraphQLCLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GraphQLCLI; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			children = (
 				0E57588A2390AF0E005834EF /* CodegenCommand.swift */,
 				0E4A1E5A2398606300EA2CF8 /* Codegen.swift */,
+				0E4A1E5C239860D800EA2CF8 /* ProjectState+codegen.swift */,
 				0E4A1E5723985F7A00EA2CF8 /* Project State */,
 			);
 			path = Codegen;
@@ -443,6 +446,7 @@
 				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
 				0ECF25E92398072B001C75F8 /* TypeReference+Codable.swift in Sources */,
 				0ECF25B72396AA41001C75F8 /* Struct+parsing.swift in Sources */,
+				0E4A1E5D239860D800EA2CF8 /* ProjectState+codegen.swift in Sources */,
 				0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */,
 				0ECF25D223980422001C75F8 /* ParseError.swift in Sources */,
 				0ECF2601239809F3001C75F8 /* GraphQLPath+Target.swift in Sources */,
