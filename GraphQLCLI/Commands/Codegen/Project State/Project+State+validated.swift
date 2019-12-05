@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension ProjectState {
+extension Project.State {
     
-    func validated() throws -> ProjectState {
-        return ProjectState(apis: apis,
-                       structs: try structs.map { try $0.validated(apis: apis) })
+    func validated() throws -> Project.State {
+        return Project.State(apis: apis,
+                             structs: try structs.map { try $0.validated(apis: apis) })
     }
     
 }

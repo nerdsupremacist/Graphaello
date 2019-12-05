@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension ProjectState {
+extension Project.State {
     
     func codegen() throws -> Codegen {
         return Codegen(apis: apis)
