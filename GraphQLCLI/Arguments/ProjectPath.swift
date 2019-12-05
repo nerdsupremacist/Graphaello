@@ -15,7 +15,7 @@ enum ProjectPath {
 
 extension ProjectPath: CommandArgumentValue {
     init(argumentValue: String) throws {
-        let localPath = Path.currentDirectory.appendingComponent(argumentValue)
+        let localPath = Path.currentDirectory + argumentValue
         if localPath.exists {
             self = try ProjectPath(path: localPath)
         }
