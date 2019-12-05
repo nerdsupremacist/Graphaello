@@ -46,7 +46,7 @@ extension ProjectPath: CommandArgumentValue {
 
 extension ProjectPath {
 
-    func path() throws -> Path {
+    private func path() throws -> Path {
         switch self {
         case .specific(let path):
             return path
@@ -55,6 +55,10 @@ extension ProjectPath {
                 .contentsOfDirectory(fullPaths: true)
                 .first { $0.isProject } ?! GraphQLError.noProjectFound(at: path)
         }
+    }
+
+    func open() throws -> Project {
+        return try Project(path: try path())
     }
 
 }

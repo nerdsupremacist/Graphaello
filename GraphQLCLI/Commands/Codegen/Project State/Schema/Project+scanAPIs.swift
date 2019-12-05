@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import XcodeProj
 import PathKit
 
 private let graphqlFileRegex = try! NSRegularExpression(pattern: #"([A-Z][a-zA-Z]*)\.graphql\.json"#)
@@ -21,10 +20,11 @@ private struct WrappedSchema: Codable {
     let schema: Schema
 }
 
-extension XcodeProj {
+extension Project {
     
-    func scanAPIs(sourcesPath: String) throws -> [API] {
-        return try pbxproj
+    func scanAPIs() throws -> [API] {
+        return try xcodeProject
+            .pbxproj
             .buildFiles
             .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath)) }
             .filter { $0.extension == "json" }

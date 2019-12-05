@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E091925239933CD0045B34B /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E091924239933CD0045B34B /* Project.swift */; };
 		0E4A1E5223984CD600EA2CF8 /* ProjectState+validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5123984CD600EA2CF8 /* ProjectState+validated.swift */; };
 		0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */; };
 		0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5823985F9200EA2CF8 /* Project+State.swift */; };
@@ -91,6 +92,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E091924239933CD0045B34B /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		0E4A1E5123984CD600EA2CF8 /* ProjectState+validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectState+validated.swift"; sourceTree = "<group>"; };
 		0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLPathValidationError.swift; sourceTree = "<group>"; };
 		0E4A1E5823985F9200EA2CF8 /* Project+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State.swift"; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				0E57588A2390AF0E005834EF /* CodegenCommand.swift */,
 				0E4A1E5A2398606300EA2CF8 /* Codegen.swift */,
 				0E4A1E5C239860D800EA2CF8 /* ProjectState+codegen.swift */,
+				0E091924239933CD0045B34B /* Project.swift */,
 				0E4A1E5723985F7A00EA2CF8 /* Project State */,
 			);
 			path = Codegen;
@@ -429,6 +432,7 @@
 				0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */,
 				0ECF25E1239805AB001C75F8 /* Argument.swift in Sources */,
 				0ECF25F82398088A001C75F8 /* SourceCode+decode.swift in Sources */,
+				0E091925239933CD0045B34B /* Project.swift in Sources */,
 				0ECF25FB239809C5001C75F8 /* Property.swift in Sources */,
 				0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */,
 				0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */,

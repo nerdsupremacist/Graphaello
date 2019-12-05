@@ -7,13 +7,12 @@
 //
 
 import Foundation
-import XcodeProj
 
-extension XcodeProj {
+extension Project {
     
-    func state(sourcesPath: String) throws -> ProjectState {
-        let apis = try scanAPIs(sourcesPath: sourcesPath)
-        let structs = try scanStructs(sourcesPath: sourcesPath).filter { $0.hasGraphQLValues }
+    func state() throws -> ProjectState {
+        let apis = try scanAPIs()
+        let structs = try scanStructs().filter { $0.hasGraphQLValues }
         return ProjectState(apis: apis, structs: structs)
     }
     

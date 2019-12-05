@@ -7,14 +7,14 @@
 //
 
 import Foundation
-import XcodeProj
 import PathKit
 import SourceKittenFramework
 
-extension XcodeProj {
+extension Project {
 
-    func scanStructs(sourcesPath: String) throws -> [Struct] {
-        return try pbxproj
+    func scanStructs() throws -> [Struct] {
+        return try xcodeProject
+            .pbxproj
             .buildFiles
             .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath)) }
             .filter { $0.extension == "swift" }
