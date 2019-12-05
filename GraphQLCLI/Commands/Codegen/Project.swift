@@ -12,8 +12,8 @@ import CLIKit
 import XcodeProj
 
 struct Project {
-    let xcodeProject: XcodeProj
-    let sourcesPath: String
+    private let xcodeProject: XcodeProj
+    private let sourcesPath: String
 
     init(path: CLIKit.Path) throws {
         xcodeProject = try XcodeProj(pathString: path.string)
