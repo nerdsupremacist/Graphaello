@@ -23,10 +23,7 @@ private struct WrappedSchema: Codable {
 extension Project {
     
     func scanAPIs() throws -> [API] {
-        return try xcodeProject
-            .pbxproj
-            .buildFiles
-            .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath)) }
+        return try files()
             .filter { $0.extension == "json" }
             .compactMap { file in file.apiName.map { (file, $0) } }
             .map { file in

@@ -13,10 +13,7 @@ import SourceKittenFramework
 extension Project {
 
     func scanStructs() throws -> [Struct] {
-        return try xcodeProject
-            .pbxproj
-            .buildFiles
-            .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath)) }
+        return try files()
             .filter { $0.extension == "swift" }
             .map { $0.string }
             .filter { !$0.contains("GraphQL Stuff") }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PathKit
 import CLIKit
 import XcodeProj
 
@@ -14,8 +15,19 @@ struct Project {
     let xcodeProject: XcodeProj
     let sourcesPath: String
 
-    init(path: Path) throws {
+    init(path: CLIKit.Path) throws {
         xcodeProject = try XcodeProj(pathString: path.string)
         sourcesPath = path.deletingLastComponent.string
     }
+}
+
+extension Project {
+
+    func files() throws -> [PathKit.Path] {
+        return try xcodeProject
+            .pbxproj
+            .buildFiles
+            .compactMap { try $0.file?.fullPath(sourceRoot: .init(sourcesPath)) }
+    }
+
 }
