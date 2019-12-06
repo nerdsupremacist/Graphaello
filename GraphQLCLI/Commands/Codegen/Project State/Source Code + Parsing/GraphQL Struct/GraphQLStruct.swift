@@ -26,8 +26,8 @@ extension GraphQLStruct {
         }
     }
     
-    static func + (lhs: GraphQLStruct, rhs: GraphQLQuery) -> GraphQLStruct {
-        return GraphQLStruct(definition: lhs.definition, fragments: lhs.fragments, query: lhs.query + rhs)
+    static func + (lhs: GraphQLStruct, rhs: GraphQLQuery) throws -> GraphQLStruct {
+        return GraphQLStruct(definition: lhs.definition, fragments: lhs.fragments, query: try lhs.query + rhs)
     }
     
 }

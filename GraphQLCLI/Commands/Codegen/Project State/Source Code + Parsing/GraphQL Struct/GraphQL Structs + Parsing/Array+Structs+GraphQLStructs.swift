@@ -204,13 +204,13 @@ private enum StructResult {
     case decoded(GraphQLStruct)
     case remaining(Struct)
     
-    static func + (lhs: StructResult, rhs: @autoclosure () throws -> PropertyResult) rethrows -> StructResult {
+    static func + (lhs: StructResult, rhs: @autoclosure () throws -> PropertyResult) throws -> StructResult {
         guard case .decoded(let decoded) = lhs else { return lhs }
         switch try rhs() {
         case .fragment(let fragment):
             return .decoded(decoded + fragment)
         case .query(let query):
-            return .decoded(decoded + query)
+            return .decoded(try decoded + query)
         case .missingFragment:
             return .remaining(decoded.definition)
         case .notAGraphQLProperty:
