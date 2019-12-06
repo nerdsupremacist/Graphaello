@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0E5758742390ACBA005834EF"
-               BuildableName = "GraphQLCLI"
-               BlueprintName = "GraphQLCLI"
-               ReferencedContainer = "container:GraphQLCLI.xcodeproj">
+               BuildableName = "Graphaello"
+               BlueprintName = "Graphaello"
+               ReferencedContainer = "container:Graphaello.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0E5758742390ACBA005834EF"
-            BuildableName = "GraphQLCLI"
-            BlueprintName = "GraphQLCLI"
-            ReferencedContainer = "container:GraphQLCLI.xcodeproj">
+            BuildableName = "Graphaello"
+            BlueprintName = "Graphaello"
+            ReferencedContainer = "container:Graphaello.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0E5758742390ACBA005834EF"
-            BuildableName = "GraphQLCLI"
-            BlueprintName = "GraphQLCLI"
-            ReferencedContainer = "container:GraphQLCLI.xcodeproj">
+            BuildableName = "Graphaello"
+            BlueprintName = "Graphaello"
+            ReferencedContainer = "container:Graphaello.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
