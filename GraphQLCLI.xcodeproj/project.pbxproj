@@ -15,6 +15,10 @@
 		0E4A1E5D239860D800EA2CF8 /* Project+State+codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5C239860D800EA2CF8 /* Project+State+codegen.swift */; };
 		0E4A1E5F239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5E239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift */; };
 		0E4A1E61239A51D300EA2CF8 /* ParsedProperty+isComputed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E60239A51D300EA2CF8 /* ParsedProperty+isComputed.swift */; };
+		0E4A1E63239A570500EA2CF8 /* GraphQLStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E62239A570500EA2CF8 /* GraphQLStruct.swift */; };
+		0E4A1E66239A572000EA2CF8 /* GraphQLFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E65239A572000EA2CF8 /* GraphQLFragment.swift */; };
+		0E4A1E68239A57D900EA2CF8 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E67239A57D900EA2CF8 /* Component.swift */; };
+		0E4A1E6A239A582400EA2CF8 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E69239A582400EA2CF8 /* Query.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -101,6 +105,10 @@
 		0E4A1E5C239860D800EA2CF8 /* Project+State+codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State+codegen.swift"; sourceTree = "<group>"; };
 		0E4A1E5E239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceFileSyntax+SingleItem.swift"; sourceTree = "<group>"; };
 		0E4A1E60239A51D300EA2CF8 /* ParsedProperty+isComputed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParsedProperty+isComputed.swift"; sourceTree = "<group>"; };
+		0E4A1E62239A570500EA2CF8 /* GraphQLStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLStruct.swift; sourceTree = "<group>"; };
+		0E4A1E65239A572000EA2CF8 /* GraphQLFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLFragment.swift; sourceTree = "<group>"; };
+		0E4A1E67239A57D900EA2CF8 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		0E4A1E69239A582400EA2CF8 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* GraphQLCLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GraphQLCLI; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -178,6 +186,17 @@
 			path = "Project State";
 			sourceTree = "<group>";
 		};
+		0E4A1E64239A571200EA2CF8 /* GraphQL Struct */ = {
+			isa = PBXGroup;
+			children = (
+				0E4A1E62239A570500EA2CF8 /* GraphQLStruct.swift */,
+				0E4A1E65239A572000EA2CF8 /* GraphQLFragment.swift */,
+				0E4A1E69239A582400EA2CF8 /* Query.swift */,
+				0E4A1E67239A57D900EA2CF8 /* Component.swift */,
+			);
+			path = "GraphQL Struct";
+			sourceTree = "<group>";
+		};
 		0E57586C2390ACBA005834EF = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */,
+				0E4A1E64239A571200EA2CF8 /* GraphQL Struct */,
 				0ECF25F9239808FF001C75F8 /* Struct */,
 				0ECF25EA23980792001C75F8 /* Intermediate Representation */,
 			);
@@ -437,6 +457,7 @@
 				0ECF25F82398088A001C75F8 /* SourceCode+decode.swift in Sources */,
 				0E091925239933CD0045B34B /* Project.swift in Sources */,
 				0ECF25FB239809C5001C75F8 /* Property.swift in Sources */,
+				0E4A1E6A239A582400EA2CF8 /* Query.swift in Sources */,
 				0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */,
 				0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */,
 				0E68B20D239166B700474D36 /* Path+templates.swift in Sources */,
@@ -461,6 +482,7 @@
 				0E7A0E2023944B26007F5AE9 /* StructuredFile.swift in Sources */,
 				0ECF25DF23980562001C75F8 /* Field.swift in Sources */,
 				0ECF260823980AA4001C75F8 /* GraphQLPath+parsing.swift in Sources */,
+				0E4A1E66239A572000EA2CF8 /* GraphQLFragment.swift in Sources */,
 				0E4A1E5223984CD600EA2CF8 /* Project+State+validated.swift in Sources */,
 				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
 				0ECF260A23980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift in Sources */,
@@ -468,12 +490,14 @@
 				0E4A1E61239A51D300EA2CF8 /* ParsedProperty+isComputed.swift in Sources */,
 				0ECF25DD2398053B001C75F8 /* Schema+Kind.swift in Sources */,
 				0ECF25E3239805D8001C75F8 /* TypeReference.swift in Sources */,
+				0E4A1E68239A57D900EA2CF8 /* Component.swift in Sources */,
 				0ECF260623980A97001C75F8 /* Property+parsing.swift in Sources */,
 				0E7A0E1E23944602007F5AE9 /* Project+scanStructs.swift in Sources */,
 				0ECF25FD239809CF001C75F8 /* GraphQLPath.swift in Sources */,
 				0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */,
 				0E68B1F0239144DF00474D36 /* Project+scanAPIs.swift in Sources */,
 				0ECF25ED239807B6001C75F8 /* ParsedProperty.swift in Sources */,
+				0E4A1E63239A570500EA2CF8 /* GraphQLStruct.swift in Sources */,
 				0ECF25FF239809E5001C75F8 /* GraphQLPath+Component.swift in Sources */,
 				0EBE9A782395116C00A705B4 /* SourceCode+Kind.swift in Sources */,
 				0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */,
