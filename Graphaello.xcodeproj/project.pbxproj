@@ -32,6 +32,9 @@
 		0E4A1E86239A9A4200EA2CF8 /* Field+SwiftCodeTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E85239A9A4200EA2CF8 /* Field+SwiftCodeTransformable.swift */; };
 		0E4A1E88239AEE9200EA2CF8 /* Argument+SwiftCodeTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E87239AEE9200EA2CF8 /* Argument+SwiftCodeTransformable.swift */; };
 		0E4A1E8A239AF53700EA2CF8 /* GraphQLStruct+SwiftCodeTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E89239AF53700EA2CF8 /* GraphQLStruct+SwiftCodeTransformable.swift */; };
+		0E4A1E8C239AF9A800EA2CF8 /* String+lowerCasingFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E8B239AF9A800EA2CF8 /* String+lowerCasingFirst.swift */; };
+		0E4A1E8E239AFD6E00EA2CF8 /* InitializerArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E8D239AFD6E00EA2CF8 /* InitializerArgument.swift */; };
+		0E4A1E90239AFF1E00EA2CF8 /* InitializerValueAssignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E8F239AFF1E00EA2CF8 /* InitializerValueAssignment.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -135,6 +138,9 @@
 		0E4A1E85239A9A4200EA2CF8 /* Field+SwiftCodeTransformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Field+SwiftCodeTransformable.swift"; sourceTree = "<group>"; };
 		0E4A1E87239AEE9200EA2CF8 /* Argument+SwiftCodeTransformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Argument+SwiftCodeTransformable.swift"; sourceTree = "<group>"; };
 		0E4A1E89239AF53700EA2CF8 /* GraphQLStruct+SwiftCodeTransformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLStruct+SwiftCodeTransformable.swift"; sourceTree = "<group>"; };
+		0E4A1E8B239AF9A800EA2CF8 /* String+lowerCasingFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+lowerCasingFirst.swift"; sourceTree = "<group>"; };
+		0E4A1E8D239AFD6E00EA2CF8 /* InitializerArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitializerArgument.swift; sourceTree = "<group>"; };
+		0E4A1E8F239AFF1E00EA2CF8 /* InitializerValueAssignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitializerValueAssignment.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* Graphaello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphaello; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -253,6 +259,8 @@
 				0E4A1E85239A9A4200EA2CF8 /* Field+SwiftCodeTransformable.swift */,
 				0E4A1E87239AEE9200EA2CF8 /* Argument+SwiftCodeTransformable.swift */,
 				0E4A1E89239AF53700EA2CF8 /* GraphQLStruct+SwiftCodeTransformable.swift */,
+				0E4A1E8D239AFD6E00EA2CF8 /* InitializerArgument.swift */,
+				0E4A1E8F239AFF1E00EA2CF8 /* InitializerValueAssignment.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -306,6 +314,7 @@
 				0E68B20C239166B700474D36 /* Path+templates.swift */,
 				0ECF25BA2396B3A7001C75F8 /* Collection+single.swift */,
 				0E7A0E1723944341007F5AE9 /* Environment+custom.swift */,
+				0E4A1E8B239AF9A800EA2CF8 /* String+lowerCasingFirst.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -533,6 +542,7 @@
 				0E4A1E6D239A5A9A00EA2CF8 /* Array+Structs+GraphQLStructs.swift in Sources */,
 				0ECF25E523980648001C75F8 /* Definition.swift in Sources */,
 				0ECF25F62398085E001C75F8 /* SourceCode+singleExpression.swift in Sources */,
+				0E4A1E90239AFF1E00EA2CF8 /* InitializerValueAssignment.swift in Sources */,
 				0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */,
 				0E4A1E88239AEE9200EA2CF8 /* Argument+SwiftCodeTransformable.swift in Sources */,
 				0E4A1E6F239A5CAA00EA2CF8 /* GraphQLFragmentResolverError.swift in Sources */,
@@ -544,6 +554,7 @@
 				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
 				0ECF25E92398072B001C75F8 /* TypeReference+Codable.swift in Sources */,
 				0ECF25B72396AA41001C75F8 /* Struct+parsing.swift in Sources */,
+				0E4A1E8E239AFD6E00EA2CF8 /* InitializerArgument.swift in Sources */,
 				0E4A1E5D239860D800EA2CF8 /* Project+State+codegen.swift in Sources */,
 				0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */,
 				0E4A1E77239A7F2D00EA2CF8 /* NamedGraphQLFragment.swift in Sources */,
@@ -555,6 +566,7 @@
 				0ECF260823980AA4001C75F8 /* GraphQLPath+parsing.swift in Sources */,
 				0E4A1E66239A572000EA2CF8 /* GraphQLFragment.swift in Sources */,
 				0E4A1E5223984CD600EA2CF8 /* Project+State+validated.swift in Sources */,
+				0E4A1E8C239AF9A800EA2CF8 /* String+lowerCasingFirst.swift in Sources */,
 				0E4A1E8A239AF53700EA2CF8 /* GraphQLStruct+SwiftCodeTransformable.swift in Sources */,
 				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
 				0ECF260A23980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift in Sources */,

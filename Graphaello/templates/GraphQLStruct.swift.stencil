@@ -11,15 +11,18 @@ extension {{ graphqlstruct.definition.name }} {
     {% if graphqlstruct.query %}
     typealias Data = {{ graphqlstruct.definition.name }}Query
     {% endif %}
+    
+    init({{ initializerArguments|swiftCodeArray|join:", " }}) {
+        self.init({{ initializerValueAssignments|swiftCodeArray|join:", " }})
+    }
 }
 
 {% if graphqlstruct.query %}
 extension {{ graphqlstruct.query.api.name }} {
     
-    func todo() -> some View {
+    func {{ functionName }}() -> some View {
         fatalError()
     }
     
 }
-typealias Data = {{ graphqlstruct.definition.name }}Query
 {% endif %}

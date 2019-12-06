@@ -12,7 +12,12 @@ import Stencil
 extension GraphQLStruct: ExtraValuesSwiftCodeTransformable {
     
     func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
-        return [:]
+        let functionName = definition.name.camelized
+        return [
+            "functionName" : functionName,
+            "initializerArguments" : initializerArguments,
+            "initializerValueAssignments" : initializerValueAssignments
+        ]
     }
     
 }
