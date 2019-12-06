@@ -1,0 +1,1 @@
+{{ argument.name }}: GraphQLArgument<{{ swiftType }}> .argument{% if argument.defaultValue %}({{argument.defaultValue}}){% endif %}

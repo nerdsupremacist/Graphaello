@@ -1,0 +1,16 @@
+struct {{ api.name }} {
+    let client: ApolloClient
+
+    {{ api.query.fields|swiftCode:"static" }}
+    {{ api.types|swiftCode }}
+}
+
+{% for type in api.types %}
+extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }} {
+    {{ type.fields|swiftCode }}
+}
+
+extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }}? {
+    {{ type.fields|swiftCode:"optional" }}
+}
+{% endfor %}

@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import SwiftFormat
-import Stencil
 
 struct Codegen {
     let apis: [API]
@@ -18,11 +16,11 @@ struct Codegen {
 extension Codegen {
 
     func generate() throws -> String {
-        let file = try Environment
-            .custom
-            .renderTemplate(name: "GraphQL.swift.stencil", context: ["apis" : apis])
-        
-        return try format(file)
+        return try swiftCode {
+            StructureAPI()
+            apis
+            structs
+        }
     }
 
 }

@@ -1,6 +1,0 @@
-{% if field|hasArguments %}
-static func {{field.name}}({% include "FieldArguments.stencil" %}) -> {{ field.type|pathClass }}<{{ field.type|swiftType }}> {
-    return .init()
-}
-{% endif %}
-static let {{field.name}}: {{ field.type|pathClass }}<{{ field.type|swiftType }}> = .init()

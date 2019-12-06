@@ -1,6 +1,0 @@
-{% if field|hasArguments %}
-func {{field.name}}({% include "FieldArguments.stencil" %}) -> {{ field.type|pathClass }}<{{ field.type|optionalType|swiftType:api }}> {
-    return .init()
-}
-{% endif %}
-var {{field.name}}: {{ field.type|pathClass }}<{{ field.type|optionalType|swiftType:api }}> { .init() }

@@ -115,36 +115,3 @@ extension GraphQL where Value: Fragment {
         self.wrappedValue = wrappedValue
     }
 }
-
-{% for api in apis %}
-struct {{ api.name }} {
-    let client: ApolloClient
-
-    {% for field in api.query.fields %}
-        {% include "Field.stencil" %}
-    {% endfor %}
-
-    {% for type in api.types %}
-    enum {{ type.name }} {
-        {% for field in type.fields %}
-            {% include "Field.stencil" %}
-        {% endfor %}
-        static let fragment: GraphQLFragmentPath<{{type.name}}> = .init()
-    }
-    {% endfor %}
-}
-
-{% for type in api.types %}
-extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }} {
-    {% for field in type.fields %}
-        {% include "ComputedField.stencil" %}
-    {% endfor %}
-}
-
-extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }}? {
-    {% for field in type.fields %}
-        {% include "OptionalComputedField.stencil" %}
-    {% endfor %}
-}
-{% endfor %}
-{% endfor %}

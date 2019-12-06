@@ -1,0 +1,25 @@
+{% for fragment in graphqlstruct.fragments %}
+extension {{ fragment.name }} : Fragment {
+    public typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
+}
+{% endfor %}
+
+extension {{ graphqlstruct.definition.name }} {
+    {% for fragment in graphqlstruct.fragments %}
+    typealias {{ fragment.target.name }} = {{ fragment.name }}
+    {% endfor %}
+    {% if graphqlstruct.query %}
+    typealias Data = {{ graphqlstruct.definition.name }}Query
+    {% endif %}
+}
+
+{% if graphqlstruct.query %}
+extension {{ graphqlstruct.query.api.name }} {
+    
+    func todo() -> some View {
+        fatalError()
+    }
+    
+}
+typealias Data = {{ graphqlstruct.definition.name }}Query
+{% endif %}

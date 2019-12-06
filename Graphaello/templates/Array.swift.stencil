@@ -1,0 +1,3 @@
+{% for value in values %}
+{{ value|swiftCode }}
+{% endfor %}

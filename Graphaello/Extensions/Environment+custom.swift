@@ -16,6 +16,32 @@ extension Environment {
         let loader = FileSystemLoader(paths: [Path.templates])
 
         let ext = Extension()
+        
+        ext.registerFilter("swiftCode") { value, arguments, context in
+            switch value {
+            case .some(let value as SwiftCodeTransformable):
+                return try value.code(using: context, arguments: arguments)
+                
+            case .some(let value as [Any]):
+                return try value.code(using: context, arguments: arguments).joined(separator: "\n")
+                
+            default:
+                return nil
+            
+            }
+        }
+        
+        ext.registerFilter("swiftCodeArray") { value, arguments, context in
+            switch value {
+                
+            case .some(let value as [Any]):
+                return try value.code(using: context, arguments: arguments)
+                
+            default:
+                return nil
+            
+            }
+        }
 
         ext.registerFilter("isFragment") { value in
             guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
