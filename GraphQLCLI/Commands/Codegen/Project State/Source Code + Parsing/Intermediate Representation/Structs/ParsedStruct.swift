@@ -16,7 +16,6 @@ struct ParsedStruct {
     init(code: SourceCode) throws {
         self.code = code
         name = try code.name()
-        // TODO: Filter out computed properties somehow
         properties = try code
             .substructure()
             .filter { try $0.kind() == .varInstance }

@@ -33,9 +33,9 @@ extension SourceCode {
 extension File {
 
     fileprivate func content(start: Int64, length: Int64) -> String {
-        let nsRange = NSRange(location: Int(start), length: Int(length))
-        let range = Range(nsRange, in: contents)
-        return range.map { String(contents[$0]) } ?? contents
+        let start = contents.index(contents.startIndex, offsetBy: max(0, Int(start - 1)))
+        let end = contents.index(start, offsetBy: Int(length))
+        return String(contents[start..<end])
     }
 
 }

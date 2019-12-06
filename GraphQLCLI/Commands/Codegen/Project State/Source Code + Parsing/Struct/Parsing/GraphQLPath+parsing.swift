@@ -15,7 +15,7 @@ extension GraphQLPath {
         guard parsed.kind == ._custom else { return nil }
         let content = parsed.code.content
 
-        let code = try SourceCode.singleExpression(content: content)
+        let code = try SourceCode.singleExpression(content: String(content.dropFirst()))
         try self.init(code: code)
     }
 
@@ -25,8 +25,7 @@ extension GraphQLPath {
     }
 
     private init?(call: SourceFileSyntax) throws {
-        let blocks = Array(call.statements)
-        guard let functionCall = blocks.single()?.item as? FunctionCallExprSyntax else { return nil }
+        guard let functionCall = call.singleItem() as? FunctionCallExprSyntax else { return nil }
         try self.init(call: functionCall)
     }
 

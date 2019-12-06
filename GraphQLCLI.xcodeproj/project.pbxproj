@@ -13,6 +13,8 @@
 		0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5823985F9200EA2CF8 /* Project+State.swift */; };
 		0E4A1E5B2398606300EA2CF8 /* Codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5A2398606300EA2CF8 /* Codegen.swift */; };
 		0E4A1E5D239860D800EA2CF8 /* Project+State+codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5C239860D800EA2CF8 /* Project+State+codegen.swift */; };
+		0E4A1E5F239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5E239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift */; };
+		0E4A1E61239A51D300EA2CF8 /* ParsedProperty+isComputed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E60239A51D300EA2CF8 /* ParsedProperty+isComputed.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -97,6 +99,8 @@
 		0E4A1E5823985F9200EA2CF8 /* Project+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State.swift"; sourceTree = "<group>"; };
 		0E4A1E5A2398606300EA2CF8 /* Codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codegen.swift; sourceTree = "<group>"; };
 		0E4A1E5C239860D800EA2CF8 /* Project+State+codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State+codegen.swift"; sourceTree = "<group>"; };
+		0E4A1E5E239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceFileSyntax+SingleItem.swift"; sourceTree = "<group>"; };
+		0E4A1E60239A51D300EA2CF8 /* ParsedProperty+isComputed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParsedProperty+isComputed.swift"; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* GraphQLCLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GraphQLCLI; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -305,6 +309,7 @@
 				0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */,
 				0ECF25EC239807B6001C75F8 /* ParsedProperty.swift */,
 				0ECF25EE239807C5001C75F8 /* ParsedAttribute.swift */,
+				0E4A1E60239A51D300EA2CF8 /* ParsedProperty+isComputed.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				0ECF25F32398084A001C75F8 /* SourceCode+optional.swift */,
 				0ECF25F72398088A001C75F8 /* SourceCode+decode.swift */,
 				0ECF25BC2396B8EE001C75F8 /* SourceCode+syntaxTree.swift */,
+				0E4A1E5E239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift */,
 			);
 			path = SourceCode;
 			sourceTree = "<group>";
@@ -434,6 +440,7 @@
 				0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */,
 				0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */,
 				0E68B20D239166B700474D36 /* Path+templates.swift in Sources */,
+				0E4A1E5F239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift in Sources */,
 				0ECF25F42398084A001C75F8 /* SourceCode+optional.swift in Sources */,
 				0ECF25EF239807C5001C75F8 /* ParsedAttribute.swift in Sources */,
 				0E68B1EE23913E8E00474D36 /* Schema.swift in Sources */,
@@ -458,6 +465,7 @@
 				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
 				0ECF260A23980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift in Sources */,
 				0ECF25E7239806EF001C75F8 /* API.swift in Sources */,
+				0E4A1E61239A51D300EA2CF8 /* ParsedProperty+isComputed.swift in Sources */,
 				0ECF25DD2398053B001C75F8 /* Schema+Kind.swift in Sources */,
 				0ECF25E3239805D8001C75F8 /* TypeReference.swift in Sources */,
 				0ECF260623980A97001C75F8 /* Property+parsing.swift in Sources */,

@@ -12,7 +12,7 @@ extension Struct {
 
     init(from parsed: ParsedStruct) throws {
         self.init(name: parsed.name,
-                  properties: try parsed.properties.map { try Property(from: $0) })
+                  properties: try parsed.properties.filter { try !$0.isComputed() }.map { try Property(from: $0) })
     }
 
 }
