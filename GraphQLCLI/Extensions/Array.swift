@@ -1,0 +1,47 @@
+//
+//  Array.swift
+//  GraphQLCLI
+//
+//  Created by Mathias Quintero on 06.12.19.
+//  Copyright © 2019 Mathias Quintero. All rights reserved.
+//
+
+import Foundation
+
+
+extension GraphQLPath.Target {
+    
+    func type(in api: API) throws -> Schema.GraphQLType {
+        switch self {
+        case .query:
+            return api.query
+        case .object(let name):
+            return try api.types[name] ?! GraphQLPathValidationError.typeNotFound(name, api: api)
+        }
+    }
+    
+}
+
+extension Array where Element == API {
+    
+    subscript(api: String) -> Element? {
+        return first { $0.name == api }
+    }
+    
+}
+
+extension Array where Element == Schema.GraphQLType {
+    
+    subscript(name: String) -> Element? {
+        return first { $0.name == name }
+    }
+    
+}
+
+extension Array where Element == Schema.GraphQLType.Field {
+    
+    subscript(name: String) -> Element? {
+        return first { $0.name == name }
+    }
+    
+}

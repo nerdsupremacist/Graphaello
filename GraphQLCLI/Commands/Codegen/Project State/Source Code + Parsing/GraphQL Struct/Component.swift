@@ -9,12 +9,21 @@
 import Foundation
 
 indirect enum GraphQLComponent {
-    enum Field {
-        case direct(String)
-        case call(String, call: [String : GraphQLPath.Component.Argument])
+    case scalar(propertyNames: Set<String>)
+    case object(GraphQLObject)
+}
+
+extension GraphQLComponent {
+    
+    static func + (lhs: GraphQLComponent, rhs: GraphQLComponent) -> GraphQLComponent {
+        switch (lhs, rhs) {
+        case (.scalar(let lhs), .scalar(let rhs)):
+            return .scalar(propertyNames: lhs.union(rhs))
+        case (.object(let lhs), .object(let rhs)):
+            return .object(lhs + rhs)
+        default:
+            fatalError()
+        }
     }
     
-    case scalar(Field)
-    case object(Field, components: [GraphQLComponent])
-    case fragment(GraphQLFragment)
 }

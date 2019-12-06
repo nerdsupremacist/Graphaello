@@ -12,7 +12,7 @@ import Stencil
 
 struct Codegen {
     let apis: [API]
-    // TODO: Fragments
+    let structs: [GraphQLStruct]
 }
 
 extension Codegen {

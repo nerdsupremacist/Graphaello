@@ -65,16 +65,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0AC1B07E-60BC-47D5-B952-926D12325000"
+            uuid = "89F6FB22-3F5F-4CB5-A996-41A33FBE4F99"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GraphQLCLI/Commands/Codegen/Project+State+codegen.swift"
+            filePath = "GraphQLCLI/Commands/Codegen/Codegen.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14"
-            landmarkName = "codegen()"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "generate()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

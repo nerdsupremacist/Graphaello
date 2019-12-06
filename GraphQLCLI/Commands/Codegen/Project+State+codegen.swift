@@ -11,7 +11,8 @@ import Foundation
 extension Project.State {
     
     func codegen() throws -> Codegen {
-        return Codegen(apis: apis)
+        return Codegen(apis: apis,
+                       structs: try structs.graphQLStructs(apis: apis))
     }
     
 }

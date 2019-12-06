@@ -9,5 +9,20 @@
 import Foundation
 
 struct GraphQLQuery {
-    let components: [GraphQLComponent]
+    let api: API
+    let components: [Field : GraphQLComponent]
+}
+
+extension GraphQLQuery {
+    
+    static func + (lhs: GraphQLQuery, rhs: GraphQLQuery) -> GraphQLQuery {
+        let components = lhs.components.merging(rhs.components) { $0 + $1 }
+        return GraphQLQuery(api: lhs.api,
+                            components: components)
+    }
+    
+    static func + (lhs: GraphQLQuery?, rhs: GraphQLQuery) -> GraphQLQuery {
+        return lhs.map { $0 + rhs } ?? rhs
+    }
+    
 }

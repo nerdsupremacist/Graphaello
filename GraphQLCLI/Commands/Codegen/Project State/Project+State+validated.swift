@@ -46,13 +46,21 @@ extension GraphQLPath {
     }
     
     fileprivate func validated(apis: [API]) throws -> GraphQLPath {
-        let api = try apis[apiName] ?! GraphQLPathValidationError.apiNotFound(apiName, apis: apis.map { $0.name })
+        let api = try apis[apiName] ?! GraphQLPathValidationError.apiNotFound(apiName, apis: apis)
         let targetType = try target.type(in: api)
         let initialResult = GraphQLPath.Result(path: [], type: .object(targetType))
         let validatedPath = try path.reduce(initialResult) { result, component in
             try component.validated(result: result, api: api)
         }
-        return GraphQLPath(apiName: apiName, target: target, path: validatedPath.path)
+        
+        let path: [GraphQLPath.Component]
+        if case .object = validatedPath.type, validatedPath.path.last != .fragment {
+            path = validatedPath.path + [.fragment]
+        } else {
+            path = validatedPath.path
+        }
+        
+        return GraphQLPath(apiName: apiName, target: target, path: path)
     }
     
 }
@@ -66,7 +74,7 @@ extension GraphQLPath.Component {
             let field = try type.fields?[name] ?! GraphQLPathValidationError.fieldNotFoundInType(name, type: type)
             if field.arguments.isEmpty {
                 let type = try api[field.type.underlyingTypeName] ?!
-                    GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: api.name)
+                    GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: api)
                 
                 return GraphQLPath.Result(path: result.path + [self],
                                           type: type)
@@ -81,7 +89,7 @@ extension GraphQLPath.Component {
             let field = try type.fields?[name] ?! GraphQLPathValidationError.fieldNotFoundInType(name, type: type)
             let arguments = field.defaultArgumentDictionary.merging(arguments) { $1 }
             let type = try api[field.type.underlyingTypeName] ?!
-                GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: api.name)
+                GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: api)
             
             return GraphQLPath.Result(path: result.path + [.call(name, arguments)],
                                       type: type)
@@ -111,19 +119,6 @@ extension Schema.GraphQLType.Field {
     
 }
 
-extension GraphQLPath.Target {
-    
-    fileprivate func type(in api: API) throws -> Schema.GraphQLType {
-        switch self {
-        case .query:
-            return api.query
-        case .object(let name):
-            return try api.types[name] ?! GraphQLPathValidationError.typeNotFound(name, api: api.name)
-        }
-    }
-    
-}
-
 extension API {
     
     fileprivate subscript(name: String) -> GraphQLPath.Result.ResultType? {
@@ -136,30 +131,6 @@ extension API {
         }
         
         return nil
-    }
-    
-}
-
-extension Array where Element == API {
-    
-    fileprivate subscript(api: String) -> Element? {
-        return first { $0.name == api }
-    }
-    
-}
-
-extension Array where Element == Schema.GraphQLType {
-    
-    fileprivate subscript(name: String) -> Element? {
-        return first { $0.name == name }
-    }
-    
-}
-
-extension Array where Element == Schema.GraphQLType.Field {
-    
-    fileprivate subscript(name: String) -> Element? {
-        return first { $0.name == name }
     }
     
 }

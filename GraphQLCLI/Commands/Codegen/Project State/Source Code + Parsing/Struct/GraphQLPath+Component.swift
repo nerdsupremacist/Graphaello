@@ -10,7 +10,7 @@ import Foundation
 
 extension GraphQLPath {
 
-    enum Component {
+    enum Component: Equatable {
         case property(String)
         case fragment
         case call(String, [String : Argument])
