@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Property {
+extension Property where Component == StandardComponent {
 
     init(from parsed: ParsedProperty) throws {
         self.init(name: parsed.name,

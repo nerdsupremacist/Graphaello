@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Struct {
+extension Struct where Component == StandardComponent {
 
     init(from parsed: ParsedStruct) throws {
         self.init(name: parsed.name,

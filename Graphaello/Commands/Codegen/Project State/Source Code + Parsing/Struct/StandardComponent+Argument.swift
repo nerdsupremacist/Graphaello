@@ -9,7 +9,7 @@
 import Foundation
 import SwiftSyntax
 
-extension GraphQLPath.Component {
+extension StandardComponent {
 
     enum Argument: Equatable, Hashable {
         enum QueryArgument: Equatable, Hashable {
@@ -25,7 +25,7 @@ extension GraphQLPath.Component {
                 }
             }
             
-            static func == (lhs: GraphQLPath.Component.Argument.QueryArgument, rhs: GraphQLPath.Component.Argument.QueryArgument) -> Bool {
+            static func == (lhs: StandardComponent.Argument.QueryArgument, rhs: StandardComponent.Argument.QueryArgument) -> Bool {
                 switch (lhs, rhs) {
                 case (.withDefault(let lhs), .withDefault(let rhs)):
                     return lhs.description == rhs.description
@@ -49,7 +49,7 @@ extension GraphQLPath.Component {
             }
         }
         
-        static func == (lhs: GraphQLPath.Component.Argument, rhs: GraphQLPath.Component.Argument) -> Bool {
+        static func == (lhs: StandardComponent.Argument, rhs: StandardComponent.Argument) -> Bool {
             switch (lhs, rhs) {
             case (.value(let lhs), .value(let rhs)):
                 return lhs.description == rhs.description

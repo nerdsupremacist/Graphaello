@@ -9,7 +9,7 @@
 import Foundation
 import SwiftSyntax
 
-extension GraphQLPath.Component.Argument.QueryArgument {
+extension StandardComponent.Argument.QueryArgument {
 
     // TODO: check that we're using the correct expression based on base of member access/argument names
     init(expression: ExprSyntax) throws {
@@ -37,7 +37,7 @@ extension GraphQLPath.Component.Argument.QueryArgument {
 
             guard let argument = Array(expression.argumentList).single() else {
                 throw ParseError.cannotInstantiateObjectFromExpression(expression,
-                                                                       type: GraphQLPath.Component.Argument.QueryArgument.self)
+                                                                       type: StandardComponent.Argument.QueryArgument.self)
 
             }
             self = .withDefault(argument.expression)

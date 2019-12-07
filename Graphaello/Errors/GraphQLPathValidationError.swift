@@ -11,6 +11,6 @@ import Foundation
 enum GraphQLPathValidationError: Error {
     case apiNotFound(String, apis: [API])
     case typeNotFound(String, api: API)
-    case cannotCallUseComponentForScalar(GraphQLPath.Component, type: Schema.GraphQLType)
+    case cannotCallUseComponentForScalar(StandardComponent, type: Schema.GraphQLType)
     case fieldNotFoundInType(String, type: Schema.GraphQLType)
 }

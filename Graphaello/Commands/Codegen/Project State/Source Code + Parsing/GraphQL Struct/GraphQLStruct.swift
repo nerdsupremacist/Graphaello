@@ -9,9 +9,17 @@
 import Foundation
 
 struct GraphQLStruct {
-    let definition: Struct
+    let definition: Struct<ValidatedComponent>
     let fragments: [GraphQLFragment]
     let query: GraphQLQuery?
+}
+
+extension GraphQLStruct {
+
+    var allFragments: [GraphQLFragment] {
+        return fragments.flatMap { $0.allFragments } + (query?.subFragments ?? [])
+    }
+
 }
 
 extension GraphQLStruct {

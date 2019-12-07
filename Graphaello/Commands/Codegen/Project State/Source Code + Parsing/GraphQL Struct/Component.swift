@@ -14,6 +14,19 @@ indirect enum GraphQLComponent {
 }
 
 extension GraphQLComponent {
+
+    var subFragments: [GraphQLFragment] {
+        switch self {
+        case .scalar:
+            return []
+        case .object(let object):
+            return object.subFragments
+        }
+    }
+
+}
+
+extension GraphQLComponent {
     
     static func + (lhs: GraphQLComponent, rhs: GraphQLComponent) -> GraphQLComponent {
         switch (lhs, rhs) {

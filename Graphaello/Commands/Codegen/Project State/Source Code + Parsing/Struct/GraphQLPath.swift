@@ -10,7 +10,7 @@ import Foundation
 
 import SwiftSyntax
 
-struct GraphQLPath {
+struct GraphQLPath<Component> {
     let apiName: String
     let target: Target
     let path: [Component]

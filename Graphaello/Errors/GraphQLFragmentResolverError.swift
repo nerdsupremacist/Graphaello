@@ -9,8 +9,8 @@
 import Foundation
 
 enum GraphQLFragmentResolverError: Error {
-    case failedToDecodeAnyOfTheStructsDueToPossibleRecursion([Struct], resolved: [GraphQLStruct])
-    case cannotResolveFragmentOrQueryWithEmptyPath(GraphQLPath)
+    case failedToDecodeAnyOfTheStructsDueToPossibleRecursion([Struct<ValidatedComponent>], resolved: [GraphQLStruct])
+    case cannotResolveFragmentOrQueryWithEmptyPath(GraphQLPath<ValidatedComponent>)
     case cannotIncludeFragmentsInsideAQuery(GraphQLFragment)
     case cannotQueryDataFromTwoAPIsFromTheSameStruct(API, API)
 }

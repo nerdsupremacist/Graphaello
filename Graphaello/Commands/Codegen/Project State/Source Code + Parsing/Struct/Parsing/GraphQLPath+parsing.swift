@@ -9,7 +9,7 @@
 import Foundation
 import SwiftSyntax
 
-extension GraphQLPath {
+extension GraphQLPath where Component == StandardComponent {
 
     init?(from parsed: ParsedAttribute) throws {
         guard parsed.kind == ._custom else { return nil }
@@ -89,7 +89,7 @@ extension GraphQLPath {
 
 }
 
-extension GraphQLPath {
+extension GraphQLPath where Component == StandardComponent {
 
     private func appending(expression: MemberAccessExprSyntax) -> GraphQLPath {
         return GraphQLPath(apiName: apiName,
@@ -99,7 +99,7 @@ extension GraphQLPath {
 
     private func appending(name: TokenSyntax, arguments: FunctionCallArgumentListSyntax) throws -> GraphQLPath {
         let baseDictionary = Dictionary(uniqueKeysWithValues: arguments.map { ($0.label?.text ?! fatalError(), $0) })
-        let dictionary = try baseDictionary.mapValues { try GraphQLPath.Component.Argument(argument: $0) }
+        let dictionary = try baseDictionary.mapValues { try StandardComponent.Argument(argument: $0) }
         return GraphQLPath(apiName: apiName, target: target, path: path + [.call(name.text, dictionary)])
     }
 

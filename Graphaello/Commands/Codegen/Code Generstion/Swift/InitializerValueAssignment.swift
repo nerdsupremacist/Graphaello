@@ -18,14 +18,12 @@ extension GraphQLStruct {
     
     var initializerValueAssignments: [InitializerValueAssignment] {
         return definition.properties.map { property in
-            switch property.graphqlPath?.target {
-            case .some(.query):
+            switch property.graphqlPath {
+            case .some(let path):
+                let expectedFragmentName = property.type.replacingOccurrences(of: #"[\[\]\.\?]"#, with: "", options: .regularExpression)
+                let matchingFragment = allFragments.first { $0.name == expectedFragmentName }
                 return InitializerValueAssignment(name: property.name,
-                                                  expression: query?.path(attribute: property.name).map { ["data"] + $0 }.map { "GraphQL(\($0.joined(separator: ".")))" })
-            case .some(.object(let type)):
-                let fragment = fragments.first { $0.target.name == type }
-                return InitializerValueAssignment(name: property.name,
-                                                  expression: fragment?.object.path(attribute: property.name).map { [type.camelized] + $0 }.map { "GraphQL(\($0.joined(separator: ".")))" })
+                                                  expression: path.expression(matchingFragment: matchingFragment))
             case .none:
                 return InitializerValueAssignment(name: property.name, expression: property.name)
             }
@@ -34,66 +32,105 @@ extension GraphQLStruct {
     
 }
 
-extension GraphQLQuery {
-    
-    func path(attribute name: String) -> [String]? {
-        return components.first { component in
-            component.value.path(attribute: name).map { [component.key.name] + $0 }
-        }
+private struct AttributePath {
+    indirect enum Kind {
+        case value
+        case array(Kind)
+        case optional(Kind)
     }
-    
+
+    let name: String
+    let kind: Kind
 }
 
-extension GraphQLObject {
-    
-    func path(attribute name: String) -> [String]? {
-        if let fragment = fragments[name] {
-            return ["fragments", fragment.name.camelized]
-        }
-        
-        return components.first { component in
-            component.value.path(attribute: name).map { [component.key.name] + $0 }
-        }
-    }
-    
-}
+extension StandardComponent {
 
-extension Field {
-    
-    var name: String {
+    var name: String? {
         switch self {
-        case .direct(let name):
+        case .property(let name):
             return name
         case .call(let name, _):
             return name
+        case .fragment:
+            return nil
         }
     }
-    
+
 }
 
-extension GraphQLComponent {
-    
-    func path(attribute name: String) -> [String]? {
-        switch self {
-        case .scalar(let propertyNames):
-            return propertyNames.contains(name) ? [] : nil
-        case .object(let object):
-            return object.path(attribute: name)
-        }
-    }
-    
-}
+extension AttributePath.Kind {
 
-extension Sequence {
-    
-    func first<T>(transform: (Element) -> T?) -> T? {
-        for element in self {
-            if let result = transform(element) {
-                return result
+    init(from reference: Schema.GraphQLType.Field.TypeReference) {
+        switch reference {
+        case .concrete(_):
+            self = .optional(.value)
+        case .complex(let definition, let reference):
+            switch (definition.kind, AttributePath.Kind(from: reference)) {
+            case (.list, let value):
+                self = .optional(.array(value))
+            case (.nonNull, .optional(let value)):
+                self = value
+            default:
+                self = .value
             }
         }
-        return nil
-        
     }
-    
+
+}
+
+extension AttributePath {
+
+    func expression<C: Collection>(attributes: C) -> String where C.Element == AttributePath {
+        guard let next = attributes.first else { return name }
+        switch kind {
+        case .value:
+            let rest = next.expression(attributes: attributes.dropFirst())
+            return "\(name).\(rest)"
+        case .array(let kind):
+            let subExpression = AttributePath(name: "$0", kind: kind)
+            let rest = subExpression.expression(attributes: attributes)
+            return "\(name).map { \(rest) }"
+        case .optional(let kind):
+            let subExpression = AttributePath(name: "", kind: kind)
+            let rest = subExpression.expression(attributes: attributes)
+            return "\(name)?\(rest)"
+        }
+    }
+
+}
+
+
+extension ValidatedComponent {
+
+    fileprivate func path(matchingFragment: GraphQLFragment?) -> [AttributePath] {
+        switch (component, matchingFragment) {
+        case (.property(let name), _):
+            return [AttributePath(name: name, kind: .init(from: fieldType))]
+        case (.fragment, .some(let fragment)):
+            return [AttributePath(name: "fragment", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
+        case (.fragment, .none):
+            return []
+        case (.call(let name, _), _):
+            return [AttributePath(name: name, kind: .init(from: fieldType))]
+        }
+    }
+
+}
+
+extension GraphQLPath where Component == ValidatedComponent {
+
+    fileprivate func expression(matchingFragment: GraphQLFragment?) -> String {
+        let first: AttributePath
+        
+        switch target {
+        case .query:
+            first = AttributePath(name: "data", kind: .value)
+        case .object(let type):
+            first = AttributePath(name: type.camelized, kind: .value)
+        }
+
+        let path = self.path.flatMap { $0.path(matchingFragment: matchingFragment) }
+        return first.expression(attributes: path)
+    }
+
 }

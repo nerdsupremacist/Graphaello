@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct Struct {
+struct Struct<Component> {
     let name: String
-    let properties: [Property]
+    let properties: [Property<Component>]
 }
 
 extension Struct {

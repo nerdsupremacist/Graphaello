@@ -12,7 +12,7 @@ import SourceKittenFramework
 
 extension Project {
 
-    func scanStructs() throws -> [Struct] {
+    func scanStructs() throws -> [Struct<StandardComponent>] {
         return try files()
             .filter { $0.extension == "swift" }
             .map { $0.string }

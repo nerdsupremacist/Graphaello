@@ -16,6 +16,14 @@ struct GraphQLFragment {
 }
 
 extension GraphQLFragment {
+
+    var allFragments: [GraphQLFragment] {
+        return [self] + object.subFragments
+    }
+
+}
+
+extension GraphQLFragment {
     
     static func ~= (lhs: GraphQLFragment, rhs: GraphQLFragment) -> Bool {
         return lhs.api.name == rhs.api.name && lhs.api.name == rhs.api.name && lhs.target.name == rhs.target.name

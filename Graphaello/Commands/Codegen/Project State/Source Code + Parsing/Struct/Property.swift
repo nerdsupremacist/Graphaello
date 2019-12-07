@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct Property {
+struct Property<Component> {
     let name: String
     let type: String
-    let graphqlPath: GraphQLPath?
+    let graphqlPath: GraphQLPath<Component>?
 }

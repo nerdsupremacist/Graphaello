@@ -8,12 +8,8 @@
 
 import Foundation
 
-extension GraphQLPath {
-
-    enum Component: Equatable {
-        case property(String)
-        case fragment
-        case call(String, [String : Argument])
-    }
-
+enum StandardComponent: Equatable {
+    case property(String)
+    case fragment
+    case call(String, [String : Argument])
 }

@@ -10,5 +10,5 @@ import Foundation
 
 enum Field: Equatable, Hashable {
     case direct(String)
-    case call(String, [String : GraphQLPath.Component.Argument])
+    case call(String, [String : StandardComponent.Argument])
 }

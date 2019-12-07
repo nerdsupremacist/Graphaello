@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Array where Element == Struct {
+extension Array where Element == Struct<ValidatedComponent> {
     
     func graphQLStructs(apis: [API]) throws -> [GraphQLStruct] {
         return try graphQLStructs(apis: apis, existing: [])
@@ -29,7 +29,7 @@ extension Array where Element == Struct {
     }
 }
 
-extension Struct {
+extension Struct where Component == ValidatedComponent {
     
     fileprivate func decode(using apis: [API], and existing: [GraphQLStruct]) throws -> StructResult {
         let result = GraphQLStruct(definition: self, fragments: [], query: nil)
@@ -40,9 +40,9 @@ extension Struct {
     
 }
 
-extension Property {
+extension Property where Component == ValidatedComponent {
     
-    fileprivate func decode(definition: Struct, using apis: [API], and existing: [GraphQLStruct]) throws -> PropertyResult {
+    fileprivate func decode(definition: Struct<ValidatedComponent>, using apis: [API], and existing: [GraphQLStruct]) throws -> PropertyResult {
         return try graphqlPath?.decode(definition: definition,
                                        property: self,
                                        using: apis,
@@ -51,9 +51,9 @@ extension Property {
     
 }
 
-extension GraphQLPath {
+extension GraphQLPath where Component == ValidatedComponent {
     
-    fileprivate func decode(definition: Struct, property: Property, using apis: [API], and existing: [GraphQLStruct]) throws -> PropertyResult {
+    fileprivate func decode(definition: Struct<ValidatedComponent>, property: Property<ValidatedComponent>, using apis: [API], and existing: [GraphQLStruct]) throws -> PropertyResult {
         let api = try apis[apiName] ?! GraphQLPathValidationError.apiNotFound(apiName, apis: apis)
         let target = try self.target.type(in: api)
         
@@ -82,7 +82,7 @@ extension GraphQLPath {
     
 }
 
-extension Collection where Element == GraphQLPath.Component {
+extension Collection where Element == ValidatedComponent {
     
     fileprivate func object(type: String, existing: [GraphQLStruct]) throws -> GraphQLPathResult {
         return try reduce(.emptyPath) { try $0 + $1.object(type: type, existing: existing) }
@@ -90,10 +90,10 @@ extension Collection where Element == GraphQLPath.Component {
     
 }
 
-extension GraphQLPath.Component {
+extension ValidatedComponent {
     
     fileprivate func object(type: String, existing: [GraphQLStruct]) throws -> GraphQLPathResult {
-        switch self {
+        switch component {
         case .property(let fieldName):
             return .valid(.scalar(.direct(fieldName)))
         
@@ -202,7 +202,7 @@ private enum PropertyResult {
 
 private enum StructResult {
     case decoded(GraphQLStruct)
-    case remaining(Struct)
+    case remaining(Struct<ValidatedComponent>)
     
     static func + (lhs: StructResult, rhs: @autoclosure () throws -> PropertyResult) throws -> StructResult {
         guard case .decoded(let decoded) = lhs else { return lhs }
@@ -221,7 +221,7 @@ private enum StructResult {
 
 private struct DecodingResult {
     let decoded: [GraphQLStruct]
-    let remaining: [Struct]
+    let remaining: [Struct<ValidatedComponent>]
     
     static func + (lhs: DecodingResult, rhs: @autoclosure () throws -> StructResult) rethrows -> DecodingResult {
         switch try rhs() {

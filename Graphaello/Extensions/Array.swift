@@ -9,7 +9,7 @@
 import Foundation
 
 
-extension GraphQLPath.Target {
+extension Target {
     
     func type(in api: API) throws -> Schema.GraphQLType {
         switch self {

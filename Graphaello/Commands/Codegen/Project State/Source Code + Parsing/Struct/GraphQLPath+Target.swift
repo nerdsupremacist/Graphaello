@@ -8,11 +8,7 @@
 
 import Foundation
 
-extension GraphQLPath {
-
-    enum Target {
-        case query
-        case object(String)
-    }
-
+enum Target {
+    case query
+    case object(String)
 }

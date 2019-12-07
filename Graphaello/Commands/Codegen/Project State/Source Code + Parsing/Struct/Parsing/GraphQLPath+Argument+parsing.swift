@@ -9,7 +9,7 @@
 import Foundation
 import SwiftSyntax
 
-extension GraphQLPath.Component.Argument {
+extension StandardComponent.Argument {
 
     init(argument: FunctionCallArgumentSyntax) throws {
         try self.init(expression: argument.expression)
@@ -22,7 +22,7 @@ extension GraphQLPath.Component.Argument {
         case let expression as MemberAccessExprSyntax:
             try self.init(expression: expression)
         default:
-            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: GraphQLPath.Component.Argument.self)
+            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: StandardComponent.Argument.self)
         }
     }
 
@@ -32,7 +32,7 @@ extension GraphQLPath.Component.Argument {
 
     private init(expression: FunctionCallExprSyntax) throws {
         guard let calledMember = expression.calledExpression as? MemberAccessExprSyntax else {
-            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: GraphQLPath.Component.Argument.self)
+            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: StandardComponent.Argument.self)
         }
         try self.init(calledMember: calledMember, argument: Array(expression.argumentList).single())
     }
@@ -46,7 +46,7 @@ extension GraphQLPath.Component.Argument {
         case ("argument", .none):
             self = .argument(.forced)
         default:
-            throw ParseError.cannotInstantiateObjectFromExpression(calledMember, type: GraphQLPath.Component.Argument.self)
+            throw ParseError.cannotInstantiateObjectFromExpression(calledMember, type: StandardComponent.Argument.self)
         }
     }
 

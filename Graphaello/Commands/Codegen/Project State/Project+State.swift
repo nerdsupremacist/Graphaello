@@ -10,12 +10,12 @@ import Foundation
 
 extension Project {
 
-    struct State {
+    struct State<Component> {
         let apis: [API]
-        let structs: [Struct]
+        let structs: [Struct<Component>]
     }
 
-    func state() throws -> State {
+    func state() throws -> State<StandardComponent> {
         let apis = try scanAPIs()
         let structs = try scanStructs().filter { $0.hasGraphQLValues }
         return State(apis: apis, structs: structs)

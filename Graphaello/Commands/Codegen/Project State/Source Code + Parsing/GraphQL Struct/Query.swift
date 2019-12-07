@@ -14,6 +14,14 @@ struct GraphQLQuery {
 }
 
 extension GraphQLQuery {
+
+    var subFragments: [GraphQLFragment] {
+        return components.values.flatMap { $0.subFragments }
+    }
+
+}
+
+extension GraphQLQuery {
     
     static func + (lhs: GraphQLQuery, rhs: GraphQLQuery) throws -> GraphQLQuery {
         guard lhs.api.name == rhs.api.name else {
