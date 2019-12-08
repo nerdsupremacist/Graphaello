@@ -11,7 +11,7 @@ import SwiftSyntax
 
 extension Stage.Parsed.Path {
 
-    init?(from parsed: ParsedAttribute) throws {
+    init?(from parsed: Stage.Extracted.Attribute) throws {
         guard parsed.kind == ._custom else { return nil }
         let content = parsed.code.content
 

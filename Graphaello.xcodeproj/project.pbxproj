@@ -14,7 +14,7 @@
 		0E4A1E5B2398606300EA2CF8 /* Codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5A2398606300EA2CF8 /* Codegen.swift */; };
 		0E4A1E5D239860D800EA2CF8 /* Project+State+codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5C239860D800EA2CF8 /* Project+State+codegen.swift */; };
 		0E4A1E5F239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5E239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift */; };
-		0E4A1E61239A51D300EA2CF8 /* ParsedProperty+isComputed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E60239A51D300EA2CF8 /* ParsedProperty+isComputed.swift */; };
+		0E4A1E61239A51D300EA2CF8 /* Extracted+Property+isComputed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E60239A51D300EA2CF8 /* Extracted+Property+isComputed.swift */; };
 		0E4A1E63239A570500EA2CF8 /* GraphQLStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E62239A570500EA2CF8 /* GraphQLStruct.swift */; };
 		0E4A1E66239A572000EA2CF8 /* GraphQLFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E65239A572000EA2CF8 /* GraphQLFragment.swift */; };
 		0E4A1E68239A57D900EA2CF8 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E67239A57D900EA2CF8 /* Component.swift */; };
@@ -54,8 +54,6 @@
 		0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1723944341007F5AE9 /* Environment+custom.swift */; };
 		0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1923944401007F5AE9 /* Struct.swift */; };
 		0E7A0E1E23944602007F5AE9 /* Project+scanStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */; };
-		0E7A0E2023944B26007F5AE9 /* StructuredFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1F23944B26007F5AE9 /* StructuredFile.swift */; };
-		0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */; };
 		0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E2323944D98007F5AE9 /* SourceCode.swift */; };
 		0EBE9A782395116C00A705B4 /* SourceCode+Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBE9A772395116C00A705B4 /* SourceCode+Kind.swift */; };
 		0ECF25B72396AA41001C75F8 /* Struct+parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25B62396AA41001C75F8 /* Struct+parsing.swift */; };
@@ -72,8 +70,6 @@
 		0ECF25E523980648001C75F8 /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25E423980648001C75F8 /* Definition.swift */; };
 		0ECF25E7239806EF001C75F8 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25E6239806EF001C75F8 /* API.swift */; };
 		0ECF25E92398072B001C75F8 /* TypeReference+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25E82398072B001C75F8 /* TypeReference+Codable.swift */; };
-		0ECF25ED239807B6001C75F8 /* ParsedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25EC239807B6001C75F8 /* ParsedProperty.swift */; };
-		0ECF25EF239807C5001C75F8 /* ParsedAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25EE239807C5001C75F8 /* ParsedAttribute.swift */; };
 		0ECF25F223980815001C75F8 /* SourceCode+content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25F123980815001C75F8 /* SourceCode+content.swift */; };
 		0ECF25F42398084A001C75F8 /* SourceCode+optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25F32398084A001C75F8 /* SourceCode+optional.swift */; };
 		0ECF25F62398085E001C75F8 /* SourceCode+singleExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25F52398085E001C75F8 /* SourceCode+singleExpression.swift */; };
@@ -86,6 +82,17 @@
 		0ECF260C23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF260B23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift */; };
 		0EDB2364239BE35A00A9C9B7 /* GraphQLPath+validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2363239BE35A00A9C9B7 /* GraphQLPath+validated.swift */; };
 		0EDB2369239C096600A9C9B7 /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2368239C096600A9C9B7 /* Stage.swift */; };
+		0EDB2372239D318C00A9C9B7 /* Extracted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2371239D318C00A9C9B7 /* Extracted.swift */; };
+		0EDB2374239D31AC00A9C9B7 /* Parsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2373239D31AC00A9C9B7 /* Parsed.swift */; };
+		0EDB2376239D31C800A9C9B7 /* Validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2375239D31C800A9C9B7 /* Validated.swift */; };
+		0EDB2378239D31F000A9C9B7 /* Resolved.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2377239D31F000A9C9B7 /* Resolved.swift */; };
+		0EDB237A239D324400A9C9B7 /* GraphQLStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2379239D324400A9C9B7 /* GraphQLStage.swift */; };
+		0EDB237C239D326700A9C9B7 /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB237B239D326700A9C9B7 /* Pipeline.swift */; };
+		0EDB2386239D33CA00A9C9B7 /* Extractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2385239D33CA00A9C9B7 /* Extractor.swift */; };
+		0EDB2388239D33FA00A9C9B7 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2387239D33FA00A9C9B7 /* Parser.swift */; };
+		0EDB238A239D340E00A9C9B7 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2389239D340E00A9C9B7 /* Validator.swift */; };
+		0EDB238C239D342100A9C9B7 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB238B239D342100A9C9B7 /* Resolver.swift */; };
+		0EDB238E239D344A00A9C9B7 /* StandardExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB238D239D344A00A9C9B7 /* StandardExtractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -119,7 +126,7 @@
 		0E4A1E5A2398606300EA2CF8 /* Codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codegen.swift; sourceTree = "<group>"; };
 		0E4A1E5C239860D800EA2CF8 /* Project+State+codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State+codegen.swift"; sourceTree = "<group>"; };
 		0E4A1E5E239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceFileSyntax+SingleItem.swift"; sourceTree = "<group>"; };
-		0E4A1E60239A51D300EA2CF8 /* ParsedProperty+isComputed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParsedProperty+isComputed.swift"; sourceTree = "<group>"; };
+		0E4A1E60239A51D300EA2CF8 /* Extracted+Property+isComputed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extracted+Property+isComputed.swift"; sourceTree = "<group>"; };
 		0E4A1E62239A570500EA2CF8 /* GraphQLStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLStruct.swift; sourceTree = "<group>"; };
 		0E4A1E65239A572000EA2CF8 /* GraphQLFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLFragment.swift; sourceTree = "<group>"; };
 		0E4A1E67239A57D900EA2CF8 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
@@ -154,8 +161,6 @@
 		0E7A0E1723944341007F5AE9 /* Environment+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+custom.swift"; sourceTree = "<group>"; };
 		0E7A0E1923944401007F5AE9 /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
 		0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+scanStructs.swift"; sourceTree = "<group>"; };
-		0E7A0E1F23944B26007F5AE9 /* StructuredFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredFile.swift; sourceTree = "<group>"; };
-		0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedStruct.swift; sourceTree = "<group>"; };
 		0E7A0E2323944D98007F5AE9 /* SourceCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCode.swift; sourceTree = "<group>"; };
 		0EBE9A772395116C00A705B4 /* SourceCode+Kind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+Kind.swift"; sourceTree = "<group>"; };
 		0ECF25B62396AA41001C75F8 /* Struct+parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Struct+parsing.swift"; sourceTree = "<group>"; };
@@ -171,8 +176,6 @@
 		0ECF25E423980648001C75F8 /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 		0ECF25E6239806EF001C75F8 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		0ECF25E82398072B001C75F8 /* TypeReference+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TypeReference+Codable.swift"; sourceTree = "<group>"; };
-		0ECF25EC239807B6001C75F8 /* ParsedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedProperty.swift; sourceTree = "<group>"; };
-		0ECF25EE239807C5001C75F8 /* ParsedAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedAttribute.swift; sourceTree = "<group>"; };
 		0ECF25F123980815001C75F8 /* SourceCode+content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+content.swift"; sourceTree = "<group>"; };
 		0ECF25F32398084A001C75F8 /* SourceCode+optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+optional.swift"; sourceTree = "<group>"; };
 		0ECF25F52398085E001C75F8 /* SourceCode+singleExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+singleExpression.swift"; sourceTree = "<group>"; };
@@ -185,6 +188,17 @@
 		0ECF260B23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLPath+QueryArgument+parsing.swift"; sourceTree = "<group>"; };
 		0EDB2363239BE35A00A9C9B7 /* GraphQLPath+validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLPath+validated.swift"; sourceTree = "<group>"; };
 		0EDB2368239C096600A9C9B7 /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
+		0EDB2371239D318C00A9C9B7 /* Extracted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extracted.swift; sourceTree = "<group>"; };
+		0EDB2373239D31AC00A9C9B7 /* Parsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parsed.swift; sourceTree = "<group>"; };
+		0EDB2375239D31C800A9C9B7 /* Validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validated.swift; sourceTree = "<group>"; };
+		0EDB2377239D31F000A9C9B7 /* Resolved.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resolved.swift; sourceTree = "<group>"; };
+		0EDB2379239D324400A9C9B7 /* GraphQLStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLStage.swift; sourceTree = "<group>"; };
+		0EDB237B239D326700A9C9B7 /* Pipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipeline.swift; sourceTree = "<group>"; };
+		0EDB2385239D33CA00A9C9B7 /* Extractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extractor.swift; sourceTree = "<group>"; };
+		0EDB2387239D33FA00A9C9B7 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		0EDB2389239D340E00A9C9B7 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		0EDB238B239D342100A9C9B7 /* Resolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resolver.swift; sourceTree = "<group>"; };
+		0EDB238D239D344A00A9C9B7 /* StandardExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardExtractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,9 +223,11 @@
 			isa = PBXGroup;
 			children = (
 				0E4A1E5823985F9200EA2CF8 /* Project+State.swift */,
-				0EDB2368239C096600A9C9B7 /* Stage.swift */,
-				0EDB2367239BF05E00A9C9B7 /* Validation */,
+				0EDB237D239D327400A9C9B7 /* Pipeline */,
 				0ECF25D8239804A8001C75F8 /* Schema */,
+				0ECF25F9239808FF001C75F8 /* Struct */,
+				0EDB236A239D312C00A9C9B7 /* Stage */,
+				0EDB2367239BF05E00A9C9B7 /* Validation */,
 				0ECF25CF239803D0001C75F8 /* Source Code + Parsing */,
 			);
 			path = "Project State";
@@ -299,8 +315,6 @@
 			children = (
 				0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */,
 				0E4A1E64239A571200EA2CF8 /* GraphQL Struct */,
-				0ECF25F9239808FF001C75F8 /* Struct */,
-				0ECF25EA23980792001C75F8 /* Intermediate Representation */,
 			);
 			path = "Source Code + Parsing";
 			sourceTree = "<group>";
@@ -384,27 +398,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		0ECF25EA23980792001C75F8 /* Intermediate Representation */ = {
-			isa = PBXGroup;
-			children = (
-				0ECF25F023980800001C75F8 /* SourceCode */,
-				0ECF25EB239807A5001C75F8 /* Structs */,
-			);
-			path = "Intermediate Representation";
-			sourceTree = "<group>";
-		};
-		0ECF25EB239807A5001C75F8 /* Structs */ = {
-			isa = PBXGroup;
-			children = (
-				0E7A0E1F23944B26007F5AE9 /* StructuredFile.swift */,
-				0E7A0E2123944B77007F5AE9 /* ParsedStruct.swift */,
-				0ECF25EC239807B6001C75F8 /* ParsedProperty.swift */,
-				0ECF25EE239807C5001C75F8 /* ParsedAttribute.swift */,
-				0E4A1E60239A51D300EA2CF8 /* ParsedProperty+isComputed.swift */,
-			);
-			path = Structs;
-			sourceTree = "<group>";
-		};
 		0ECF25F023980800001C75F8 /* SourceCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,6 +443,106 @@
 				0EDB2363239BE35A00A9C9B7 /* GraphQLPath+validated.swift */,
 			);
 			path = Validation;
+			sourceTree = "<group>";
+		};
+		0EDB236A239D312C00A9C9B7 /* Stage */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2368239C096600A9C9B7 /* Stage.swift */,
+				0EDB2379239D324400A9C9B7 /* GraphQLStage.swift */,
+				0EDB236B239D314900A9C9B7 /* Extracted */,
+				0EDB236C239D315400A9C9B7 /* Parsed */,
+				0EDB236F239D316A00A9C9B7 /* Validated */,
+				0EDB2370239D317000A9C9B7 /* Resolved */,
+			);
+			path = Stage;
+			sourceTree = "<group>";
+		};
+		0EDB236B239D314900A9C9B7 /* Extracted */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2371239D318C00A9C9B7 /* Extracted.swift */,
+				0E4A1E60239A51D300EA2CF8 /* Extracted+Property+isComputed.swift */,
+			);
+			path = Extracted;
+			sourceTree = "<group>";
+		};
+		0EDB236C239D315400A9C9B7 /* Parsed */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2373239D31AC00A9C9B7 /* Parsed.swift */,
+			);
+			path = Parsed;
+			sourceTree = "<group>";
+		};
+		0EDB236F239D316A00A9C9B7 /* Validated */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2375239D31C800A9C9B7 /* Validated.swift */,
+			);
+			path = Validated;
+			sourceTree = "<group>";
+		};
+		0EDB2370239D317000A9C9B7 /* Resolved */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2377239D31F000A9C9B7 /* Resolved.swift */,
+			);
+			path = Resolved;
+			sourceTree = "<group>";
+		};
+		0EDB237D239D327400A9C9B7 /* Pipeline */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB237B239D326700A9C9B7 /* Pipeline.swift */,
+				0EDB237E239D336300A9C9B7 /* Component */,
+			);
+			path = Pipeline;
+			sourceTree = "<group>";
+		};
+		0EDB237E239D336300A9C9B7 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2381239D338800A9C9B7 /* Extraction */,
+				0EDB2382239D339400A9C9B7 /* Parsing */,
+				0EDB2383239D33A100A9C9B7 /* Validation */,
+				0EDB2384239D33A700A9C9B7 /* Resolver */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		0EDB2381239D338800A9C9B7 /* Extraction */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2385239D33CA00A9C9B7 /* Extractor.swift */,
+				0EDB238D239D344A00A9C9B7 /* StandardExtractor.swift */,
+				0ECF25F023980800001C75F8 /* SourceCode */,
+			);
+			path = Extraction;
+			sourceTree = "<group>";
+		};
+		0EDB2382239D339400A9C9B7 /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2387239D33FA00A9C9B7 /* Parser.swift */,
+			);
+			path = Parsing;
+			sourceTree = "<group>";
+		};
+		0EDB2383239D33A100A9C9B7 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB2389239D340E00A9C9B7 /* Validator.swift */,
+			);
+			path = Validation;
+			sourceTree = "<group>";
+		};
+		0EDB2384239D33A700A9C9B7 /* Resolver */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB238B239D342100A9C9B7 /* Resolver.swift */,
+			);
+			path = Resolver;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -534,29 +627,33 @@
 				0ECF25F82398088A001C75F8 /* SourceCode+decode.swift in Sources */,
 				0E4A1E80239A94C800EA2CF8 /* StructureAPI.swift in Sources */,
 				0E091925239933CD0045B34B /* Project.swift in Sources */,
+				0EDB238E239D344A00A9C9B7 /* StandardExtractor.swift in Sources */,
 				0E4A1E71239A637700EA2CF8 /* GraphQLField.swift in Sources */,
 				0ECF25FB239809C5001C75F8 /* Property.swift in Sources */,
 				0E4A1E6A239A582400EA2CF8 /* Query.swift in Sources */,
-				0E7A0E2223944B77007F5AE9 /* ParsedStruct.swift in Sources */,
 				0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */,
 				0E68B20D239166B700474D36 /* Path+templates.swift in Sources */,
 				0E4A1E5F239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift in Sources */,
 				0ECF25F42398084A001C75F8 /* SourceCode+optional.swift in Sources */,
-				0ECF25EF239807C5001C75F8 /* ParsedAttribute.swift in Sources */,
+				0EDB2378239D31F000A9C9B7 /* Resolved.swift in Sources */,
+				0EDB2374239D31AC00A9C9B7 /* Parsed.swift in Sources */,
 				0E68B1EE23913E8E00474D36 /* Schema.swift in Sources */,
 				0E4A1E6D239A5A9A00EA2CF8 /* Array+Structs+GraphQLStructs.swift in Sources */,
 				0ECF25E523980648001C75F8 /* Definition.swift in Sources */,
 				0ECF25F62398085E001C75F8 /* SourceCode+singleExpression.swift in Sources */,
 				0EDB2364239BE35A00A9C9B7 /* GraphQLPath+validated.swift in Sources */,
+				0EDB2386239D33CA00A9C9B7 /* Extractor.swift in Sources */,
 				0E4A1E90239AFF1E00EA2CF8 /* InitializerValueAssignment.swift in Sources */,
 				0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */,
 				0E4A1E88239AEE9200EA2CF8 /* Argument+SwiftCodeTransformable.swift in Sources */,
 				0E4A1E6F239A5CAA00EA2CF8 /* GraphQLFragmentResolverError.swift in Sources */,
+				0EDB2372239D318C00A9C9B7 /* Extracted.swift in Sources */,
 				0EDB2369239C096600A9C9B7 /* Stage.swift in Sources */,
 				0E4A1E5B2398606300EA2CF8 /* Codegen.swift in Sources */,
 				0ECF260323980A0C001C75F8 /* StandardComponent+Argument.swift in Sources */,
 				0E4A1E75239A6CDE00EA2CF8 /* Array.swift in Sources */,
 				0ECF260C23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift in Sources */,
+				0EDB237C239D326700A9C9B7 /* Pipeline.swift in Sources */,
 				0ECF25BD2396B8EE001C75F8 /* SourceCode+syntaxTree.swift in Sources */,
 				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
 				0ECF25E92398072B001C75F8 /* TypeReference+Codable.swift in Sources */,
@@ -567,7 +664,6 @@
 				0E4A1E77239A7F2D00EA2CF8 /* NamedGraphQLFragment.swift in Sources */,
 				0ECF25D223980422001C75F8 /* ParseError.swift in Sources */,
 				0ECF2601239809F3001C75F8 /* GraphQLPath+Target.swift in Sources */,
-				0E7A0E2023944B26007F5AE9 /* StructuredFile.swift in Sources */,
 				0E4A1E84239A973900EA2CF8 /* GraphQLType+SwiftCodeTransformable.swift in Sources */,
 				0ECF25DF23980562001C75F8 /* Field.swift in Sources */,
 				0ECF260823980AA4001C75F8 /* GraphQLPath+parsing.swift in Sources */,
@@ -578,7 +674,9 @@
 				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
 				0ECF260A23980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift in Sources */,
 				0ECF25E7239806EF001C75F8 /* API.swift in Sources */,
-				0E4A1E61239A51D300EA2CF8 /* ParsedProperty+isComputed.swift in Sources */,
+				0EDB2376239D31C800A9C9B7 /* Validated.swift in Sources */,
+				0E4A1E61239A51D300EA2CF8 /* Extracted+Property+isComputed.swift in Sources */,
+				0EDB2388239D33FA00A9C9B7 /* Parser.swift in Sources */,
 				0ECF25DD2398053B001C75F8 /* Schema+Kind.swift in Sources */,
 				0ECF25E3239805D8001C75F8 /* TypeReference.swift in Sources */,
 				0E4A1E68239A57D900EA2CF8 /* Component.swift in Sources */,
@@ -588,7 +686,7 @@
 				0E4A1E73239A672B00EA2CF8 /* GraphQLObject.swift in Sources */,
 				0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */,
 				0E68B1F0239144DF00474D36 /* Project+scanAPIs.swift in Sources */,
-				0ECF25ED239807B6001C75F8 /* ParsedProperty.swift in Sources */,
+				0EDB237A239D324400A9C9B7 /* GraphQLStage.swift in Sources */,
 				0E4A1E63239A570500EA2CF8 /* GraphQLStruct.swift in Sources */,
 				0EBE9A782395116C00A705B4 /* SourceCode+Kind.swift in Sources */,
 				0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */,
@@ -596,9 +694,11 @@
 				0E5758932391212E005834EF /* GraphQLCommands.swift in Sources */,
 				0ECF25F223980815001C75F8 /* SourceCode+content.swift in Sources */,
 				0E5758792390ACBA005834EF /* main.swift in Sources */,
+				0EDB238C239D342100A9C9B7 /* Resolver.swift in Sources */,
 				0ECF25DB2398050E001C75F8 /* GraphQLType.swift in Sources */,
 				0ECF25BB2396B3A7001C75F8 /* Collection+single.swift in Sources */,
 				0E4A1E7C239A925A00EA2CF8 /* SwiftCodeTransformable.swift in Sources */,
+				0EDB238A239D340E00A9C9B7 /* Validator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
