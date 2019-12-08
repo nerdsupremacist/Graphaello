@@ -13,5 +13,5 @@ protocol Pipeline {
     func extract(from file: File) throws -> [Struct<Stage.Extracted>]
     func parse(structs: Struct<Stage.Extracted>) throws -> Struct<Stage.Parsed>
     func validate(struct: Struct<Stage.Parsed>) throws -> Struct<Stage.Validated>
-    func resolve(structs: [Struct<Stage.Validated>]) throws -> [Struct<Stage.Resolved>]
+    func resolve(structs: [Struct<Stage.Validated>]) throws -> [GraphQLStruct]
 }
