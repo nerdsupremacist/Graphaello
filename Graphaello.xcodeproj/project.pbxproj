@@ -269,9 +269,9 @@
 				0E4A1E5823985F9200EA2CF8 /* Project+State.swift */,
 				0EDB237D239D327400A9C9B7 /* Pipeline */,
 				0ECF25D8239804A8001C75F8 /* Schema */,
+				0E4A1E64239A571200EA2CF8 /* GraphQL Struct */,
 				0ECF25F9239808FF001C75F8 /* Struct */,
 				0EDB236A239D312C00A9C9B7 /* Stage */,
-				0ECF25CF239803D0001C75F8 /* Source Code + Parsing */,
 			);
 			path = "Project State";
 			sourceTree = "<group>";
@@ -371,14 +371,6 @@
 				0E68B20F2391679A00474D36 /* templates */,
 			);
 			path = Graphaello;
-			sourceTree = "<group>";
-		};
-		0ECF25CF239803D0001C75F8 /* Source Code + Parsing */ = {
-			isa = PBXGroup;
-			children = (
-				0E4A1E64239A571200EA2CF8 /* GraphQL Struct */,
-			);
-			path = "Source Code + Parsing";
 			sourceTree = "<group>";
 		};
 		0ECF25D0239803E7001C75F8 /* Extensions */ = {
