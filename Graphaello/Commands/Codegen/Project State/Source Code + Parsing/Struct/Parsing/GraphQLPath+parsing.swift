@@ -9,7 +9,7 @@
 import Foundation
 import SwiftSyntax
 
-extension GraphQLPath where Component == StandardComponent {
+extension Stage.Parsed.Path {
 
     init?(from parsed: ParsedAttribute) throws {
         guard parsed.kind == ._custom else { return nil }
@@ -44,22 +44,22 @@ extension GraphQLPath where Component == StandardComponent {
         case let expression as FunctionCallExprSyntax:
             try self.init(expression: expression)
         default:
-            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: GraphQLPath.self)
+            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: Stage.Parsed.Path.self)
         }
     }
 
     private init(expression: FunctionCallExprSyntax) throws {
         guard let called = expression.calledExpression as? MemberAccessExprSyntax else {
-            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: GraphQLPath.self)
+            throw ParseError.cannotInstantiateObjectFromExpression(expression, type: Stage.Parsed.Path.self)
         }
 
         switch called.base {
         case .some(let base as IdentifierExprSyntax):
-            self = try GraphQLPath(apiName: base.identifier.text,
-                                   target: .query,
-                                   path: []).appending(name: called.name, arguments: expression.argumentList)
+            self = try Stage.Parsed.Path(apiName: base.identifier.text,
+                                         target: .query,
+                                         components: []).appending(name: called.name, arguments: expression.argumentList)
         case .some(let base):
-            self = try GraphQLPath(expression: base).appending(name: called.name, arguments: expression.argumentList)
+            self = try Stage.Parsed.Path(expression: base).appending(name: called.name, arguments: expression.argumentList)
         default:
             throw ParseError.expectedBaseForCalls(expression: expression)
         }
@@ -70,7 +70,7 @@ extension GraphQLPath where Component == StandardComponent {
         case .some(let base as IdentifierExprSyntax):
             self.init(base: base, name: expression.name)
         case .some(let base):
-            self = try GraphQLPath(expression: base).appending(expression: expression)
+            self = try Stage.Parsed.Path(expression: base).appending(expression: expression)
         default:
             throw ParseError.expectedBaseForCalls(expression: expression)
         }
@@ -81,26 +81,26 @@ extension GraphQLPath where Component == StandardComponent {
         if (name.capitalized == name) {
             self.init(apiName: base.identifier.text,
                       target: .object(name),
-                      path: [])
+                      components: [])
         } else {
-            self.init(apiName: base.identifier.text, target: .query, path: [.property(name)])
+            self.init(apiName: base.identifier.text, target: .query, components: [.property(name)])
         }
     }
 
 }
 
-extension GraphQLPath where Component == StandardComponent {
+extension Stage.Parsed.Path {
 
-    private func appending(expression: MemberAccessExprSyntax) -> GraphQLPath {
-        return GraphQLPath(apiName: apiName,
-                           target: target,
-                           path: path + [expression.name.text == "fragment" ? .fragment : .property(expression.name.text)])
+    private func appending(expression: MemberAccessExprSyntax) -> Self {
+        return .init(apiName: apiName,
+                     target: target,
+                     components: components + [expression.name.text == "fragment" ? .fragment : .property(expression.name.text)])
     }
 
-    private func appending(name: TokenSyntax, arguments: FunctionCallArgumentListSyntax) throws -> GraphQLPath {
+    private func appending(name: TokenSyntax, arguments: FunctionCallArgumentListSyntax) throws -> Self {
         let baseDictionary = Dictionary(uniqueKeysWithValues: arguments.map { ($0.label?.text ?! fatalError(), $0) })
-        let dictionary = try baseDictionary.mapValues { try StandardComponent.Argument(argument: $0) }
-        return GraphQLPath(apiName: apiName, target: target, path: path + [.call(name.text, dictionary)])
+        let dictionary = try baseDictionary.mapValues { try Argument(argument: $0) }
+        return .init(apiName: apiName, target: target, components: components + [.call(name.text, dictionary)])
     }
 
 }

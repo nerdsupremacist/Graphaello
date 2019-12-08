@@ -8,17 +8,13 @@
 
 import Foundation
 
-struct ParsedStruct {
-    let code: SourceCode
-    let name: String
-    let properties: [ParsedProperty]
-
+extension Struct where CurrentStage == Stage.Extracted {
     init(code: SourceCode) throws {
         self.code = code
         name = try code.name()
         properties = try code
             .substructure()
             .filter { try $0.kind() == .varInstance }
-            .map { try ParsedProperty(code: $0) }
+            .map { try Property(code: $0) }
     }
 }

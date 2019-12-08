@@ -8,11 +8,12 @@
 
 import Foundation
 
-extension Struct where Component == StandardComponent {
+extension Struct where CurrentStage == Graphaello.Stage.Parsed {
 
-    init(from parsed: ParsedStruct) throws {
-        self.init(name: parsed.name,
-                  properties: try parsed.properties.filter { try !$0.isComputed() }.map { try Property(from: $0) })
+    init(from extracted: Struct<Stage.Extracted>) throws {
+        self = try extracted.map { attributes in
+            try attributes.compactMap { try Stage.Parsed.Path(from: $0) }.first
+        }
     }
 
 }

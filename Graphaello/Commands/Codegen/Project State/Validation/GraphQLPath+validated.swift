@@ -8,24 +8,24 @@
 
 import Foundation
 
-extension GraphQLPath where Component == StandardComponent {
+extension Stage.Parsed.Path {
 
-    func validated(apis: [API]) throws -> GraphQLPath<ValidatedComponent> {
+    func validated(apis: [API]) throws -> Stage.Validated.Path {
         let api = try apis[apiName] ?! GraphQLPathValidationError.apiNotFound(apiName, apis: apis)
         let targetType = try target.type(in: api)
         let initialResult = Result(path: [], type: .object(targetType))
-        let validatedPath = try path.reduce(initialResult) { result, component in
+        let validatedPath = try components.reduce(initialResult) { result, component in
             try component.validated(result: result, api: api)
         }
 
-        let path: [ValidatedComponent]
-        if case .object = validatedPath.type, validatedPath.path.last?.component != .fragment {
+        let path: [Stage.Validated.Component]
+        if case .object = validatedPath.type, validatedPath.path.last?.parsed != .fragment {
             path = validatedPath.path + [validatedPath.fragmentComponent()]
         } else {
             path = validatedPath.path
         }
 
-        return .init(apiName: apiName, target: target, path: path)
+        return Stage.Validated.Path(parsed: self, components: path)
     }
 
 }
@@ -45,17 +45,17 @@ fileprivate struct Result {
         }
     }
 
-    let path: [ValidatedComponent]
+    let path: [Stage.Validated.Component]
     let type: ResultType
 
-    func fragmentComponent() -> ValidatedComponent {
-        return ValidatedComponent(fieldType: .concrete(.init(kind: .scalar, name: type.graphQLType.name)),
-                                  underlyingType: type.graphQLType,
-                                  component: .fragment)
+    func fragmentComponent() -> Stage.Validated.Component {
+        return .init(fieldType: .concrete(.init(kind: .scalar, name: type.graphQLType.name)),
+                     underlyingType: type.graphQLType,
+                     parsed: .fragment)
     }
 }
 
-extension StandardComponent {
+extension Stage.Parsed.Component {
 
     fileprivate func validated(result: Result, api: API) throws -> Result {
         switch (self, result.type) {
@@ -66,10 +66,10 @@ extension StandardComponent {
                 let type = try api[field.type.underlyingTypeName] ?!
                     GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: api)
 
-                let component = ValidatedComponent(fieldType: field.type, underlyingType: type.graphQLType, component: self)
+                let component = Stage.Validated.Component(fieldType: field.type, underlyingType: type.graphQLType, parsed: self)
                 return Result(path: result.path + [component], type: type)
             } else {
-                return try StandardComponent.call(name, [:]).validated(result: result, api: api)
+                return try Stage.Parsed.Component.call(name, [:]).validated(result: result, api: api)
             }
 
         case (.fragment, .object):
@@ -82,7 +82,7 @@ extension StandardComponent {
             let type = try api[field.type.underlyingTypeName] ?!
                 GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: api)
 
-            let component = ValidatedComponent(fieldType: field.type, underlyingType: type.graphQLType, component: .call(name, arguments))
+            let component = Stage.Validated.Component(fieldType: field.type, underlyingType: type.graphQLType, parsed: .call(name, arguments))
             return Result(path: result.path + [component], type: type)
 
         case (_, .scalar(let type)):
@@ -95,7 +95,7 @@ extension StandardComponent {
 
 extension Schema.GraphQLType.Field {
 
-    fileprivate var defaultArgumentDictionary: [String : StandardComponent.Argument] {
+    fileprivate var defaultArgumentDictionary: [String : Graphaello.Argument] {
         let baseDictionary = Dictionary(uniqueKeysWithValues: arguments.map { ($0.name, $0) })
         return baseDictionary.mapValues { argument in
             argument

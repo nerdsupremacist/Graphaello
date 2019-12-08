@@ -33,8 +33,8 @@ extension SourceCode {
 
 extension StructuredFile {
 
-    func structs() throws -> [ParsedStruct] {
-        return try code.structs().map { try ParsedStruct(code: $0) }
+    func structs() throws -> [Struct<Stage.Extracted>] {
+        return try code.structs().map { try Struct(code: $0) }
     }
 
 }

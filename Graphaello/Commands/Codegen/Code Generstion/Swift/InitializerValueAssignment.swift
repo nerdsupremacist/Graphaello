@@ -43,7 +43,7 @@ private struct AttributePath {
     let kind: Kind
 }
 
-extension StandardComponent {
+extension Stage.Parsed.Component {
 
     var name: String? {
         switch self {
@@ -100,10 +100,10 @@ extension AttributePath {
 }
 
 
-extension ValidatedComponent {
+extension Stage.Validated.Component {
 
     fileprivate func path(matchingFragment: GraphQLFragment?) -> [AttributePath] {
-        switch (component, matchingFragment) {
+        switch (parsed, matchingFragment) {
         case (.property(let name), _):
             return [AttributePath(name: name, kind: .init(from: fieldType))]
         case (.fragment, .some(let fragment)):
@@ -117,19 +117,19 @@ extension ValidatedComponent {
 
 }
 
-extension GraphQLPath where Component == ValidatedComponent {
+extension Stage.Validated.Path {
 
     fileprivate func expression(matchingFragment: GraphQLFragment?) -> String {
         let first: AttributePath
         
-        switch target {
+        switch parsed.target {
         case .query:
             first = AttributePath(name: "data", kind: .value)
         case .object(let type):
             first = AttributePath(name: type.camelized, kind: .value)
         }
 
-        let path = self.path.flatMap { $0.path(matchingFragment: matchingFragment) }
+        let path = components.flatMap { $0.path(matchingFragment: matchingFragment) }
         return first.expression(attributes: path)
     }
 

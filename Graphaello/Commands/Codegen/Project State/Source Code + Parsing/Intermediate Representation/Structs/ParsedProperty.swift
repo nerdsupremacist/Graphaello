@@ -8,17 +8,12 @@
 
 import Foundation
 
-struct ParsedProperty {
-    let code: SourceCode
-    let name: String
-    let type: String
-    let attributes: [ParsedAttribute]
-
+extension Property where CurrentStage == Stage.Extracted {
     init(code: SourceCode) throws {
         self.code = code
         name = try code.name()
         type = try code.typeName()
-        attributes = try code
+        info = try code
             .optional { try $0.attributes() }?
             .map { try ParsedAttribute(code: $0) } ?? []
     }

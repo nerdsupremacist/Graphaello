@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Array where Element == Struct<ValidatedComponent> {
+extension Array where Element == Struct<Stage.Validated> {
     
     func graphQLStructs(apis: [API]) throws -> [GraphQLStruct] {
         return try graphQLStructs(apis: apis, existing: [])
@@ -29,7 +29,7 @@ extension Array where Element == Struct<ValidatedComponent> {
     }
 }
 
-extension Struct where Component == ValidatedComponent {
+extension Struct where CurrentStage == Stage.Validated {
     
     fileprivate func decode(using apis: [API], and existing: [GraphQLStruct]) throws -> StructResult {
         let result = GraphQLStruct(definition: self, fragments: [], query: nil)
@@ -40,9 +40,9 @@ extension Struct where Component == ValidatedComponent {
     
 }
 
-extension Property where Component == ValidatedComponent {
+extension Property where CurrentStage == Stage.Validated {
     
-    fileprivate func decode(definition: Struct<ValidatedComponent>, using apis: [API], and existing: [GraphQLStruct]) throws -> PropertyResult {
+    fileprivate func decode(definition: Struct<Stage.Validated>, using apis: [API], and existing: [GraphQLStruct]) throws -> PropertyResult {
         return try graphqlPath?.decode(definition: definition,
                                        property: self,
                                        using: apis,
@@ -51,15 +51,15 @@ extension Property where Component == ValidatedComponent {
     
 }
 
-extension GraphQLPath where Component == ValidatedComponent {
+extension Stage.Validated.Path {
     
-    fileprivate func decode(definition: Struct<ValidatedComponent>, property: Property<ValidatedComponent>, using apis: [API], and existing: [GraphQLStruct]) throws -> PropertyResult {
-        let api = try apis[apiName] ?! GraphQLPathValidationError.apiNotFound(apiName, apis: apis)
-        let target = try self.target.type(in: api)
+    fileprivate func decode(definition: Struct<Stage.Validated>, property: Property<Stage.Validated>, using apis: [API], and existing: [GraphQLStruct]) throws -> PropertyResult {
+        let api = try apis[parsed.apiName] ?! GraphQLPathValidationError.apiNotFound(parsed.apiName, apis: apis)
+        let target = try parsed.target.type(in: api)
         
-        switch try path.object(type: property.type, existing: existing) {
+        switch try components.object(type: property.type, existing: existing) {
         case .valid(let valid):
-            switch self.target {
+            switch parsed.target {
             case .object:
                 return .fragment(GraphQLFragment(name: "\(definition.name)\(target.name)",
                                                  api: api,
@@ -82,7 +82,7 @@ extension GraphQLPath where Component == ValidatedComponent {
     
 }
 
-extension Collection where Element == ValidatedComponent {
+extension Collection where Element == Stage.Validated.Component {
     
     fileprivate func object(type: String, existing: [GraphQLStruct]) throws -> GraphQLPathResult {
         return try reduce(.emptyPath) { try $0 + $1.object(type: type, existing: existing) }
@@ -90,10 +90,10 @@ extension Collection where Element == ValidatedComponent {
     
 }
 
-extension ValidatedComponent {
+extension Stage.Validated.Component {
     
     fileprivate func object(type: String, existing: [GraphQLStruct]) throws -> GraphQLPathResult {
-        switch component {
+        switch parsed {
         case .property(let fieldName):
             return .valid(.scalar(.direct(fieldName)))
         
@@ -202,7 +202,7 @@ private enum PropertyResult {
 
 private enum StructResult {
     case decoded(GraphQLStruct)
-    case remaining(Struct<ValidatedComponent>)
+    case remaining(Struct<Stage.Validated>)
     
     static func + (lhs: StructResult, rhs: @autoclosure () throws -> PropertyResult) throws -> StructResult {
         guard case .decoded(let decoded) = lhs else { return lhs }
@@ -221,7 +221,7 @@ private enum StructResult {
 
 private struct DecodingResult {
     let decoded: [GraphQLStruct]
-    let remaining: [Struct<ValidatedComponent>]
+    let remaining: [Struct<Stage.Validated>]
     
     static func + (lhs: DecodingResult, rhs: @autoclosure () throws -> StructResult) rethrows -> DecodingResult {
         switch try rhs() {

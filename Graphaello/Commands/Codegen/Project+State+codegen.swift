@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Project.State where Component == ValidatedComponent {
+extension Project.State where CurrentStage == Stage.Validated {
     
     func codegen() throws -> Codegen {
         return Codegen(apis: apis,
