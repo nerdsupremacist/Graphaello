@@ -33,7 +33,7 @@ extension Pipeline {
     
     func parse(extracted: Project.State<Stage.Extracted>) throws -> Project.State<Stage.Parsed> {
         return Project.State(apis: extracted.apis,
-                             structs: try parse(extracted: extracted.structs))
+                             structs: try parse(extracted: extracted.structs).filter { $0.hasGraphQLValues })
     }
     
     func validate(parsed: Project.State<Stage.Parsed>) throws -> Project.State<Stage.Validated> {

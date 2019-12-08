@@ -20,10 +20,8 @@ extension GraphQLStruct {
         return definition.properties.map { property in
             switch property.graphqlPath {
             case .some(let path):
-                let expectedFragmentName = property.type.replacingOccurrences(of: #"[\[\]\.\?]"#, with: "", options: .regularExpression)
-                let matchingFragment = allFragments.first { $0.name == expectedFragmentName }
                 return InitializerValueAssignment(name: property.name,
-                                                  expression: path.expression(matchingFragment: matchingFragment))
+                                                  expression: path.expression())
             case .none:
                 return InitializerValueAssignment(name: property.name, expression: property.name)
             }
@@ -99,27 +97,17 @@ extension AttributePath {
 
 }
 
-
-extension Stage.Validated.Component {
-
-    fileprivate func path(matchingFragment: GraphQLFragment?) -> [AttributePath] {
-        switch (parsed, matchingFragment) {
-        case (.property(let name), _):
-            return [AttributePath(name: name, kind: .init(from: fieldType))]
-        case (.fragment, .some(let fragment)):
-            return [AttributePath(name: "fragment", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
-        case (.fragment, .none):
-            return []
-        case (.call(let name, _), _):
-            return [AttributePath(name: name, kind: .init(from: fieldType))]
-        }
+extension Stage.Resolved.Path {
+    
+    fileprivate func expression() -> String {
+        return validated.expression(referencedFragment: referencedFragment)
     }
-
+    
 }
 
 extension Stage.Validated.Path {
 
-    fileprivate func expression(matchingFragment: GraphQLFragment?) -> String {
+    fileprivate func expression(referencedFragment: GraphQLFragment?) -> String {
         let first: AttributePath
         
         switch parsed.target {
@@ -129,8 +117,25 @@ extension Stage.Validated.Path {
             first = AttributePath(name: type.camelized, kind: .value)
         }
 
-        let path = components.flatMap { $0.path(matchingFragment: matchingFragment) }
+        let path = components.flatMap { $0.path(referencedFragment: referencedFragment) }
         return first.expression(attributes: path)
+    }
+
+}
+
+extension Stage.Validated.Component {
+
+    fileprivate func path(referencedFragment: GraphQLFragment?) -> [AttributePath] {
+        switch (parsed, referencedFragment) {
+        case (.property(let name), _):
+            return [AttributePath(name: name, kind: .init(from: fieldType))]
+        case (.fragment, .some(let fragment)):
+            return [AttributePath(name: "fragment", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
+        case (.fragment, .none):
+            return []
+        case (.call(let name, _), _):
+            return [AttributePath(name: name, kind: .init(from: fieldType))]
+        }
     }
 
 }

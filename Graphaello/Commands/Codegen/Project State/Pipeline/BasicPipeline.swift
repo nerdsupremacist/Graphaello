@@ -13,6 +13,7 @@ struct BasicPipeline: Pipeline {
     let extractor: Extractor
     let parser: Parser
     let validator: Validator
+    let resolver: Resolver
     
     func extract(from file: File) throws -> [Struct<Stage.Extracted>] {
         return try extractor.extract(from: file)
@@ -27,6 +28,6 @@ struct BasicPipeline: Pipeline {
     }
     
     func resolve(validated: [Struct<Stage.Validated>]) throws -> [GraphQLStruct] {
-        fatalError()
+        return try resolver.resolve(validated: validated)
     }
 }

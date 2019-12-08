@@ -9,7 +9,7 @@
 import Foundation
 
 struct GraphQLStruct {
-    let definition: Struct<Stage.Validated>
+    let definition: Struct<Stage.Resolved>
     let fragments: [GraphQLFragment]
     let query: GraphQLQuery?
 }

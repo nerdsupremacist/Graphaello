@@ -15,6 +15,7 @@ extension Stage {
 
         struct Path {
             let validated: Validated.Path
+            let referencedFragment: GraphQLFragment?
         }
     }
 

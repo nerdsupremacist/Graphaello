@@ -23,7 +23,6 @@
 		0E4A1E71239A637700EA2CF8 /* GraphQLField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E70239A637700EA2CF8 /* GraphQLField.swift */; };
 		0E4A1E73239A672B00EA2CF8 /* GraphQLObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E72239A672B00EA2CF8 /* GraphQLObject.swift */; };
 		0E4A1E75239A6CDE00EA2CF8 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E74239A6CDE00EA2CF8 /* Array.swift */; };
-		0E4A1E77239A7F2D00EA2CF8 /* NamedGraphQLFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E76239A7F2D00EA2CF8 /* NamedGraphQLFragment.swift */; };
 		0E4A1E7C239A925A00EA2CF8 /* SwiftCodeTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E7B239A925A00EA2CF8 /* SwiftCodeTransformable.swift */; };
 		0E4A1E80239A94C800EA2CF8 /* StructureAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E7F239A94C800EA2CF8 /* StructureAPI.swift */; };
 		0E4A1E82239A957600EA2CF8 /* API+SwiftCodeTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E81239A957600EA2CF8 /* API+SwiftCodeTransformable.swift */; };
@@ -41,6 +40,14 @@
 		0E4A1E9A239D693D00EA2CF8 /* ComponentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E99239D693D00EA2CF8 /* ComponentValidator.swift */; };
 		0E4A1E9C239D6A6900EA2CF8 /* ComponentValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E9B239D6A6900EA2CF8 /* ComponentValidation.swift */; };
 		0E4A1E9E239D6CFD00EA2CF8 /* BasicComponentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E9D239D6CFD00EA2CF8 /* BasicComponentValidator.swift */; };
+		0E4A1EA2239D725B00EA2CF8 /* ValueResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EA1239D725B00EA2CF8 /* ValueResolver.swift */; };
+		0E4A1EA4239D726800EA2CF8 /* StructResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EA3239D726800EA2CF8 /* StructResolution.swift */; };
+		0E4A1EA6239D772D00EA2CF8 /* BasicResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EA5239D772D00EA2CF8 /* BasicResolver.swift */; };
+		0E4A1EA8239D7A3100EA2CF8 /* GraphQLStructResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EA7239D7A3100EA2CF8 /* GraphQLStructResolver.swift */; };
+		0E4A1EAA239D7D5500EA2CF8 /* StructResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EA9239D7D5500EA2CF8 /* StructResolver.swift */; };
+		0E4A1EAC239DA49000EA2CF8 /* ValidatedStructResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EAB239DA49000EA2CF8 /* ValidatedStructResolver.swift */; };
+		0E4A1EAE239DA4FF00EA2CF8 /* PropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EAD239DA4FF00EA2CF8 /* PropertyResolver.swift */; };
+		0E4A1EB0239DA81600EA2CF8 /* PathResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EAF239DA81600EA2CF8 /* PathResolver.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -157,7 +164,6 @@
 		0E4A1E70239A637700EA2CF8 /* GraphQLField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLField.swift; sourceTree = "<group>"; };
 		0E4A1E72239A672B00EA2CF8 /* GraphQLObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLObject.swift; sourceTree = "<group>"; };
 		0E4A1E74239A6CDE00EA2CF8 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
-		0E4A1E76239A7F2D00EA2CF8 /* NamedGraphQLFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamedGraphQLFragment.swift; sourceTree = "<group>"; };
 		0E4A1E7B239A925A00EA2CF8 /* SwiftCodeTransformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCodeTransformable.swift; sourceTree = "<group>"; };
 		0E4A1E7F239A94C800EA2CF8 /* StructureAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureAPI.swift; sourceTree = "<group>"; };
 		0E4A1E81239A957600EA2CF8 /* API+SwiftCodeTransformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+SwiftCodeTransformable.swift"; sourceTree = "<group>"; };
@@ -175,6 +181,14 @@
 		0E4A1E99239D693D00EA2CF8 /* ComponentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValidator.swift; sourceTree = "<group>"; };
 		0E4A1E9B239D6A6900EA2CF8 /* ComponentValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValidation.swift; sourceTree = "<group>"; };
 		0E4A1E9D239D6CFD00EA2CF8 /* BasicComponentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicComponentValidator.swift; sourceTree = "<group>"; };
+		0E4A1EA1239D725B00EA2CF8 /* ValueResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueResolver.swift; sourceTree = "<group>"; };
+		0E4A1EA3239D726800EA2CF8 /* StructResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructResolution.swift; sourceTree = "<group>"; };
+		0E4A1EA5239D772D00EA2CF8 /* BasicResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicResolver.swift; sourceTree = "<group>"; };
+		0E4A1EA7239D7A3100EA2CF8 /* GraphQLStructResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLStructResolver.swift; sourceTree = "<group>"; };
+		0E4A1EA9239D7D5500EA2CF8 /* StructResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructResolver.swift; sourceTree = "<group>"; };
+		0E4A1EAB239DA49000EA2CF8 /* ValidatedStructResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedStructResolver.swift; sourceTree = "<group>"; };
+		0E4A1EAD239DA4FF00EA2CF8 /* PropertyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyResolver.swift; sourceTree = "<group>"; };
+		0E4A1EAF239DA81600EA2CF8 /* PathResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathResolver.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* Graphaello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphaello; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -281,7 +295,6 @@
 			children = (
 				0E4A1E62239A570500EA2CF8 /* GraphQLStruct.swift */,
 				0E4A1E65239A572000EA2CF8 /* GraphQLFragment.swift */,
-				0E4A1E76239A7F2D00EA2CF8 /* NamedGraphQLFragment.swift */,
 				0E4A1E69239A582400EA2CF8 /* Query.swift */,
 				0E4A1E67239A57D900EA2CF8 /* Component.swift */,
 				0E4A1E70239A637700EA2CF8 /* GraphQLField.swift */,
@@ -581,6 +594,14 @@
 			isa = PBXGroup;
 			children = (
 				0EDB238B239D342100A9C9B7 /* Resolver.swift */,
+				0E4A1EA5239D772D00EA2CF8 /* BasicResolver.swift */,
+				0E4A1EA3239D726800EA2CF8 /* StructResolution.swift */,
+				0E4A1EA1239D725B00EA2CF8 /* ValueResolver.swift */,
+				0E4A1EA9239D7D5500EA2CF8 /* StructResolver.swift */,
+				0E4A1EA7239D7A3100EA2CF8 /* GraphQLStructResolver.swift */,
+				0E4A1EAB239DA49000EA2CF8 /* ValidatedStructResolver.swift */,
+				0E4A1EAD239DA4FF00EA2CF8 /* PropertyResolver.swift */,
+				0E4A1EAF239DA81600EA2CF8 /* PathResolver.swift */,
 			);
 			path = Resolver;
 			sourceTree = "<group>";
@@ -741,6 +762,7 @@
 				0ECF25E523980648001C75F8 /* Definition.swift in Sources */,
 				0ECF25F62398085E001C75F8 /* SourceCode+singleExpression.swift in Sources */,
 				0EDB23A5239D3E2E00A9C9B7 /* SubParser+attribute.swift in Sources */,
+				0E4A1EA6239D772D00EA2CF8 /* BasicResolver.swift in Sources */,
 				0EDB2386239D33CA00A9C9B7 /* Extractor.swift in Sources */,
 				0EDB23B2239D47B900A9C9B7 /* BaseMemberAccess.swift in Sources */,
 				0E4A1E90239AFF1E00EA2CF8 /* InitializerValueAssignment.swift in Sources */,
@@ -754,15 +776,16 @@
 				0E4A1E75239A6CDE00EA2CF8 /* Array.swift in Sources */,
 				0EDB237C239D326700A9C9B7 /* Pipeline.swift in Sources */,
 				0ECF25BD2396B8EE001C75F8 /* SourceCode+syntaxTree.swift in Sources */,
+				0E4A1EA4239D726800EA2CF8 /* StructResolution.swift in Sources */,
 				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
 				0ECF25E92398072B001C75F8 /* TypeReference+Codable.swift in Sources */,
 				0E4A1E8E239AFD6E00EA2CF8 /* InitializerArgument.swift in Sources */,
 				0E4A1E5D239860D800EA2CF8 /* Project+State+codegen.swift in Sources */,
 				0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */,
 				0EDB2397239D389800A9C9B7 /* BasicStructExtractor.swift in Sources */,
-				0E4A1E77239A7F2D00EA2CF8 /* NamedGraphQLFragment.swift in Sources */,
 				0ECF25D223980422001C75F8 /* ParseError.swift in Sources */,
 				0ECF2601239809F3001C75F8 /* Target.swift in Sources */,
+				0E4A1EAE239DA4FF00EA2CF8 /* PropertyResolver.swift in Sources */,
 				0E4A1E84239A973900EA2CF8 /* GraphQLType+SwiftCodeTransformable.swift in Sources */,
 				0ECF25DF23980562001C75F8 /* Field.swift in Sources */,
 				0EDB239B239D397600A9C9B7 /* BasicAttributeExtractor.swift in Sources */,
@@ -775,8 +798,10 @@
 				0EDB23B8239D4B1D00A9C9B7 /* SubParser+argumentList.swift in Sources */,
 				0EDB23A3239D3D8800A9C9B7 /* SubParser.swift in Sources */,
 				0ECF25E7239806EF001C75F8 /* API.swift in Sources */,
+				0E4A1EA8239D7A3100EA2CF8 /* GraphQLStructResolver.swift in Sources */,
 				0EDB2376239D31C800A9C9B7 /* Validated.swift in Sources */,
 				0EDB23B6239D48EB00A9C9B7 /* SubParser+functionCall+Path.swift in Sources */,
+				0E4A1EAA239D7D5500EA2CF8 /* StructResolver.swift in Sources */,
 				0EDB23C0239D4F0700A9C9B7 /* SubParser+functionCall+QueryArgument.swift in Sources */,
 				0E4A1E61239A51D300EA2CF8 /* Extracted+Property+isComputed.swift in Sources */,
 				0EDB2388239D33FA00A9C9B7 /* Parser.swift in Sources */,
@@ -786,7 +811,9 @@
 				0ECF25E3239805D8001C75F8 /* TypeReference.swift in Sources */,
 				0EDB23C2239D500A00A9C9B7 /* BasicPipeline.swift in Sources */,
 				0E4A1E9E239D6CFD00EA2CF8 /* BasicComponentValidator.swift in Sources */,
+				0E4A1EAC239DA49000EA2CF8 /* ValidatedStructResolver.swift in Sources */,
 				0EDB23AD239D44F900A9C9B7 /* SubPArser+memberAccess+Path.swift in Sources */,
+				0E4A1EB0239DA81600EA2CF8 /* PathResolver.swift in Sources */,
 				0E4A1E68239A57D900EA2CF8 /* Component.swift in Sources */,
 				0E4A1E82239A957600EA2CF8 /* API+SwiftCodeTransformable.swift in Sources */,
 				0E4A1E86239A9A4200EA2CF8 /* Field+SwiftCodeTransformable.swift in Sources */,
@@ -810,6 +837,7 @@
 				0ECF25DB2398050E001C75F8 /* GraphQLType.swift in Sources */,
 				0ECF25BB2396B3A7001C75F8 /* Collection+single.swift in Sources */,
 				0E4A1E7C239A925A00EA2CF8 /* SwiftCodeTransformable.swift in Sources */,
+				0E4A1EA2239D725B00EA2CF8 /* ValueResolver.swift in Sources */,
 				0EDB238A239D340E00A9C9B7 /* Validator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,8 @@ enum PipelineFactory {
     static func create() -> Pipeline {
         return BasicPipeline(extractor: create(),
                              parser: create(),
-                             validator: create())
+                             validator: create(),
+                             resolver: create())
     }
     
     private static func create() -> Extractor {
@@ -66,6 +67,18 @@ enum PipelineFactory {
         return BasicValidator {
             BasicPathValidator {
                 BasicComponentValidator()
+            }
+        }
+    }
+    
+    private static func create() -> Resolver {
+        return BasicResolver {
+            GraphQLStructResolver {
+                ValidatedStructResolver {
+                    PropertyResolver {
+                        PathResolver()
+                    }
+                }
             }
         }
     }

@@ -22,7 +22,7 @@ extension Array where Element == Struct<Stage.Validated> {
         }
         
         guard !result.decoded.isEmpty else {
-            throw GraphQLFragmentResolverError.failedToDecodeAnyOfTheStructsDueToPossibleRecursion(self, resolved: existing)
+            throw GraphQLFragmentResolverError.failedToDecodeAnyOfTheStructsDueToPossibleRecursion(self)
         }
         
         return try result.remaining.graphQLStructs(apis: apis, existing: existing + result.decoded)
@@ -32,10 +32,11 @@ extension Array where Element == Struct<Stage.Validated> {
 extension Struct where CurrentStage == Stage.Validated {
     
     fileprivate func decode(using apis: [API], and existing: [GraphQLStruct]) throws -> StructResult {
-        let result = GraphQLStruct(definition: self, fragments: [], query: nil)
-        return try properties.reduce(.decoded(result)) {
-            try $0 + $1.decode(definition: self, using: apis, and: existing)
-        }
+        fatalError()
+//        let result = GraphQLStruct(definition: self, fragments: [], query: nil)
+//        return try properties.reduce(.decoded(result)) {
+//            try $0 + $1.decode(definition: self, using: apis, and: existing)
+//        }
     }
     
 }
@@ -205,17 +206,18 @@ private enum StructResult {
     case remaining(Struct<Stage.Validated>)
     
     static func + (lhs: StructResult, rhs: @autoclosure () throws -> PropertyResult) throws -> StructResult {
-        guard case .decoded(let decoded) = lhs else { return lhs }
-        switch try rhs() {
-        case .fragment(let fragment):
-            return .decoded(decoded + fragment)
-        case .query(let query):
-            return .decoded(try decoded + query)
-        case .missingFragment:
-            return .remaining(decoded.definition)
-        case .notAGraphQLProperty:
-            return lhs
-        }
+        fatalError()
+//        guard case .decoded(let decoded) = lhs else { return lhs }
+//        switch try rhs() {
+//        case .fragment(let fragment):
+//            return .decoded(decoded + fragment)
+//        case .query(let query):
+//            return .decoded(try decoded + query)
+//        case .missingFragment:
+//            return .remaining(decoded.definition)
+//        case .notAGraphQLProperty:
+//            return lhs
+//        }
     }
 }
 
