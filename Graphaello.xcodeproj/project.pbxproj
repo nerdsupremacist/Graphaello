@@ -323,6 +323,26 @@
 			path = Swift;
 			sourceTree = "<group>";
 		};
+		0E4A1E9F239D717800EA2CF8 /* SubValidators */ = {
+			isa = PBXGroup;
+			children = (
+				0E4A1E95239D683A00EA2CF8 /* PathValidator.swift */,
+				0E4A1E99239D693D00EA2CF8 /* ComponentValidator.swift */,
+				0E4A1E9B239D6A6900EA2CF8 /* ComponentValidation.swift */,
+				0E4A1EA0239D719100EA2CF8 /* Implementation */,
+			);
+			path = SubValidators;
+			sourceTree = "<group>";
+		};
+		0E4A1EA0239D719100EA2CF8 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				0E4A1E97239D687F00EA2CF8 /* BasicPathValidator.swift */,
+				0E4A1E9D239D6CFD00EA2CF8 /* BasicComponentValidator.swift */,
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
 		0E57586C2390ACBA005834EF = {
 			isa = PBXGroup;
 			children = (
@@ -560,11 +580,7 @@
 			children = (
 				0EDB2389239D340E00A9C9B7 /* Validator.swift */,
 				0E4A1E93239D67D900EA2CF8 /* BasicValidator.swift */,
-				0E4A1E95239D683A00EA2CF8 /* PathValidator.swift */,
-				0E4A1E97239D687F00EA2CF8 /* BasicPathValidator.swift */,
-				0E4A1E99239D693D00EA2CF8 /* ComponentValidator.swift */,
-				0E4A1E9B239D6A6900EA2CF8 /* ComponentValidation.swift */,
-				0E4A1E9D239D6CFD00EA2CF8 /* BasicComponentValidator.swift */,
+				0E4A1E9F239D717800EA2CF8 /* SubValidators */,
 			);
 			path = Validation;
 			sourceTree = "<group>";
