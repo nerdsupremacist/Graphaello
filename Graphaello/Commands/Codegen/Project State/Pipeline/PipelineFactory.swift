@@ -1,0 +1,86 @@
+//
+//  PipelineFactory.swift
+//  Graphaello
+//
+//  Created by Mathias Quintero on 08.12.19.
+//  Copyright © 2019 Mathias Quintero. All rights reserved.
+//
+
+import Foundation
+import SwiftSyntax
+
+enum PipelineFactory {
+    
+    static func create() -> Pipeline {
+        return BasicPipeline(extractor: create(), parser: create())
+    }
+    
+    private static func create() -> Extractor {
+        return BasicExtractor(extractor: BasicStructExtractor(propertyExtractor: BasicPropertyExtractor(attributeExtractor: BasicAttributeExtractor())))
+    }
+    
+    private static func create() -> Parser {
+        return BasicParser {
+            .attribute {
+                .syntaxTree {
+                    .annotationFunctionCall {
+                        .pathExpression(
+                            memberAccess: { (parent: SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path> in
+                                .memberAccess(parent: parent) {
+                                    .baseMemberAccess()
+                                }
+                            },
+                            functionCall: { (parent: SubParser<ExprSyntax, Stage.Parsed.Path>) in
+                                .functionCall(parent: parent) {
+                                    .argumentList {
+                                        .argumentExpression(
+                                            memberAccess: {
+                                                .memberAccess()
+                                            },
+                                            functionCall: {
+                                                .functionCall {
+                                                    .queryArgumentExpression(
+                                                        memberAccess: {
+                                                            .memberAccess()
+                                                        },
+                                                        functionCall: {
+                                                            .functionCall()
+                                                        }
+                                                    )
+                                                }
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: Little help for the compiler
+
+extension SubParser {
+    
+    fileprivate static func pathExpression(memberAccess: @escaping (SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path>,
+                                           functionCall: @escaping (SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path>) -> SubParser<ExprSyntax, Stage.Parsed.Path> {
+        
+        return .expressionWithParent(memberAccess: memberAccess, functionCall: functionCall)
+    }
+    
+    fileprivate static func argumentExpression(memberAccess: @escaping () -> SubParser<MemberAccessExprSyntax, Argument>,
+                                               functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Argument>) -> SubParser<ExprSyntax, Argument> {
+        
+        return .expression(memberAccess: memberAccess, functionCall: functionCall)
+    }
+    
+    fileprivate static func queryArgumentExpression(memberAccess: @escaping () -> SubParser<MemberAccessExprSyntax, Argument.QueryArgument>,
+                                                    functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Argument.QueryArgument>) -> SubParser<ExprSyntax, Argument.QueryArgument> {
+        
+        return .expression(memberAccess: memberAccess, functionCall: functionCall)
+    }
+    
+}

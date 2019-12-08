@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct BasicParser<PathParser: SubParser>: Parser where PathParser.Input == Stage.Extracted.Attribute, PathParser.Output == Stage.Parsed.Path {
-    let parser: PathParser
+struct BasicParser: Parser {
+    let parser: SubParser<Stage.Extracted.Attribute, Stage.Parsed.Path?>
 
     func parse(extracted: Struct<Stage.Extracted>) throws -> Struct<Stage.Parsed> {
         return try extracted.map { attributes in
@@ -20,4 +20,12 @@ struct BasicParser<PathParser: SubParser>: Parser where PathParser.Input == Stag
                 .first
         }
     }
+}
+
+extension BasicParser {
+    
+    init(parser: () -> SubParser<Stage.Extracted.Attribute, Stage.Parsed.Path?>) {
+        self.parser = parser()
+    }
+    
 }

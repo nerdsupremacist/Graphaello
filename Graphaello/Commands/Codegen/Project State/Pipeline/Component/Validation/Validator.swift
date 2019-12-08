@@ -9,5 +9,5 @@
 import Foundation
 
 protocol Validator {
-    func validate(struct: Struct<Stage.Parsed>) throws -> Struct<Stage.Validated>
+    func validate(parsed: Struct<Stage.Parsed>) throws -> Struct<Stage.Validated>
 }

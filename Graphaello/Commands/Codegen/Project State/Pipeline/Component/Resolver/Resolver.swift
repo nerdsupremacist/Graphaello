@@ -9,5 +9,5 @@
 import Foundation
 
 protocol Resolver {
-    func resolve(structs: [Struct<Stage.Validated>]) throws -> [GraphQLStruct]
+    func resolve(validated: [Struct<Stage.Validated>]) throws -> [GraphQLStruct]
 }
