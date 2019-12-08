@@ -8,11 +8,13 @@
 
 import Foundation
 
-enum BasicStructExtractor<Property: PropertyExtractor>: StructExtractor {
-    static func extract(code: SourceCode) throws -> Struct<Stage.Extracted> {
+struct BasicStructExtractor: StructExtractor {
+    let propertyExtractor: PropertyExtractor
+
+    func extract(code: SourceCode) throws -> Struct<Stage.Extracted> {
         let properties = try code.substructure()
             .filter { try $0.kind() == .varInstance }
-            .map { try Property.extract(code: $0) }
+            .map { try propertyExtractor.extract(code: $0) }
 
         return Struct(code: code,
                       name: try code.name(),

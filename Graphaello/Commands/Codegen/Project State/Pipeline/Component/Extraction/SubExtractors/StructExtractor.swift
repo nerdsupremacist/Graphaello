@@ -9,5 +9,5 @@
 import Foundation
 
 protocol StructExtractor {
-    static func extract(code: SourceCode) throws -> Struct<Stage.Extracted>
+    func extract(code: SourceCode) throws -> Struct<Stage.Extracted>
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol Parser {
-    static func parse(structs: Struct<Stage.Extracted>) throws -> Struct<Stage.Parsed>
+    func parse(extracted: Struct<Stage.Extracted>) throws -> Struct<Stage.Parsed>
 }

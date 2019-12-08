@@ -9,14 +9,14 @@
 import Foundation
 import SourceKittenFramework
 
-enum BasicExtractor<SubExtractor: StructExtractor>: Extractor {
+struct BasicExtractor: Extractor {
+    let extractor: StructExtractor
 
-    static func extract(from file: File) throws -> [Struct<Stage.Extracted>] {
+    func extract(from file: File) throws -> [Struct<Stage.Extracted>] {
         let code = try SourceCode(file: file)
         let structs = try code.structs()
-        return try structs.map { try SubExtractor.extract(code: $0) }
+        return try structs.map { try extractor.extract(code: $0) }
     }
-
 }
 
 extension SourceCode {

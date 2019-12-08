@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum BasicAttributeExtractor: AttributeExtractor {
+struct BasicAttributeExtractor: AttributeExtractor {
 
-    static func extract(code: SourceCode) throws -> Stage.Extracted.Attribute {
+    func extract(code: SourceCode) throws -> Stage.Extracted.Attribute {
         return Stage.Extracted.Attribute(code: code, kind: try code.attribute())
     }
 

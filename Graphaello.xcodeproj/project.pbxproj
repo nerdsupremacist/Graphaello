@@ -56,7 +56,6 @@
 		0E7A0E1E23944602007F5AE9 /* Project+scanStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */; };
 		0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E2323944D98007F5AE9 /* SourceCode.swift */; };
 		0EBE9A782395116C00A705B4 /* SourceCode+Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBE9A772395116C00A705B4 /* SourceCode+Kind.swift */; };
-		0ECF25B72396AA41001C75F8 /* Struct+parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25B62396AA41001C75F8 /* Struct+parsing.swift */; };
 		0ECF25BB2396B3A7001C75F8 /* Collection+single.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25BA2396B3A7001C75F8 /* Collection+single.swift */; };
 		0ECF25BD2396B8EE001C75F8 /* SourceCode+syntaxTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25BC2396B8EE001C75F8 /* SourceCode+syntaxTree.swift */; };
 		0ECF25C62397250C001C75F8 /* SwiftSyntax in Frameworks */ = {isa = PBXBuildFile; productRef = 0ECF25C52397250C001C75F8 /* SwiftSyntax */; };
@@ -75,11 +74,8 @@
 		0ECF25F62398085E001C75F8 /* SourceCode+singleExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25F52398085E001C75F8 /* SourceCode+singleExpression.swift */; };
 		0ECF25F82398088A001C75F8 /* SourceCode+decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25F72398088A001C75F8 /* SourceCode+decode.swift */; };
 		0ECF25FB239809C5001C75F8 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25FA239809C5001C75F8 /* Property.swift */; };
-		0ECF2601239809F3001C75F8 /* GraphQLPath+Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF2600239809F3001C75F8 /* GraphQLPath+Target.swift */; };
-		0ECF260323980A0C001C75F8 /* StandardComponent+Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF260223980A0C001C75F8 /* StandardComponent+Argument.swift */; };
-		0ECF260823980AA4001C75F8 /* GraphQLPath+parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF260723980AA4001C75F8 /* GraphQLPath+parsing.swift */; };
-		0ECF260A23980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF260923980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift */; };
-		0ECF260C23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF260B23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift */; };
+		0ECF2601239809F3001C75F8 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF2600239809F3001C75F8 /* Target.swift */; };
+		0ECF260323980A0C001C75F8 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF260223980A0C001C75F8 /* Argument.swift */; };
 		0EDB2364239BE35A00A9C9B7 /* GraphQLPath+validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2363239BE35A00A9C9B7 /* GraphQLPath+validated.swift */; };
 		0EDB2369239C096600A9C9B7 /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2368239C096600A9C9B7 /* Stage.swift */; };
 		0EDB2372239D318C00A9C9B7 /* Extracted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2371239D318C00A9C9B7 /* Extracted.swift */; };
@@ -99,6 +95,23 @@
 		0EDB2397239D389800A9C9B7 /* BasicStructExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2396239D389800A9C9B7 /* BasicStructExtractor.swift */; };
 		0EDB2399239D38EE00A9C9B7 /* BasicPropertyExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2398239D38EE00A9C9B7 /* BasicPropertyExtractor.swift */; };
 		0EDB239B239D397600A9C9B7 /* BasicAttributeExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB239A239D397600A9C9B7 /* BasicAttributeExtractor.swift */; };
+		0EDB239E239D3A5000A9C9B7 /* BasicParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB239D239D3A5000A9C9B7 /* BasicParser.swift */; };
+		0EDB23A3239D3D8800A9C9B7 /* SubParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23A2239D3D8800A9C9B7 /* SubParser.swift */; };
+		0EDB23A5239D3E2E00A9C9B7 /* PathFromAttributeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23A4239D3E2E00A9C9B7 /* PathFromAttributeParser.swift */; };
+		0EDB23A7239D40DD00A9C9B7 /* PathFromSyntaxTreeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23A6239D40DD00A9C9B7 /* PathFromSyntaxTreeParser.swift */; };
+		0EDB23A9239D41BE00A9C9B7 /* PathFromAnnotationFunctionCallParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23A8239D41BE00A9C9B7 /* PathFromAnnotationFunctionCallParser.swift */; };
+		0EDB23AB239D42AC00A9C9B7 /* ExpressionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23AA239D42AC00A9C9B7 /* ExpressionParser.swift */; };
+		0EDB23AD239D44F900A9C9B7 /* PathFromMemberAccessParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23AC239D44F900A9C9B7 /* PathFromMemberAccessParser.swift */; };
+		0EDB23AF239D458300A9C9B7 /* AnyParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23AE239D458300A9C9B7 /* AnyParser.swift */; };
+		0EDB23B2239D47B900A9C9B7 /* BaseMemberAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23B1239D47B900A9C9B7 /* BaseMemberAccess.swift */; };
+		0EDB23B4239D47F100A9C9B7 /* PathFromBaseMemberAccessParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23B3239D47F000A9C9B7 /* PathFromBaseMemberAccessParser.swift */; };
+		0EDB23B6239D48EB00A9C9B7 /* PathFromFunctionCallParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23B5239D48EB00A9C9B7 /* PathFromFunctionCallParser.swift */; };
+		0EDB23B8239D4B1D00A9C9B7 /* ArgumentsFromArgumentListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23B7239D4B1D00A9C9B7 /* ArgumentsFromArgumentListParser.swift */; };
+		0EDB23BA239D4C8900A9C9B7 /* ArgumentFromMemberAccessParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23B9239D4C8900A9C9B7 /* ArgumentFromMemberAccessParser.swift */; };
+		0EDB23BC239D4D3000A9C9B7 /* ArgumentFromFunctionCallParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23BB239D4D3000A9C9B7 /* ArgumentFromFunctionCallParser.swift */; };
+		0EDB23BE239D4E9F00A9C9B7 /* QueryArgumentFromMemberAccessParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23BD239D4E9F00A9C9B7 /* QueryArgumentFromMemberAccessParser.swift */; };
+		0EDB23C0239D4F0700A9C9B7 /* QueryArgumentFromFunctionCallParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23BF239D4F0700A9C9B7 /* QueryArgumentFromFunctionCallParser.swift */; };
+		0EDB23C2239D500A00A9C9B7 /* BasicPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB23C1239D500A00A9C9B7 /* BasicPipeline.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -169,7 +182,6 @@
 		0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+scanStructs.swift"; sourceTree = "<group>"; };
 		0E7A0E2323944D98007F5AE9 /* SourceCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCode.swift; sourceTree = "<group>"; };
 		0EBE9A772395116C00A705B4 /* SourceCode+Kind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+Kind.swift"; sourceTree = "<group>"; };
-		0ECF25B62396AA41001C75F8 /* Struct+parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Struct+parsing.swift"; sourceTree = "<group>"; };
 		0ECF25BA2396B3A7001C75F8 /* Collection+single.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+single.swift"; sourceTree = "<group>"; };
 		0ECF25BC2396B8EE001C75F8 /* SourceCode+syntaxTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+syntaxTree.swift"; sourceTree = "<group>"; };
 		0ECF25CD2397269F001C75F8 /* lib_InternalSwiftSyntaxParser.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = lib_InternalSwiftSyntaxParser.dylib; path = Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/lib_InternalSwiftSyntaxParser.dylib; sourceTree = DEVELOPER_DIR; };
@@ -187,11 +199,8 @@
 		0ECF25F52398085E001C75F8 /* SourceCode+singleExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+singleExpression.swift"; sourceTree = "<group>"; };
 		0ECF25F72398088A001C75F8 /* SourceCode+decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+decode.swift"; sourceTree = "<group>"; };
 		0ECF25FA239809C5001C75F8 /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
-		0ECF2600239809F3001C75F8 /* GraphQLPath+Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLPath+Target.swift"; sourceTree = "<group>"; };
-		0ECF260223980A0C001C75F8 /* StandardComponent+Argument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StandardComponent+Argument.swift"; sourceTree = "<group>"; };
-		0ECF260723980AA4001C75F8 /* GraphQLPath+parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLPath+parsing.swift"; sourceTree = "<group>"; };
-		0ECF260923980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLPath+Argument+parsing.swift"; sourceTree = "<group>"; };
-		0ECF260B23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLPath+QueryArgument+parsing.swift"; sourceTree = "<group>"; };
+		0ECF2600239809F3001C75F8 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
+		0ECF260223980A0C001C75F8 /* Argument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Argument.swift; sourceTree = "<group>"; };
 		0EDB2363239BE35A00A9C9B7 /* GraphQLPath+validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLPath+validated.swift"; sourceTree = "<group>"; };
 		0EDB2368239C096600A9C9B7 /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		0EDB2371239D318C00A9C9B7 /* Extracted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extracted.swift; sourceTree = "<group>"; };
@@ -211,6 +220,23 @@
 		0EDB2396239D389800A9C9B7 /* BasicStructExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStructExtractor.swift; sourceTree = "<group>"; };
 		0EDB2398239D38EE00A9C9B7 /* BasicPropertyExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicPropertyExtractor.swift; sourceTree = "<group>"; };
 		0EDB239A239D397600A9C9B7 /* BasicAttributeExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicAttributeExtractor.swift; sourceTree = "<group>"; };
+		0EDB239D239D3A5000A9C9B7 /* BasicParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicParser.swift; sourceTree = "<group>"; };
+		0EDB23A2239D3D8800A9C9B7 /* SubParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubParser.swift; sourceTree = "<group>"; };
+		0EDB23A4239D3E2E00A9C9B7 /* PathFromAttributeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFromAttributeParser.swift; sourceTree = "<group>"; };
+		0EDB23A6239D40DD00A9C9B7 /* PathFromSyntaxTreeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFromSyntaxTreeParser.swift; sourceTree = "<group>"; };
+		0EDB23A8239D41BE00A9C9B7 /* PathFromAnnotationFunctionCallParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFromAnnotationFunctionCallParser.swift; sourceTree = "<group>"; };
+		0EDB23AA239D42AC00A9C9B7 /* ExpressionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionParser.swift; sourceTree = "<group>"; };
+		0EDB23AC239D44F900A9C9B7 /* PathFromMemberAccessParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFromMemberAccessParser.swift; sourceTree = "<group>"; };
+		0EDB23AE239D458300A9C9B7 /* AnyParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyParser.swift; sourceTree = "<group>"; };
+		0EDB23B1239D47B900A9C9B7 /* BaseMemberAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMemberAccess.swift; sourceTree = "<group>"; };
+		0EDB23B3239D47F000A9C9B7 /* PathFromBaseMemberAccessParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFromBaseMemberAccessParser.swift; sourceTree = "<group>"; };
+		0EDB23B5239D48EB00A9C9B7 /* PathFromFunctionCallParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFromFunctionCallParser.swift; sourceTree = "<group>"; };
+		0EDB23B7239D4B1D00A9C9B7 /* ArgumentsFromArgumentListParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentsFromArgumentListParser.swift; sourceTree = "<group>"; };
+		0EDB23B9239D4C8900A9C9B7 /* ArgumentFromMemberAccessParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentFromMemberAccessParser.swift; sourceTree = "<group>"; };
+		0EDB23BB239D4D3000A9C9B7 /* ArgumentFromFunctionCallParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentFromFunctionCallParser.swift; sourceTree = "<group>"; };
+		0EDB23BD239D4E9F00A9C9B7 /* QueryArgumentFromMemberAccessParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryArgumentFromMemberAccessParser.swift; sourceTree = "<group>"; };
+		0EDB23BF239D4F0700A9C9B7 /* QueryArgumentFromFunctionCallParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryArgumentFromFunctionCallParser.swift; sourceTree = "<group>"; };
+		0EDB23C1239D500A00A9C9B7 /* BasicPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicPipeline.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -430,22 +456,10 @@
 			children = (
 				0E7A0E1923944401007F5AE9 /* Struct.swift */,
 				0ECF25FA239809C5001C75F8 /* Property.swift */,
-				0ECF2600239809F3001C75F8 /* GraphQLPath+Target.swift */,
-				0ECF260223980A0C001C75F8 /* StandardComponent+Argument.swift */,
-				0ECF260423980A84001C75F8 /* Parsing */,
+				0ECF2600239809F3001C75F8 /* Target.swift */,
+				0ECF260223980A0C001C75F8 /* Argument.swift */,
 			);
 			path = Struct;
-			sourceTree = "<group>";
-		};
-		0ECF260423980A84001C75F8 /* Parsing */ = {
-			isa = PBXGroup;
-			children = (
-				0ECF25B62396AA41001C75F8 /* Struct+parsing.swift */,
-				0ECF260723980AA4001C75F8 /* GraphQLPath+parsing.swift */,
-				0ECF260923980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift */,
-				0ECF260B23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift */,
-			);
-			path = Parsing;
 			sourceTree = "<group>";
 		};
 		0EDB2367239BF05E00A9C9B7 /* Validation */ = {
@@ -507,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				0EDB237B239D326700A9C9B7 /* Pipeline.swift */,
+				0EDB23C1239D500A00A9C9B7 /* BasicPipeline.swift */,
 				0EDB237E239D336300A9C9B7 /* Component */,
 			);
 			path = Pipeline;
@@ -538,6 +553,8 @@
 			isa = PBXGroup;
 			children = (
 				0EDB2387239D33FA00A9C9B7 /* Parser.swift */,
+				0EDB239D239D3A5000A9C9B7 /* BasicParser.swift */,
+				0EDB239F239D3AA000A9C9B7 /* SubParsers */,
 			);
 			path = Parsing;
 			sourceTree = "<group>";
@@ -577,6 +594,36 @@
 				0EDB239A239D397600A9C9B7 /* BasicAttributeExtractor.swift */,
 			);
 			path = Implementations;
+			sourceTree = "<group>";
+		};
+		0EDB239F239D3AA000A9C9B7 /* SubParsers */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB23A2239D3D8800A9C9B7 /* SubParser.swift */,
+				0EDB23A4239D3E2E00A9C9B7 /* PathFromAttributeParser.swift */,
+				0EDB23A6239D40DD00A9C9B7 /* PathFromSyntaxTreeParser.swift */,
+				0EDB23A8239D41BE00A9C9B7 /* PathFromAnnotationFunctionCallParser.swift */,
+				0EDB23AA239D42AC00A9C9B7 /* ExpressionParser.swift */,
+				0EDB23AE239D458300A9C9B7 /* AnyParser.swift */,
+				0EDB23AC239D44F900A9C9B7 /* PathFromMemberAccessParser.swift */,
+				0EDB23B5239D48EB00A9C9B7 /* PathFromFunctionCallParser.swift */,
+				0EDB23B3239D47F000A9C9B7 /* PathFromBaseMemberAccessParser.swift */,
+				0EDB23B7239D4B1D00A9C9B7 /* ArgumentsFromArgumentListParser.swift */,
+				0EDB23B9239D4C8900A9C9B7 /* ArgumentFromMemberAccessParser.swift */,
+				0EDB23BB239D4D3000A9C9B7 /* ArgumentFromFunctionCallParser.swift */,
+				0EDB23BD239D4E9F00A9C9B7 /* QueryArgumentFromMemberAccessParser.swift */,
+				0EDB23BF239D4F0700A9C9B7 /* QueryArgumentFromFunctionCallParser.swift */,
+				0EDB23B0239D479E00A9C9B7 /* Helpers */,
+			);
+			path = SubParsers;
+			sourceTree = "<group>";
+		};
+		0EDB23B0239D479E00A9C9B7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0EDB23B1239D47B900A9C9B7 /* BaseMemberAccess.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -658,6 +705,7 @@
 			files = (
 				0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */,
 				0EDB2392239D381000A9C9B7 /* PropertyExtractor.swift in Sources */,
+				0EDB23AB239D42AC00A9C9B7 /* ExpressionParser.swift in Sources */,
 				0ECF25E1239805AB001C75F8 /* Argument.swift in Sources */,
 				0EDB2394239D384A00A9C9B7 /* AttributeExtractor.swift in Sources */,
 				0ECF25F82398088A001C75F8 /* SourceCode+decode.swift in Sources */,
@@ -672,14 +720,18 @@
 				0E68B20D239166B700474D36 /* Path+templates.swift in Sources */,
 				0E4A1E5F239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift in Sources */,
 				0ECF25F42398084A001C75F8 /* SourceCode+optional.swift in Sources */,
+				0EDB23BA239D4C8900A9C9B7 /* ArgumentFromMemberAccessParser.swift in Sources */,
+				0EDB23BE239D4E9F00A9C9B7 /* QueryArgumentFromMemberAccessParser.swift in Sources */,
 				0EDB2378239D31F000A9C9B7 /* Resolved.swift in Sources */,
 				0EDB2374239D31AC00A9C9B7 /* Parsed.swift in Sources */,
 				0E68B1EE23913E8E00474D36 /* Schema.swift in Sources */,
 				0E4A1E6D239A5A9A00EA2CF8 /* Array+Structs+GraphQLStructs.swift in Sources */,
 				0ECF25E523980648001C75F8 /* Definition.swift in Sources */,
 				0ECF25F62398085E001C75F8 /* SourceCode+singleExpression.swift in Sources */,
+				0EDB23A5239D3E2E00A9C9B7 /* PathFromAttributeParser.swift in Sources */,
 				0EDB2364239BE35A00A9C9B7 /* GraphQLPath+validated.swift in Sources */,
 				0EDB2386239D33CA00A9C9B7 /* Extractor.swift in Sources */,
+				0EDB23B2239D47B900A9C9B7 /* BaseMemberAccess.swift in Sources */,
 				0E4A1E90239AFF1E00EA2CF8 /* InitializerValueAssignment.swift in Sources */,
 				0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */,
 				0E4A1E88239AEE9200EA2CF8 /* Argument+SwiftCodeTransformable.swift in Sources */,
@@ -687,43 +739,50 @@
 				0EDB2372239D318C00A9C9B7 /* Extracted.swift in Sources */,
 				0EDB2369239C096600A9C9B7 /* Stage.swift in Sources */,
 				0E4A1E5B2398606300EA2CF8 /* Codegen.swift in Sources */,
-				0ECF260323980A0C001C75F8 /* StandardComponent+Argument.swift in Sources */,
+				0ECF260323980A0C001C75F8 /* Argument.swift in Sources */,
 				0E4A1E75239A6CDE00EA2CF8 /* Array.swift in Sources */,
-				0ECF260C23980B17001C75F8 /* GraphQLPath+QueryArgument+parsing.swift in Sources */,
 				0EDB237C239D326700A9C9B7 /* Pipeline.swift in Sources */,
 				0ECF25BD2396B8EE001C75F8 /* SourceCode+syntaxTree.swift in Sources */,
 				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
 				0ECF25E92398072B001C75F8 /* TypeReference+Codable.swift in Sources */,
-				0ECF25B72396AA41001C75F8 /* Struct+parsing.swift in Sources */,
 				0E4A1E8E239AFD6E00EA2CF8 /* InitializerArgument.swift in Sources */,
 				0E4A1E5D239860D800EA2CF8 /* Project+State+codegen.swift in Sources */,
 				0E57589123911FBA005834EF /* Optional+Extensions.swift in Sources */,
 				0EDB2397239D389800A9C9B7 /* BasicStructExtractor.swift in Sources */,
 				0E4A1E77239A7F2D00EA2CF8 /* NamedGraphQLFragment.swift in Sources */,
 				0ECF25D223980422001C75F8 /* ParseError.swift in Sources */,
-				0ECF2601239809F3001C75F8 /* GraphQLPath+Target.swift in Sources */,
+				0ECF2601239809F3001C75F8 /* Target.swift in Sources */,
 				0E4A1E84239A973900EA2CF8 /* GraphQLType+SwiftCodeTransformable.swift in Sources */,
 				0ECF25DF23980562001C75F8 /* Field.swift in Sources */,
-				0ECF260823980AA4001C75F8 /* GraphQLPath+parsing.swift in Sources */,
 				0EDB239B239D397600A9C9B7 /* BasicAttributeExtractor.swift in Sources */,
 				0E4A1E66239A572000EA2CF8 /* GraphQLFragment.swift in Sources */,
 				0E4A1E5223984CD600EA2CF8 /* Project+State+validated.swift in Sources */,
 				0E4A1E8C239AF9A800EA2CF8 /* String+lowerCasingFirst.swift in Sources */,
+				0EDB23BC239D4D3000A9C9B7 /* ArgumentFromFunctionCallParser.swift in Sources */,
 				0E4A1E8A239AF53700EA2CF8 /* GraphQLStruct+SwiftCodeTransformable.swift in Sources */,
 				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
-				0ECF260A23980AD3001C75F8 /* GraphQLPath+Argument+parsing.swift in Sources */,
+				0EDB23B8239D4B1D00A9C9B7 /* ArgumentsFromArgumentListParser.swift in Sources */,
+				0EDB23A3239D3D8800A9C9B7 /* SubParser.swift in Sources */,
 				0ECF25E7239806EF001C75F8 /* API.swift in Sources */,
 				0EDB2376239D31C800A9C9B7 /* Validated.swift in Sources */,
+				0EDB23B6239D48EB00A9C9B7 /* PathFromFunctionCallParser.swift in Sources */,
+				0EDB23C0239D4F0700A9C9B7 /* QueryArgumentFromFunctionCallParser.swift in Sources */,
 				0E4A1E61239A51D300EA2CF8 /* Extracted+Property+isComputed.swift in Sources */,
+				0EDB23AF239D458300A9C9B7 /* AnyParser.swift in Sources */,
 				0EDB2388239D33FA00A9C9B7 /* Parser.swift in Sources */,
+				0EDB23A7239D40DD00A9C9B7 /* PathFromSyntaxTreeParser.swift in Sources */,
 				0ECF25DD2398053B001C75F8 /* Schema+Kind.swift in Sources */,
 				0ECF25E3239805D8001C75F8 /* TypeReference.swift in Sources */,
+				0EDB23C2239D500A00A9C9B7 /* BasicPipeline.swift in Sources */,
+				0EDB23AD239D44F900A9C9B7 /* PathFromMemberAccessParser.swift in Sources */,
 				0E4A1E68239A57D900EA2CF8 /* Component.swift in Sources */,
 				0E7A0E1E23944602007F5AE9 /* Project+scanStructs.swift in Sources */,
 				0E4A1E82239A957600EA2CF8 /* API+SwiftCodeTransformable.swift in Sources */,
 				0E4A1E86239A9A4200EA2CF8 /* Field+SwiftCodeTransformable.swift in Sources */,
 				0E4A1E73239A672B00EA2CF8 /* GraphQLObject.swift in Sources */,
+				0EDB23A9239D41BE00A9C9B7 /* PathFromAnnotationFunctionCallParser.swift in Sources */,
 				0E57588F23911DAC005834EF /* GraphQLError.swift in Sources */,
+				0EDB23B4239D47F100A9C9B7 /* PathFromBaseMemberAccessParser.swift in Sources */,
 				0E68B1F0239144DF00474D36 /* Project+scanAPIs.swift in Sources */,
 				0EDB237A239D324400A9C9B7 /* GraphQLStage.swift in Sources */,
 				0E4A1E63239A570500EA2CF8 /* GraphQLStruct.swift in Sources */,
@@ -735,6 +794,7 @@
 				0E5758792390ACBA005834EF /* main.swift in Sources */,
 				0EDB238C239D342100A9C9B7 /* Resolver.swift in Sources */,
 				0EDB2390239D37D600A9C9B7 /* StructExtractor.swift in Sources */,
+				0EDB239E239D3A5000A9C9B7 /* BasicParser.swift in Sources */,
 				0ECF25DB2398050E001C75F8 /* GraphQLType.swift in Sources */,
 				0ECF25BB2396B3A7001C75F8 /* Collection+single.swift in Sources */,
 				0E4A1E7C239A925A00EA2CF8 /* SwiftCodeTransformable.swift in Sources */,

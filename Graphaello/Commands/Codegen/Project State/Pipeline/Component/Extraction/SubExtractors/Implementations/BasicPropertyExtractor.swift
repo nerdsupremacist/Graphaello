@@ -8,11 +8,13 @@
 
 import Foundation
 
-enum BasicPropertyExtractor<Attribute: AttributeExtractor>: PropertyExtractor {
-    static func extract(code: SourceCode) throws -> Property<Stage.Extracted> {
+struct BasicPropertyExtractor: PropertyExtractor {
+    let attributeExtractor: AttributeExtractor
+
+    func extract(code: SourceCode) throws -> Property<Stage.Extracted> {
         let attributes = try code
             .optional { try $0.attributes() }?
-            .map { try Attribute.extract(code: $0) } ?? []
+            .map { try attributeExtractor.extract(code: $0) } ?? []
 
         return Property(code: code,
                         name: try code.name(),

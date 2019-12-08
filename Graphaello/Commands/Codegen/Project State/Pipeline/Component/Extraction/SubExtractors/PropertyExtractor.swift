@@ -9,5 +9,5 @@
 import Foundation
 
 protocol PropertyExtractor {
-    static func extract(code: SourceCode) throws -> Property<Stage.Extracted>
+    func extract(code: SourceCode) throws -> Property<Stage.Extracted>
 }

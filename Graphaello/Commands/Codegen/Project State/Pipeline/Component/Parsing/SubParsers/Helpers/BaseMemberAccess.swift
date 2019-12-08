@@ -1,5 +1,5 @@
 //
-//  AttributeExtractor.swift
+//  BaseMemberAccess.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 12/8/19.
@@ -8,6 +8,7 @@
 
 import Foundation
 
-protocol AttributeExtractor {
-    func extract(code: SourceCode) throws -> Stage.Extracted.Attribute
+struct BaseMemberAccess {
+    let base: String
+    let accessedField: String
 }

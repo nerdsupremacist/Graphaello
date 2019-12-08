@@ -10,5 +10,5 @@ import Foundation
 import SourceKittenFramework
 
 protocol Extractor {
-    static func extract(from file: File) throws -> [Struct<Stage.Extracted>]
+    func extract(from file: File) throws -> [Struct<Stage.Extracted>]
 }

@@ -1,5 +1,5 @@
 //
-//  AttributeExtractor.swift
+//  BasicPipeline.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 12/8/19.
@@ -7,7 +7,3 @@
 //
 
 import Foundation
-
-protocol AttributeExtractor {
-    func extract(code: SourceCode) throws -> Stage.Extracted.Attribute
-}
