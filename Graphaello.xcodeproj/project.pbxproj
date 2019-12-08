@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0E091925239933CD0045B34B /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E091924239933CD0045B34B /* Project.swift */; };
-		0E4A1E5223984CD600EA2CF8 /* Project+State+validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5123984CD600EA2CF8 /* Project+State+validated.swift */; };
 		0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */; };
 		0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5823985F9200EA2CF8 /* Project+State.swift */; };
 		0E4A1E5B2398606300EA2CF8 /* Codegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E5A2398606300EA2CF8 /* Codegen.swift */; };
@@ -36,6 +35,12 @@
 		0E4A1E8E239AFD6E00EA2CF8 /* InitializerArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E8D239AFD6E00EA2CF8 /* InitializerArgument.swift */; };
 		0E4A1E90239AFF1E00EA2CF8 /* InitializerValueAssignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E8F239AFF1E00EA2CF8 /* InitializerValueAssignment.swift */; };
 		0E4A1E92239D51A500EA2CF8 /* PipelineFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E91239D51A500EA2CF8 /* PipelineFactory.swift */; };
+		0E4A1E94239D67D900EA2CF8 /* BasicValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E93239D67D900EA2CF8 /* BasicValidator.swift */; };
+		0E4A1E96239D683A00EA2CF8 /* PathValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E95239D683A00EA2CF8 /* PathValidator.swift */; };
+		0E4A1E98239D687F00EA2CF8 /* BasicPathValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E97239D687F00EA2CF8 /* BasicPathValidator.swift */; };
+		0E4A1E9A239D693D00EA2CF8 /* ComponentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E99239D693D00EA2CF8 /* ComponentValidator.swift */; };
+		0E4A1E9C239D6A6900EA2CF8 /* ComponentValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E9B239D6A6900EA2CF8 /* ComponentValidation.swift */; };
+		0E4A1E9E239D6CFD00EA2CF8 /* BasicComponentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1E9D239D6CFD00EA2CF8 /* BasicComponentValidator.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -76,7 +81,6 @@
 		0ECF25FB239809C5001C75F8 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25FA239809C5001C75F8 /* Property.swift */; };
 		0ECF2601239809F3001C75F8 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF2600239809F3001C75F8 /* Target.swift */; };
 		0ECF260323980A0C001C75F8 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF260223980A0C001C75F8 /* Argument.swift */; };
-		0EDB2364239BE35A00A9C9B7 /* GraphQLPath+validated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2363239BE35A00A9C9B7 /* GraphQLPath+validated.swift */; };
 		0EDB2369239C096600A9C9B7 /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2368239C096600A9C9B7 /* Stage.swift */; };
 		0EDB2372239D318C00A9C9B7 /* Extracted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2371239D318C00A9C9B7 /* Extracted.swift */; };
 		0EDB2374239D31AC00A9C9B7 /* Parsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDB2373239D31AC00A9C9B7 /* Parsed.swift */; };
@@ -138,7 +142,6 @@
 
 /* Begin PBXFileReference section */
 		0E091924239933CD0045B34B /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		0E4A1E5123984CD600EA2CF8 /* Project+State+validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State+validated.swift"; sourceTree = "<group>"; };
 		0E4A1E5323984E1B00EA2CF8 /* GraphQLPathValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLPathValidationError.swift; sourceTree = "<group>"; };
 		0E4A1E5823985F9200EA2CF8 /* Project+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+State.swift"; sourceTree = "<group>"; };
 		0E4A1E5A2398606300EA2CF8 /* Codegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codegen.swift; sourceTree = "<group>"; };
@@ -166,6 +169,12 @@
 		0E4A1E8D239AFD6E00EA2CF8 /* InitializerArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitializerArgument.swift; sourceTree = "<group>"; };
 		0E4A1E8F239AFF1E00EA2CF8 /* InitializerValueAssignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitializerValueAssignment.swift; sourceTree = "<group>"; };
 		0E4A1E91239D51A500EA2CF8 /* PipelineFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineFactory.swift; sourceTree = "<group>"; };
+		0E4A1E93239D67D900EA2CF8 /* BasicValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicValidator.swift; sourceTree = "<group>"; };
+		0E4A1E95239D683A00EA2CF8 /* PathValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathValidator.swift; sourceTree = "<group>"; };
+		0E4A1E97239D687F00EA2CF8 /* BasicPathValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicPathValidator.swift; sourceTree = "<group>"; };
+		0E4A1E99239D693D00EA2CF8 /* ComponentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValidator.swift; sourceTree = "<group>"; };
+		0E4A1E9B239D6A6900EA2CF8 /* ComponentValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValidation.swift; sourceTree = "<group>"; };
+		0E4A1E9D239D6CFD00EA2CF8 /* BasicComponentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicComponentValidator.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* Graphaello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphaello; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -200,7 +209,6 @@
 		0ECF25FA239809C5001C75F8 /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
 		0ECF2600239809F3001C75F8 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		0ECF260223980A0C001C75F8 /* Argument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Argument.swift; sourceTree = "<group>"; };
-		0EDB2363239BE35A00A9C9B7 /* GraphQLPath+validated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQLPath+validated.swift"; sourceTree = "<group>"; };
 		0EDB2368239C096600A9C9B7 /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		0EDB2371239D318C00A9C9B7 /* Extracted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extracted.swift; sourceTree = "<group>"; };
 		0EDB2373239D31AC00A9C9B7 /* Parsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parsed.swift; sourceTree = "<group>"; };
@@ -263,7 +271,6 @@
 				0ECF25D8239804A8001C75F8 /* Schema */,
 				0ECF25F9239808FF001C75F8 /* Struct */,
 				0EDB236A239D312C00A9C9B7 /* Stage */,
-				0EDB2367239BF05E00A9C9B7 /* Validation */,
 				0ECF25CF239803D0001C75F8 /* Source Code + Parsing */,
 			);
 			path = "Project State";
@@ -459,15 +466,6 @@
 			path = Struct;
 			sourceTree = "<group>";
 		};
-		0EDB2367239BF05E00A9C9B7 /* Validation */ = {
-			isa = PBXGroup;
-			children = (
-				0E4A1E5123984CD600EA2CF8 /* Project+State+validated.swift */,
-				0EDB2363239BE35A00A9C9B7 /* GraphQLPath+validated.swift */,
-			);
-			path = Validation;
-			sourceTree = "<group>";
-		};
 		0EDB236A239D312C00A9C9B7 /* Stage */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,6 +559,12 @@
 			isa = PBXGroup;
 			children = (
 				0EDB2389239D340E00A9C9B7 /* Validator.swift */,
+				0E4A1E93239D67D900EA2CF8 /* BasicValidator.swift */,
+				0E4A1E95239D683A00EA2CF8 /* PathValidator.swift */,
+				0E4A1E97239D687F00EA2CF8 /* BasicPathValidator.swift */,
+				0E4A1E99239D693D00EA2CF8 /* ComponentValidator.swift */,
+				0E4A1E9B239D6A6900EA2CF8 /* ComponentValidation.swift */,
+				0E4A1E9D239D6CFD00EA2CF8 /* BasicComponentValidator.swift */,
 			);
 			path = Validation;
 			sourceTree = "<group>";
@@ -703,11 +707,13 @@
 				0E4A1E5423984E1B00EA2CF8 /* GraphQLPathValidationError.swift in Sources */,
 				0EDB2392239D381000A9C9B7 /* PropertyExtractor.swift in Sources */,
 				0EDB23AB239D42AC00A9C9B7 /* SubParser+expression.swift in Sources */,
+				0E4A1E9A239D693D00EA2CF8 /* ComponentValidator.swift in Sources */,
 				0ECF25E1239805AB001C75F8 /* Field+Argument.swift in Sources */,
 				0EDB2394239D384A00A9C9B7 /* AttributeExtractor.swift in Sources */,
 				0ECF25F82398088A001C75F8 /* SourceCode+decode.swift in Sources */,
 				0E4A1E80239A94C800EA2CF8 /* StructureAPI.swift in Sources */,
 				0E091925239933CD0045B34B /* Project.swift in Sources */,
+				0E4A1E96239D683A00EA2CF8 /* PathValidator.swift in Sources */,
 				0EDB238E239D344A00A9C9B7 /* BasicExtractor.swift in Sources */,
 				0E4A1E71239A637700EA2CF8 /* GraphQLField.swift in Sources */,
 				0ECF25FB239809C5001C75F8 /* Property.swift in Sources */,
@@ -718,6 +724,7 @@
 				0E4A1E5F239A50D200EA2CF8 /* SourceFileSyntax+SingleItem.swift in Sources */,
 				0ECF25F42398084A001C75F8 /* SourceCode+optional.swift in Sources */,
 				0EDB23BA239D4C8900A9C9B7 /* SubParser+memberAccess+Argument.swift in Sources */,
+				0E4A1E9C239D6A6900EA2CF8 /* ComponentValidation.swift in Sources */,
 				0EDB23BE239D4E9F00A9C9B7 /* SubParser+memberAccess+QueryArgument.swift in Sources */,
 				0EDB2378239D31F000A9C9B7 /* Resolved.swift in Sources */,
 				0EDB2374239D31AC00A9C9B7 /* Parsed.swift in Sources */,
@@ -726,7 +733,6 @@
 				0ECF25E523980648001C75F8 /* Definition.swift in Sources */,
 				0ECF25F62398085E001C75F8 /* SourceCode+singleExpression.swift in Sources */,
 				0EDB23A5239D3E2E00A9C9B7 /* SubParser+attribute.swift in Sources */,
-				0EDB2364239BE35A00A9C9B7 /* GraphQLPath+validated.swift in Sources */,
 				0EDB2386239D33CA00A9C9B7 /* Extractor.swift in Sources */,
 				0EDB23B2239D47B900A9C9B7 /* BaseMemberAccess.swift in Sources */,
 				0E4A1E90239AFF1E00EA2CF8 /* InitializerValueAssignment.swift in Sources */,
@@ -753,8 +759,8 @@
 				0ECF25DF23980562001C75F8 /* Field.swift in Sources */,
 				0EDB239B239D397600A9C9B7 /* BasicAttributeExtractor.swift in Sources */,
 				0E4A1E66239A572000EA2CF8 /* GraphQLFragment.swift in Sources */,
-				0E4A1E5223984CD600EA2CF8 /* Project+State+validated.swift in Sources */,
 				0E4A1E8C239AF9A800EA2CF8 /* String+lowerCasingFirst.swift in Sources */,
+				0E4A1E94239D67D900EA2CF8 /* BasicValidator.swift in Sources */,
 				0EDB23BC239D4D3000A9C9B7 /* SubParser+functionCall+Argument.swift in Sources */,
 				0E4A1E8A239AF53700EA2CF8 /* GraphQLStruct+SwiftCodeTransformable.swift in Sources */,
 				0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */,
@@ -768,8 +774,10 @@
 				0EDB2388239D33FA00A9C9B7 /* Parser.swift in Sources */,
 				0EDB23A7239D40DD00A9C9B7 /* SubParser+syntaxTree.swift in Sources */,
 				0ECF25DD2398053B001C75F8 /* Schema+Kind.swift in Sources */,
+				0E4A1E98239D687F00EA2CF8 /* BasicPathValidator.swift in Sources */,
 				0ECF25E3239805D8001C75F8 /* TypeReference.swift in Sources */,
 				0EDB23C2239D500A00A9C9B7 /* BasicPipeline.swift in Sources */,
+				0E4A1E9E239D6CFD00EA2CF8 /* BasicComponentValidator.swift in Sources */,
 				0EDB23AD239D44F900A9C9B7 /* SubPArser+memberAccess+Path.swift in Sources */,
 				0E4A1E68239A57D900EA2CF8 /* Component.swift in Sources */,
 				0E4A1E82239A957600EA2CF8 /* API+SwiftCodeTransformable.swift in Sources */,

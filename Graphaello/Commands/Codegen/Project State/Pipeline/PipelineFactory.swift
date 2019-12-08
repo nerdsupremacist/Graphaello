@@ -12,7 +12,9 @@ import SwiftSyntax
 enum PipelineFactory {
     
     static func create() -> Pipeline {
-        return BasicPipeline(extractor: create(), parser: create())
+        return BasicPipeline(extractor: create(),
+                             parser: create(),
+                             validator: create())
     }
     
     private static func create() -> Extractor {
@@ -56,6 +58,14 @@ enum PipelineFactory {
                         )
                     }
                 }
+            }
+        }
+    }
+    
+    private static func create() -> Validator {
+        return BasicValidator {
+            BasicPathValidator {
+                BasicComponentValidator()
             }
         }
     }

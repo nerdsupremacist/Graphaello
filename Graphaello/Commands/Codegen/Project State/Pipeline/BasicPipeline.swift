@@ -12,6 +12,7 @@ import SourceKittenFramework
 struct BasicPipeline: Pipeline {
     let extractor: Extractor
     let parser: Parser
+    let validator: Validator
     
     func extract(from file: File) throws -> [Struct<Stage.Extracted>] {
         return try extractor.extract(from: file)
@@ -22,7 +23,7 @@ struct BasicPipeline: Pipeline {
     }
     
     func validate(parsed: Struct<Stage.Parsed>, using apis: [API]) throws -> Struct<Stage.Validated> {
-        fatalError()
+        return try validator.validate(parsed: parsed, using: apis)
     }
     
     func resolve(validated: [Struct<Stage.Validated>]) throws -> [GraphQLStruct] {
