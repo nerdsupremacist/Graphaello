@@ -21,7 +21,7 @@ struct BasicPipeline: Pipeline {
         return try parser.parse(extracted: extracted)
     }
     
-    func validate(parsed: Struct<Stage.Parsed>) throws -> Struct<Stage.Validated> {
+    func validate(parsed: Struct<Stage.Parsed>, using apis: [API]) throws -> Struct<Stage.Validated> {
         fatalError()
     }
     

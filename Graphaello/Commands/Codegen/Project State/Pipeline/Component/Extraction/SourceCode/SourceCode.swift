@@ -26,3 +26,11 @@ extension SourceCode {
     }
 
 }
+
+extension SourceCode: CustomStringConvertible {
+    
+    var description: String {
+        return content
+    }
+    
+}

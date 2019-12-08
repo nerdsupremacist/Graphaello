@@ -54,7 +54,6 @@
 		0E7A0E122393F91F007F5AE9 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 0E7A0E112393F91F007F5AE9 /* SwiftFormat */; };
 		0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1723944341007F5AE9 /* Environment+custom.swift */; };
 		0E7A0E1A23944401007F5AE9 /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1923944401007F5AE9 /* Struct.swift */; };
-		0E7A0E1E23944602007F5AE9 /* Project+scanStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */; };
 		0E7A0E2423944D98007F5AE9 /* SourceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A0E2323944D98007F5AE9 /* SourceCode.swift */; };
 		0EBE9A782395116C00A705B4 /* SourceCode+Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBE9A772395116C00A705B4 /* SourceCode+Kind.swift */; };
 		0ECF25BB2396B3A7001C75F8 /* Collection+single.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF25BA2396B3A7001C75F8 /* Collection+single.swift */; };
@@ -180,7 +179,6 @@
 		0E68B20F2391679A00474D36 /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = templates; sourceTree = "<group>"; };
 		0E7A0E1723944341007F5AE9 /* Environment+custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+custom.swift"; sourceTree = "<group>"; };
 		0E7A0E1923944401007F5AE9 /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
-		0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+scanStructs.swift"; sourceTree = "<group>"; };
 		0E7A0E2323944D98007F5AE9 /* SourceCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCode.swift; sourceTree = "<group>"; };
 		0EBE9A772395116C00A705B4 /* SourceCode+Kind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SourceCode+Kind.swift"; sourceTree = "<group>"; };
 		0ECF25BA2396B3A7001C75F8 /* Collection+single.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+single.swift"; sourceTree = "<group>"; };
@@ -351,7 +349,6 @@
 		0ECF25CF239803D0001C75F8 /* Source Code + Parsing */ = {
 			isa = PBXGroup;
 			children = (
-				0E7A0E1D23944602007F5AE9 /* Project+scanStructs.swift */,
 				0E4A1E64239A571200EA2CF8 /* GraphQL Struct */,
 			);
 			path = "Source Code + Parsing";
@@ -775,7 +772,6 @@
 				0EDB23C2239D500A00A9C9B7 /* BasicPipeline.swift in Sources */,
 				0EDB23AD239D44F900A9C9B7 /* SubPArser+memberAccess+Path.swift in Sources */,
 				0E4A1E68239A57D900EA2CF8 /* Component.swift in Sources */,
-				0E7A0E1E23944602007F5AE9 /* Project+scanStructs.swift in Sources */,
 				0E4A1E82239A957600EA2CF8 /* API+SwiftCodeTransformable.swift in Sources */,
 				0E4A1E86239A9A4200EA2CF8 /* Field+SwiftCodeTransformable.swift in Sources */,
 				0E4A1E73239A672B00EA2CF8 /* GraphQLObject.swift in Sources */,
