@@ -1,6 +1,6 @@
 {% for fragment in graphqlstruct.fragments %}
 extension {{ fragment.name }} : Fragment {
-    public typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
+    typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
 }
 {% endfor %}
 
@@ -9,7 +9,7 @@ extension {{ graphqlstruct.definition.name }} {
     typealias {{ fragment.target.name }} = {{ fragment.name }}
     {% endfor %}
     {% if graphqlstruct.query %}
-    typealias Data = {{ graphqlstruct.definition.name }}Query
+    typealias Data = {{ graphqlstruct.definition.name }}Query.Data
     {% endif %}
     
     init({{ initializerArguments|swiftCodeArray|join:", " }}) {
@@ -24,7 +24,7 @@ extension {{ graphqlstruct.query.api.name }} {
         return QueryRenderer(client: client,
                              query: {{ graphqlstruct.definition.name }}Query({{ queryArgumentAssignments|swiftCodeArray|join:", " }})) { data in
         
-            fatalError()
+            {{ graphqlstruct.definition.name }}({{ initializerArgumentAssignmentFromQueryData|swiftCodeArray|join:", " }})
         }
     }
     

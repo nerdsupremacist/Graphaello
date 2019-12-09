@@ -62,6 +62,7 @@
 		0E4A1EDF239DC55100EA2CF8 /* CollectedPath+queryComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EDE239DC55100EA2CF8 /* CollectedPath+queryComponents.swift */; };
 		0E4A1EE1239DD2AC00EA2CF8 /* QueryRendererArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EE0239DD2AC00EA2CF8 /* QueryRendererArgument.swift */; };
 		0E4A1EE3239E7C1900EA2CF8 /* QueryArgumentAssignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EE2239E7C1900EA2CF8 /* QueryArgumentAssignment.swift */; };
+		0E4A1EE5239E838B00EA2CF8 /* InitializerArgumentAssignmentFromQueryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EE4239E838B00EA2CF8 /* InitializerArgumentAssignmentFromQueryData.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -217,6 +218,7 @@
 		0E4A1EDE239DC55100EA2CF8 /* CollectedPath+queryComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectedPath+queryComponents.swift"; sourceTree = "<group>"; };
 		0E4A1EE0239DD2AC00EA2CF8 /* QueryRendererArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryRendererArgument.swift; sourceTree = "<group>"; };
 		0E4A1EE2239E7C1900EA2CF8 /* QueryArgumentAssignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryArgumentAssignment.swift; sourceTree = "<group>"; };
+		0E4A1EE4239E838B00EA2CF8 /* InitializerArgumentAssignmentFromQueryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitializerArgumentAssignmentFromQueryData.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* Graphaello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphaello; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				0E4A1E8F239AFF1E00EA2CF8 /* InitializerValueAssignment.swift */,
 				0E4A1EE0239DD2AC00EA2CF8 /* QueryRendererArgument.swift */,
 				0E4A1EE2239E7C1900EA2CF8 /* QueryArgumentAssignment.swift */,
+				0E4A1EE4239E838B00EA2CF8 /* InitializerArgumentAssignmentFromQueryData.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -931,6 +934,7 @@
 				0ECF25DB2398050E001C75F8 /* GraphQLType.swift in Sources */,
 				0ECF25BB2396B3A7001C75F8 /* Collection+single.swift in Sources */,
 				0E4A1E7C239A925A00EA2CF8 /* SwiftCodeTransformable.swift in Sources */,
+				0E4A1EE5239E838B00EA2CF8 /* InitializerArgumentAssignmentFromQueryData.swift in Sources */,
 				0E4A1EDD239DC4B700EA2CF8 /* CollectedPath+object.swift in Sources */,
 				0E4A1EA2239D725B00EA2CF8 /* ValueResolver.swift in Sources */,
 				0EDB238A239D340E00A9C9B7 /* Validator.swift in Sources */,
