@@ -20,7 +20,7 @@ extension {{ graphqlstruct.definition.name }} {
 {% if graphqlstruct.query %}
 extension {{ graphqlstruct.query.api.name }} {
     
-    func {{ functionName }}() -> some View {
+    func {{ functionName }}({{ queryRendererArguments|swiftCodeArray|join:", " }}) -> some View {
         fatalError()
     }
     

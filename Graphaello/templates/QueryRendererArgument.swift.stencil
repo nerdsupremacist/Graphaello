@@ -1,0 +1,1 @@
+{{ queryrendererargument.name }}: {{ queryrendererargument.type }}{% if queryrendererargument.expression %}queryrendererargument.expression{% endif %}

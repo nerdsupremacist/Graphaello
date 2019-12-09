@@ -60,6 +60,7 @@
 		0E4A1ED9239DBE4300EA2CF8 /* CollectedPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1ED8239DBE4300EA2CF8 /* CollectedPath.swift */; };
 		0E4A1EDD239DC4B700EA2CF8 /* CollectedPath+object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EDC239DC4B700EA2CF8 /* CollectedPath+object.swift */; };
 		0E4A1EDF239DC55100EA2CF8 /* CollectedPath+queryComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EDE239DC55100EA2CF8 /* CollectedPath+queryComponents.swift */; };
+		0E4A1EE1239DD2AC00EA2CF8 /* QueryRendererArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1EE0239DD2AC00EA2CF8 /* QueryRendererArgument.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -213,6 +214,7 @@
 		0E4A1ED8239DBE4300EA2CF8 /* CollectedPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedPath.swift; sourceTree = "<group>"; };
 		0E4A1EDC239DC4B700EA2CF8 /* CollectedPath+object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectedPath+object.swift"; sourceTree = "<group>"; };
 		0E4A1EDE239DC55100EA2CF8 /* CollectedPath+queryComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectedPath+queryComponents.swift"; sourceTree = "<group>"; };
+		0E4A1EE0239DD2AC00EA2CF8 /* QueryRendererArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryRendererArgument.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* Graphaello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphaello; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				0E4A1E89239AF53700EA2CF8 /* GraphQLStruct+SwiftCodeTransformable.swift */,
 				0E4A1E8D239AFD6E00EA2CF8 /* InitializerArgument.swift */,
 				0E4A1E8F239AFF1E00EA2CF8 /* InitializerValueAssignment.swift */,
+				0E4A1EE0239DD2AC00EA2CF8 /* QueryRendererArgument.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -823,6 +826,7 @@
 				0E4A1E71239A637700EA2CF8 /* GraphQLField.swift in Sources */,
 				0ECF25FB239809C5001C75F8 /* Property.swift in Sources */,
 				0E4A1E6A239A582400EA2CF8 /* Query.swift in Sources */,
+				0E4A1EE1239DD2AC00EA2CF8 /* QueryRendererArgument.swift in Sources */,
 				0E4A1E5923985F9200EA2CF8 /* Project+State.swift in Sources */,
 				0EDB2399239D38EE00A9C9B7 /* BasicPropertyExtractor.swift in Sources */,
 				0E68B20D239166B700474D36 /* Path+templates.swift in Sources */,

@@ -15,6 +15,7 @@ struct BasicStructExtractor: StructExtractor {
         let properties = try code.substructure()
             .filter { try $0.kind() == .varInstance }
             .map { try propertyExtractor.extract(code: $0) }
+            .filter { try !$0.isComputed() }
 
         return Struct(code: code,
                       name: try code.name(),
