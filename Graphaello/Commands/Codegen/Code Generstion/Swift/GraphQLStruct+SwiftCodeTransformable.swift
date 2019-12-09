@@ -18,6 +18,7 @@ extension GraphQLStruct: ExtraValuesSwiftCodeTransformable {
             "initializerArguments" : initializerArguments,
             "initializerValueAssignments" : initializerValueAssignments,
             "queryRendererArguments": queryRendererArguments,
+            "queryArgumentAssignments": queryArgumentAssignments,
         ]
     }
     

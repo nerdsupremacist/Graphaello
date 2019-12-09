@@ -21,7 +21,11 @@ extension {{ graphqlstruct.definition.name }} {
 extension {{ graphqlstruct.query.api.name }} {
     
     func {{ functionName }}({{ queryRendererArguments|swiftCodeArray|join:", " }}) -> some View {
-        fatalError()
+        return QueryRenderer(client: client,
+                             query: {{ graphqlstruct.definition.name }}Query({{ queryArgumentAssignments|swiftCodeArray|join:", " }})) { data in
+        
+            fatalError()
+        }
     }
     
 }
