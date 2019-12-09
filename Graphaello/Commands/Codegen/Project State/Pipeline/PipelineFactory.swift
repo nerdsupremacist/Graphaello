@@ -73,13 +73,19 @@ enum PipelineFactory {
     
     private static func create() -> Resolver {
         return BasicResolver {
-            GraphQLStructResolver {
+            GraphQLStructResolver(resolver: {
                 ValidatedStructResolver {
                     PropertyResolver {
                         PathResolver()
                     }
                 }
-            }
+            }, collector: {
+                BasicResolvedStructCollector {
+                    ResolvedPropertyCollector {
+                        ResolvedComponentCollector()
+                    }
+                }
+            })
         }
     }
 }

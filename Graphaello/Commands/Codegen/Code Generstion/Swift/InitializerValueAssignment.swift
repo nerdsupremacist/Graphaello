@@ -11,7 +11,7 @@ import SwiftSyntax
 
 struct InitializerValueAssignment: SwiftCodeTransformable {
     let name: String
-    let expression: String?
+    let expression: String
 }
 
 extension GraphQLStruct {
@@ -21,7 +21,7 @@ extension GraphQLStruct {
             switch property.graphqlPath {
             case .some(let path):
                 return InitializerValueAssignment(name: property.name,
-                                                  expression: path.expression())
+                                                  expression: "GraphQL(\(path.expression()))")
             case .none:
                 return InitializerValueAssignment(name: property.name, expression: property.name)
             }
@@ -98,26 +98,18 @@ extension AttributePath {
 }
 
 extension Stage.Resolved.Path {
-    
+
     fileprivate func expression() -> String {
-        return validated.expression(referencedFragment: referencedFragment)
-    }
-    
-}
-
-extension Stage.Validated.Path {
-
-    fileprivate func expression(referencedFragment: GraphQLFragment?) -> String {
         let first: AttributePath
         
-        switch parsed.target {
+        switch validated.parsed.target {
         case .query:
             first = AttributePath(name: "data", kind: .value)
         case .object(let type):
             first = AttributePath(name: type.camelized, kind: .value)
         }
 
-        let path = components.flatMap { $0.path(referencedFragment: referencedFragment) }
+        let path = validated.components.flatMap { $0.path(referencedFragment: referencedFragment) }
         return first.expression(attributes: path)
     }
 

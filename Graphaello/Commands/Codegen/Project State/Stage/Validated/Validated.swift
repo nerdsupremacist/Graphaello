@@ -21,6 +21,8 @@ extension Stage {
 
         struct Path {
             let parsed: Parsed.Path
+            let api: API
+            let target: Schema.GraphQLType
             let components: [Component]
         }
     }

@@ -27,7 +27,7 @@ struct BasicPathValidator: PathValidator {
             components = validatedContext.components
         }
 
-        return Stage.Validated.Path(parsed: path, components: components)
+        return Stage.Validated.Path(parsed: path, api: api, target: targetType, components: components)
     }
 }
 

@@ -10,22 +10,24 @@ import Foundation
 
 struct GraphQLStructResolver<Resolver: StructResolver>: StructResolver where Resolver.Resolved == Struct<Stage.Resolved> {
     let resolver: Resolver
+    let collector: ResolvedStructCollector
     
     func resolve(validated: Struct<Stage.Validated>,
                  using context: StructResolution.Context) throws -> StructResolution.Result<GraphQLStruct> {
         
         return try resolver
             .resolve(validated: validated, using: context)
-            .map { definition in
-                GraphQLStruct(definition: definition, fragments: [], query: nil)
+            .flatMap { definition in
+                try collector.collect(from: definition)
             }
     }
 }
 
 extension GraphQLStructResolver {
     
-    init(resolver: () -> Resolver) {
+    init(resolver: () -> Resolver, collector: () -> ResolvedStructCollector) {
         self.resolver = resolver()
+        self.collector = collector()
     }
     
 }

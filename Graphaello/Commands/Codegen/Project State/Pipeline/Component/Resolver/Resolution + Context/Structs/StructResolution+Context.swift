@@ -1,5 +1,5 @@
 //
-//  StructResolution.swift
+//  StructResolution+Context.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 08.12.19.
@@ -8,21 +8,7 @@
 
 import Foundation
 
-enum StructResolution {
-    enum Result<Value> {
-        case resolved(Value)
-        case missingFragment
-    }
-    
-    enum StructResult<Value> {
-        case resolved(Value)
-        case missingFragment(Struct<Stage.Validated>)
-    }
-    
-    enum FragmentName {
-        case fullName(String)
-        case typealiasOnStruct(String, String)
-    }
+extension StructResolution {
     
     struct Context {
         private struct FastStruct {
@@ -48,6 +34,15 @@ enum StructResolution {
             self.failedDueToMissingFragment = failedDueToMissingFragment
         }
     }
+    
+}
+
+extension StructResolution.Context {
+    
+    var isEmpty: Bool {
+        return fragmentDictionary.isEmpty && structsDictionary.isEmpty
+    }
+    
 }
 
 extension StructResolution.Context {
@@ -98,55 +93,12 @@ extension StructResolution.Context {
     
 }
 
-extension StructResolution.Result {
-    
-    func map<T>(transform: (Value) throws -> T) rethrows -> StructResolution.Result<T> {
-        switch self {
-        case .resolved(let value):
-            return .resolved(try transform(value))
-        case .missingFragment:
-            return .missingFragment
-        }
-    }
-    
-}
-
-extension StructResolution.Result {
-    
-    func map(to validated: Struct<Stage.Validated>) -> StructResolution.StructResult<Value> {
-        switch self {
-        case .resolved(let value):
-            return .resolved(value)
-        case .missingFragment:
-            return .missingFragment(validated)
-        }
-    }
-    
-}
-
 extension StructResolution.Context {
     
     func cleared() -> StructResolution.Context {
         return StructResolution.Context(fragmentDictionary: fragmentDictionary,
                                         structsDictionary: structsDictionary,
                                         failedDueToMissingFragment: [])
-    }
-    
-}
-
-extension Sequence {
-    
-    func collect<Value>(transform: (Element) throws -> StructResolution.Result<Value>) rethrows -> StructResolution.Result<[Value]> {
-        var collected = [Value]()
-        for element in self {
-            switch try transform(element) {
-            case .resolved(let value):
-                collected.append(value)
-            case .missingFragment:
-                return .missingFragment
-            }
-        }
-        return .resolved(collected)
     }
     
 }

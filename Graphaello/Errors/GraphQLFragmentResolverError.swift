@@ -11,7 +11,7 @@ import Foundation
 enum GraphQLFragmentResolverError: Error {
     case invalidTypeNameForFragment(String)
     case failedToDecodeAnyOfTheStructsDueToPossibleRecursion([Struct<Stage.Validated>])
-    case cannotResolveFragmentOrQueryWithEmptyPath(Stage.Validated.Path)
+    case cannotResolveFragmentOrQueryWithEmptyPath(Stage.Resolved.Path)
     case cannotIncludeFragmentsInsideAQuery(GraphQLFragment)
     case cannotQueryDataFromTwoAPIsFromTheSameStruct(API, API)
 }

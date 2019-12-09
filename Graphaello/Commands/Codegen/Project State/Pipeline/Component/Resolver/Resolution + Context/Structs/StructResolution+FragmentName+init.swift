@@ -1,5 +1,5 @@
 //
-//  PathResolver.swift
+//  StructResolution+FragmentName+init.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 08.12.19.
@@ -8,24 +8,6 @@
 
 import Foundation
 import SwiftSyntax
-
-struct PathResolver: ValueResolver {
-    
-    func resolve(value: Stage.Validated.Path,
-                 in property: Property<Stage.Validated>,
-                 using context: StructResolution.Context) throws -> StructResolution.Result<Stage.Resolved.Path> {
-        
-        guard value.components.last?.parsed == .fragment else {
-            return .resolved(.init(validated: value, referencedFragment: nil))
-        }
-        
-        let fragmentName = try StructResolution.FragmentName(typeName: property.type)
-        guard let fragment = context[fragmentName] else { return .missingFragment }
-        
-        return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: fragment))
-    }
-    
-}
 
 extension StructResolution.FragmentName {
     
@@ -36,7 +18,7 @@ extension StructResolution.FragmentName {
         try self.init(syntax: syntax)
     }
     
-    init(syntax: Syntax) throws {
+    fileprivate init(syntax: Syntax) throws {
         switch syntax {
         case let expression as IdentifierExprSyntax:
             self = .fullName(expression.identifier.text)
