@@ -108,7 +108,7 @@ extension SubParser {
     
     fileprivate static func queryArgumentExpression(memberAccess: @escaping () -> SubParser<MemberAccessExprSyntax, Argument.QueryArgument>,
                                                     functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Argument.QueryArgument>) -> SubParser<ExprSyntax, Argument.QueryArgument> {
-        
+        // Add default
         return .expression(memberAccess: memberAccess, functionCall: functionCall)
     }
     
