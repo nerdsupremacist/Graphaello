@@ -1,3 +1,5 @@
+// MARK: - {{ api.name }}
+
 struct {{ api.name }} {
     let client: ApolloClient
 

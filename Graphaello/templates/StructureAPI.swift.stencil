@@ -5,6 +5,8 @@ import Apollo
 import Foundation
 import SwiftUI
 
+// MARK: Basic API
+
 private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
     typealias ContentFactory = (Query.Data) -> Content
 
