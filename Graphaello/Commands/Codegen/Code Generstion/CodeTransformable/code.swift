@@ -1,5 +1,5 @@
 //
-//  swiftCode.swift
+//  code.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 10.12.19.
@@ -9,7 +9,7 @@
 import Foundation
 import SwiftFormat
 
-func swiftCode(@SwiftCodeBuilder builder: () -> SwiftCodeTransformable) throws -> String {
+func code(@CodeBuilder builder: () -> CodeTransformable) throws -> String {
     let transformable = builder()
     return try format(try transformable.code(using: .custom))
 }

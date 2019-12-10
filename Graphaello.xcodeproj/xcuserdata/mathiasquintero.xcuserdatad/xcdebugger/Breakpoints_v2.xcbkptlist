@@ -5,23 +5,20 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.SwiftErrorBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B864476D-E67D-4496-BF8D-6E017353301C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            typeName = "GraphQLError">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.SwiftErrorBreakpoint">
-         <BreakpointContent
-            uuid = "CC159793-C5C2-4850-9B61-7E110CE586A3"
+            uuid = "EADA6FD3-2E94-442C-AC55-8CA812584580"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
+            condition = "substructure.isEmpty"
             continueAfterRunningActions = "No"
-            typeName = "GraphQLFragmentResolverError">
+            filePath = "Graphaello/Commands/Codegen/Project State/Pipeline/Component/Extraction/SourceCode/SourceCode+singleExpression.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "singleExpression(content:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

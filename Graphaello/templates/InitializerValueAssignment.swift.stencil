@@ -1,1 +1,1 @@
-{{ initializervalueassignment.name }}: {{ initializervalueassignment.expression }}
+{{ initializerValueAssignment.name }}: {{ initializerValueAssignment.expression }}

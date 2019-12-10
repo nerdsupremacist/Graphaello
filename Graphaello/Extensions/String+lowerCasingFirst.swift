@@ -24,6 +24,8 @@ extension String {
         guard !isEmpty else {
             return ""
         }
+        
+        guard uppercased() != self else { return lowercased() }
 
         let parts = self.components(separatedBy: badChars)
 

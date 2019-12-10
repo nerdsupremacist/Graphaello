@@ -1,1 +1,1 @@
-{{ initializerargument.name }}: {{ initializerargument.type }}
+{{ initializerArgument.name }}: {{ initializerArgument.type }}

@@ -1,32 +1,32 @@
-// MARK: - {{ graphqlstruct.definition.name }}
+// MARK: - {{ graphQLStruct.definition.name }}
 
-{% for fragment in graphqlstruct.fragments %}
+{% for fragment in graphQLStruct.fragments %}
 extension {{ fragment.name }} : Fragment {
     typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
 }
 {% endfor %}
 
-extension {{ graphqlstruct.definition.name }} {
-    {% for fragment in graphqlstruct.fragments %}
+extension {{ graphQLStruct.definition.name }} {
+    {% for fragment in graphQLStruct.fragments %}
     typealias {{ fragment.target.name }} = {{ fragment.name }}
     {% endfor %}
-    {% if graphqlstruct.query %}
-    typealias Data = {{ graphqlstruct.definition.name }}Query.Data
+    {% if graphQLStruct.query %}
+    typealias Data = {{ graphQLStruct.definition.name }}Query.Data
     {% endif %}
     
-    init({{ initializerArguments|swiftCodeArray|join:", " }}) {
-        self.init({{ initializerValueAssignments|swiftCodeArray|join:", " }})
+    init({{ initializerArguments|codeArray|join:", " }}) {
+        self.init({{ initializerValueAssignments|codeArray|join:", " }})
     }
 }
 
-{% if graphqlstruct.query %}
-extension {{ graphqlstruct.query.api.name }} {
+{% if graphQLStruct.query %}
+extension {{ graphQLStruct.query.api.name }} {
     
-    func {{ functionName }}({{ queryRendererArguments|swiftCodeArray|join:", " }}) -> some View {
+    func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: {{ graphqlstruct.definition.name }}Query({{ queryArgumentAssignments|swiftCodeArray|join:", " }})) { data in
+                             query: {{ graphQLStruct.definition.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
         
-            {{ graphqlstruct.definition.name }}({{ initializerArgumentAssignmentFromQueryData|swiftCodeArray|join:", " }})
+            {{ graphQLStruct.definition.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
     }
     

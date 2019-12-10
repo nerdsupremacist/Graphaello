@@ -1,1 +1,1 @@
-{{ value|swiftCode }}
+{{ value|code }}

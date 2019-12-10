@@ -1,5 +1,5 @@
 //
-//  Array+SwiftCodeTransformable.swift
+//  Array+CodeTransformable.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 10.12.19.
@@ -9,7 +9,7 @@
 import Foundation
 import Stencil
 
-extension Array: SwiftCodeTransformable where Element: SwiftCodeTransformable {
+extension Array: CodeTransformable where Element: CodeTransformable {
     
     func code(using context: Context, arguments: [Any?]) throws -> String {
         return try context.render(template: "Array.swift.stencil", context: ["values" : self])
@@ -22,7 +22,7 @@ extension Array {
     func code(using context: Context, arguments: [Any?]) throws -> [String] {
         return try compactMap { element in
             switch element {
-            case let element as SwiftCodeTransformable:
+            case let element as CodeTransformable:
                 return try element.code(using: context, arguments: arguments)
             case let element as CustomStringConvertible:
                 return element.description

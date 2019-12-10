@@ -17,9 +17,9 @@ extension Environment {
 
         let ext = Extension()
         
-        ext.registerFilter("swiftCode") { value, arguments, context in
+        ext.registerFilter("code") { value, arguments, context in
             switch value {
-            case .some(let value as SwiftCodeTransformable):
+            case .some(let value as CodeTransformable):
                 return try value.code(using: context, arguments: arguments)
                 
             case .some(let value as [Any]):
@@ -31,7 +31,7 @@ extension Environment {
             }
         }
         
-        ext.registerFilter("swiftCodeArray") { value, arguments, context in
+        ext.registerFilter("codeArray") { value, arguments, context in
             switch value {
                 
             case .some(let value as [Any]):

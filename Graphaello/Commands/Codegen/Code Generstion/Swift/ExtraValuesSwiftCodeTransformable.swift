@@ -17,7 +17,7 @@ extension ExtraValuesSwiftCodeTransformable {
 
     func code(using context: Context, arguments: [Any?]) throws -> String {
         let name = String(describing: Self.self)
-        let dictionary = try self.arguments(from: context, arguments: arguments).merging([name.lowercased() : self]) { $1 }
+        let dictionary = try self.arguments(from: context, arguments: arguments).merging([name.camelized : self]) { $1 }
         return try context.render(template: "\(name).swift.stencil", context: dictionary)
     }
 

@@ -21,7 +21,7 @@ struct Codegen {
 extension Codegen {
 
     func generate() throws -> String {
-        return try swiftCode {
+        return try code {
             StructureAPI()
             apis
             structs

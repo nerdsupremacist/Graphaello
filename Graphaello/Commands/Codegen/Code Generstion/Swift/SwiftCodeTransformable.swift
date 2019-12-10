@@ -9,23 +9,13 @@
 import Foundation
 import Stencil
 
-protocol SwiftCodeTransformable {
-    func code(using context: Context, arguments: [Any?]) throws -> String
-}
-
-extension SwiftCodeTransformable {
-    
-    func code(using environment: Environment) throws -> String {
-        return try environment.renderTemplate(name: "SwiftCodeTransformable.swift.stencil", context: ["value" : self])
-    }
-    
-}
+protocol SwiftCodeTransformable: CodeTransformable {}
 
 extension SwiftCodeTransformable {
     
     func code(using context: Context, arguments: [Any?]) throws -> String {
         let name = String(describing: Self.self)
-        return try context.render(template: "\(name).swift.stencil", context: [name.lowercased() : self])
+        return try context.render(template: "\(name).swift.stencil", context: [name.camelized : self])
     }
     
 }

@@ -1,4 +1,4 @@
-enum {{ graphqltype.name }} {
-    {{ graphqltype.fields|swiftCode:"static" }}
-    static var fragment: GraphQLFragmentPath<{{graphqltype.name}}> { .init() }
+enum {{ graphQLType.name }} {
+    {{ graphQLType.fields|code:"static" }}
+    static var fragment: GraphQLFragmentPath<{{graphQLType.name}}> { .init() }
 }

@@ -3,16 +3,16 @@
 struct {{ api.name }} {
     let client: ApolloClient
 
-    {{ api.query.fields|swiftCode:"static" }}
-    {{ api.types|swiftCode }}
+    {{ api.query.fields|code:"static" }}
+    {{ api.types|code }}
 }
 
 {% for type in api.types %}
 extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }} {
-    {{ type.fields|swiftCode }}
+    {{ type.fields|code }}
 }
 
 extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }}? {
-    {{ type.fields|swiftCode:"optional" }}
+    {{ type.fields|code:"optional" }}
 }
 {% endfor %}

@@ -1,5 +1,5 @@
 //
-//  AnySwiftCodeTransformable.swift
+//  AnyCodeTransformable.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 10.12.19.
@@ -9,11 +9,11 @@
 import Foundation
 import Stencil
 
-struct AnySwiftCodeTransformable: SwiftCodeTransformable {
+struct AnyCodeTransformable: CodeTransformable {
     
     let _code: (Context, [Any?]) throws -> String
     
-    init(transformable: SwiftCodeTransformable) {
+    init(transformable: CodeTransformable) {
         _code = transformable.code
     }
     
