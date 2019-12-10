@@ -1,5 +1,5 @@
 //
-//  CustomAPI.swift
+//  StructureAPI.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 06.12.19.
