@@ -24,7 +24,6 @@ extension Pipeline {
         let apis = try project.scanAPIs()
         let swiftFiles = try project.files()
             .filter { $0.extension == "swift" }
-            .filter { !$0.string.contains("GraphQL Stuff") }
             .compactMap { File(path: $0.string) }
     
         let extracted = try extract(from: swiftFiles)
