@@ -15,7 +15,7 @@ extension SourceCode {
         do {
             let start = try offset()
             let length = try self.length()
-            return file.content(start: start, length: length)
+            return file.content(start: start, length: length).trimmingCharacters(in: .whitespaces)
         } catch {
             return file.contents
         }
