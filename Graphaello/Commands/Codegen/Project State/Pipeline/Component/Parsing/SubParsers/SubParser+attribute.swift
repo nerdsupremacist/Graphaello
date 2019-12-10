@@ -16,9 +16,7 @@ extension SubParser {
             guard attribute.kind == ._custom else { return nil }
             let content = attribute.code.content
 
-            let code = try SourceCode.singleExpression(content: String(content.dropFirst()))
-            guard try code.kind() == .functionCall else { return nil }
-
+            let code = try SourceCode(content: String(content.dropFirst()))
             return try parser().parse(from: try code.syntaxTree())
         }
     }
