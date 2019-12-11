@@ -12,3 +12,16 @@ enum Field: Equatable, Hashable {
     case direct(String)
     case call(String, [String : Argument])
 }
+
+extension Field {
+    
+    var name: String {
+        switch self {
+        case .direct(let name):
+            return name
+        case .call(let name, _):
+            return name
+        }
+    }
+    
+}

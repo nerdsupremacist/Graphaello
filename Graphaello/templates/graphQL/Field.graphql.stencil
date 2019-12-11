@@ -1,0 +1,1 @@
+{{ name }}{% if arguments %}({{ arguments|codeArray|join:", " }}){% endif %}

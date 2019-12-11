@@ -30,7 +30,7 @@ extension Project {
                 let (file, apiName) = file
                 let data = try Data(contentsOf: file.url)
                 let wrapped = try decoder.decode(WrappedSchema.self, from: data)
-                return API(name: apiName, schema: wrapped.schema)
+                return API(name: apiName, schema: wrapped.schema, path: file)
             }
     }
     

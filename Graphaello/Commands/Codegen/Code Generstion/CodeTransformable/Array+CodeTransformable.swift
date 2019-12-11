@@ -12,7 +12,7 @@ import Stencil
 extension Array: CodeTransformable where Element: CodeTransformable {
     
     func code(using context: Context, arguments: [Any?]) throws -> String {
-        return try context.render(template: "Array.swift.stencil", context: ["values" : self])
+        return try context.render(template: "Array.stencil", context: ["values" : self])
     }
     
 }

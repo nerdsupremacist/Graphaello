@@ -7,17 +7,16 @@
 //
 
 import Foundation
+import PathKit
 
 class API {
     let name: String
-
     let query: Schema.GraphQLType
-
     let types: [Schema.GraphQLType]
-    
     let scalars: [Schema.GraphQLType]
+    let path: Path
 
-    init(name: String, schema: Schema) {
+    init(name: String, schema: Schema, path: Path) {
         self.name = name
 
         self.query = schema.types.first { $0.name == schema.queryType.name } ?! fatalError("Expected a query type")
@@ -27,5 +26,6 @@ class API {
             .filter { $0.name != schema.queryType.name }
         
         self.scalars = schema.types.filter { $0.isScalar }
+        self.path = path
     }
 }

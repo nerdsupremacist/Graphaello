@@ -31,7 +31,7 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
                     
                 case .query:
                     let components = try collectedPath.queryComponents(propertyName: value.name)
-                    return .query(GraphQLQuery(api: path.validated.api, components: components))
+                    return .query(GraphQLQuery(name: parent.name, api: path.validated.api, components: components))
                 
                 case .object:
                     let simpleDefinitionName = parent.name.replacingOccurrences(of: #"[\[\]\.\?]"#, with: "", options: .regularExpression)

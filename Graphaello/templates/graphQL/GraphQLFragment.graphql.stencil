@@ -1,0 +1,3 @@
+fragment {{ fragment.name }} on {{ fragment.target.name }} {
+    {{ fragment.object|code }}
+}

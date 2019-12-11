@@ -9,6 +9,7 @@
 import Foundation
 
 struct GraphQLQuery {
+    let name: String
     let api: API
     let components: [Field : GraphQLComponent]
 }
@@ -28,7 +29,8 @@ extension GraphQLQuery {
             throw GraphQLFragmentResolverError.cannotQueryDataFromTwoAPIsFromTheSameStruct(lhs.api, rhs.api)
         }
         let components = lhs.components.merging(rhs.components) { $0 + $1 }
-        return GraphQLQuery(api: lhs.api,
+        return GraphQLQuery(name: lhs.name,
+                            api: lhs.api,
                             components: components)
     }
     
