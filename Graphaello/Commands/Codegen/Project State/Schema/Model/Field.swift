@@ -10,7 +10,7 @@ import Foundation
 
 extension Schema.GraphQLType {
 
-    struct Field: Codable {
+    struct Field: Codable, Equatable, Hashable {
         enum CodingKeys: String, CodingKey {
             case name
             case arguments = "args"

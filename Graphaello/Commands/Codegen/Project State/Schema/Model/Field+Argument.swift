@@ -10,7 +10,7 @@ import Foundation
 
 extension Schema.GraphQLType.Field {
 
-    struct Argument: Codable {
+    struct Argument: Codable, Equatable, Hashable {
         let name: String
         let defaultValue: String?
         let `type`: TypeReference

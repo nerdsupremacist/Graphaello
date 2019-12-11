@@ -9,19 +9,23 @@
 import Foundation
 
 enum Field: Equatable, Hashable {
-    case direct(String)
-    case call(String, [String : Argument])
+    case direct(Schema.GraphQLType.Field)
+    case call(Schema.GraphQLType.Field, [String : Argument])
 }
 
 extension Field {
     
-    var name: String {
+    var definition: Schema.GraphQLType.Field {
         switch self {
-        case .direct(let name):
-            return name
-        case .call(let name, _):
-            return name
+        case .direct(let field):
+            return field
+        case .call(let field, _):
+            return field
         }
+    }
+    
+    var name: String {
+        return definition.name
     }
     
 }

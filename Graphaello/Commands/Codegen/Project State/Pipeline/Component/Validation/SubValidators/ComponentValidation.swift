@@ -58,7 +58,7 @@ extension ComponentValidation.Context {
 extension ComponentValidation.Context {
 
     func fragmentComponent() -> Stage.Validated.Component {
-        return .init(fieldType: .concrete(.init(kind: .scalar, name: type.graphQLType.name)),
+        return .init(reference: .fragment,
                      underlyingType: type.graphQLType,
                      parsed: .fragment)
     }

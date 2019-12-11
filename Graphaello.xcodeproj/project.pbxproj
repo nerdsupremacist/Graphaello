@@ -82,6 +82,7 @@
 		0E4A1F0F23A06AF300EA2CF8 /* ObjectFieldCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F0E23A06AF300EA2CF8 /* ObjectFieldCall.swift */; };
 		0E4A1F1123A06C1A00EA2CF8 /* FragmentReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F1023A06C1A00EA2CF8 /* FragmentReference.swift */; };
 		0E4A1F1323A0737600EA2CF8 /* ApolloCodeGenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F1223A0737600EA2CF8 /* ApolloCodeGenRequest.swift */; };
+		0E4A1F1523A07BAD00EA2CF8 /* GraphQLCodeQueryArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F1423A07BAD00EA2CF8 /* GraphQLCodeQueryArgument.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -257,6 +258,7 @@
 		0E4A1F0E23A06AF300EA2CF8 /* ObjectFieldCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectFieldCall.swift; sourceTree = "<group>"; };
 		0E4A1F1023A06C1A00EA2CF8 /* FragmentReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentReference.swift; sourceTree = "<group>"; };
 		0E4A1F1223A0737600EA2CF8 /* ApolloCodeGenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloCodeGenRequest.swift; sourceTree = "<group>"; };
+		0E4A1F1423A07BAD00EA2CF8 /* GraphQLCodeQueryArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLCodeQueryArgument.swift; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* Graphaello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphaello; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 				0E4A1F0A23A0648600EA2CF8 /* GraphQLComponent+GraphQLCodeTransformable.swift */,
 				0E4A1F0C23A065D700EA2CF8 /* FieldArgument.swift */,
 				0E4A1F1023A06C1A00EA2CF8 /* FragmentReference.swift */,
+				0E4A1F1423A07BAD00EA2CF8 /* GraphQLCodeQueryArgument.swift */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";
@@ -932,6 +935,7 @@
 				0E4A1ECB239DBA8400EA2CF8 /* ResolvedStructCollector.swift in Sources */,
 				0EDB23BA239D4C8900A9C9B7 /* SubParser+memberAccess+Argument.swift in Sources */,
 				0E4A1E9C239D6A6900EA2CF8 /* ComponentValidation.swift in Sources */,
+				0E4A1F1523A07BAD00EA2CF8 /* GraphQLCodeQueryArgument.swift in Sources */,
 				0EDB23BE239D4E9F00A9C9B7 /* SubParser+memberAccess+QueryArgument.swift in Sources */,
 				0E4A1F1323A0737600EA2CF8 /* ApolloCodeGenRequest.swift in Sources */,
 				0E4A1EDF239DC55100EA2CF8 /* CollectedPath+queryComponents.swift in Sources */,

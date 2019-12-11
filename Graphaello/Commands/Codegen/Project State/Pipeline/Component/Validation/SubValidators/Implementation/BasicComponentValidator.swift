@@ -21,7 +21,7 @@ struct BasicComponentValidator: ComponentValidator {
                 let type = try context.api[field.type.underlyingTypeName] ?!
                     GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: context.api)
 
-                let component = Stage.Validated.Component(fieldType: field.type,
+                let component = Stage.Validated.Component(reference: .field(field),
                                                           underlyingType: type.graphQLType,
                                                           parsed: component)
                 
@@ -39,7 +39,7 @@ struct BasicComponentValidator: ComponentValidator {
             let type = try context.api[field.type.underlyingTypeName] ?!
                 GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: context.api)
 
-            let component = Stage.Validated.Component(fieldType: field.type,
+            let component = Stage.Validated.Component(reference: .field(field),
                                                       underlyingType: type.graphQLType,
                                                       parsed: .call(name, arguments))
             

@@ -12,7 +12,8 @@ import Stencil
 extension GraphQLQuery: ExtraValuesGraphQLCodeTransformable {
     func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
         return [
-            "objectFieldCalls": objectFieldCalls
+            "objectFieldCalls": objectFieldCalls,
+            "graphQLCodeQueryArgument": graphQLCodeQueryArgument,
         ]
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 extension Schema.GraphQLType {
 
-    enum Kind: String, Codable, Equatable {
+    enum Kind: String, Codable, Equatable, Hashable {
         case scalar = "SCALAR"
         case object = "OBJECT"
         case list = "LIST"

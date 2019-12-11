@@ -14,7 +14,12 @@ extension Stage {
         typealias Information = Path?
 
         struct Component {
-            let fieldType: Schema.GraphQLType.Field.TypeReference
+            enum Reference {
+                case field(Schema.GraphQLType.Field)
+                case fragment
+            }
+            
+            let reference: Reference
             let underlyingType: Schema.GraphQLType
             let parsed: Parsed.Component
         }
@@ -27,4 +32,17 @@ extension Stage {
         }
     }
 
+}
+
+extension Stage.Validated.Component {
+    
+    var fieldType: Schema.GraphQLType.Field.TypeReference {
+        switch reference {
+        case .field(let field):
+            return field.type
+        case .fragment:
+            return .concrete(.init(kind: .object, name: underlyingType.name))
+        }
+    }
+    
 }

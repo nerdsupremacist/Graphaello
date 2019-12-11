@@ -18,7 +18,7 @@ extension Schema {
 
 extension Schema.GraphQLType.Field {
 
-    indirect enum TypeReference {
+    indirect enum TypeReference: Equatable, Hashable {
         case concrete(Definition)
         case complex(Definition, ofType: TypeReference)
     }
@@ -33,6 +33,24 @@ extension Schema.GraphQLType.Field.TypeReference {
             return definition.name ?? "Any"
         case .complex(_, let ofType):
             return ofType.underlyingTypeName
+        }
+    }
+    
+    var graphQLType: String {
+        switch self {
+
+        case .concrete(let definition):
+            return definition.name ?? "Any"
+
+        case .complex(let definition, let ofType):
+            switch definition.kind {
+            case .list:
+                return "[\(ofType.graphQLType)]"
+            case .nonNull:
+                return "\(ofType.graphQLType)!"
+            case .scalar, .object, .enum:
+                return ofType.graphQLType
+            }
         }
     }
 

@@ -38,19 +38,19 @@ extension Property where CurrentStage: GraphQLStage {
 extension GraphQLQuery {
     
     fileprivate var arguments: [QueryRendererArgument] {
-        return components.keys.flatMap { $0.arguments(api: api, parent: api.query) }
+        return components.keys.flatMap { $0.arguments(api: api) }
     }
     
 }
 
 extension Field {
     
-    fileprivate func arguments(api: API, parent: Schema.GraphQLType) -> [QueryRendererArgument] {
+    fileprivate func arguments(api: API) -> [QueryRendererArgument] {
         switch self {
         case .direct:
             return []
         case .call(let field, let arguments):
-            let dictionary = Dictionary(uniqueKeysWithValues: parent.fields?.first { $0.name == field }?.arguments.map { ($0.name, $0.type) } ?? [])
+            let dictionary = Dictionary(uniqueKeysWithValues: field.arguments.map { ($0.name, $0.type) })
             return arguments.compactMap { element in
                 guard let queryArgument = element.value.queryArgument else { return nil }
                 let type = dictionary[element.key]

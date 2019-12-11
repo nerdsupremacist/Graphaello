@@ -12,16 +12,16 @@ struct ResolvedComponentCollector: ResolvedValueCollector {
     func collect(from value: Stage.Validated.Component,
                  in parent: Stage.Resolved.Path) -> StructResolution.Result<CollectedPath.Valid> {
         
-        switch value.parsed {
-        case .property(let name):
-            return .resolved(.scalar(.direct(name)))
+        switch (value.reference, value.parsed) {
+        case (.field(let field), .property):
+            return .resolved(.scalar(.direct(field)))
         
-        case .fragment:
+        case (_, .fragment), (.fragment, _):
             guard let fragment = parent.referencedFragment else { return .missingFragment }
             return .resolved(.fragment(fragment))
             
-        case .call(let name, let arguments):
-            return .resolved(.scalar(.call(name, arguments)))
+        case (.field(let field), .call(_, let arguments)):
+            return .resolved(.scalar(.call(field, arguments)))
         
         }
     }
