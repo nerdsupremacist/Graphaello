@@ -61,7 +61,7 @@ extension Codegen {
                                         code: graphQLCode)
         }
         
-        return Array(requests.values)
+        return requests.values.sorted { $0.api.name <= $1.api.name }
     }
     
 }
