@@ -68,15 +68,15 @@ extension Codegen {
 
 extension Codegen {
 
-    func generate() throws -> String {
+    func generate(using apollo: ApolloReference) throws -> String {
         let codeGenRequests = try graphQLCodeGenRequests()
-        
-        print(codeGenRequests.first!.code)
+        let apolloCode = try codeGenRequests.map { try $0.generate(using: apollo) }
         
         return try code {
             StructureAPI()
             apis
             structs
+            apolloCode
         }
     }
 

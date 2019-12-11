@@ -83,6 +83,8 @@
 		0E4A1F1123A06C1A00EA2CF8 /* FragmentReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F1023A06C1A00EA2CF8 /* FragmentReference.swift */; };
 		0E4A1F1323A0737600EA2CF8 /* ApolloCodeGenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F1223A0737600EA2CF8 /* ApolloCodeGenRequest.swift */; };
 		0E4A1F1523A07BAD00EA2CF8 /* GraphQLCodeQueryArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F1423A07BAD00EA2CF8 /* GraphQLCodeQueryArgument.swift */; };
+		0E4A1F1723A1428C00EA2CF8 /* ApolloReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F1623A1428C00EA2CF8 /* ApolloReference.swift */; };
+		0E4A1F1923A15B6100EA2CF8 /* String+CodeTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A1F1823A15B6100EA2CF8 /* String+CodeTransformable.swift */; };
 		0E5758792390ACBA005834EF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5758782390ACBA005834EF /* main.swift */; };
 		0E5758842390ADA9005834EF /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758832390ADA9005834EF /* SourceKittenFramework */; };
 		0E5758872390AEDD005834EF /* CLIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5758862390AEDD005834EF /* CLIKit */; };
@@ -259,6 +261,8 @@
 		0E4A1F1023A06C1A00EA2CF8 /* FragmentReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentReference.swift; sourceTree = "<group>"; };
 		0E4A1F1223A0737600EA2CF8 /* ApolloCodeGenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloCodeGenRequest.swift; sourceTree = "<group>"; };
 		0E4A1F1423A07BAD00EA2CF8 /* GraphQLCodeQueryArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLCodeQueryArgument.swift; sourceTree = "<group>"; };
+		0E4A1F1623A1428C00EA2CF8 /* ApolloReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloReference.swift; sourceTree = "<group>"; };
+		0E4A1F1823A15B6100EA2CF8 /* String+CodeTransformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+CodeTransformable.swift"; sourceTree = "<group>"; };
 		0E5758752390ACBA005834EF /* Graphaello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphaello; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E5758782390ACBA005834EF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0E57588A2390AF0E005834EF /* CodegenCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodegenCommand.swift; sourceTree = "<group>"; };
@@ -516,6 +520,7 @@
 				0E4A1EEE23A0050A00EA2CF8 /* code.swift */,
 				0E4A1EEC23A004E800EA2CF8 /* SwiftCodeBuilder.swift */,
 				0E4A1EF223A0055600EA2CF8 /* Array+CodeTransformable.swift */,
+				0E4A1F1823A15B6100EA2CF8 /* String+CodeTransformable.swift */,
 				0E4A1EF423A0057100EA2CF8 /* Optional+CodeTransformable.swift */,
 				0E4A1EF623A005C500EA2CF8 /* Context+render.swift */,
 			);
@@ -587,6 +592,7 @@
 				0E57588A2390AF0E005834EF /* CodegenCommand.swift */,
 				0E4A1E5A2398606300EA2CF8 /* Codegen.swift */,
 				0E4A1F1223A0737600EA2CF8 /* ApolloCodeGenRequest.swift */,
+				0E4A1F1623A1428C00EA2CF8 /* ApolloReference.swift */,
 				0E091924239933CD0045B34B /* Project.swift */,
 				0E4A1E79239A921700EA2CF8 /* Code Generstion */,
 				0E4A1E5723985F7A00EA2CF8 /* Project State */,
@@ -966,6 +972,7 @@
 				0E4A1EB9239DB6AC00EA2CF8 /* StructResolution+FragmentName.swift in Sources */,
 				0E4A1EEB23A004D200EA2CF8 /* AnyCodeTransformable.swift in Sources */,
 				0E4A1EA4239D726800EA2CF8 /* StructResolution.swift in Sources */,
+				0E4A1F1723A1428C00EA2CF8 /* ApolloReference.swift in Sources */,
 				0E4A1EFB23A058B300EA2CF8 /* CodeTransformable.swift in Sources */,
 				0E57588D2390B110005834EF /* ProjectPath.swift in Sources */,
 				0ECF25E92398072B001C75F8 /* TypeReference+Codable.swift in Sources */,
@@ -1031,6 +1038,7 @@
 				0E4A1ED6239DBDB100EA2CF8 /* ResolvedComponentCollector.swift in Sources */,
 				0E4A1E63239A570500EA2CF8 /* GraphQLStruct.swift in Sources */,
 				0EBE9A782395116C00A705B4 /* SourceCode+Kind.swift in Sources */,
+				0E4A1F1923A15B6100EA2CF8 /* String+CodeTransformable.swift in Sources */,
 				0E4A1F0723A0633E00EA2CF8 /* GraphQLObject+GraphQLCodeTransformable.swift in Sources */,
 				0E7A0E1823944341007F5AE9 /* Environment+custom.swift in Sources */,
 				0E57588B2390AF0E005834EF /* CodegenCommand.swift in Sources */,
