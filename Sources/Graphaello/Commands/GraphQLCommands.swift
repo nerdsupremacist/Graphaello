@@ -12,5 +12,6 @@ import CLIKit
 class GraphQLCommands: Commands {
     let description = "Manages the state of the GraphQL Integrations in your project"
 
+    let `init` = InitCommand()
     let codegen = CodegenCommand()
 }

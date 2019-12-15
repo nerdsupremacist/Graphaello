@@ -70,3 +70,43 @@ extension Project {
     }
 
 }
+
+extension Project {
+
+    func addDependencyIfNotThere(name: String,
+                                 repositoryURL: String,
+                                 version: XCRemoteSwiftPackageReference.VersionRequirement) throws {
+
+        guard let project = try xcodeProject.pbxproj.rootProject() else { return }
+        guard !project.packages.contains(where: { $0.name == name }) else { return }
+        let packages = try project.targets.map { target in
+            try project.addSwiftPackage(repositoryURL: repositoryURL,
+                                        productName: name,
+                                        versionRequirement: version,
+                                        targetName: target.name)
+        }
+        try save()
+        _ = packages
+    }
+
+}
+
+extension Project {
+
+    func addBuildPhaseIfNotThrere(name: String,
+                                  code: String) throws {
+
+        let targets = xcodeProject.pbxproj.nativeTargets.filter { !$0.buildPhases.contains { $0.name() == name } }
+        guard !targets.isEmpty else { return }
+        let phase = PBXShellScriptBuildPhase(name: name, shellPath: "/bin/sh", shellScript: code)
+        xcodeProject.pbxproj.add(object: phase)
+
+        targets.forEach { target in
+            guard let indexOfCompile = target.buildPhases.firstIndex(where: { $0.type() == .sources }) else { return }
+            target.buildPhases.insert(phase, at: indexOfCompile)
+        }
+
+        try save()
+    }
+
+}
