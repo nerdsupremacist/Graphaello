@@ -23,6 +23,15 @@ private let binaryPath: Path = {
 
 extension Path {
     
-    static let templates: Path = { binaryPath.parent() + "templates" }()
+    static let templates = templatePath()
     
+}
+
+private func templatePath(file: StaticString = #file) -> Path {
+    #if DEBUG
+    return Path(file.description).parent().parent().parent().parent() + "templates"
+    #else
+    // TODO: This is probably still wrong
+    return binaryPath.parent() + "templates"
+    #endif
 }
