@@ -12,7 +12,7 @@ import PathKit
 
 private let script = """
 if ! type "graphaello" > /dev/null; then
-  echo "warning: graphaello is not installed. Your project won't be updated automatically"
+  echo "warning: graphaello is not installed on your machine. Your project won't be updated automatically"
   exit 0
 fi
 graphaello codegen --project $PROJECT_FILE_PATH --apollo derivedData
