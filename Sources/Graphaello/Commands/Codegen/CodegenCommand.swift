@@ -18,7 +18,7 @@ class CodegenCommand : Command {
                    description: "Path to Xcode Project usind GraphQL")
     var project: ProjectPath
     
-    @CommandOption(default: .binary, description: "Reference to path of the Apollo CLI")
+    @CommandOption(default: .derivedData, description: "Reference to path of the Apollo CLI")
     var apollo: ApolloReference
 
     var description: String {

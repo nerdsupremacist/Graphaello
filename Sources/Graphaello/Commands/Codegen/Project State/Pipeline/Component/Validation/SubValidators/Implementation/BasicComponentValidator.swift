@@ -53,9 +53,11 @@ struct BasicComponentValidator: ComponentValidator {
     
 }
 
+private typealias GraphaelloArgument = Argument
+
 extension Schema.GraphQLType.Field {
 
-    fileprivate var defaultArgumentDictionary: [String : Graphaello.Argument] {
+    fileprivate var defaultArgumentDictionary: [String : GraphaelloArgument] {
         let baseDictionary = Dictionary(uniqueKeysWithValues: arguments.map { ($0.name, $0) })
         return baseDictionary.mapValues { argument in
             argument
