@@ -16,7 +16,7 @@ brew install graphaello
 To use Graphaello run the command:
 
 ```
-graphaello codegen --project {PATH_TO_YOUR_XCODE_PROJECT}
+graphaello codegen [--project {PATH_TO_YOUR_XCODE_PROJECT}]
 ```
 
 Graphaello will scan your project for GraphQL Schema files in the format `{Name}.graphql.json` and create all the extension you need to access this schema from Swift. It will then scan your project for any `struct`s that are using information from GraphQL via the `@GraphQL` property wrapper, and autogenerate any fragments and queries.
