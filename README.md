@@ -7,7 +7,7 @@ Graphaello is a command line tool to use GraphQL from SwiftUI. The easy way.
 To install Graphaello, we use homebrew:
 
 ```
-brew tap https://bitbucket.ase.in.tum.de/scm/mmq/formulae.git
+brew tap mmq/formulae https://bitbucket.ase.in.tum.de/scm/mmq/formulae.git
 brew install graphaello
 ```
 
