@@ -9,7 +9,15 @@
 import Foundation
 import SwiftFormat
 
+private let formattingThreshold = 500_000
+
 func code(@CodeBuilder builder: () -> CodeTransformable) throws -> String {
     let transformable = builder()
-    return try format(try transformable.code(using: .custom))
+    let code = try transformable.code(using: .custom)
+    if code.count > formattingThreshold {
+        // Shouldn't do any formatting on this
+        return code
+    } else {
+        return try format(code)
+    }
 }
