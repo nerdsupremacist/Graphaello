@@ -15,8 +15,14 @@ extension Stage {
 
         struct Component {
             enum Reference {
+                enum Casting {
+                    case up
+                    case down
+                }
+
                 case field(Schema.GraphQLType.Field)
                 case fragment
+                case casting(Casting)
             }
             
             let reference: Reference
@@ -40,8 +46,8 @@ extension Stage.Validated.Component {
         switch reference {
         case .field(let field):
             return field.type
-        case .fragment:
-            return .concrete(.init(kind: .object, name: underlyingType.name))
+        case .fragment, .casting:
+            return .concrete(.init(kind: underlyingType.kind, name: underlyingType.name))
         }
     }
     

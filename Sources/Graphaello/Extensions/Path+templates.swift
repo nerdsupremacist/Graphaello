@@ -31,7 +31,6 @@ private func templatePath(file: StaticString = #file) -> Path {
     #if DEBUG
     return Path(file.description).parent().parent().parent().parent() + "templates"
     #else
-    // TODO: This is probably still wrong
     return binaryPath.parent().parent() + "graphaello" + "templates"
     #endif
 }

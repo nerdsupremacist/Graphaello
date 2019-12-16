@@ -13,6 +13,10 @@ struct ResolvedComponentCollector: ResolvedValueCollector {
                  in parent: Stage.Resolved.Path) -> StructResolution.Result<CollectedPath.Valid> {
         
         switch (value.reference, value.parsed) {
+        case (.casting(.up), _), (.casting(.down), _):
+            // TODO: Figure out what should be resolved here
+            fatalError()
+            
         case (.field(let field), .property):
             return .resolved(.scalar(.direct(field)))
         

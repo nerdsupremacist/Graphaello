@@ -41,21 +41,6 @@ private struct AttributePath {
     let kind: Kind
 }
 
-extension Stage.Parsed.Component {
-
-    var name: String? {
-        switch self {
-        case .property(let name):
-            return name
-        case .call(let name, _):
-            return name
-        case .fragment:
-            return nil
-        }
-    }
-
-}
-
 extension AttributePath.Kind {
 
     init(from reference: Schema.GraphQLType.Field.TypeReference) {
@@ -118,14 +103,18 @@ extension Stage.Resolved.Path {
 extension Stage.Validated.Component {
 
     fileprivate func path(referencedFragment: GraphQLFragment?) -> [AttributePath] {
-        switch (parsed, referencedFragment) {
-        case (.property(let name), _):
-            return [AttributePath(name: name, kind: .init(from: fieldType))]
-        case (.fragment, .some(let fragment)):
-            return [AttributePath(name: "fragments", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
-        case (.fragment, .none):
+        switch (reference, parsed, referencedFragment) {
+        case (.casting(.down), _, _):
+            return [AttributePath(name: "as\(underlyingType.name)", kind: .optional(.value))]
+        case (.casting(.up), _, _):
             return []
-        case (.call(let name, _), _):
+        case (_, .property(let name), _):
+            return [AttributePath(name: name, kind: .init(from: fieldType))]
+        case (_, .fragment, .some(let fragment)):
+            return [AttributePath(name: "fragments", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
+        case (_, .fragment, .none):
+            return []
+        case (_, .call(let name, _), _):
             return [AttributePath(name: name, kind: .init(from: fieldType))]
         }
     }

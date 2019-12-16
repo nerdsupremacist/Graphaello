@@ -45,3 +45,11 @@ extension Array where Element == Schema.GraphQLType.Field {
     }
     
 }
+
+extension Array where Element == Schema.TypeReference {
+
+    subscript(name: String) -> Element? {
+        return first { $0.name == name }
+    }
+
+}

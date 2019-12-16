@@ -34,4 +34,14 @@ extension String {
 
         return ([first] + rest).joined(separator: "")
     }
+
+    var upperCamelized: String {
+        guard !isEmpty else {
+            return ""
+        }
+
+        let parts = self.components(separatedBy: badChars)
+
+        return parts.map { String($0).uppercasingFirst }.joined(separator: "")
+    }
 }
