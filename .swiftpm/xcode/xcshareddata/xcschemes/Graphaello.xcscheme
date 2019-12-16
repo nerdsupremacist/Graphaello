@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "init --project /Users/mathiasquintero/master-thesis/client-query-swiftui-prototype"
+            argument = "codegen --project /Users/mathiasquintero/master-thesis/GitHub"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

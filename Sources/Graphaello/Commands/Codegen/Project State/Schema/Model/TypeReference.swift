@@ -48,7 +48,8 @@ extension Schema.GraphQLType.Field.TypeReference {
                 return "[\(ofType.graphQLType)]"
             case .nonNull:
                 return "\(ofType.graphQLType)!"
-            case .scalar, .object, .enum:
+            case .scalar, .object, .enum, .interface, .inputObject, .union:
+                // TODO: What should we do with interfaces, union types, etc.
                 return ofType.graphQLType
             }
         }
@@ -59,8 +60,18 @@ extension Schema.GraphQLType.Field.TypeReference {
 
         case .concrete(let definition):
             guard let name = definition.name else { return "Any" }
+            // TODO: What should we do with interfaces, union types, etc.
             guard let api = api, case .object = definition.kind else {
-                return "\(name)?"
+                switch name {
+                case "Boolean":
+                    return "Bool?"
+                case "DateTime":
+                    return "Date?"
+                case "URI":
+                    return "URL?"
+                default:
+                    return "\(name)?"
+                }
             }
             return "\(api).\(name)?"
 
@@ -70,7 +81,8 @@ extension Schema.GraphQLType.Field.TypeReference {
                 return "[\(ofType.swiftType(api: api))]?"
             case .nonNull:
                 return String(ofType.swiftType(api: api).dropLast())
-            case .scalar, .object, .enum:
+            case .scalar, .object, .enum, .interface, .inputObject, .union:
+                // TODO: What should we do with interfaces, union types, etc.
                 return ofType.swiftType(api: api)
             }
         }
@@ -93,7 +105,7 @@ extension Schema.GraphQLType.Field.TypeReference {
             switch definition.kind {
             case .nonNull:
                 return ofType
-            case .list, .scalar, .object, .enum:
+            case .list, .scalar, .object, .enum, .interface, .inputObject, .union:
                 return self
             }
         }

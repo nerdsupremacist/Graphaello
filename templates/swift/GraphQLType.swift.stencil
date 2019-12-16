@@ -1,4 +1,13 @@
 enum {{ graphQLType.name }} {
     {{ graphQLType.fields|code:"static" }}
+
+    {% for interface in graphQLType.interfaces %}
+    static var {{ interface.name|camelized }}: GraphQLFragmentPath<{{interface.name}}> { .init() }
+    {% endfor %}
+
+    {% for possibleType in graphQLType.possibleTypes %}
+    static var {{ possibleType.name|camelized }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
+    {% endfor %}
+    
     static var fragment: GraphQLFragmentPath<{{graphQLType.name}}> { .init() }
 }

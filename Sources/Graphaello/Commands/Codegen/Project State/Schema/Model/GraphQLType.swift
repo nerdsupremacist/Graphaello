@@ -14,6 +14,8 @@ extension Schema {
         let name: String
         let kind: Kind
         let fields: [Field]?
+        let possibleTypes: [TypeReference]?
+        let interfaces: [TypeReference]?
     }
 
 }
@@ -25,7 +27,16 @@ extension Schema.GraphQLType {
     }
     
     var includeInReport: Bool {
-        return kind == .object && !name.starts(with: "__")
+        let hasAnything = !fields.isEmpty || !possibleTypes.isEmpty || !interfaces.isEmpty
+        return kind != .scalar && !name.starts(with: "__") && hasAnything
+    }
+
+}
+
+extension Optional where Wrapped: Collection {
+
+    fileprivate var isEmpty: Bool {
+        return self?.isEmpty ?? true
     }
 
 }

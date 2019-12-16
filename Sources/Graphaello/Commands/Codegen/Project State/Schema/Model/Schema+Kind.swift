@@ -16,6 +16,9 @@ extension Schema.GraphQLType {
         case list = "LIST"
         case nonNull = "NON_NULL"
         case `enum` = "ENUM"
+        case interface = "INTERFACE"
+        case inputObject = "INPUT_OBJECT"
+        case union = "UNION"
     }
     
 }

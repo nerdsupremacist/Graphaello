@@ -43,29 +43,9 @@ extension Environment {
             }
         }
 
-        ext.registerFilter("isFragment") { value in
-            guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
-            return value.isFragment
-        }
-
-        ext.registerFilter("swiftType") { value, arguments in
-            guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
-            return value.swiftType(api: (arguments.first as? API)?.name)
-        }
-
-        ext.registerFilter("pathClass") { value in
-            guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
-            return value.isFragment ? "GraphQLFragmentPath" : "GraphQLPath"
-        }
-
-        ext.registerFilter("hasArguments") { value in
-            guard let value = value as? Schema.GraphQLType.Field else { return nil }
-            return !value.arguments.isEmpty
-        }
-
-        ext.registerFilter("optionalType") { value in
-            guard let value = value as? Schema.GraphQLType.Field.TypeReference else { return nil }
-            return value.optional
+        ext.registerFilter("camelized") { value in
+            guard let value = value as? String else { return nil }
+            return value.camelized
         }
 
         return Environment(loader: loader, extensions: [ext])
