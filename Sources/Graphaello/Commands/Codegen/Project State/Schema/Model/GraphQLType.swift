@@ -16,6 +16,7 @@ extension Schema {
         let fields: [Field]?
         let possibleTypes: [TypeReference]?
         let interfaces: [TypeReference]?
+        let enumValues: [TypeReference]?
     }
 
 }
@@ -25,10 +26,9 @@ extension Schema.GraphQLType {
     var isScalar: Bool {
         return kind == .scalar
     }
-    
+
     var includeInReport: Bool {
-        let hasAnything = !fields.isEmpty || !possibleTypes.isEmpty || !interfaces.isEmpty
-        return kind != .scalar && !name.starts(with: "__") && hasAnything
+        return kind != .scalar && !name.starts(with: "__")
     }
 
 }

@@ -74,6 +74,7 @@ extension Project {
 extension Project {
 
     func addDependencyIfNotThere(name: String,
+                                 productName: String,
                                  repositoryURL: String,
                                  version: XCRemoteSwiftPackageReference.VersionRequirement) throws {
 
@@ -81,7 +82,7 @@ extension Project {
         guard !project.packages.contains(where: { $0.name == name }) else { return }
         let packages = try project.targets.map { target in
             try project.addSwiftPackage(repositoryURL: repositoryURL,
-                                        productName: name,
+                                        productName: productName,
                                         versionRequirement: version,
                                         targetName: target.name)
         }

@@ -10,6 +10,9 @@ import Foundation
 import Stencil
 import PathKit
 
+// TODO: finish this list
+private let keywords: Set<String> = ["public", "private", "extension"]
+
 extension Environment {
 
     static let custom: Environment = {
@@ -46,6 +49,15 @@ extension Environment {
         ext.registerFilter("camelized") { value in
             guard let value = value as? String else { return nil }
             return value.camelized
+        }
+
+        ext.registerFilter("keywordProtected") { value in
+            guard let value = value as? String else { return nil }
+            if keywords.contains(value) {
+                return "`\(value)`"
+            } else {
+                return value
+            }
         }
 
         return Environment(loader: loader, extensions: [ext])

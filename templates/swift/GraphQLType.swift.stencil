@@ -1,12 +1,15 @@
-enum {{ graphQLType.name }} {
+enum {{ graphQLType.name }}{%if hasEnumValues %}: String{% endif %} {
+    {% for value in graphQLType.enumValues %}
+    case {{ value.name|camelized|keywordProtected }} = "{{ value.name }}"
+    {% endfor %}
     {{ graphQLType.fields|code:"static" }}
 
     {% for interface in graphQLType.interfaces %}
-    static var {{ interface.name|camelized }}: GraphQLFragmentPath<{{interface.name}}> { .init() }
+    static var {{ interface.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{interface.name}}> { .init() }
     {% endfor %}
 
     {% for possibleType in graphQLType.possibleTypes %}
-    static var {{ possibleType.name|camelized }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
+    static var {{ possibleType.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
     {% endfor %}
     
     static var fragment: GraphQLFragmentPath<{{graphQLType.name}}> { .init() }

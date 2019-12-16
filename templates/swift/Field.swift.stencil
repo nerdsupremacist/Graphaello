@@ -1,5 +1,5 @@
 {% if hasArguments %}
-{% if isStatic %}static {% endif %}func {{field.name}}({{ field.arguments|codeArray|join:", " }}) -> {{ pathClass }}<{{ swiftType }}> {
+{% if isStatic %}static {% endif %}func {{ field.name|keywordProtected }}({{ field.arguments|codeArray|join:", " }}) -> {{ pathClass }}<{{ swiftType }}> {
     return .init()
 }
 {% endif %}

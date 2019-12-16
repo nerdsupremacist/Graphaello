@@ -7,5 +7,14 @@
 //
 
 import Foundation
+import Stencil
 
-extension Schema.GraphQLType: SwiftCodeTransformable { }
+extension Schema.GraphQLType: ExtraValuesSwiftCodeTransformable {
+
+    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
+        return [
+            "hasEnumValues": enumValues.map { !$0.isEmpty } ?? false
+        ]
+    }
+
+}

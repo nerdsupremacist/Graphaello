@@ -30,6 +30,7 @@ class InitCommand : Command {
     func run() throws {
         let project = try self.project.open()
         try project.addDependencyIfNotThere(name: "apollo-ios",
+                                            productName: "Apollo",
                                             repositoryURL: "https://github.com/apollographql/apollo-ios.git",
                                             version: .branch("master"))
 

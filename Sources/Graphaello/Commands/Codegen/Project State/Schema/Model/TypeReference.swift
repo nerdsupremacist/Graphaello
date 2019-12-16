@@ -69,6 +69,10 @@ extension Schema.GraphQLType.Field.TypeReference {
                     return "Date?"
                 case "URI":
                     return "URL?"
+                case "ID":
+                    return "String?"
+                case "HTML":
+                    return "String?"
                 default:
                     return "\(name)?"
                 }

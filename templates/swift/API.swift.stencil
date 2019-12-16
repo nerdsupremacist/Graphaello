@@ -12,24 +12,23 @@ extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.nam
     {{ type.fields|code }}
 
     {% for interface in graphQLType.interfaces %}
-    var {{ interface.name|camelized }}: GraphQLFragmentPath<{{interface.name}}> { .init() }
+    var {{ interface.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{interface.name}}> { .init() }
     {% endfor %}
 
     {% for possibleType in graphQLType.possibleTypes %}
-    var {{ possibleType.name|camelized }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
+    var {{ possibleType.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
     {% endfor %}
-
 }
 
 extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }}? {
     {{ type.fields|code:"optional" }}
 
     {% for interface in graphQLType.interfaces %}
-    var {{ interface.name|camelized }}: GraphQLFragmentPath<{{interface.name}}> { .init() }
+    var {{ interface.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{interface.name}}> { .init() }
     {% endfor %}
 
     {% for possibleType in graphQLType.possibleTypes %}
-    var {{ possibleType.name|camelized }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
+    var {{ possibleType.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
     {% endfor %}
 }
 {% endfor %}
