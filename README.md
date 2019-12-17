@@ -51,3 +51,10 @@ struct CountryList: View {
 let api = Countries(client: ...)
 api.countryList() // return a view with the country list
 ```
+
+## Suggested Workflow
+
+To use the suggested workflow for Graphaello, simply run `graphaello init` in your repository and graphaello will insert itself into your project:
+
+1. It will add Apollo as a Swift Package Dependency
+2. It will add a codegen build phase to your project
