@@ -1,4 +1,6 @@
-enum {{ graphQLType.name }}{%if hasEnumValues %}: String{% endif %} {
+{% if graphQLType.inputFields %}struct{% else %}enum{% endif %} {{ graphQLType.name }}{%if hasEnumValues %}: String{% endif %} {
+    {{ graphQLType.inputFields|code }}
+
     {% for value in graphQLType.enumValues %}
     case {{ value.name|camelized|keywordProtected }} = "{{ value.name }}"
     {% endfor %}
@@ -12,5 +14,5 @@ enum {{ graphQLType.name }}{%if hasEnumValues %}: String{% endif %} {
     static var {{ possibleType.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
     {% endfor %}
     
-    static var fragment: GraphQLFragmentPath<{{graphQLType.name}}> { .init() }
+    static var _fragment: GraphQLFragmentPath<{{graphQLType.name}}> { .init() }
 }

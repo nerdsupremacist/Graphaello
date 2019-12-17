@@ -17,6 +17,7 @@ extension Schema {
         let possibleTypes: [TypeReference]?
         let interfaces: [TypeReference]?
         let enumValues: [TypeReference]?
+        let inputFields: [InputField]?
     }
 
 }

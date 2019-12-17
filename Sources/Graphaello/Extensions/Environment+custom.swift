@@ -11,7 +11,7 @@ import Stencil
 import PathKit
 
 // TODO: finish this list
-private let keywords: Set<String> = ["public", "private", "extension"]
+private let keywords: Set<String> = ["public", "private", "extension", "internal", "default"]
 
 extension Environment {
 

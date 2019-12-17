@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "codegen --project /Users/mathiasquintero/master-thesis/GitHub"
+            argument = "codegen --project /Users/mathiasquintero/master-thesis/GitHub --apollo derivedData"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

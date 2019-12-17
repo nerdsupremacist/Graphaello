@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedValueCollector where Collector.Resolved == Stage.Validated.Component, Collector.Parent == Stage.Resolved.Path, Collector.Collected == CollectedPath.Valid {
+struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedValueCollector where Collector.Resolved == Stage.Validated.Component, Collector.Parent == Stage.Resolved.Path, Collector.Collected == CollectedPath.Valid? {
     let collector: Collector
     
     func collect(from value: Property<Stage.Resolved>,
@@ -20,6 +20,9 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
             .components
             .collect { component in
                 return try collector.collect(from: component, in: path)
+            }
+            .map { components in
+                return components.compactMap { $0 }
             }
             .map { components in
                 return components.reduce(.empty) { $0 + $1 }

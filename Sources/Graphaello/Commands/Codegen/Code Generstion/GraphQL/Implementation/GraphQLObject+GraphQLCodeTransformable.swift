@@ -14,6 +14,7 @@ extension GraphQLObject: ExtraValuesGraphQLCodeTransformable {
         return [
             "objectFieldCalls": objectFieldCalls,
             "referencedFragments": referencedFragments,
+            "typeConditionals": typeConditionals.values.sorted { $0.type.name <= $1.type.name }
         ]
     }
 }

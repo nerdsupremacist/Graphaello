@@ -3,4 +3,4 @@
     return .init()
 }
 {% endif %}
-{% if isStatic %}static {% endif %}var {{field.name}}: {{ pathClass }}<{{ swiftType }}> { .init() }
+{% if isStatic %}static {% endif %}var {{ field.name|keywordProtected }}: {{ pathClass }}<{{ swiftType }}> { .init() }

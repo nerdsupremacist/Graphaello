@@ -10,12 +10,13 @@ import Foundation
 
 struct ResolvedComponentCollector: ResolvedValueCollector {
     func collect(from value: Stage.Validated.Component,
-                 in parent: Stage.Resolved.Path) -> StructResolution.Result<CollectedPath.Valid> {
+                 in parent: Stage.Resolved.Path) -> StructResolution.Result<CollectedPath.Valid?> {
         
         switch (value.reference, value.parsed) {
-        case (.casting(.up), _), (.casting(.down), _):
-            // TODO: Figure out what should be resolved here
-            fatalError()
+        case (.casting(.up), _):
+            return .resolved(nil)
+        case (.casting(.down), _):
+            return .resolved(.typeConditional(value.underlyingType, .empty))
             
         case (.field(let field), .property):
             return .resolved(.scalar(.direct(field)))

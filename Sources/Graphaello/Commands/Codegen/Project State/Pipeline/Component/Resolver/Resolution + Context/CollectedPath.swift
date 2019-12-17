@@ -10,6 +10,7 @@ import Foundation
 
 enum CollectedPath {
     indirect enum Valid {
+        case typeConditional(Schema.GraphQLType, CollectedPath)
         case scalar(Field)
         case object(Field, Valid)
         case fragment(GraphQLFragment)
@@ -42,6 +43,8 @@ extension CollectedPath.Valid {
             return .object(field, rhs)
         case .object(let field, let valid):
             return .object(field, valid + rhs)
+        case .typeConditional(let type, let path):
+            return .typeConditional(type, path + rhs)
         case fragment:
             fatalError("Unexpected extra value appended to fragment")
         }

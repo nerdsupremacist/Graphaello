@@ -67,7 +67,7 @@ struct GraphQLFragmentPath<UnderlyingType> {
 
 extension GraphQLFragmentPath {
 
-    var fragment: GraphQLFragmentPath<UnderlyingType> {
+    var _fragment: GraphQLFragmentPath<UnderlyingType> {
         return self
     }
 

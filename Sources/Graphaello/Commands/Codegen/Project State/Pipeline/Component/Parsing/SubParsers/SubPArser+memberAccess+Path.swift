@@ -34,7 +34,7 @@ extension Stage.Parsed.Path {
     fileprivate func appending(name: String) -> Self {
         return .init(apiName: apiName,
                      target: target,
-                     components: components + [name == "fragment" ? .fragment : .property(name)])
+                     components: components + [name == "_fragment" ? .fragment : .property(name)])
     }
 
 }

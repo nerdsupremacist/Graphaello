@@ -13,5 +13,6 @@ enum GraphQLFragmentResolverError: Error {
     case failedToDecodeAnyOfTheStructsDueToPossibleRecursion([Struct<Stage.Validated>])
     case cannotResolveFragmentOrQueryWithEmptyPath(Stage.Resolved.Path)
     case cannotIncludeFragmentsInsideAQuery(GraphQLFragment)
+    case cannotDowncastQueryToType(Schema.GraphQLType)
     case cannotQueryDataFromTwoAPIsFromTheSameStruct(API, API)
 }

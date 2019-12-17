@@ -1,0 +1,3 @@
+... on {{ typeConditional.type.name }} {
+    {{ typeConditional.object|code }}
+}

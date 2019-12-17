@@ -12,7 +12,7 @@ extension SubParser {
     
     static func baseMemberAccess() -> SubParser<BaseMemberAccess, Stage.Parsed.Path> {
         return .init { access in
-            if (access.accessedField.capitalized == access.accessedField) {
+            if (access.accessedField.upperCamelized == access.accessedField) {
                 return Stage.Parsed.Path(apiName: access.base,
                                          target: .object(access.accessedField),
                                          components: [])

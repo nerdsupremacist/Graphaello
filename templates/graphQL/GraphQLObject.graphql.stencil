@@ -1,2 +1,3 @@
+{{ typeConditionals|code }}
 {{ referencedFragments|code }}
 {{ objectFieldCalls|code }}

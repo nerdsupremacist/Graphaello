@@ -59,24 +59,21 @@ extension Schema.GraphQLType.Field.TypeReference {
         switch self {
 
         case .concrete(let definition):
-            guard let name = definition.name else { return "Any" }
-            // TODO: What should we do with interfaces, union types, etc.
-            guard let api = api, case .object = definition.kind else {
+            guard let name = definition.name, let api = api else { return "Any" }
+
+            if case .scalar = definition.kind {
                 switch name {
                 case "Boolean":
                     return "Bool?"
-                case "DateTime":
-                    return "Date?"
-                case "URI":
-                    return "URL?"
-                case "ID":
-                    return "String?"
-                case "HTML":
-                    return "String?"
+                case "Int":
+                    return "Int?"
+                case "Float":
+                    return "Float?"
                 default:
-                    return "\(name)?"
+                    return "String?"
                 }
             }
+
             return "\(api).\(name)?"
 
         case .complex(let definition, let ofType):
