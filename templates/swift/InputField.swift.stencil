@@ -1,1 +1,1 @@
-let {{ inputField.name }}: {{ swiftType }}
+let {{ inputField.name|keywordProtected }}: {{ swiftType }}
