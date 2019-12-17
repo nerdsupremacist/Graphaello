@@ -13,6 +13,6 @@ do {
     let command = try CommandLineParser().parse(command: GraphQLCommands())
     try command.run()
 } catch {
-    print(error)
+    print(error.localizedDescription)
     exit(-1)
 }
