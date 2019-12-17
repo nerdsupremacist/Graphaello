@@ -12,11 +12,11 @@
       },
       {
         "package": "CLIKit",
-        "repositoryURL": "https://github.com/apparata/CLIKit.git",
+        "repositoryURL": "https://github.com/nerdsupremacist/CLIKit.git",
         "state": {
-          "branch": null,
-          "revision": "6e673f16626bc3d1271b5c7c6957bce1be2b960f",
-          "version": "0.3.4"
+          "branch": "master",
+          "revision": "a2c9a9841dc3b2f42038d49a7372c2fd3f20b43b",
+          "version": null
         }
       },
       {
