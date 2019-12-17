@@ -34,7 +34,7 @@ class CodegenCommand : Command {
         let extracted = try pipeline.extract(from: project)
         Console.print(result: "Found \(extracted.apis.count) APIs")
         extracted.apis.forEach { api in
-            Console.print(result: "\(api.name)", indentation: 2)
+            Console.print(result: "\(inverse: api.name)", indentation: 2)
         }
         Console.print(result: "Found \(extracted.structs.count) structs")
 
