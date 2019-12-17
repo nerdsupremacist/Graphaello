@@ -18,7 +18,12 @@ enum ApolloReference: String {
 extension ApolloReference: CommandArgumentValue {
     
     var description: String {
-        return "Reference to Apollo CLI"
+        switch self {
+        case .binary:
+            return "Binary Command Line Tool"
+        case .derivedData:
+            return "Command Line Tool in Apollo's derived data"
+        }
     }
     
     init(argumentValue: String) throws {

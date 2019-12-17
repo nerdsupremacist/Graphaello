@@ -25,6 +25,14 @@ struct Project {
 
 extension Project {
 
+    var fileName: String {
+        return path.lastComponent
+    }
+
+}
+
+extension Project {
+
     func files() throws -> [PathKit.Path] {
         return try xcodeProject
             .pbxproj
@@ -76,10 +84,10 @@ extension Project {
     func addDependencyIfNotThere(name: String,
                                  productName: String,
                                  repositoryURL: String,
-                                 version: XCRemoteSwiftPackageReference.VersionRequirement) throws {
+                                 version: XCRemoteSwiftPackageReference.VersionRequirement) throws -> Bool {
 
-        guard let project = try xcodeProject.pbxproj.rootProject() else { return }
-        guard !project.packages.contains(where: { $0.name == name }) else { return }
+        guard let project = try xcodeProject.pbxproj.rootProject() else { return false }
+        guard !project.packages.contains(where: { $0.name == name }) else { return false }
         let packages = try project.targets.map { target in
             try project.addSwiftPackage(repositoryURL: repositoryURL,
                                         productName: productName,
@@ -88,6 +96,7 @@ extension Project {
         }
         try save()
         _ = packages
+        return true
     }
 
 }
@@ -95,10 +104,10 @@ extension Project {
 extension Project {
 
     func addBuildPhaseIfNotThrere(name: String,
-                                  code: String) throws {
+                                  code: String) throws -> Bool {
 
         let targets = xcodeProject.pbxproj.nativeTargets.filter { !$0.buildPhases.contains { $0.name() == name } }
-        guard !targets.isEmpty else { return }
+        guard !targets.isEmpty else { return false }
         let phase = PBXShellScriptBuildPhase(name: name, shellPath: "/bin/sh", shellScript: code)
         xcodeProject.pbxproj.add(object: phase)
 
@@ -108,6 +117,7 @@ extension Project {
         }
 
         try save()
+        return true
     }
 
 }

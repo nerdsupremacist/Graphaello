@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CLIKit
 
 struct Codegen {
     let apis: [API]
@@ -69,15 +70,31 @@ extension Codegen {
 extension Codegen {
 
     func generate(using apollo: ApolloReference) throws -> String {
+        Console.print(title: "🎨 Writing GraphQL Code", indentation: 1)
         let codeGenRequests = try graphQLCodeGenRequests()
+
+        Console.print(title: "🚀 Delegating some stuff to Apollo codegen", indentation: 1)
         let apolloCode = try codeGenRequests.map { try $0.generate(using: apollo) }
-        
+
+        Console.print(title: "🎁 Bundling it all together", indentation: 1)
         return try code {
             StructureAPI()
             apis
             structs
             apolloCode
         }
+    }
+
+}
+
+extension Codegen {
+
+    var allFragments: [GraphQLFragment] {
+        return structs.flatMap { $0.fragments }
+    }
+
+    var allQueries: [GraphQLQuery] {
+        return structs.compactMap { $0.query }
     }
 
 }

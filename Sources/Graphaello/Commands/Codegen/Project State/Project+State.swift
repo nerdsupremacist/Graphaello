@@ -45,3 +45,11 @@ extension Pipeline {
     }
     
 }
+
+extension Project.State where CurrentStage: GraphQLStage {
+
+    var graphQLPaths: [CurrentStage.Path] {
+        return structs.flatMap { $0.properties.compactMap { $0.graphqlPath } }
+    }
+
+}

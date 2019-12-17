@@ -40,7 +40,16 @@ extension ProjectPath: CommandArgumentValue {
     }
 
     var description: String {
-        return "Path of the Xcode Project to run"
+        switch self {
+        case .first(let path):
+            if path == Path.currentDirectory {
+                return "First Project in the current working directory"
+            } else {
+                return "First Project"
+            }
+        case .specific(let path):
+            return path.description
+        }
     }
 }
 
