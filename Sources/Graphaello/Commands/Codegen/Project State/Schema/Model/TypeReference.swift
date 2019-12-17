@@ -49,7 +49,6 @@ extension Schema.GraphQLType.Field.TypeReference {
             case .nonNull:
                 return "\(ofType.graphQLType)!"
             case .scalar, .object, .enum, .interface, .inputObject, .union:
-                // TODO: What should we do with interfaces, union types, etc.
                 return ofType.graphQLType
             }
         }
@@ -83,7 +82,6 @@ extension Schema.GraphQLType.Field.TypeReference {
             case .nonNull:
                 return String(ofType.swiftType(api: api).dropLast())
             case .scalar, .object, .enum, .interface, .inputObject, .union:
-                // TODO: What should we do with interfaces, union types, etc.
                 return ofType.swiftType(api: api)
             }
         }
