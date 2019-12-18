@@ -9,6 +9,7 @@
 import Foundation
 
 struct BasicComponentValidator: ComponentValidator {
+    let generator: ValueExpressionGenerator
     
     func validate(component: Stage.Parsed.Component,
                   using context: ComponentValidation.Context) throws -> ComponentValidation.Result {
@@ -55,7 +56,10 @@ struct BasicComponentValidator: ComponentValidator {
 
         case (.call(let name, let arguments), .object(let type)):
             let field = try type.fields?[name] ?! GraphQLPathValidationError.fieldNotFoundInType(name, type: type)
-            let arguments = field.defaultArgumentDictionary.merging(arguments) { $1 }
+
+            let arguments = try field.defaultArgumentDictionary(using: generator,
+                                                                with: context.api).merging(arguments) { $1 }
+
             let type = try context.api[field.type.underlyingTypeName] ?!
                 GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: context.api)
 
@@ -73,19 +77,27 @@ struct BasicComponentValidator: ComponentValidator {
     
 }
 
+extension BasicComponentValidator {
+
+    init(generator: () -> ValueExpressionGenerator) {
+        self.init(generator: generator())
+    }
+
+}
+
 private typealias GraphaelloArgument = Argument
 
 extension Schema.GraphQLType.Field {
 
-    fileprivate var defaultArgumentDictionary: [String : GraphaelloArgument] {
+    fileprivate func defaultArgumentDictionary(using generator: ValueExpressionGenerator, with api: API) throws -> [String : GraphaelloArgument] {
         let baseDictionary = Dictionary(uniqueKeysWithValues: arguments.map { ($0.name, $0) })
-        return baseDictionary.mapValues { argument in
-            argument
+        return try baseDictionary.mapValues { argument in
+            try argument
                 .defaultValue
-                .map { _ in
-                    // TODO: Find out how to insert the default values
-                    .argument(.forced)
-//                    GraphQLPath.Component.Argument.argument(.withDefault())
+                .map { value in
+                    .argument(.withDefault(try generator.expression(from: value,
+                                                                    for: argument.type,
+                                                                    using: api)))
                 } ?? .argument(.forced)
         }
     }

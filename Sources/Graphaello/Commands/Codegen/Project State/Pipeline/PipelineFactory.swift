@@ -66,7 +66,9 @@ enum PipelineFactory {
     private static func create() -> Validator {
         return BasicValidator {
             BasicPathValidator {
-                BasicComponentValidator()
+                BasicComponentValidator {
+                    BasicValueExpressionGenerator()
+                }
             }
         }
     }

@@ -12,6 +12,9 @@ extension Schema.GraphQLType {
     struct InputField: Codable {
         let name: String
         let type: Field.TypeReference
+
+        @OptionalParsed<GraphQLValue.Lexer, GraphQLValue>
+        var defaultValue: GraphQLValue?
     }
 
 }

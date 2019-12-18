@@ -8,7 +8,7 @@
 
 import Foundation
 
-infix operator ?!
+infix operator ?!: NilCoalescingPrecedence
 
 extension Optional {
 
