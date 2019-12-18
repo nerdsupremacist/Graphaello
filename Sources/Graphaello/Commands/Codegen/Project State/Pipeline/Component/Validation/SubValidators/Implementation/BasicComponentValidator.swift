@@ -9,7 +9,7 @@
 import Foundation
 
 struct BasicComponentValidator: ComponentValidator {
-    let generator: ValueExpressionGenerator
+    let transpiler: GraphQLToSwiftTranspiler
     
     func validate(component: Stage.Parsed.Component,
                   using context: ComponentValidation.Context) throws -> ComponentValidation.Result {
@@ -57,7 +57,7 @@ struct BasicComponentValidator: ComponentValidator {
         case (.call(let name, let arguments), .object(let type)):
             let field = try type.fields?[name] ?! GraphQLPathValidationError.fieldNotFoundInType(name, type: type)
 
-            let arguments = try field.defaultArgumentDictionary(using: generator,
+            let arguments = try field.defaultArgumentDictionary(using: transpiler,
                                                                 with: context.api).merging(arguments) { $1 }
 
             let type = try context.api[field.type.underlyingTypeName] ?!
@@ -79,8 +79,8 @@ struct BasicComponentValidator: ComponentValidator {
 
 extension BasicComponentValidator {
 
-    init(generator: () -> ValueExpressionGenerator) {
-        self.init(generator: generator())
+    init(transpiler: () -> GraphQLToSwiftTranspiler) {
+        self.init(transpiler: transpiler())
     }
 
 }
@@ -89,15 +89,15 @@ private typealias GraphaelloArgument = Argument
 
 extension Schema.GraphQLType.Field {
 
-    fileprivate func defaultArgumentDictionary(using generator: ValueExpressionGenerator, with api: API) throws -> [String : GraphaelloArgument] {
+    fileprivate func defaultArgumentDictionary(using transpiler: GraphQLToSwiftTranspiler, with api: API) throws -> [String : GraphaelloArgument] {
         let baseDictionary = Dictionary(uniqueKeysWithValues: arguments.map { ($0.name, $0) })
         return try baseDictionary.mapValues { argument in
             try argument
                 .defaultValue
                 .map { value in
-                    .argument(.withDefault(try generator.expression(from: value,
-                                                                    for: argument.type,
-                                                                    using: api)))
+                    .argument(.withDefault(try transpiler.expression(from: value,
+                                                                     for: argument.type,
+                                                                     using: api)))
                 } ?? .argument(.forced)
         }
     }

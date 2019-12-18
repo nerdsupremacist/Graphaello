@@ -1,5 +1,5 @@
 //
-//  BasicValueExpressionGenerator.swift
+//  BasicGraphQLToSwiftTranspiler.swift
 //  
 //
 //  Created by Mathias Quintero on 12/18/19.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftSyntax
 
-struct BasicValueExpressionGenerator: ValueExpressionGenerator {
+struct BasicGraphQLToSwiftTranspiler: GraphQLToSwiftTranspiler {
 
     func expression(from value: GraphQLValue,
                     for type: Schema.GraphQLType.Field.TypeReference,

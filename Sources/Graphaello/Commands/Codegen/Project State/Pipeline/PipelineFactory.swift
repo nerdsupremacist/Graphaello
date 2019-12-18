@@ -67,7 +67,7 @@ enum PipelineFactory {
         return BasicValidator {
             BasicPathValidator {
                 BasicComponentValidator {
-                    BasicValueExpressionGenerator()
+                    BasicGraphQLToSwiftTranspiler()
                 }
             }
         }
