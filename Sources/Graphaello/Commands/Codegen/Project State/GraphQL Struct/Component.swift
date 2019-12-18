@@ -24,6 +24,15 @@ extension GraphQLComponent {
         }
     }
 
+    var arguments: OrderedSet<GraphQLArgument> {
+        switch self {
+        case .object(let object):
+            return object.arguments
+        case .scalar:
+            return []
+        }
+    }
+
 }
 
 extension GraphQLComponent {

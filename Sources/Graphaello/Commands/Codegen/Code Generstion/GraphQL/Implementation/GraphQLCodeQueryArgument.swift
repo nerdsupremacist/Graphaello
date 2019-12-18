@@ -21,7 +21,7 @@ struct GraphQLCodeQueryArgument: ExtraValuesGraphQLCodeTransformable {
 extension GraphQLQuery {
     
     var graphQLCodeQueryArgument: [GraphQLCodeQueryArgument] {
-        return components.keys.flatMap { $0.graphQLCodeQueryArgument }
+        return arguments.map { GraphQLCodeQueryArgument(name: $0.name, type: $0.type) }
     }
     
 }

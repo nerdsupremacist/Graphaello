@@ -10,6 +10,22 @@ import SwiftSyntax
 
 struct BasicGraphQLToSwiftTranspiler: GraphQLToSwiftTranspiler {
 
+    func expression(from value: GraphQLValue?,
+                    for type: Schema.GraphQLType.Field.TypeReference,
+                    using api: API) throws -> ExprSyntax? {
+
+        guard let value = value else {
+            if case .complex(let definition, _) = type, definition.kind == .nonNull {
+                return nil
+            } else {
+                let literal = SyntaxFactory.makeNilKeyword()
+                return SyntaxFactory.makeNilLiteralExpr(nilKeyword: literal)
+            }
+        }
+
+        return try expression(from: value, for: type, using: api) as ExprSyntax
+    }
+
     func expression(from value: GraphQLValue,
                     for type: Schema.GraphQLType.Field.TypeReference,
                     using api: API) throws -> ExprSyntax {

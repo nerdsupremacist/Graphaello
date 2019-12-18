@@ -20,6 +20,14 @@ extension GraphQLObject {
         return fragments.values + components.values.flatMap { $0.subFragments }
     }
 
+    var arguments: OrderedSet<GraphQLArgument> {
+        let currentLevel = components.keys.flatMap { $0.arguments }
+        let fromComponents = components.values.flatMap { $0.arguments }
+        let fromFragmented = fragments.values.flatMap { $0.arguments }
+        let fromTypeConditional = typeConditionals.values.flatMap { $0.arguments }
+        return currentLevel + fromComponents + fromFragmented + fromTypeConditional
+    }
+
 }
 
 extension GraphQLObject {

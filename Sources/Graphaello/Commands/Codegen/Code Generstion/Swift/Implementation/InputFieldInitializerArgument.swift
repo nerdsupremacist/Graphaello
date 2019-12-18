@@ -32,9 +32,9 @@ extension Schema.GraphQLType {
                                         in api: API) throws -> [InputFieldInitializerArgument] {
         guard let inputFields = inputFields else { return [] }
         return try inputFields.map { field in
-            let defaultValue = try field.defaultValue.map { try transpiler.expression(from: $0,
-                                                                                      for: field.type,
-                                                                                      using: api) }
+            let defaultValue = try transpiler.expression(from: field.defaultValue,
+                                                         for: field.type,
+                                                         using: api)
 
             return InputFieldInitializerArgument(name: field.name,
                                                  api: api,

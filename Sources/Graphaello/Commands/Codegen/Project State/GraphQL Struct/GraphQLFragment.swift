@@ -21,6 +21,10 @@ extension GraphQLFragment {
         return [self] + object.subFragments
     }
 
+    var arguments: OrderedSet<GraphQLArgument> {
+        return object.arguments
+    }
+
 }
 
 extension GraphQLFragment {

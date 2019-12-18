@@ -92,13 +92,9 @@ extension Schema.GraphQLType.Field {
     fileprivate func defaultArgumentDictionary(using transpiler: GraphQLToSwiftTranspiler, with api: API) throws -> [String : GraphaelloArgument] {
         let baseDictionary = Dictionary(uniqueKeysWithValues: arguments.map { ($0.name, $0) })
         return try baseDictionary.mapValues { argument in
-            try argument
-                .defaultValue
-                .map { value in
-                    .argument(.withDefault(try transpiler.expression(from: value,
-                                                                     for: argument.type,
-                                                                     using: api)))
-                } ?? .argument(.forced)
+            try transpiler.expression(from: argument.defaultValue,
+                                      for: argument.type,
+                                      using: api).map { .argument(.withDefault($0)) } ?? .argument(.forced)
         }
     }
 

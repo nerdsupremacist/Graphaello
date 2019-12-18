@@ -1,1 +1,1 @@
-{{ queryRendererArgument.name }}: {{ queryRendererArgument.type }}{% if queryRendererArgument.expression %}queryRendererArgument.expression{% endif %}
+{{ queryRendererArgument.name }}: {{ queryRendererArgument.type }}{% if queryRendererArgument.expression %} = {{ queryRendererArgument.expression }}{% endif %}
