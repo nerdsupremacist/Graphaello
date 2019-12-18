@@ -1,0 +1,2 @@
+{{ inputFieldInitializerArgument.name }}: {{ swiftType }}
+    {% if inputFieldInitializerArgument.defaultValue %} = {{ inputFieldInitializerArgument.defaultValue }}{% endif %}

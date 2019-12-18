@@ -1,6 +1,14 @@
 {% if graphQLType.inputFields %}struct{% else %}enum{% endif %} {{ graphQLType.name }}{%if hasEnumValues %}: String{% endif %} {
     {{ graphQLType.inputFields|code }}
 
+    {% if needsInitializer %}
+    init({{ inputFieldInitializerArguments|codeArray|join:", " }}) {
+        {% for inputField in graphQLType.inputFields %}
+        self.{{ inputField.name }} = {{ inputField.name }}
+        {% endfor %}
+    }
+    {% endif %}
+
     {% for value in graphQLType.enumValues %}
     case {{ value.name|camelized|keywordProtected }} = "{{ value.name }}"
     {% endfor %}
