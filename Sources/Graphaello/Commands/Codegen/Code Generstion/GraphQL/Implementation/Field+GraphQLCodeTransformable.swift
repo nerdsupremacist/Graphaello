@@ -15,7 +15,8 @@ extension Field: ExtraValuesGraphQLCodeTransformable {
         case .direct:
             return ["name": name]
         case .call(_, let arguments):
-            return ["name": name, "arguments": arguments.keys.sorted().map { FieldArgument(name: $0) }]
+            let sortedKeys = arguments.keys.sorted()
+            return ["name": name, "arguments": sortedKeys.map { FieldArgument(name: $0) } as [FieldArgument]]
         }
     }
 }
