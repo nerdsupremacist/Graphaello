@@ -1,17 +1,17 @@
 // MARK: - {{ graphQLStruct.definition.name }}
 
 {% for fragment in graphQLStruct.fragments %}
-extension {{ fragment.name }} : Fragment {
+extension ApolloStuff.{{ fragment.name }} : Fragment {
     typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
 }
 {% endfor %}
 
 extension {{ graphQLStruct.definition.name }} {
     {% for fragment in graphQLStruct.fragments %}
-    typealias {{ fragment.target.name }} = {{ fragment.name }}
+    typealias {{ fragment.target.name }} = ApolloStuff.{{ fragment.name }}
     {% endfor %}
     {% if graphQLStruct.query %}
-    typealias Data = {{ graphQLStruct.definition.name }}Query.Data
+    typealias Data = ApolloStuff.{{ graphQLStruct.definition.name }}Query.Data
     {% endif %}
     
     init({{ initializerArguments|codeArray|join:", " }}) {
@@ -24,7 +24,7 @@ extension {{ graphQLStruct.query.api.name }} {
     
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: {{ graphQLStruct.definition.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
+                             query: ApolloStuff.{{ graphQLStruct.definition.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
         
             {{ graphQLStruct.definition.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }

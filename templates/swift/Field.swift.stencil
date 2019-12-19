@@ -1,6 +1,6 @@
 {% if hasArguments %}
-{% if isStatic %}static {% endif %}func {{ field.name|keywordProtected }}({{ field.arguments|codeArray|join:", " }}) -> {{ pathClass }}<{{ swiftType }}> {
+{% if isStatic %}static {% endif %}func {{ field.name|camelized|keywordProtected }}({{ field.arguments|codeArray|join:", " }}) -> {{ pathClass }}<{{ swiftType }}> {
     return .init()
 }
 {% endif %}
-{% if isStatic %}static {% endif %}var {{ field.name|keywordProtected }}: {{ pathClass }}<{{ swiftType }}> { .init() }
+{% if isStatic %}static {% endif %}var {{ field.name|camelized|keywordProtected }}: {{ pathClass }}<{{ swiftType }}> { .init() }

@@ -110,4 +110,16 @@ extension Schema.GraphQLType.Field.TypeReference {
         }
     }
 
+    var isScalar: Bool {
+        switch self {
+        case .concrete(let definition):
+            return definition.kind == .scalar
+        case .complex(let definition, let ofType):
+            if case .nonNull = definition.kind {
+                return ofType.isScalar
+            }
+            return false
+        }
+    }
+
 }

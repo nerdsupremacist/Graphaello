@@ -60,6 +60,7 @@ extension ApolloReference {
     private func arguments(schema: Path, graphql: Path, outputFile: Path) -> [String] {
         return [
             command,
+            "--namespace=ApolloStuff",
             "--target=swift",
             "--includes=\(graphql)",
             "--localSchemaFile=\(schema)",

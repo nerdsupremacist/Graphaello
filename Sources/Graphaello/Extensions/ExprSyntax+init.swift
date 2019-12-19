@@ -66,7 +66,7 @@ extension MemberAccessExprSyntax {
 
 extension FunctionCallExprSyntax {
 
-    init(target: ExprSyntax, arguments: [(String, ExprSyntax)]) {
+    init(target: ExprSyntax, arguments: [(String?, ExprSyntax)]) {
         let leftParen = SyntaxFactory.makeLeftParenToken()
         let rightParen = SyntaxFactory.makeRightParenToken()
 
@@ -86,14 +86,18 @@ extension FunctionCallExprSyntax {
 
 extension FunctionCallArgumentSyntax {
 
-    init(name: String, value: ExprSyntax, useTrailingComma: Bool) {
-        let label = SyntaxFactory.makeIdentifier(name)
-        let colon = SyntaxFactory.makeColonToken()
+    init(name: String?, value: ExprSyntax, useTrailingComma: Bool) {
         let comma = SyntaxFactory.makeCommaToken()
 
         self = FunctionCallArgumentSyntax { builder in
-            builder.useLabel(label)
-            builder.useColon(colon)
+            if let name = name {
+                let label = SyntaxFactory.makeIdentifier(name)
+                let colon = SyntaxFactory.makeColonToken()
+
+                builder.useLabel(label)
+                builder.useColon(colon)
+            }
+
             builder.useExpression(value)
             if useTrailingComma {
                 builder.useTrailingComma(comma)

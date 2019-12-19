@@ -27,7 +27,7 @@ extension GraphQLStruct {
         let argumentsFromQuery = query?
             .arguments
             .map { argument in
-                return QueryRendererArgument(name: argument.name,
+                return QueryRendererArgument(name: argument.name.camelized,
                                              type: argument.type.swiftType(api: api),
                                              expression: argument.defaultValue)
             } ?? []

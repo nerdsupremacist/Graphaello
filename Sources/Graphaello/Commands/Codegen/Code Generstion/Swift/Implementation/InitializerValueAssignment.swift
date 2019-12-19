@@ -109,7 +109,7 @@ extension Stage.Validated.Component {
         case (.casting(.up), _, _):
             return []
         case (_, .property(let name), _):
-            return [AttributePath(name: name, kind: .init(from: fieldType))]
+            return [AttributePath(name: name.camelized, kind: .init(from: fieldType))]
         case (_, .fragment, .some(let fragment)):
             return [AttributePath(name: "fragments", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
         case (_, .fragment, .none):

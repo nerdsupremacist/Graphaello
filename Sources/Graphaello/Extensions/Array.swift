@@ -41,7 +41,8 @@ extension Array where Element == Schema.GraphQLType {
 extension Array where Element == Schema.GraphQLType.Field {
     
     subscript(name: String) -> Element? {
-        return first { $0.name == name }
+        let name = name.camelized
+        return first { $0.name.camelized == name }
     }
     
 }
@@ -57,7 +58,8 @@ extension Array where Element == Schema.TypeReference {
 extension Array where Element == Schema.GraphQLType.Field.Argument {
 
     subscript(name: String) -> Schema.GraphQLType.Field.Argument? {
-        return first { $0.name == name }
+        let name = name.camelized
+        return first { $0.name.camelized == name }
     }
 
 }

@@ -117,3 +117,15 @@ extension GraphQL where Value: Fragment {
         self.wrappedValue = wrappedValue
     }
 }
+
+extension RawRepresentable {
+    fileprivate init?<Other: RawRepresentable>(_ other: Other?) where Other.RawValue == RawValue {
+        guard let rawValue = other?.rawValue else { return nil }
+        self.init(rawValue: rawValue)
+    }
+
+    fileprivate init<Other: RawRepresentable>(_ other: Other) where Other.RawValue == RawValue {
+        guard let value = Self(rawValue: other.rawValue) else { fatalError() }
+        self = value
+    }
+}

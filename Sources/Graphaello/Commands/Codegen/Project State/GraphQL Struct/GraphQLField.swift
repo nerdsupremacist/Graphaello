@@ -46,17 +46,20 @@ extension Field {
                 case .value(let expression):
                     return GraphQLArgument(name: element.key,
                                            type: type,
-                                           defaultValue: expression)
+                                           defaultValue: expression,
+                                           argument: element.value)
 
                 case .argument(.withDefault(let expression)):
                     return GraphQLArgument(name: element.key,
                                            type: type,
-                                           defaultValue: expression)
+                                           defaultValue: expression,
+                                           argument: element.value)
 
                 case .argument(.forced):
                     return GraphQLArgument(name: element.key,
                                            type: type,
-                                           defaultValue: nil)
+                                           defaultValue: nil,
+                                           argument: element.value)
                 }
             })
         }
