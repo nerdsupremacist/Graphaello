@@ -48,7 +48,7 @@ struct BasicComponentValidator: ComponentValidator {
                 
                 return .init(component: component, type: type)
             } else {
-                return try validate(component: .call(name, [:]), using: context)
+                return try validate(component: .call(name, []), using: context)
             }
 
         case (.fragment, .object):
@@ -58,7 +58,8 @@ struct BasicComponentValidator: ComponentValidator {
             let field = try type.fields?[name] ?! GraphQLPathValidationError.fieldNotFoundInType(name, type: type)
 
             let arguments = try field.defaultArgumentDictionary(using: transpiler,
-                                                                with: context.api).merging(arguments) { $1 }
+                                                                with: context.api,
+                                                                merged: arguments)
 
             let type = try context.api[field.type.underlyingTypeName] ?!
                 GraphQLPathValidationError.typeNotFound(field.type.underlyingTypeName, api: context.api)
@@ -85,16 +86,20 @@ extension BasicComponentValidator {
 
 }
 
-private typealias GraphaelloArgument = Argument
-
 extension Schema.GraphQLType.Field {
 
-    fileprivate func defaultArgumentDictionary(using transpiler: GraphQLToSwiftTranspiler, with api: API) throws -> [String : GraphaelloArgument] {
-        let baseDictionary = Dictionary(uniqueKeysWithValues: arguments.map { ($0.name, $0) })
-        return try baseDictionary.mapValues { argument in
-            try transpiler.expression(from: argument.defaultValue,
+    fileprivate func defaultArgumentDictionary(using transpiler: GraphQLToSwiftTranspiler,
+                                               with api: API,
+                                               merged otherArguments: [Field.Argument] = []) throws -> [Field.Argument] {
+
+        let otherArguments = Dictionary(uniqueKeysWithValues: otherArguments.map { ($0.name, $0.value) })
+        return try self.arguments.map { argument in
+            let value = try otherArguments[argument.name] ??
+                transpiler.expression(from: argument.defaultValue,
                                       for: argument.type,
                                       using: api).map { .argument(.withDefault($0)) } ?? .argument(.forced)
+
+            return Field.Argument(name: argument.name, value: value)
         }
     }
 

@@ -8,9 +8,16 @@
 
 import Foundation
 
+typealias GraphaelloArgument = Argument
+
 enum Field: Equatable, Hashable {
+    struct Argument: Equatable, Hashable {
+        let name: String
+        let value: GraphaelloArgument
+    }
+
     case direct(Schema.GraphQLType.Field)
-    case call(Schema.GraphQLType.Field, [String : Argument])
+    case call(Schema.GraphQLType.Field, [Argument])
 }
 
 extension Field {
@@ -40,23 +47,23 @@ extension Field {
 
         case .call(let field, let arguments):
             return OrderedSet(arguments.map { element in
-                let type = field.arguments[element.key]?.type ?! fatalError()
+                let type = field.arguments[element.name]?.type ?! fatalError()
                 switch element.value {
 
                 case .value(let expression):
-                    return GraphQLArgument(name: element.key,
+                    return GraphQLArgument(name: element.name,
                                            type: type,
                                            defaultValue: expression,
                                            argument: element.value)
 
                 case .argument(.withDefault(let expression)):
-                    return GraphQLArgument(name: element.key,
+                    return GraphQLArgument(name: element.name,
                                            type: type,
                                            defaultValue: expression,
                                            argument: element.value)
 
                 case .argument(.forced):
-                    return GraphQLArgument(name: element.key,
+                    return GraphQLArgument(name: element.name,
                                            type: type,
                                            defaultValue: nil,
                                            argument: element.value)

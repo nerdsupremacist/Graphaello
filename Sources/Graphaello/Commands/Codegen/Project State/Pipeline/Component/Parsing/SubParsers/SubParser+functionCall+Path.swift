@@ -12,7 +12,7 @@ import SwiftSyntax
 extension SubParser {
     
     static func functionCall(parent: SubParser<ExprSyntax, Stage.Parsed.Path>,
-                             parser: @escaping () -> SubParser<FunctionCallArgumentListSyntax, [String : Argument]>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path> {
+                             parser: @escaping () -> SubParser<FunctionCallArgumentListSyntax, [Field.Argument]>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path> {
         
         return .init { expression in
             guard let called = expression.calledExpression as? MemberAccessExprSyntax else {
@@ -40,7 +40,7 @@ extension SubParser {
 
 extension Stage.Parsed.Path {
 
-    fileprivate func appending(name: String, arguments: [String : Argument]) throws -> Self {
+    fileprivate func appending(name: String, arguments: [Field.Argument]) throws -> Self {
         return .init(apiName: apiName, target: target, components: components + [.call(name, arguments)])
     }
 

@@ -16,7 +16,7 @@ extension Stage {
         enum Component: Equatable {
             case property(String)
             case fragment
-            case call(String, [String : Argument])
+            case call(String, [Field.Argument])
         }
 
         struct Path {

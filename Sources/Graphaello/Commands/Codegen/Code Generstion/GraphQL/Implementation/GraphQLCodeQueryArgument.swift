@@ -35,8 +35,8 @@ extension Field {
         case .call(let field, let arguments):
             let dictionary = Dictionary(uniqueKeysWithValues: field.arguments.map { ($0.name, $0.type) })
             return arguments.compactMap { element in
-                guard let type = dictionary[element.key] else { return nil }
-                return GraphQLCodeQueryArgument(name: element.key, type: type)
+                guard let type = dictionary[element.name] else { return nil }
+                return GraphQLCodeQueryArgument(name: element.name, type: type)
             }
         }
     }
