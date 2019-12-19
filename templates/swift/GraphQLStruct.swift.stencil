@@ -32,3 +32,6 @@ extension {{ graphQLStruct.query.api.name }} {
     
 }
 {% endif %}
+
+{{ missingFragmentsStructs|code }}
+{{ missingReferencedFragments|code }}

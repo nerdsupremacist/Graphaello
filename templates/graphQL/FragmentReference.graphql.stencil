@@ -1,1 +1,5 @@
+{% if fragmentReference.hasArguments %}
+{{ fragmentReference.fragment.object|code }}
+{% else %}
 ...{{ fragmentReference.fragment.name }}
+{% endif %}

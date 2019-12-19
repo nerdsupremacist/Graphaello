@@ -1,0 +1,12 @@
+extension ApolloStuff.{{ missingReferencedFragment.path|join:"." }}.Fragments {
+
+    public var {{ missingReferencedFragment.fragmentName|camelized }}: ApolloStuff.{{ missingReferencedFragment.fragmentName }} {
+        get {
+            return ApolloStuff.{{ missingReferencedFragment.fragmentName }}(unsafeResultMap: resultMap)
+        }
+        set {
+            resultMap += newValue.resultMap
+        }
+    }
+
+}

@@ -1,0 +1,18 @@
+extension ApolloStuff.{{ missingFragmentsStruct.path|join:"." }} {
+    public struct Fragments {
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+            resultMap = unsafeResultMap
+        }
+    }
+
+    public var fragments: Fragments {
+        get {
+            return Fragments(unsafeResultMap: resultMap)
+        }
+        set {
+            resultMap += newValue.resultMap
+        }
+    }
+}

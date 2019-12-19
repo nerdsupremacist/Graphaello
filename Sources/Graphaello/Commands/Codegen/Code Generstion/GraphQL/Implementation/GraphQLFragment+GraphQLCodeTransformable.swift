@@ -7,5 +7,12 @@
 //
 
 import Foundation
+import Stencil
 
-extension GraphQLFragment: GraphQLCodeTransformable { }
+extension GraphQLFragment: ExtraValuesGraphQLCodeTransformable {
+
+    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
+        return ["isInsideFragment": true]
+    }
+
+}
