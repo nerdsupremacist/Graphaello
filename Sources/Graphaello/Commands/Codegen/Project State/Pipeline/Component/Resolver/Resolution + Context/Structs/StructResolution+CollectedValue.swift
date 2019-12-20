@@ -13,6 +13,7 @@ extension StructResolution {
     enum CollectedValue {
         case query(GraphQLQuery)
         case fragment(GraphQLFragment)
+        case connectionQuery(GraphQLConnectionQuery)
     }
     
 }
@@ -25,6 +26,8 @@ extension GraphQLStruct {
             return try lhs + query
         case .fragment(let fragment):
             return lhs + fragment
+        case .connectionQuery(let connectionQuery):
+            return lhs + connectionQuery
         }
     }
     

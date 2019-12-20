@@ -12,6 +12,7 @@ struct GraphQLStruct {
     let definition: Struct<Stage.Resolved>
     let fragments: [GraphQLFragment]
     let query: GraphQLQuery?
+    let connectionQueries: [GraphQLConnectionQuery]
 }
 
 extension GraphQLStruct {
@@ -28,14 +29,30 @@ extension GraphQLStruct {
         let includesFragment = lhs.fragments.contains { $0 ~= rhs }
         if includesFragment {
             let fragments = lhs.fragments.map { $0 ~= rhs ? $0 + rhs : $0 }
-            return GraphQLStruct(definition: lhs.definition, fragments: fragments, query: lhs.query)
+            return GraphQLStruct(definition: lhs.definition,
+                                 fragments: fragments,
+                                 query: lhs.query,
+                                 connectionQueries: lhs.connectionQueries)
         } else {
-            return GraphQLStruct(definition: lhs.definition, fragments: lhs.fragments + [rhs], query: lhs.query)
+            return GraphQLStruct(definition: lhs.definition,
+                                 fragments: lhs.fragments + [rhs],
+                                 query: lhs.query,
+                                 connectionQueries: lhs.connectionQueries)
         }
     }
     
     static func + (lhs: GraphQLStruct, rhs: GraphQLQuery) throws -> GraphQLStruct {
-        return GraphQLStruct(definition: lhs.definition, fragments: lhs.fragments, query: try lhs.query + rhs)
+        return GraphQLStruct(definition: lhs.definition,
+                             fragments: lhs.fragments,
+                             query: try lhs.query + rhs,
+                             connectionQueries: lhs.connectionQueries)
+    }
+
+    static func + (lhs: GraphQLStruct, rhs: GraphQLConnectionQuery) -> GraphQLStruct {
+        return GraphQLStruct(definition: lhs.definition,
+                             fragments: lhs.fragments,
+                             query: lhs.query,
+                             connectionQueries: lhs.connectionQueries + [rhs])
     }
     
 }

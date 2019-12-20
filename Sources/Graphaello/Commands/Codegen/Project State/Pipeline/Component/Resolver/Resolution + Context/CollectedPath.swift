@@ -14,6 +14,7 @@ enum CollectedPath {
         case scalar(Field)
         case object(Field, Valid)
         case fragment(GraphQLFragment)
+        case connection(GraphQLConnectionFragment)
     }
     
     case valid(Valid)
@@ -45,7 +46,7 @@ extension CollectedPath.Valid {
             return .object(field, valid + rhs)
         case .typeConditional(let type, let path):
             return .typeConditional(type, path + rhs)
-        case fragment:
+        case .fragment, .connection:
             fatalError("Unexpected extra value appended to fragment")
         }
         

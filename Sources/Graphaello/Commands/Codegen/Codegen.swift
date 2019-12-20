@@ -47,6 +47,7 @@ extension Codegen {
     
     private func graphQLCodeGenRequests() throws -> [ApolloCodeGenRequest] {
         let members = allConnectionFragments.map(MemberOfAPI.fragment) +
+            allConnectionQueries.map(MemberOfAPI.query) +
             allFragments.map(MemberOfAPI.fragment) +
             allQueries.map(MemberOfAPI.query)
         
@@ -89,6 +90,12 @@ extension Codegen {
 }
 
 extension Codegen {
+
+    var allConnectionQueries: [GraphQLQuery] {
+        return structs
+            .flatMap { $0.connectionQueries }
+            .map { $0.query }
+    }
 
     var allConnectionFragments: [GraphQLFragment] {
         return structs

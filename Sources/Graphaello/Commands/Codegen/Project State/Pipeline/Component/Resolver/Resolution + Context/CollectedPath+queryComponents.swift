@@ -16,6 +16,8 @@ extension CollectedPath.Valid {
             return [field : .scalar]
         case .object(let field, let valid):
             return [field : .object(valid.object(propertyName: propertyName))]
+        case .connection(let connection):
+            throw GraphQLFragmentResolverError.cannotIncludeFragmentsInsideAQuery(connection.fragment)
         case .fragment(let fragment):
             throw GraphQLFragmentResolverError.cannotIncludeFragmentsInsideAQuery(fragment)
         case .typeConditional(let type, _):
