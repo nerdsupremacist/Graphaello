@@ -1,9 +1,11 @@
 // MARK: - {{ api.name }}
 
-struct {{ api.name }} {
+struct {{ api.name }}: API {
     let client: ApolloClient
 
     typealias Query = {{ api.name }}
+    typealias Path<V> = GraphQLPath<{{ api.name }}, V>
+    typealias FragmentPath<V> = GraphQLFragmentPath<{{ api.name }}, V>
 
     {{ api.query.fields|code:"static" }}
     {{ api.types|code }}
@@ -14,11 +16,11 @@ extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.nam
     {{ type.fields|code }}
 
     {% for interface in type.interfaces %}
-    var {{ interface.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{ api.name }}.{{interface.name}}> { .init() }
+    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{interface.name}}> { .init() }
     {% endfor %}
 
     {% for possibleType in type.possibleTypes %}
-    var {{ possibleType.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{ api.name }}.{{possibleType.name}}?> { .init() }
+    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{possibleType.name}}?> { .init() }
     {% endfor %}
 }
 
@@ -26,11 +28,11 @@ extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.nam
     {{ type.fields|code:"optional" }}
 
     {% for interface in type.interfaces %}
-    var {{ interface.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{ api.name }}.{{interface.name}}?> { .init() }
+    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{interface.name}}?> { .init() }
     {% endfor %}
 
     {% for possibleType in type.possibleTypes %}
-    var {{ possibleType.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{ api.name }}.{{possibleType.name}}?> { .init() }
+    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{possibleType.name}}?> { .init() }
     {% endfor %}
 }
 {% endfor %}

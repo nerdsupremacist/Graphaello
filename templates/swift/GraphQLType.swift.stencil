@@ -1,26 +1,31 @@
-{% if graphQLType.inputFields %}struct{% else %}enum{% endif %} {{ graphQLType.name }}{%if hasEnumValues %}: String{% endif %} {
-    {{ graphQLType.inputFields|code }}
+{% if graphQlType.inputFields %}struct{% else %}enum{% endif %} {{ graphQlType.name }}: {%if hasEnumValues %}String, {% endif %}Target{% if connectionNodeType %}, Connection{% endif %} {
+
+    {% if connectionNodeType %}typealias Node = {{ connectionNodeType }}{% endif %}
+    typealias Path<V> = GraphQLPath<{{ graphQlType.name }}, V>
+    typealias FragmentPath<V> = GraphQLFragmentPath<{{ graphQlType.name }}, V>
+
+    {{ graphQlType.inputFields|code }}
 
     {% if needsInitializer %}
     init({{ inputFieldInitializerArguments|codeArray|join:", " }}) {
-        {% for inputField in graphQLType.inputFields %}
+        {% for inputField in graphQlType.inputFields %}
         self.{{ inputField.name }} = {{ inputField.name }}
         {% endfor %}
     }
     {% endif %}
 
-    {% for value in graphQLType.enumValues %}
+    {% for value in graphQlType.enumValues %}
     case {{ value.name|camelized|keywordProtected }} = "{{ value.name }}"
     {% endfor %}
-    {{ graphQLType.fields|code:"static" }}
+    {{ graphQlType.fields|code:"static" }}
 
-    {% for interface in graphQLType.interfaces %}
-    static var {{ interface.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{interface.name}}> { .init() }
+    {% for interface in graphQlType.interfaces %}
+    static var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{interface.name}}> { .init() }
     {% endfor %}
 
-    {% for possibleType in graphQLType.possibleTypes %}
-    static var {{ possibleType.name|camelized|keywordProtected }}: GraphQLFragmentPath<{{possibleType.name}}?> { .init() }
+    {% for possibleType in graphQlType.possibleTypes %}
+    static var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{possibleType.name}}?> { .init() }
     {% endfor %}
     
-    static var _fragment: GraphQLFragmentPath<{{graphQLType.name}}> { .init() }
+    static var _fragment: FragmentPath<{{graphQlType.name}}> { .init() }
 }

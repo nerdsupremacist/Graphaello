@@ -1,17 +1,17 @@
-// MARK: - {{ graphQLStruct.definition.name }}
+// MARK: - {{ graphQlStruct.definition.name }}
 
-{% for fragment in graphQLStruct.fragments %}
+{% for fragment in graphQlStruct.fragments %}
 extension ApolloStuff.{{ fragment.name }} : Fragment {
     typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
 }
 {% endfor %}
 
-extension {{ graphQLStruct.definition.name }} {
-    {% for fragment in graphQLStruct.fragments %}
+extension {{ graphQlStruct.definition.name }} {
+    {% for fragment in graphQlStruct.fragments %}
     typealias {{ fragment.target.name }} = ApolloStuff.{{ fragment.name }}
     {% endfor %}
-    {% if graphQLStruct.query %}
-    typealias Data = ApolloStuff.{{ graphQLStruct.definition.name }}Query.Data
+    {% if graphQlStruct.query %}
+    typealias Data = ApolloStuff.{{ graphQlStruct.definition.name }}Query.Data
     {% endif %}
     
     init({{ initializerArguments|codeArray|join:", " }}) {
@@ -19,14 +19,14 @@ extension {{ graphQLStruct.definition.name }} {
     }
 }
 
-{% if graphQLStruct.query %}
-extension {{ graphQLStruct.query.api.name }} {
+{% if graphQlStruct.query %}
+extension {{ graphQlStruct.query.api.name }} {
     
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: ApolloStuff.{{ graphQLStruct.definition.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
+                             query: ApolloStuff.{{ graphQlStruct.definition.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
         
-            {{ graphQLStruct.definition.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
+            {{ graphQlStruct.definition.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
     }
     

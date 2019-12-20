@@ -16,7 +16,7 @@ extension Schema.GraphQLType.Field: ExtraValuesSwiftCodeTransformable {
         let isOptional = arguments.contains { $0 as? String == "optional" }
         
         let hasArguments = !self.arguments.isEmpty
-        let pathClass = type.isFragment ? "GraphQLFragmentPath" : "GraphQLPath"
+        let pathClass = type.isFragment ? "FragmentPath" : "Path"
         
         let api = context["api"] as? API ?! fatalError("API Not found")
         let swiftType = isOptional ? type.optional.swiftType(api: api.name) : type.swiftType(api: api.name)

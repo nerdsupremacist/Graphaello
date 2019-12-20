@@ -13,11 +13,11 @@ fileprivate let badChars = CharacterSet.alphanumerics.inverted
 
 extension String {
     var uppercasingFirst: String {
-        return prefix(1).uppercased() + dropFirst()
+        return prefix(1).uppercased() + dropFirst().lowercased()
     }
 
     var lowercasingFirst: String {
-        return prefix(1).lowercased() + dropFirst()
+        return prefix(1).lowercased() + dropFirst().lowercased()
     }
 
     var camelized: String {
@@ -27,8 +27,7 @@ extension String {
         
         guard uppercased() != self else { return lowercased() }
 
-        let parts = self.components(separatedBy: badChars)
-
+        let parts = self.parts
         let first = String(describing: parts.first!).lowercasingFirst
         let rest = parts.dropFirst().map({String($0).uppercasingFirst})
 
@@ -40,8 +39,12 @@ extension String {
             return ""
         }
 
-        let parts = self.components(separatedBy: badChars)
-
         return parts.map { String($0).uppercasingFirst }.joined(separator: "")
+    }
+
+    private var parts: [String] {
+        return replacingOccurrences(of: "([a-z])([A-Z]*)([A-Z][a-z]|$)",
+                                    with: "$1 $2 $3",
+                                    options: .regularExpression).components(separatedBy: badChars)
     }
 }

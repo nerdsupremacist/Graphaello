@@ -45,12 +45,16 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
     }
 }
 
-struct GraphQLPath<Value> {
-    fileprivate init() { }
-}
-
 protocol Fragment {
     associatedtype UnderlyingType
+}
+
+protocol Target { }
+
+protocol API: Target { }
+
+protocol Connection: Target {
+    associatedtype Node
 }
 
 extension Array: Fragment where Element: Fragment {
@@ -61,13 +65,22 @@ extension Optional: Fragment where Wrapped: Fragment {
     typealias UnderlyingType = Wrapped.UnderlyingType?
 }
 
-struct GraphQLFragmentPath<UnderlyingType> {
+struct GraphQLPath<TargetType: Target, Value> {
+    fileprivate init() { }
+}
+
+struct GraphQLFragmentPath<TargetType: Target, UnderlyingType> {
     fileprivate init() { }
 }
 
 extension GraphQLFragmentPath {
+    typealias Path<V> = GraphQLPath<TargetType, V>
+    typealias FragmentPath<V> = GraphQLFragmentPath<TargetType, V>
+}
 
-    var _fragment: GraphQLFragmentPath<UnderlyingType> {
+extension GraphQLFragmentPath {
+
+    var _fragment: FragmentPath<UnderlyingType> {
         return self
     }
 
@@ -95,11 +108,31 @@ extension GraphQLArgument {
 
 }
 
+struct Paging<Value: Fragment> {
+    @State
+    private(set) var isLoading: Bool = false
+
+    @State
+    private(set) var values: [Value]
+
+    @State
+    private var cursor: String
+
+    @State
+    private(set) var hasMore: Bool
+
+    fileprivate init(values: [Value], cursor: String, hasMore: Bool) {
+        self.values = values
+        self.cursor = cursor
+        self.hasMore = hasMore
+    }
+}
+
 @propertyWrapper
 struct GraphQL<Value> {
     var wrappedValue: Value
 
-    init(_ path: @autoclosure () -> GraphQLPath<Value>) {
+    init<T: Target>(_: @autoclosure () -> GraphQLPath<T, Value>) {
         fatalError("Initializer with path only should never be used")
     }
 
@@ -109,12 +142,18 @@ struct GraphQL<Value> {
 }
 
 extension GraphQL where Value: Fragment {
-    init(_ path: @autoclosure () -> GraphQLFragmentPath<Value.UnderlyingType>) {
+    init<T: Target>(_: @autoclosure () -> GraphQLFragmentPath<T, Value.UnderlyingType>) {
+        fatalError("Initializer with path only should never be used")
+    }
+}
+
+extension GraphQL {
+    init<T: API, C: Connection, F: Fragment>(_: @autoclosure () -> GraphQLFragmentPath<T, C>) where Value == Paging<F>, C.Node == F.UnderlyingType {
         fatalError("Initializer with path only should never be used")
     }
 
-    fileprivate init(_ wrappedValue: Value) {
-        self.wrappedValue = wrappedValue
+    init<T: API, C: Connection, F: Fragment>(_: @autoclosure () -> GraphQLFragmentPath<T, C?>) where Value == Paging<F>?, C.Node == F.UnderlyingType {
+        fatalError("Initializer with path only should never be used")
     }
 }
 
