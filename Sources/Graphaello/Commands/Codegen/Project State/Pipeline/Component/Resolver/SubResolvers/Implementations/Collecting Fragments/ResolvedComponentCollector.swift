@@ -22,7 +22,7 @@ struct ResolvedComponentCollector: ResolvedValueCollector {
             return .resolved(.scalar(.direct(field)))
         
         case (_, .fragment), (.fragment, _):
-            guard let fragment = parent.referencedFragment else { return .missingFragment }
+            guard let fragment = parent.referencedFragment?.fragment else { return .missingFragment }
             return .resolved(.fragment(fragment))
             
         case (.field(let field), .call(_, let arguments)):

@@ -16,8 +16,10 @@ struct FragmentReference: GraphQLCodeTransformable {
 extension GraphQLObject {
     
     var referencedFragments: [FragmentReference] {
-        return fragments.values.sorted { $0.name < $1.name }.map { FragmentReference(hasArguments: !$0.arguments.isEmpty,
-                                                                                     fragment: $0) }
+        return fragments
+            .sorted { $0.name < $1.name }
+            .map { FragmentReference(hasArguments: !$0.arguments.isEmpty,
+                                     fragment: $0) }
     }
     
 }

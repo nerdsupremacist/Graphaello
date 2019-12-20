@@ -19,10 +19,19 @@ struct PathResolver: ValueResolver {
             return .resolved(.init(validated: value, referencedFragment: nil))
         }
         
-        let fragmentName = try StructResolution.FragmentName(typeName: property.type)
-        guard let fragment = context[fragmentName] else { return .missingFragment }
-        
-        return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: fragment))
+        switch try StructResolution.ReferencedFragment(typeName: property.type) {
+
+        case .name(let fragmentName):
+            guard let fragment = context[fragmentName] else { return .missingFragment }
+            return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: .fragment(fragment)))
+
+        case .paging(let nodeFragmentName):
+            guard let connectionType = value.components.last?.underlyingType else { fatalError() }
+            guard let nodeFragment = context[nodeFragmentName] else { return .missingFragment }
+            let fragment = try GraphQLConnectionFragment(connection: connectionType, nodeFragment: nodeFragment)
+            return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: .connection(fragment)))
+
+        }
     }
     
 }

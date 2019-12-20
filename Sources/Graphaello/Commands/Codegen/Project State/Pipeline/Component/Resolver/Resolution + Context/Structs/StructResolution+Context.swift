@@ -20,7 +20,7 @@ extension StructResolution {
                 self.fragments = Dictionary(uniqueKeysWithValues: resolved.fragments.map { ($0.target.name, $0) })
             }
         }
-        
+
         private let fragmentDictionary: [String : GraphQLFragment]
         private let structsDictionary: [String : FastStruct]
         public let failedDueToMissingFragment: [Struct<Stage.Validated>]
@@ -89,8 +89,8 @@ extension StructResolution.Context {
                                         structsDictionary: lhs.structsDictionary,
                                         failedDueToMissingFragment: lhs.failedDueToMissingFragment + [rhs])
     }
-    
-    
+
+
 }
 
 extension StructResolution.Context {

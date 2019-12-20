@@ -94,7 +94,7 @@ extension Stage.Resolved.Path {
             first = AttributePath(name: type.camelized, kind: .value)
         }
 
-        let path = validated.components.flatMap { $0.path(referencedFragment: referencedFragment) }
+        let path = validated.components.flatMap { $0.path(referencedFragment: referencedFragment?.fragment) }
         return first.expression(attributes: path)
     }
 

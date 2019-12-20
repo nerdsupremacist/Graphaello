@@ -46,8 +46,9 @@ extension Codegen {
     }
     
     private func graphQLCodeGenRequests() throws -> [ApolloCodeGenRequest] {
-        let members = structs.flatMap { $0.fragments }.map(MemberOfAPI.fragment) +
-            structs.compactMap { $0.query }.map(MemberOfAPI.query)
+        let members = allConnectionFragments.map(MemberOfAPI.fragment) +
+            allFragments.map(MemberOfAPI.fragment) +
+            allQueries.map(MemberOfAPI.query)
         
         let groupped = Dictionary(grouping: members) { $0.api.name }
         let requests = try groupped.mapValues { members -> ApolloCodeGenRequest in
@@ -88,6 +89,15 @@ extension Codegen {
 }
 
 extension Codegen {
+
+    var allConnectionFragments: [GraphQLFragment] {
+        return structs
+            .flatMap { $0.definition.properties }
+            .compactMap { property in
+                guard case .some(.connection(let connection)) = property.graphqlPath?.referencedFragment else { return nil }
+                return connection.fragment
+            }
+    }
 
     var allFragments: [GraphQLFragment] {
         return structs.flatMap { $0.fragments }

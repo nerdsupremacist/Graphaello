@@ -13,9 +13,27 @@ extension Stage {
     enum Resolved: GraphQLStage {
         typealias Information = Path?
 
+        enum ReferencedFragment {
+            case fragment(GraphQLFragment)
+            case connection(GraphQLConnectionFragment)
+        }
+
         struct Path {
             let validated: Validated.Path
-            let referencedFragment: GraphQLFragment?
+            let referencedFragment: ReferencedFragment?
+        }
+    }
+
+}
+
+extension Stage.Resolved.ReferencedFragment {
+
+    var fragment: GraphQLFragment {
+        switch self {
+        case .fragment(let fragment):
+            return fragment
+        case .connection(let connection):
+            return connection.fragment
         }
     }
 

@@ -11,14 +11,7 @@ import SwiftSyntax
 
 extension StructResolution.FragmentName {
     
-    init(typeName: String) throws {
-        guard let syntax = try SourceCode(content: typeName).syntaxTree().singleItem() else  {
-            throw GraphQLFragmentResolverError.invalidTypeNameForFragment(typeName)
-        }
-        try self.init(syntax: syntax)
-    }
-    
-    fileprivate init(syntax: Syntax) throws {
+    init(syntax: Syntax) throws {
         switch syntax {
         case let expression as IdentifierExprSyntax:
             self = .fullName(expression.identifier.text)
@@ -30,6 +23,10 @@ extension StructResolution.FragmentName {
         case let expression as ArrayExprSyntax:
             guard let syntax = Array(expression.elements).single()?.expression else { throw GraphQLFragmentResolverError.invalidTypeNameForFragment(expression.description) }
             try self.init(syntax: syntax)
+        case let expression as OptionalTypeSyntax:
+            try self.init(syntax: expression.wrappedType)
+        case let expression as MemberTypeIdentifierSyntax:
+            self = .typealiasOnStruct(expression.baseType.description, expression.name.text)
         default:
             throw GraphQLFragmentResolverError.invalidTypeNameForFragment(syntax.description)
         }

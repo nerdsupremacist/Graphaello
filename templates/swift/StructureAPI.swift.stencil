@@ -108,20 +108,20 @@ extension GraphQLArgument {
 
 }
 
-struct Paging<Value: Fragment> {
-    @State
-    private(set) var isLoading: Bool = false
+class Paging<Value: Fragment>: DynamicProperty {
+    @Published
+    private(set) var isLoading: Bool
 
-    @State
+    @Published
     private(set) var values: [Value]
 
-    @State
-    private var cursor: String
+    private var cursor: String?
 
-    @State
+    @Published
     private(set) var hasMore: Bool
 
     fileprivate init(values: [Value], cursor: String, hasMore: Bool) {
+        self.isLoading = false
         self.values = values
         self.cursor = cursor
         self.hasMore = hasMore

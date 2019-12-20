@@ -88,9 +88,9 @@ extension BasicComponentValidator {
 
 extension Schema.GraphQLType.Field {
 
-    fileprivate func defaultArgumentDictionary(using transpiler: GraphQLToSwiftTranspiler,
-                                               with api: API,
-                                               merged otherArguments: [Field.Argument] = []) throws -> [Field.Argument] {
+    func defaultArgumentDictionary(using transpiler: GraphQLToSwiftTranspiler,
+                                   with api: API,
+                                   merged otherArguments: [Field.Argument] = []) throws -> [Field.Argument] {
 
         let otherArguments = Dictionary(uniqueKeysWithValues: otherArguments.map { ($0.name, $0.value) })
         return try self.arguments.map { argument in

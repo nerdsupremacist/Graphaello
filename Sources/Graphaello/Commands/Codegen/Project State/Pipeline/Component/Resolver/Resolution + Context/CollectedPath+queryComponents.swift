@@ -13,7 +13,7 @@ extension CollectedPath.Valid {
     func queryComponents(propertyName: String) throws -> [Field : GraphQLComponent] {
         switch self {
         case .scalar(let field):
-            return [field : .scalar(propertyNames: [propertyName])]
+            return [field : .scalar]
         case .object(let field, let valid):
             return [field : .object(valid.object(propertyName: propertyName))]
         case .fragment(let fragment):
