@@ -110,22 +110,17 @@ extension GraphQLArgument {
 
 class Paging<Value: Fragment>: DynamicProperty {
     @Published
-    private(set) var isLoading: Bool
+    private(set) var isLoading: Bool = false
 
     @Published
-    private(set) var values: [Value]
+    private(set) var values: [Value] = []
 
-    private var cursor: String?
+    private var cursor: String? = nil
 
     @Published
-    private(set) var hasMore: Bool
+    private(set) var hasMore: Bool = false
 
-    fileprivate init(values: [Value], cursor: String, hasMore: Bool) {
-        self.isLoading = false
-        self.values = values
-        self.cursor = cursor
-        self.hasMore = hasMore
-    }
+    fileprivate init() { }
 }
 
 @propertyWrapper
