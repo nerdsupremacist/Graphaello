@@ -108,19 +108,66 @@ extension GraphQLArgument {
 
 }
 
-class Paging<Value: Fragment>: DynamicProperty {
+class Paging<Value: Fragment>: DynamicProperty, ObservableObject {
+    fileprivate struct Response {
+        let values: [Value]
+        let cursor: String?
+        let hasMore: Bool
+
+        static var empty: Response {
+            Response(values: [], cursor: nil, hasMore: false)
+        }
+    }
+
+    fileprivate typealias Completion = (Result<Response, Error>) -> Void
+    fileprivate typealias Loader = (String, @escaping Completion) -> Void
+
+    private let loader: Loader
+
     @Published
     private(set) var isLoading: Bool = false
 
     @Published
     private(set) var values: [Value] = []
 
-    private var cursor: String? = nil
+    private var cursor: String?
 
     @Published
     private(set) var hasMore: Bool = false
 
-    fileprivate init() { }
+    @Published
+    private(set) var error: Error? = nil
+
+    fileprivate init(_ response: Response, loader: @escaping Loader) {
+        self.loader = loader
+        use(response)
+    }
+
+    func loadMore() {
+        guard let cursor = cursor, !isLoading else { return }
+        isLoading = true
+        loader(cursor) { [weak self] result in
+            switch result {
+            case let .success(response):
+                self?.use(response)
+            case let .failure(error):
+                self?.handle(error)
+            }
+        }
+    }
+
+    private func use(_ response: Response) {
+        isLoading = false
+        values += response.values
+        cursor = response.cursor
+        hasMore = response.hasMore
+    }
+
+    private func handle(_ error: Error) {
+        isLoading = false
+        hasMore = false
+        self.error = error
+    }
 }
 
 @propertyWrapper

@@ -18,7 +18,7 @@ extension Schema.GraphQLType: ExtraValuesSwiftCodeTransformable {
             "needsInitializer": inputFields?.contains { $0.defaultValue != nil } ?? false,
             "hasEnumValues": enumValues.map { !$0.isEmpty } ?? false,
             "inputFieldInitializerArguments": try inputFieldInitializerArguments(using: transpiler, in: api),
-            "connectionNodeType": try connectionEdgeType(using: api)?.nodeField.type.swiftType(api: api.name) ?? false,
+            "connectionNodeType": try connectionEdgeType(using: api)?.nodeField.type.nonNull.swiftType(api: api.name) ?? false,
         ]
     }
 
