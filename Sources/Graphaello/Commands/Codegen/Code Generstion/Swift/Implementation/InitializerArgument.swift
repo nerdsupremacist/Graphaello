@@ -17,7 +17,7 @@ extension GraphQLStruct {
     
     var initializerArguments: [InitializerArgument] {
         let stockArguments = definition.properties
-            .filter { $0.graphqlPath == nil }
+            .filter { $0.graphqlPath?.isConnection ?? true }
             .map { InitializerArgument(name: $0.name, type: $0.type) }
         
         let queryArgument = query != nil ? [InitializerArgument(name: "data", type: "Data")] : []

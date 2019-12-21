@@ -20,8 +20,9 @@ extension GraphQLStruct {
         return definition.properties.map { property in
             switch property.graphqlPath {
             case .some(let path):
+                let expression = path.isConnection ? property.name : path.expression()
                 return InitializerValueAssignment(name: property.name,
-                                                  expression: "GraphQL(\(path.expression()))")
+                                                  expression: "GraphQL(\(expression))")
             case .none:
                 return InitializerValueAssignment(name: property.name, expression: property.name)
             }

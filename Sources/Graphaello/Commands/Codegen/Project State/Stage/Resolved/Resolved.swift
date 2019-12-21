@@ -38,3 +38,12 @@ extension Stage.Resolved.ReferencedFragment {
     }
 
 }
+
+extension Stage.Resolved.Path {
+
+    var isConnection: Bool {
+        guard case .connection = referencedFragment else { return false }
+        return true
+    }
+
+}
