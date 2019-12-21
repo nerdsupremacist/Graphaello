@@ -170,6 +170,101 @@ class Paging<Value: Fragment>: DynamicProperty, ObservableObject {
     }
 }
 
+struct PagingView<Value: Fragment>: View {
+    enum Data {
+        case item(Value, Int)
+        case loading
+        case error(Error)
+
+        fileprivate var id: String {
+            switch self {
+            case .item(_, let int):
+                return int.description
+            case .error:
+                return "error"
+            case .loading:
+                return "loading"
+            }
+        }
+    }
+
+    @ObservedObject private var paging: Paging<Value>
+    private var loader: (Data) -> AnyView
+
+    init(_ paging: Paging<Value>, loader: @escaping (Data) -> AnyView) {
+        self.paging = paging
+        self.loader = loader
+    }
+
+    var body: some View {
+        ForEach((paging.values.enumerated().map { Data.item($0.element, $0.offset) } +
+                    [paging.isLoading ? Data.loading : nil, paging.error.map(Data.error)].compactMap { $0 }),
+                id: \.id) { data in
+
+            self.loader(data).onAppear {  self.onAppear(data: data) }
+        }
+    }
+
+    private func onAppear(data: Data) {
+        guard !paging.isLoading,
+            paging.hasMore,
+            case .item(_, let index) = data,
+            index > paging.values.count - 2 else { return }
+
+        paging.loadMore()
+    }
+}
+
+extension PagingView {
+
+    init<Loading: View, Error: View, Data: View>(_ paging: Paging<Value>,
+                                                 loading loadingView: @escaping () -> Loading,
+                                                 error errorView: @escaping (Swift.Error) -> Error,
+                                                 item itemView: @escaping (Value) -> Data) {
+
+        self.init(paging) { data in
+            switch data {
+            case .item(let item, _):
+                return AnyView(itemView(item))
+            case .error(let error):
+                return AnyView(errorView(error))
+            case .loading:
+                return AnyView(loadingView())
+            }
+        }
+    }
+
+    init<Error: View, Data: View>(_ paging: Paging<Value>,
+                                  error errorView: @escaping (Swift.Error) -> Error,
+                                  item itemView: @escaping (Value) -> Data) {
+
+        self.init(paging,
+                  loading: { Text("Loading") },
+                  error: errorView,
+                  item: itemView)
+    }
+
+    init<Loading: View, Data: View>(_ paging: Paging<Value>,
+                                  loading loadingView: @escaping () -> Loading,
+                                  item itemView: @escaping (Value) -> Data) {
+
+        self.init(paging,
+                  loading: loadingView,
+                  error: { Text("Error: \($0.localizedDescription)") },
+                  item: itemView)
+    }
+
+    init<Data: View>(_ paging: Paging<Value>,
+                     item itemView: @escaping (Value) -> Data) {
+
+        self.init(paging,
+                  loading: { Text("Loading") },
+                  error: { Text("Error: \($0.localizedDescription)") },
+                  item: itemView)
+    }
+
+}
+
 @propertyWrapper
 struct GraphQL<Value> {
     var wrappedValue: Value
