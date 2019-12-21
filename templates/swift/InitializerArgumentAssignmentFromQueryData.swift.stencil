@@ -1,1 +1,1 @@
-{{ initializerArgumentAssignmentFromQueryData.name }}: {{ initializerArgumentAssignmentFromQueryData.expression }}
+{{ initializerArgumentAssignmentFromQueryData.name }}: {{ initializerArgumentAssignmentFromQueryData.expression|code }}

@@ -1,0 +1,5 @@
+{{ pathExpression }}.paging { cursor, completion in
+    self.client.fetch(query: ApolloStuff.{{ pagingFromFragment.query.query.name|upperCamelized }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { result in
+        completion(result.map { $0.{{ optionalPathExpression }} })
+    }
+}

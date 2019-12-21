@@ -24,11 +24,25 @@ extension GraphQLStruct {
 
 extension GraphQLQuery {
     
-    fileprivate var queryArgumentAssignments: [QueryArgumentAssignment] {
+    var queryArgumentAssignments: [QueryArgumentAssignment] {
         return arguments.map { QueryArgumentAssignment(name: $0.name,
                                                        expression: $0.assignmentExpression) }
     }
     
+}
+
+extension GraphQLConnectionQuery {
+
+    var queryArgumentAssignments: [QueryArgumentAssignment] {
+        return query.queryArgumentAssignments.map { assignment in
+            if assignment.name == "after" {
+                return QueryArgumentAssignment(name: assignment.name,
+                                               expression: IdentifierExprSyntax(identifier: "cursor"))
+            }
+            return assignment
+        }
+    }
+
 }
 
 extension GraphQLArgument {
