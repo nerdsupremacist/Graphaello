@@ -35,3 +35,4 @@ extension {{ graphQlStruct.query.api.name }} {
 
 {{ missingFragmentsStructs|code }}
 {{ missingReferencedFragments|code }}
+{{ connectionFragments|code }}

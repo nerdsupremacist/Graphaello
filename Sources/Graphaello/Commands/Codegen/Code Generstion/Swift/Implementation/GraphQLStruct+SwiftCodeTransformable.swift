@@ -22,6 +22,7 @@ extension GraphQLStruct: ExtraValuesSwiftCodeTransformable {
             "initializerArgumentAssignmentFromQueryData": initializerArgumentAssignmentFromQueryData,
             "missingFragmentsStructs": Array(missingFragmentsStructs),
             "missingReferencedFragments": Array(missingReferencedFragments),
+            "connectionFragments": connectionQueries.map { $0.fragment },
         ]
     }
     

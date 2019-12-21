@@ -1,0 +1,18 @@
+extension ApolloStuff.{{ graphQlConnectionFragment.fragment.name|upperCamelized }} {
+    typealias Completion = (Result<ApolloStuff.{{ graphQlConnectionFragment.fragment.name|upperCamelized }}?, Error>) -> Void
+    typealias Loader = (String, @escaping Completion) -> Void
+
+    private var response: Paging<ApolloStuff.{{ graphQlConnectionFragment.nodeFragment.name|upperCamelized }}>.Response {
+        return Paging.Response(values: edges?.compactMap { $0?.node?.fragments.{{ graphQlConnectionFragment.nodeFragment.name|camelized }} } ?? [],
+                               cursor: pageInfo.endCursor,
+                               hasMore: pageInfo.hasNextPage)
+    }
+
+    fileprivate func paging(loader: @escaping Loader) -> Paging<ApolloStuff.{{ graphQlConnectionFragment.nodeFragment.name|upperCamelized }}> {
+        return Paging(response) { cursor, completion in
+            loader(cursor) { result in
+                completion(result.map { $0?.response ?? .empty })
+            }
+        }
+    }
+}

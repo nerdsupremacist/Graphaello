@@ -57,6 +57,11 @@ extension Environment {
             return value.camelized
         }
 
+        ext.registerFilter("upperCamelized") { value in
+            guard let value = value as? String else { return nil }
+            return value.upperCamelized
+        }
+
         ext.registerFilter("keywordProtected") { value in
             guard let value = value as? String else { return nil }
             if keywords.contains(value) {
