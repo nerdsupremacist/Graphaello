@@ -43,8 +43,14 @@ extension String {
     }
 
     private var parts: [String] {
-        return replacingOccurrences(of: "([a-z])([A-Z]*)([A-Z][a-z]|$)",
-                                    with: "$1 $2 $3",
-                                    options: .regularExpression).components(separatedBy: badChars)
+        let basics = replacingOccurrences(of: "([a-z])([A-Z])",
+                                          with: "$1 $2",
+                                          options: .regularExpression)
+
+        let complete = basics.replacingOccurrences(of: "([A-Z]+)([A-Z][a-z]|$)",
+                                                   with: "$1 $2",
+                                                   options: .regularExpression)
+
+        return complete.components(separatedBy: badChars)
     }
 }

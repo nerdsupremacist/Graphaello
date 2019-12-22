@@ -1,14 +1,14 @@
 // MARK: - {{ graphQlStruct.definition.name }}
 
 {% for fragment in graphQlStruct.fragments %}
-extension ApolloStuff.{{ fragment.name }} : Fragment {
+extension ApolloStuff.{{ fragment.name|upperCamelized }} : Fragment {
     typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
 }
 {% endfor %}
 
 extension {{ graphQlStruct.definition.name }} {
     {% for fragment in graphQlStruct.fragments %}
-    typealias {{ fragment.target.name }} = ApolloStuff.{{ fragment.name }}
+    typealias {{ fragment.target.name }} = ApolloStuff.{{ fragment.name||upperCamelized }}
     {% endfor %}
     {% if graphQlStruct.query %}
     typealias Data = ApolloStuff.{{ graphQlStruct.definition.name }}Query.Data

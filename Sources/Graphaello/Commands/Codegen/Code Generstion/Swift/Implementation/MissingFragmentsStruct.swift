@@ -42,7 +42,7 @@ extension GraphQLConnectionFragment {
 extension GraphQLQuery {
 
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
-        return ["\(name)Query", "Data"] + components
+        return ["\(name)Query".upperCamelized, "Data"] + components
             .sorted { $0.key.name < $1.key.name }
             .flatMap { $0.value.missingFragmentsStructs(field: $0.key) }
     }
