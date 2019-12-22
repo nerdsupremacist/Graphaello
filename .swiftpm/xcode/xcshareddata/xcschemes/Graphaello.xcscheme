@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "codegen --project /Users/mathiasquintero/master-thesis/StarWars --apollo derivedData"
+            argument = "codegen --project /Users/mathiasquintero/master-thesis/Music --apollo derivedData"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

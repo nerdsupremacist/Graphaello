@@ -37,7 +37,7 @@ struct GraphQLConnectionFragment {
                                              typeConditionals: [:])
 
         self.edgeType = connectionEdge.edgeType
-        self.fragment = GraphQLFragment(name: "\(connection.name)_\(nodeFragment.name)",
+        self.fragment = GraphQLFragment(name: "\(connection.name)\(nodeFragment.name)",
                                         api: nodeFragment.api,
                                         target: connection,
                                         object: connectionObject)

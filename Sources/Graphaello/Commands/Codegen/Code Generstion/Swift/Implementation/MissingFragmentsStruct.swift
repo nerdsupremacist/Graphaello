@@ -16,7 +16,9 @@ extension GraphQLStruct {
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
         let fromQuery = query?.missingFragmentsStructs ?? []
         let fromFragments = fragments.flatMap { $0.missingFragmentsStructs }
-        return fromQuery + fromFragments
+        let fromConnectionQueries = connectionQueries.flatMap { $0.query.missingFragmentsStructs }
+        let fromConnectionFragments = connectionQueries.flatMap { $0.fragment.missingFragmentsStructs }
+        return fromQuery + fromFragments + fromConnectionQueries + fromConnectionFragments
     }
 
 }
@@ -24,7 +26,15 @@ extension GraphQLStruct {
 extension GraphQLFragment {
 
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
-        return target.name + object.missingFragmentsStructs
+        return target.name.upperCamelized + object.missingFragmentsStructs
+    }
+
+}
+
+extension GraphQLConnectionFragment {
+
+    var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
+        return fragment.name.upperCamelized + fragment.object.missingFragmentsStructs
     }
 
 }
@@ -64,7 +74,7 @@ extension GraphQLComponent {
     func missingFragmentsStructs(field: Field) -> OrderedSet<MissingFragmentsStruct> {
         switch self {
         case .object(let object):
-            return field.definition.name.upperCamelized + object.missingFragmentsStructs
+            return field.definition.name.singular.upperCamelized + object.missingFragmentsStructs
         default:
             return []
         }
