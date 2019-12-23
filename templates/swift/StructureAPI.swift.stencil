@@ -111,54 +111,6 @@ extension GraphQLFragmentPath {
 
 }
 
-extension GraphQLPath {
-
-    func _flatten<InnerValue>() -> GraphQLPath<TargetType, [InnerValue]> where Value == [[InnerValue]] {
-        return .init()
-    }
-
-    func _flatten<InnerValue>() -> GraphQLPath<TargetType, [InnerValue]?> where Value == [[InnerValue]]? {
-        return .init()
-    }
-
-}
-
-extension GraphQLFragmentPath {
-
-    func _flatten<Value>() -> GraphQLFragmentPath<TargetType, [Value]> where UnderlyingType == [[Value]] {
-        return .init()
-    }
-
-    func _flatten<Value>() -> GraphQLFragmentPath<TargetType, [Value]?> where UnderlyingType == [[Value]]? {
-        return .init()
-    }
-
-}
-
-extension GraphQLPath {
-
-    func _compactMap<InnerValue>() -> GraphQLPath<TargetType, [InnerValue]> where Value == [InnerValue?] {
-        return .init()
-    }
-
-    func _compactMap<InnerValue>() -> GraphQLPath<TargetType, [InnerValue]?> where Value == [InnerValue?]? {
-        return .init()
-    }
-
-}
-
-extension GraphQLFragmentPath {
-
-    func _compactMap<Value>() -> GraphQLFragmentPath<TargetType, [Value]> where UnderlyingType == [Value?] {
-        return .init()
-    }
-
-    func _compactMap<Value>() -> GraphQLFragmentPath<TargetType, [Value]?> where UnderlyingType == [Value?]? {
-        return .init()
-    }
-
-}
-
 enum GraphQLArgument<Value> {
     enum QueryArgument {
         case withDefault(Value)
