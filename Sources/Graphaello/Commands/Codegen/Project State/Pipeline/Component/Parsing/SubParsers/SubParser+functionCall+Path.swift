@@ -19,6 +19,26 @@ extension SubParser {
                 throw ParseError.cannotInstantiateObjectFromExpression(expression, type: Stage.Parsed.Path.self)
             }
 
+            switch called.name.text {
+
+            case "_forEach":
+                guard let keyPathExpression = Array(expression.argumentList).single()?.expression as? KeyPathExprSyntax,
+                    let base = called.base else { fatalError() }
+                return try parent.parse(from: keyPathExpression.expression.asMemberAccessOf(expression: base))
+
+            case "_compactMap":
+                guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
+                return try parent.parse(from: base)
+
+            case "_flatten":
+                guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
+                return try parent.parse(from: base)
+
+            default:
+                break
+
+            }
+
             let arguments = try parser().parse(from: expression.argumentList)
 
             switch called.base {
@@ -42,6 +62,34 @@ extension Stage.Parsed.Path {
 
     fileprivate func appending(name: String, arguments: [Field.Argument]) throws -> Self {
         return .init(apiName: apiName, target: target, components: components + [.call(name, arguments)])
+    }
+
+}
+
+extension ExprSyntax {
+
+    fileprivate func asMemberAccessOf(expression base: ExprSyntax) -> ExprSyntax {
+        switch self {
+        case let expression as MemberAccessExprSyntax:
+            return MemberAccessExprSyntax(base: expression.base?.asMemberAccessOf(expression: base) ?? base,
+                                          name: expression.name.text)
+
+        case let expression as IdentifierExprSyntax:
+            return MemberAccessExprSyntax(base: base,
+                                          name: expression.identifier.text)
+
+        case let expression as FunctionCallExprSyntax:
+            return FunctionCallExprSyntax { builder in
+                builder.useCalledExpression(expression.calledExpression.asMemberAccessOf(expression: base))
+                for argument in expression.argumentList {
+                    builder.addArgument(argument)
+                }
+            }
+
+        default:
+            return self
+
+        }
     }
 
 }
