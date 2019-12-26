@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GraphQLConnectionFragment {
+struct GraphQLConnectionFragment: Hashable {
     let connection: Schema.GraphQLType
     let edgeType: Schema.GraphQLType
     let nodeFragment: GraphQLFragment

@@ -29,3 +29,15 @@ class API {
         self.path = path
     }
 }
+
+extension API: Hashable {
+
+    static func == (lhs: API, rhs: API) -> Bool {
+        return lhs.name == rhs.name
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+
+}

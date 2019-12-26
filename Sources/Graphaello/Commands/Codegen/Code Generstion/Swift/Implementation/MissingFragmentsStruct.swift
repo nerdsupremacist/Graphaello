@@ -17,8 +17,7 @@ extension GraphQLStruct {
         let fromQuery = query?.missingFragmentsStructs ?? []
         let fromFragments = fragments.flatMap { $0.missingFragmentsStructs }
         let fromConnectionQueries = connectionQueries.flatMap { $0.query.missingFragmentsStructs }
-        let fromConnectionFragments = connectionQueries.flatMap { $0.fragment.missingFragmentsStructs }
-        return fromQuery + fromFragments + fromConnectionQueries + fromConnectionFragments
+        return fromQuery + fromFragments + fromConnectionQueries
     }
 
 }

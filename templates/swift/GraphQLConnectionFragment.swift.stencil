@@ -16,3 +16,6 @@ extension ApolloStuff.{{ graphQlConnectionFragment.fragment.name|upperCamelized 
         }
     }
 }
+
+{{ missingFragmentsStructs|code }}
+{{ missingReferencedFragments|code }}

@@ -134,3 +134,11 @@ extension Sequence {
     }
 
 }
+
+extension Sequence {
+
+    func map<V: Hashable>(_ transform: (Element) throws -> V) rethrows -> OrderedSet<V> {
+        return try reduce(into: []) { $0.append(try transform($1)) }
+    }
+
+}

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GraphQLFragment {
+struct GraphQLFragment: Hashable {
     let name: String
     let api: API
     let target: Schema.GraphQLType

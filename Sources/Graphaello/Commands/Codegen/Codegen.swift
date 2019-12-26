@@ -46,12 +46,7 @@ extension Codegen {
     }
     
     private func graphQLCodeGenRequests() throws -> [ApolloCodeGenRequest] {
-        let members = allConnectionFragments.map(MemberOfAPI.fragment) +
-            allConnectionQueries.map(MemberOfAPI.query) +
-            allFragments.map(MemberOfAPI.fragment) +
-            allQueries.map(MemberOfAPI.query)
-        
-        let groupped = Dictionary(grouping: members) { $0.api.name }
+        let groupped = Dictionary(grouping: allMembers) { $0.api.name }
         let requests = try groupped.mapValues { members -> ApolloCodeGenRequest in
             let fragments = members.compactMap { $0.fragment }
             let queries = members.compactMap { $0.query }
@@ -83,6 +78,7 @@ extension Codegen {
             StructureAPI()
             apis
             structs
+            Array(allConnectionFragments)
             apolloCode
         }
     }
@@ -91,19 +87,21 @@ extension Codegen {
 
 extension Codegen {
 
-    var allConnectionQueries: [GraphQLQuery] {
-        return structs
-            .flatMap { $0.connectionQueries }
-            .map { $0.query }
+    private var allMembers: [MemberOfAPI] {
+        let fromConnections = allConnectionFragments.map { MemberOfAPI.fragment($0.fragment) } +
+            allConnectionQueries.map { MemberOfAPI.query($0.query) }
+
+        return fromConnections +
+            allFragments.map(MemberOfAPI.fragment) +
+            allQueries.map(MemberOfAPI.query)
     }
 
-    var allConnectionFragments: [GraphQLFragment] {
-        return structs
-            .flatMap { $0.definition.properties }
-            .compactMap { property in
-                guard case .some(.connection(let connection)) = property.graphqlPath?.referencedFragment else { return nil }
-                return connection.fragment
-            }
+    var allConnectionQueries: OrderedSet<GraphQLConnectionQuery> {
+        return structs.flatMap { OrderedSet($0.connectionQueries) }
+    }
+
+    var allConnectionFragments: OrderedSet<GraphQLConnectionFragment> {
+        return allConnectionQueries.map { $0.fragment }
     }
 
     var allFragments: [GraphQLFragment] {

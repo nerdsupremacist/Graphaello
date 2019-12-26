@@ -6,5 +6,15 @@
 //
 
 import Foundation
+import Stencil
 
-extension GraphQLConnectionFragment: SwiftCodeTransformable { }
+extension GraphQLConnectionFragment: ExtraValuesSwiftCodeTransformable {
+
+    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
+        return [
+            "missingFragmentsStructs": Array(missingFragmentsStructs),
+            "missingReferencedFragments": Array(missingReferencedFragments),
+        ]
+    }
+
+}

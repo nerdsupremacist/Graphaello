@@ -8,7 +8,7 @@
 
 import Foundation
 
-indirect enum GraphQLComponent {
+indirect enum GraphQLComponent: Hashable {
     case scalar
     case object(GraphQLObject)
 }

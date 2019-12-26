@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GraphQLConnectionQuery {
+struct GraphQLConnectionQuery: Hashable {
     let query: GraphQLQuery
     let fragment: GraphQLConnectionFragment
 }

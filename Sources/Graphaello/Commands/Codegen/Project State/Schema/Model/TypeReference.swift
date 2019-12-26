@@ -10,7 +10,7 @@ import Foundation
 
 extension Schema {
 
-    struct TypeReference: Codable {
+    struct TypeReference: Codable, Hashable {
         let name: String
     }
 

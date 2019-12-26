@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GraphQLTypeConditional {
+struct GraphQLTypeConditional: Hashable {
     let type: Schema.GraphQLType
     let object: GraphQLObject
 }

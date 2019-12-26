@@ -18,8 +18,7 @@ extension GraphQLStruct {
         let fromQuery = query?.missingReferencedFragments ?? []
         let fromFragments = fragments.flatMap { $0.missingReferencedFragments }
         let fromConnectionQueries = connectionQueries.flatMap { $0.query.missingReferencedFragments }
-        let fromConnectionFragments = connectionQueries.flatMap { $0.fragment.missingReferencedFragments }
-        return fromQuery + fromFragments + fromConnectionQueries + fromConnectionFragments
+        return fromQuery + fromFragments + fromConnectionQueries
     }
 
 }

@@ -10,7 +10,7 @@ import Foundation
 
 extension Schema {
 
-    struct GraphQLType: Codable {
+    struct GraphQLType: Codable, Hashable {
         let name: String
         let kind: Kind
         let fields: [Field]?

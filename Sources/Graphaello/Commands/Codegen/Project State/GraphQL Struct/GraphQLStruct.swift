@@ -28,7 +28,7 @@ extension GraphQLStruct {
     static func + (lhs: GraphQLStruct, rhs: GraphQLFragment) -> GraphQLStruct {
         let includesFragment = lhs.fragments.contains { $0 ~= rhs }
         if includesFragment {
-            let fragments = lhs.fragments.map { $0 ~= rhs ? $0 + rhs : $0 }
+            let fragments = lhs.fragments.map { $0 ~= rhs ? $0 + rhs : $0 } as [GraphQLFragment]
             return GraphQLStruct(definition: lhs.definition,
                                  fragments: fragments,
                                  query: lhs.query,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GraphQLObject {
+struct GraphQLObject: Hashable {
     let components: [Field : GraphQLComponent]
     let fragments: [GraphQLFragment]
     let typeConditionals: [String : GraphQLTypeConditional]
