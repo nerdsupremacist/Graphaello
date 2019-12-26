@@ -8,7 +8,8 @@
 
 import Foundation
 
-// Copied from https://gist.github.com/reitzig/67b41e75176ddfd432cb09392a270218
+// Copied and adapted from https://gist.github.com/reitzig/67b41e75176ddfd432cb09392a270218
+// Modifications made public at: https://gist.github.com/nerdsupremacist/8e620beb2dcf6404f9edcac756ed28dc
 fileprivate let badChars = CharacterSet.alphanumerics.inverted
 
 extension String {
