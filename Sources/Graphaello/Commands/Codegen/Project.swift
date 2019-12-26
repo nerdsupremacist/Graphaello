@@ -54,6 +54,10 @@ extension Project {
 
     func writeFile(name: String, content: String) throws {
         guard let data = content.data(using: .utf8) else { return }
+        try writeFile(name: name, data: data)
+    }
+
+    func writeFile(name: String, data: Data) throws {
         let file = try path(for: name)
         try data.write(to: file.url)
     }

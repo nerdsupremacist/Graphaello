@@ -53,6 +53,10 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "codegen --project /Users/mathiasquintero/master-thesis/Music --apollo derivedData"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "add --project /Users/mathiasquintero/master-thesis/starwars --apiName StarWars  https://swapi-graphql.netlify.com/.netlify/functions/index"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
