@@ -35,9 +35,15 @@ extension GraphQLConnectionQuery {
 
     var queryArgumentAssignments: [QueryArgumentAssignment] {
         return query.queryArgumentAssignments.map { assignment in
+            if assignment.name == "first" {
+                return QueryArgumentAssignment(name: assignment.name,
+                                               expression: SequenceExprSyntax(lhs: IdentifierExprSyntax(identifier: "_pageSize"),
+                                                                              rhs: IdentifierExprSyntax(identifier: "first"),
+                                                                              binaryOperator: BinaryOperatorExprSyntax(text: "??")) )
+            }
             if assignment.name == "after" {
                 return QueryArgumentAssignment(name: assignment.name,
-                                               expression: IdentifierExprSyntax(identifier: "cursor"))
+                                               expression: IdentifierExprSyntax(identifier: "_cursor"))
             }
             return assignment
         }

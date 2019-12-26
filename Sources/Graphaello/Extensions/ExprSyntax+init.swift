@@ -19,6 +19,18 @@ extension IdentifierExprSyntax {
 
 }
 
+extension SequenceExprSyntax {
+
+    init(lhs: ExprSyntax, rhs: ExprSyntax, binaryOperator: BinaryOperatorExprSyntax) {
+        self = SequenceExprSyntax { builder in
+            builder.addElement(lhs)
+            builder.addElement(binaryOperator)
+            builder.addElement(rhs)
+        }
+    }
+
+}
+
 extension ArrayExprSyntax {
 
     init(expressions: [ExprSyntax]) {
@@ -35,6 +47,18 @@ extension ArrayExprSyntax {
     }
 
 }
+
+extension BinaryOperatorExprSyntax {
+
+    init(text: String) {
+        let token = SyntaxFactory.makeSpacedBinaryOperator(text, leadingTrivia: .spaces(1), trailingTrivia: .spaces(1))
+        self = BinaryOperatorExprSyntax { builder in
+            builder.useOperatorToken(token)
+        }
+    }
+
+}
+
 
 extension ArrayElementSyntax {
 

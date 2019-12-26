@@ -162,7 +162,7 @@ class Paging<Value: Fragment>: DynamicProperty, ObservableObject {
     }
 
     fileprivate typealias Completion = (Result<Response, Error>) -> Void
-    fileprivate typealias Loader = (String, @escaping Completion) -> Void
+    fileprivate typealias Loader = (String, Int?, @escaping Completion) -> Void
 
     private let loader: Loader
 
@@ -185,10 +185,10 @@ class Paging<Value: Fragment>: DynamicProperty, ObservableObject {
         use(response)
     }
 
-    func loadMore() {
+    func loadMore(pageSize: Int? = nil) {
         guard let cursor = cursor, !isLoading else { return }
         isLoading = true
-        loader(cursor) { [weak self] result in
+        loader(cursor, pageSize) { [weak self] result in
             switch result {
             case let .success(response):
                 self?.use(response)
@@ -231,10 +231,12 @@ struct PagingView<Value: Fragment>: View {
     }
 
     @ObservedObject private var paging: Paging<Value>
+    private let pageSize: Int?
     private var loader: (Data) -> AnyView
 
-    init(_ paging: Paging<Value>, loader: @escaping (Data) -> AnyView) {
+    init(_ paging: Paging<Value>, pageSize: Int?, loader: @escaping (Data) -> AnyView) {
         self.paging = paging
+        self.pageSize = pageSize
         self.loader = loader
     }
 
@@ -253,18 +255,19 @@ struct PagingView<Value: Fragment>: View {
             case .item(_, let index) = data,
             index > paging.values.count - 2 else { return }
 
-        paging.loadMore()
+        paging.loadMore(pageSize: pageSize)
     }
 }
 
 extension PagingView {
 
     init<Loading: View, Error: View, Data: View>(_ paging: Paging<Value>,
+                                                 pageSize: Int? = nil,
                                                  loading loadingView: @escaping () -> Loading,
                                                  error errorView: @escaping (Swift.Error) -> Error,
                                                  item itemView: @escaping (Value) -> Data) {
 
-        self.init(paging) { data in
+        self.init(paging, pageSize: pageSize) { data in
             switch data {
             case .item(let item, _):
                 return AnyView(itemView(item))
@@ -277,29 +280,35 @@ extension PagingView {
     }
 
     init<Error: View, Data: View>(_ paging: Paging<Value>,
+                                  pageSize: Int? = nil,
                                   error errorView: @escaping (Swift.Error) -> Error,
                                   item itemView: @escaping (Value) -> Data) {
 
         self.init(paging,
+                  pageSize: pageSize,
                   loading: { Text("Loading") },
                   error: errorView,
                   item: itemView)
     }
 
     init<Loading: View, Data: View>(_ paging: Paging<Value>,
-                                  loading loadingView: @escaping () -> Loading,
-                                  item itemView: @escaping (Value) -> Data) {
+                                    pageSize: Int? = nil,
+                                    loading loadingView: @escaping () -> Loading,
+                                    item itemView: @escaping (Value) -> Data) {
 
         self.init(paging,
+                  pageSize: pageSize,
                   loading: loadingView,
                   error: { Text("Error: \($0.localizedDescription)") },
                   item: itemView)
     }
 
     init<Data: View>(_ paging: Paging<Value>,
+                     pageSize: Int? = nil,
                      item itemView: @escaping (Value) -> Data) {
 
         self.init(paging,
+                  pageSize: pageSize,
                   loading: { Text("Loading") },
                   error: { Text("Error: \($0.localizedDescription)") },
                   item: itemView)
