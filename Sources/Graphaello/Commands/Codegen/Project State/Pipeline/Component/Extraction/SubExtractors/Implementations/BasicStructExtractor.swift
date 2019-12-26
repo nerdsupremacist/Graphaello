@@ -14,7 +14,7 @@ struct BasicStructExtractor: StructExtractor {
     func extract(code: SourceCode) throws -> Struct<Stage.Extracted> {
         let properties = try code.substructure()
             .filter { try $0.kind() == .varInstance }
-            .map { try propertyExtractor.extract(code: $0) }
+            .compactMap { try propertyExtractor.extract(code: $0) }
             .filter { try !$0.isComputed() }
 
         return Struct(code: code,
