@@ -36,7 +36,7 @@ extension ApolloCodeGenRequest {
         process.launch()
         process.waitUntilExit()
         
-        return String(data: try Data(contentsOf: swiftPath.url), encoding: .utf8) ?! fatalError()
+        return String(data: try Data(contentsOf: swiftPath.url), encoding: .utf8)!
     }
     
 }

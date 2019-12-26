@@ -26,7 +26,7 @@ extension ProjectPath: CommandArgumentValue {
             return
         }
 
-        throw GraphQLError.pathDoesNotExist(argumentValue)
+        throw ArgumentError.pathDoesNotExist(argumentValue)
     }
 
     init(path: Path) throws {
@@ -35,7 +35,7 @@ extension ProjectPath: CommandArgumentValue {
         } else if path.isDirectory {
             self = .first(path)
         } else {
-            throw GraphQLError.fileIsNotAProject(path)
+            throw ArgumentError.fileIsNotAProject(path)
         }
     }
 
@@ -62,7 +62,7 @@ extension ProjectPath {
         case .first(let path):
             return try path
                 .contentsOfDirectory(fullPaths: true)
-                .first { $0.isProject } ?! GraphQLError.noProjectFound(at: path)
+                .first { $0.isProject } ?! ArgumentError.noProjectFound(at: path)
         }
     }
 

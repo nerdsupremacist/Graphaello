@@ -47,7 +47,7 @@ extension Field {
 
         case .call(let field, let arguments):
             return OrderedSet(arguments.map { element in
-                let type = field.arguments[element.name]?.type ?! fatalError()
+                let type = field.arguments[element.name]?.type ?! fatalError("Missing Argument in field")
                 switch element.value {
 
                 case .value(let expression):

@@ -26,8 +26,8 @@ extension Schema.GraphQLType {
 
             return nil
         }
-        let edgeType = api[ofType.underlyingTypeName]?.graphQLType ?! fatalError()
-        let pageInfoType = api[pageInfoField.type.underlyingTypeName]?.graphQLType ?! fatalError()
+        let edgeType = api[ofType.underlyingTypeName]?.graphQLType ?! fatalError("Expected Type to exist")
+        let pageInfoType = api[pageInfoField.type.underlyingTypeName]?.graphQLType ?! fatalError("Expected Type to exist")
 
         guard let nodeField = edgeType.fields?["node"],
             let cursorField = pageInfoType.fields?["endCursor"],

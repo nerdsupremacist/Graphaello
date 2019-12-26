@@ -27,7 +27,7 @@ extension ApolloReference: CommandArgumentValue {
     }
     
     init(argumentValue: String) throws {
-        self = ApolloReference(rawValue: argumentValue) ?! fatalError("")
+        self = try ApolloReference(rawValue: argumentValue) ?! ArgumentError.invalidApolloReference(argumentValue)
     }
     
 }
@@ -71,9 +71,9 @@ extension ApolloReference {
     private func scriptPath() throws -> Path {
         switch self {
         case .binary:
-            return ExecutableFinder.find("apollo") ?! fatalError("Failed to find apollo")
+            return try ExecutableFinder.find("apollo") ?! ArgumentError.apolloIsNotInstalled
         case .derivedData:
-            let buildRoot = Environment["BUILD_ROOT"].map { Path($0) } ?! fatalError("No build root folder given")
+            let buildRoot = try Environment["BUILD_ROOT"].map { Path($0) } ?! ArgumentError.noBuildRootFolderProvided
             return try buildRoot.findSourcePackages() + "checkouts" + "apollo-ios" + "scripts" + "run-bundled-codegen.sh"
         }
     }
@@ -83,7 +83,7 @@ extension ApolloReference {
 extension Path {
     
     func findSourcePackages() throws -> Path {
-        guard self.string != "/" else { fatalError("") }
+        guard self.string != "/" else { throw Argument.invalidDerivedDataFolder }
         let sourcePackages = self + "SourcePackages"
         if sourcePackages.exists && sourcePackages.isDirectory {
             return sourcePackages
