@@ -10,37 +10,54 @@ import SwiftUI
 private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
     typealias ContentFactory = (Query.Data) -> Content
 
-    let client: ApolloClient
-    let query: Query
-    let factory: ContentFactory
-    
-    @State private var isLoading: Bool = false
-    @State private var value: Query.Data? = nil
-    @State private var error: String? = nil
-    @State private var cancellable: Cancellable? = nil
-    
-    var body: some View {
-        return VStack {
-            error.map { Text("Error: \($0)") }
-            value.map(factory)
-            isLoading ? Text("Loading") : nil
-        }.onAppear {
-            self.cancellable = self.client.fetch(query: self.query) { result in
+    private final class ViewModel: ObservableObject {
+        @Published var isLoading: Bool = false
+        @Published var value: Query.Data? = nil
+        @Published var error: String? = nil
+        private var cancellable: Cancellable? = nil
+
+        deinit {
+            cancel()
+        }
+
+        func load(client: ApolloClient, query: Query) {
+            guard value == nil, !isLoading else { return }
+            self.cancellable = client.fetch(query: query) { [weak self] result in
                 defer {
-                    self.cancellable = nil
-                    self.isLoading = false
+                    self?.cancellable = nil
+                    self?.isLoading = false
                 }
                 switch result {
                 case .success(let result):
-                    self.value = result.data
-                    self.error = result.errors?.map { $0.description }.joined(separator: ", ")
+                    self?.value = result.data
+                    self?.error = result.errors?.map { $0.description }.joined(separator: ", ")
                 case .failure(let error):
-                    self.error = error.localizedDescription
+                    self?.error = error.localizedDescription
                 }
             }
             self.isLoading = true
-        }.onDisappear {
+        }
+
+        func cancel() {
             self.cancellable?.cancel()
+        }
+    }
+
+    let client: ApolloClient
+    let query: Query
+    let factory: ContentFactory
+
+    @ObservedObject private var viewModel = ViewModel()
+
+    var body: some View {
+        return VStack {
+            viewModel.error.map { Text("Error: \($0)") }
+            viewModel.value.map(factory)
+            viewModel.isLoading ? Text("Loading") : nil
+        }.onAppear {
+            self.viewModel.load(client: self.client, query: self.query)
+        }.onDisappear {
+            self.viewModel.cancel()
         }
     }
 }
