@@ -61,8 +61,7 @@ extension GraphQLArgument {
         if type.isScalar {
             return IdentifierExprSyntax(identifier: name.camelized)
         } else {
-            return FunctionCallExprSyntax(target: MemberAccessExprSyntax(base: IdentifierExprSyntax(identifier: "ApolloStuff"),
-                                                                         name: type.underlyingTypeName),
+            return FunctionCallExprSyntax(target: MemberAccessExprSyntax(base: nil, name: "init"),
                                           arguments: [(nil, IdentifierExprSyntax(identifier: name.camelized))])
         }
     }

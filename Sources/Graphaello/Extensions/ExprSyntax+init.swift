@@ -76,11 +76,13 @@ extension ArrayElementSyntax {
 
 extension MemberAccessExprSyntax {
 
-    init(base: ExprSyntax, name: String) {
+    init(base: ExprSyntax?, name: String) {
         let dot = SyntaxFactory.makePeriodToken()
         let name = SyntaxFactory.makeIdentifier(name)
         self = MemberAccessExprSyntax { builder in
-            builder.useBase(base)
+            if let base = base {
+                builder.useBase(base)
+            }
             builder.useDot(dot)
             builder.useName(name)
         }
