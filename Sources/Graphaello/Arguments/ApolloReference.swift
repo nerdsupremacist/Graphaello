@@ -83,7 +83,7 @@ extension ApolloReference {
 extension Path {
     
     func findSourcePackages() throws -> Path {
-        guard self.string != "/" else { throw Argument.invalidDerivedDataFolder }
+        guard self.string != "/" else { throw ArgumentError.invalidDerivedDataFolder }
         let sourcePackages = self + "SourcePackages"
         if sourcePackages.exists && sourcePackages.isDirectory {
             return sourcePackages
