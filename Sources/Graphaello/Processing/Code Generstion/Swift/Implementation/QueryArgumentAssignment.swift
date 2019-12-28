@@ -38,7 +38,7 @@ extension GraphQLConnectionQuery {
             if assignment.name == "first" {
                 return QueryArgumentAssignment(name: assignment.name,
                                                expression: SequenceExprSyntax(lhs: IdentifierExprSyntax(identifier: "_pageSize"),
-                                                                              rhs: IdentifierExprSyntax(identifier: "first"),
+                                                                              rhs: assignment.expression,
                                                                               binaryOperator: BinaryOperatorExprSyntax(text: "??")) )
             }
             if assignment.name == "after" {

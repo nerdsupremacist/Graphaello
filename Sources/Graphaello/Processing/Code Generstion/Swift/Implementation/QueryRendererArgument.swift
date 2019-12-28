@@ -26,6 +26,7 @@ extension GraphQLStruct {
 
         let argumentsFromQuery = query?
             .arguments
+            .filter { !$0.isHardCoded }
             .map { argument in
                 return QueryRendererArgument(name: argument.name.camelized,
                                              type: argument.type.swiftType(api: api),

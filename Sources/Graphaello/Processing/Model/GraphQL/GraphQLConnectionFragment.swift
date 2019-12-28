@@ -12,7 +12,10 @@ struct GraphQLConnectionFragment: Hashable {
     let edgeType: Schema.GraphQLType
     let nodeFragment: GraphQLFragment
     let fragment: GraphQLFragment
+}
 
+extension GraphQLConnectionFragment {
+    
     init(connection: Schema.GraphQLType,
          nodeFragment: GraphQLFragment) throws {
 
@@ -42,4 +45,5 @@ struct GraphQLConnectionFragment: Hashable {
                                         target: connection,
                                         object: connectionObject)
     }
+
 }

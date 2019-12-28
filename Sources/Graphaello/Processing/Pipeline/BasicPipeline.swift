@@ -14,6 +14,7 @@ struct BasicPipeline: Pipeline {
     let parser: Parser
     let validator: Validator
     let resolver: Resolver
+    let cleaner: Cleaner
     
     func extract(from file: File) throws -> [Struct<Stage.Extracted>] {
         return try extractor.extract(from: file)
@@ -29,5 +30,9 @@ struct BasicPipeline: Pipeline {
     
     func resolve(validated: [Struct<Stage.Validated>]) throws -> [GraphQLStruct] {
         return try resolver.resolve(validated: validated)
+    }
+
+    func clean(resolved: GraphQLStruct) throws -> GraphQLStruct {
+        return try cleaner.clean(resolved: resolved)
     }
 }

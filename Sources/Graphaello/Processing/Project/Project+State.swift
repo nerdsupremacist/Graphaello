@@ -43,6 +43,10 @@ extension Pipeline {
     func resolve(validated: Project.State<Stage.Validated>) throws -> Codegen {
         return Codegen(apis: validated.apis, structs: try resolve(validated: validated.structs))
     }
+
+    func clean(resolved: Codegen) throws -> Codegen {
+        return Codegen(apis: resolved.apis, structs: try clean(resolved: resolved.structs))
+    }
     
 }
 

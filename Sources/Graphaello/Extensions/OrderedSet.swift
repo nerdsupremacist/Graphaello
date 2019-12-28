@@ -119,6 +119,12 @@ extension OrderedSet: Hashable where Element: Hashable { }
 
 extension OrderedSet {
 
+    static func + (lhs: OrderedSet<Element>, rhs: Element) -> OrderedSet<Element> {
+        var copy = lhs
+        copy.append(rhs)
+        return copy
+    }
+
     static func + (lhs: OrderedSet<Element>, rhs: OrderedSet<Element>) -> OrderedSet<Element> {
         var copy = lhs
         copy.append(contentsOf: rhs)

@@ -1,1 +1,1 @@
-{{ fieldArgument.name }}: ${{ fieldArgument.name }}
+{{ fieldArgument.name }}: ${{ fieldArgument.queryArgumentName }}

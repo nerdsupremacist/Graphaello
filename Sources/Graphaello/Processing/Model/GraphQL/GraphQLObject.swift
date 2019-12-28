@@ -12,20 +12,32 @@ struct GraphQLObject: Hashable {
     let components: [Field : GraphQLComponent]
     let fragments: [GraphQLFragment]
     let typeConditionals: [String : GraphQLTypeConditional]
+    let arguments: OrderedSet<GraphQLArgument>
+}
+
+extension GraphQLObject {
+
+    init(components: [Field : GraphQLComponent],
+         fragments: [GraphQLFragment],
+         typeConditionals: [String : GraphQLTypeConditional]) {
+
+        self.components = components
+        self.fragments = fragments
+        self.typeConditionals = typeConditionals
+
+        let currentLevel = components.keys.flatMap { $0.arguments }
+        let fromComponents = components.values.flatMap { $0.arguments }
+        let fromFragmented = fragments.flatMap { $0.arguments }
+        let fromTypeConditional = typeConditionals.values.flatMap { $0.arguments }
+        self.arguments = currentLevel + fromComponents + fromFragmented + fromTypeConditional
+    }
+
 }
 
 extension GraphQLObject {
 
     var subFragments: [GraphQLFragment] {
         return fragments + components.values.flatMap { $0.subFragments }
-    }
-
-    var arguments: OrderedSet<GraphQLArgument> {
-        let currentLevel = components.keys.flatMap { $0.arguments }
-        let fromComponents = components.values.flatMap { $0.arguments }
-        let fromFragmented = fragments.flatMap { $0.arguments }
-        let fromTypeConditional = typeConditionals.values.flatMap { $0.arguments }
-        return currentLevel + fromComponents + fromFragmented + fromTypeConditional
     }
 
 }

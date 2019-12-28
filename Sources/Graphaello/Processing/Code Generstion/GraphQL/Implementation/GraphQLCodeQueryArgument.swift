@@ -12,7 +12,7 @@ import Stencil
 struct GraphQLCodeQueryArgument: ExtraValuesGraphQLCodeTransformable {
     let name: String
     let type: Schema.GraphQLType.Field.TypeReference
-    
+
     func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
         return ["type": type.graphQLType]
     }

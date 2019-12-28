@@ -14,10 +14,19 @@ enum Field: Equatable, Hashable {
     struct Argument: Equatable, Hashable {
         let name: String
         let value: GraphaelloArgument
+        let queryArgumentName: String
     }
 
     case direct(Schema.GraphQLType.Field)
     case call(Schema.GraphQLType.Field, [Argument])
+}
+
+extension Field.Argument {
+
+    init(name: String, value: GraphaelloArgument) {
+        self.init(name: name, value: value, queryArgumentName: name)
+    }
+
 }
 
 extension Field {
@@ -52,18 +61,21 @@ extension Field {
 
                 case .value(let expression):
                     return GraphQLArgument(name: element.name,
+                                           field: field,
                                            type: type,
                                            defaultValue: expression,
                                            argument: element.value)
 
                 case .argument(.withDefault(let expression)):
                     return GraphQLArgument(name: element.name,
+                                           field: field,
                                            type: type,
                                            defaultValue: expression,
                                            argument: element.value)
 
                 case .argument(.forced):
                     return GraphQLArgument(name: element.name,
+                                           field: field,
                                            type: type,
                                            defaultValue: nil,
                                            argument: element.value)
