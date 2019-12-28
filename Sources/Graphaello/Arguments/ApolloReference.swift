@@ -38,8 +38,8 @@ extension ApolloReference {
         let task = Process()
         task.launchPath = "/usr/bin/env"
         task.arguments = [path.string] + arguments(schema: schema, graphql: graphql, outputFile: outputFile)
-//        task.standardOutput = nil
-//        task.standardError = nil
+        task.standardOutput = nil
+        task.standardError = nil
         return task
     }
     
