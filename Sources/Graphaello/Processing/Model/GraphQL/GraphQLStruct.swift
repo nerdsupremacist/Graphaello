@@ -16,14 +16,6 @@ struct GraphQLStruct {
 }
 
 extension GraphQLStruct {
-
-    var allFragments: [GraphQLFragment] {
-        return fragments.flatMap { $0.allFragments } + (query?.subFragments ?? [])
-    }
-
-}
-
-extension GraphQLStruct {
     
     static func + (lhs: GraphQLStruct, rhs: GraphQLFragment) -> GraphQLStruct {
         let includesFragment = lhs.fragments.contains { $0 ~= rhs }

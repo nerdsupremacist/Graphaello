@@ -16,10 +16,6 @@ struct GraphQLQuery: Hashable {
 
 extension GraphQLQuery {
 
-    var subFragments: [GraphQLFragment] {
-        return components.values.flatMap { $0.subFragments }
-    }
-
     var arguments: OrderedSet<GraphQLArgument> {
         return components.keys.flatMap { $0.arguments } +
             components.values.flatMap { $0.arguments }

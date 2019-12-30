@@ -15,15 +15,6 @@ indirect enum GraphQLComponent: Hashable {
 
 extension GraphQLComponent {
 
-    var subFragments: [GraphQLFragment] {
-        switch self {
-        case .scalar:
-            return []
-        case .object(let object):
-            return object.subFragments
-        }
-    }
-
     var arguments: OrderedSet<GraphQLArgument> {
         switch self {
         case .object(let object):

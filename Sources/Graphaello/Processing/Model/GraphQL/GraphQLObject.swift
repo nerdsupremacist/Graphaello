@@ -35,14 +35,6 @@ extension GraphQLObject {
 }
 
 extension GraphQLObject {
-
-    var subFragments: [GraphQLFragment] {
-        return fragments + components.values.flatMap { $0.subFragments }
-    }
-
-}
-
-extension GraphQLObject {
     
     static func + (lhs: GraphQLObject, rhs: GraphQLObject) -> GraphQLObject {
         let components = lhs.components.merging(rhs.components) { $0 + $1 }

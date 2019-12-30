@@ -17,10 +17,6 @@ struct GraphQLFragment: Hashable {
 
 extension GraphQLFragment {
 
-    var allFragments: [GraphQLFragment] {
-        return [self] + object.subFragments
-    }
-
     var arguments: OrderedSet<GraphQLArgument> {
         return object.arguments
     }
@@ -30,7 +26,7 @@ extension GraphQLFragment {
 extension GraphQLFragment {
     
     static func ~= (lhs: GraphQLFragment, rhs: GraphQLFragment) -> Bool {
-        return lhs.api.name == rhs.api.name && lhs.api.name == rhs.api.name && lhs.target.name == rhs.target.name
+        return lhs.api.name == rhs.api.name && lhs.target.name == rhs.target.name
     }
     
     static func + (lhs: GraphQLFragment, rhs: GraphQLFragment) -> GraphQLFragment {
