@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CLIKit
 
 struct ApolloCodeGenRequest {
     let api: API
