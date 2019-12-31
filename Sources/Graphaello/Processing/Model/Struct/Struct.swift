@@ -39,11 +39,17 @@ extension Struct {
 
 extension Struct {
     
-    func with(@ContextBuilder context: () throws -> ContextProtocol) rethrows -> Struct<CurrentStage> {
-        return try Struct<CurrentStage>(code: code, name: name, properties: properties) {
+    func with<Stage: StageProtocol>(properties: [Property<Stage>],
+                                    @ContextBuilder context: () throws -> ContextProtocol) rethrows -> Struct<Stage> {
+        
+        return try Struct<Stage>(code: code, name: name, properties: properties) {
             self.context
             try context()
         }
+    }
+    
+    func with(@ContextBuilder context: () throws -> ContextProtocol) rethrows -> Struct<CurrentStage> {
+        return try with(properties: properties, context: context)
     }
     
 }

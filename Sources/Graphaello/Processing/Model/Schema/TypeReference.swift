@@ -67,7 +67,7 @@ extension Schema.GraphQLType.Field.TypeReference {
                 case "Int":
                     return "Int?"
                 case "Float":
-                    return "Float?"
+                    return "Double?"
                 default:
                     return "String?"
                 }

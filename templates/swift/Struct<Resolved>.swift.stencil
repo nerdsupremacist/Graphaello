@@ -1,16 +1,16 @@
 // MARK: - {{ structResolved.name }}
 
-{% for fragment in structResolved.fragments %}
+{% for fragment in fragments %}
 extension ApolloStuff.{{ fragment.name|upperCamelized }} : Fragment {
     typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
 }
 {% endfor %}
 
-extension {{ structResolved.definition.name }} {
-    {% for fragment in structResolved.fragments %}
+extension {{ structResolved.name }} {
+    {% for fragment in fragments %}
     typealias {{ fragment.target.name }} = ApolloStuff.{{ fragment.name||upperCamelized }}
     {% endfor %}
-    {% if structResolved.query %}
+    {% if query %}
     typealias Data = ApolloStuff.{{ structResolved.name }}Query.Data
     {% endif %}
     
@@ -19,8 +19,8 @@ extension {{ structResolved.definition.name }} {
     }
 }
 
-{% if structResolved.query %}
-extension {{ structResolved.query.api.name }} {
+{% if query %}
+extension {{ query.api.name }} {
     
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,

@@ -8,20 +8,19 @@
 
 import Foundation
 
-struct BasicResolvedStructCollector<Collector: ResolvedValueCollector>: ResolvedStructCollector where Collector.Resolved == Property<Stage.Resolved>, Collector.Parent == Struct<Stage.Resolved>, Collector.Collected == [StructResolution.CollectedValue] {
+struct BasicResolvedStructCollector<Collector: ResolvedValueCollector>: ResolvedStructCollector where Collector.Resolved == Property<Stage.Resolved>, Collector.Parent == Struct<Stage.Validated>, Collector.Collected == [StructResolution.CollectedValue] {
     let collector: Collector
     
-    func collect(from value: Struct<Stage.Resolved>) throws -> StructResolution.Result<Struct<Stage.Resolved>> {
-        return try value
-            .properties
+    func collect(from properties: [Property<Stage.Resolved>], for validated: Struct<Stage.Validated>) throws -> StructResolution.Result<Struct<Stage.Resolved>> {
+        return try properties
             .collect { property in
-                return try collector.collect(from: property, in: value)
+                return try collector.collect(from: property, in: validated)
             }
             .map { values in
                 return values.flatMap {  $0 }
             }
             .map { values in
-                let initialResult = value.with {
+                let initialResult = validated.with(properties: properties) {
                     (.fragments ~> [])
                     (.query ~> nil)
                     (.connectionQueries ~> [])

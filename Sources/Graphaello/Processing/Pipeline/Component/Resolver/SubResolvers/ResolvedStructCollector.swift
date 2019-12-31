@@ -9,5 +9,6 @@
 import Foundation
 
 protocol ResolvedStructCollector {
-    func collect(from value: Struct<Stage.Resolved>) throws -> StructResolution.Result<Struct<Stage.Resolved>>
+    func collect(from properties: [Property<Stage.Resolved>],
+                 for validated: Struct<Stage.Validated>) throws -> StructResolution.Result<Struct<Stage.Resolved>>
 }

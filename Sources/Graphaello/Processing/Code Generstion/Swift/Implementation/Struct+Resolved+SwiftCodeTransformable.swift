@@ -18,6 +18,8 @@ extension Struct: ExtraValuesSwiftCodeTransformable where CurrentStage == Stage.
     func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         return [
             "functionName" : name.camelized,
+            "fragments": fragments,
+            "query": query ?? false,
             "initializerArguments" : initializerArguments,
             "initializerValueAssignments" : initializerValueAssignments,
             "queryRendererArguments": queryRendererArguments,

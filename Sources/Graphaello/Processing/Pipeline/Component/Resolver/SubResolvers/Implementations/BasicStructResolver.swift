@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GraphQLStructResolver<Resolver: StructResolver>: StructResolver where Resolver.Resolved == Struct<Stage.Resolved> {
+struct BasicStructResolver<Resolver: StructResolver>: StructResolver where Resolver.Resolved == [Property<Stage.Resolved>] {
     let resolver: Resolver
     let collector: ResolvedStructCollector
     
@@ -17,13 +17,13 @@ struct GraphQLStructResolver<Resolver: StructResolver>: StructResolver where Res
         
         return try resolver
             .resolve(validated: validated, using: context)
-            .flatMap { definition in
-                try collector.collect(from: definition)
+            .flatMap { properties in
+                try collector.collect(from: properties, for: validated)
             }
     }
 }
 
-extension GraphQLStructResolver {
+extension BasicStructResolver {
     
     init(resolver: () -> Resolver, collector: () -> ResolvedStructCollector) {
         self.resolver = resolver()

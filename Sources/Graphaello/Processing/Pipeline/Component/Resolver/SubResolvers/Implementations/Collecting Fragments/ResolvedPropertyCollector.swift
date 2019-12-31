@@ -12,7 +12,7 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
     let collector: Collector
     
     func collect(from value: Property<Stage.Resolved>,
-                 in parent: Struct<Stage.Resolved>) throws -> StructResolution.Result<[StructResolution.CollectedValue]> {
+                 in parent: Struct<Stage.Validated>) throws -> StructResolution.Result<[StructResolution.CollectedValue]> {
         
         guard let path = value.graphqlPath else { return .resolved([]) }
         return try path
