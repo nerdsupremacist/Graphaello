@@ -7,13 +7,15 @@
 
 import Foundation
 
-struct GraphQLObjectCleaner: SubCleaner {
-    let argumentCleaner: AnyCleaner<GraphQLArgument>
-    let componentsCleaner: (AnyCleaner<GraphQLObject>) -> AnyCleaner<[Field : GraphQLComponent]>
-    let fragmentCleaner: (AnyCleaner<GraphQLObject>) -> AnyCleaner<GraphQLFragment>
-    let typeConditionalCleaner: (AnyCleaner<GraphQLObject>) -> AnyCleaner<GraphQLTypeConditional>
+struct GraphQLObjectCleaner: ArgumentCleaner {
+    let argumentCleaner: AnyArgumentCleaner<GraphQLArgument>
+    let componentsCleaner: (AnyArgumentCleaner<GraphQLObject>) -> AnyArgumentCleaner<[Field : GraphQLComponent]>
+    let fragmentCleaner: (AnyArgumentCleaner<GraphQLObject>) -> AnyArgumentCleaner<GraphQLFragment>
+    let typeConditionalCleaner: (AnyArgumentCleaner<GraphQLObject>) -> AnyArgumentCleaner<GraphQLTypeConditional>
 
-    func clean(resolved: GraphQLObject, using context: Cleaning.Context) throws -> Cleaning.Result<GraphQLObject> {
+    func clean(resolved: GraphQLObject,
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLObject> {
+        
         let cleaner = any()
         let componentsCleaner = self.componentsCleaner(cleaner)
         let fragmentCleaner = self.fragmentCleaner(cleaner)

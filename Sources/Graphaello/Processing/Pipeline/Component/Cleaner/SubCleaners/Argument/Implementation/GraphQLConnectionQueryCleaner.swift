@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct GraphQLConnectionQueryCleaner: SubCleaner {
-    let queryCleaner: AnyCleaner<GraphQLQuery>
+struct GraphQLConnectionQueryCleaner: ArgumentCleaner {
+    let queryCleaner: AnyArgumentCleaner<GraphQLQuery>
 
     func clean(resolved: GraphQLConnectionQuery,
-               using context: Cleaning.Context) throws -> Cleaning.Result<GraphQLConnectionQuery> {
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLConnectionQuery> {
 
         return try queryCleaner
             .clean(resolved: resolved.query, using: context)

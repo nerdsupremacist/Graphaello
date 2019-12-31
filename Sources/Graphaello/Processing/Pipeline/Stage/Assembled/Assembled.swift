@@ -10,7 +10,7 @@ import Foundation
 extension Stage {
     
     enum Assembled: GraphQLStage, AssembledStage {
-        static var pathKey = Context.Key.resolved
+        static var pathKey = Context.Key.cleaned
     }
     
 }

@@ -20,7 +20,7 @@ extension Struct where CurrentStage == Stage.Prepared {
         return properties.map { property in
             switch property.graphqlPath {
             case .some(let path):
-                let expression = path.isConnection ? property.name : path.expression()
+                let expression = path.resolved.isConnection ? property.name : path.expression()
                 return InitializerValueAssignment(name: property.name,
                                                   expression: "GraphQL(\(expression))")
             case .none:

@@ -35,11 +35,11 @@ struct BasicPipeline: Pipeline {
         return try resolver.resolve(validated: validated)
     }
 
-    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Resolved> {
+    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Cleaned> {
         return try cleaner.clean(resolved: resolved)
     }
     
-    func assemble(cleaned: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Assembled> {
+    func assemble(cleaned: Project.State<Stage.Cleaned>) throws -> Project.State<Stage.Assembled> {
         return try assembler.assemble(cleaned: cleaned)
     }
     

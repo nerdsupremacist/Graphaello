@@ -7,19 +7,19 @@
 
 import Foundation
 
-extension Stage.Resolved.Path {
+extension Stage.Cleaned.Path {
 
     func expression(queryValueIsOptional: Bool = false) -> String {
         let first: AttributePath
 
-        switch validated.parsed.target {
+        switch resolved.validated.parsed.target {
         case .query:
             first = AttributePath(name: "data", kind: queryValueIsOptional ? .optional(.value) : .value)
         case .object(let type):
             first = AttributePath(name: type.camelized, kind: .value)
         }
 
-        let path = validated.components.flatMap { $0.path(referencedFragment: referencedFragment?.fragment) }
+        let path = components.flatMap { $0.path(referencedFragment: resolved.referencedFragment?.fragment) }
         return first.expression(attributes: path)
     }
 
@@ -77,22 +77,22 @@ extension AttributePath {
 
 }
 
-extension Stage.Validated.Component {
+extension Stage.Cleaned.Component {
 
     fileprivate func path(referencedFragment: GraphQLFragment?) -> [AttributePath] {
-        switch (reference, parsed, referencedFragment) {
+        switch (validated.reference, validated.parsed, referencedFragment) {
         case (.casting(.down), _, _):
-            return [AttributePath(name: "as\(underlyingType.name)", kind: .optional(.value))]
+            return [AttributePath(name: "as\(validated.underlyingType.name)", kind: .optional(.value))]
         case (.casting(.up), _, _):
             return []
         case (_, .property(let name), _):
-            return [AttributePath(name: name.camelized, kind: .init(from: fieldType))]
+            return [AttributePath(name: renamed?.camelized ?? name.camelized, kind: .init(from: validated.fieldType))]
         case (_, .fragment, .some(let fragment)):
             return [AttributePath(name: "fragments", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
         case (_, .fragment, .none):
             return []
         case (_, .call(let name, _), _):
-            return [AttributePath(name: name, kind: .init(from: fieldType))]
+            return [AttributePath(name: renamed?.camelized ?? name, kind: .init(from: validated.fieldType))]
         }
     }
 

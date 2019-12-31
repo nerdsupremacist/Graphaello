@@ -14,9 +14,9 @@ protocol Pipeline {
     func parse(extracted: Struct<Stage.Extracted>) throws -> Struct<Stage.Parsed>
     func validate(parsed: Struct<Stage.Parsed>, using apis: [API]) throws -> Struct<Stage.Validated>
     func resolve(validated: [Struct<Stage.Validated>]) throws -> [Struct<Stage.Resolved>]
-    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Resolved>
+    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Cleaned>
     
-    func assemble(cleaned: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Assembled>
+    func assemble(cleaned: Project.State<Stage.Cleaned>) throws -> Project.State<Stage.Assembled>
     
     func prepare(assembled: Project.State<Stage.Assembled>,
                  using apollo: ApolloReference) throws -> Project.State<Stage.Prepared>
@@ -38,7 +38,7 @@ extension Pipeline {
         return try parsed.map { try validate(parsed: $0, using: apis) }
     }
 
-    func clean(resolved: [Struct<Stage.Resolved>]) throws -> [Struct<Stage.Resolved>] {
+    func clean(resolved: [Struct<Stage.Resolved>]) throws -> [Struct<Stage.Cleaned>] {
         return try resolved.map { try clean(resolved: $0) }
     }
     

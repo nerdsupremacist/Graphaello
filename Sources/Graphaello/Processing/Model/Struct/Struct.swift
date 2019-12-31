@@ -38,6 +38,9 @@ extension Struct {
 }
 
 extension Struct {
+    func with<Stage: StageProtocol>(properties: [Property<Stage>]) -> Struct<Stage> {
+        return Struct<Stage>(code: code, name: name, properties: properties) { context }
+    }
     
     func with<Stage: StageProtocol>(properties: [Property<Stage>],
                                     @ContextBuilder context: () throws -> ContextProtocol) rethrows -> Struct<Stage> {

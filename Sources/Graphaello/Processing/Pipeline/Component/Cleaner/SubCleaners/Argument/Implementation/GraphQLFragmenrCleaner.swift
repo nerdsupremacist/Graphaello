@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct GraphQLFragmenrCleaner: SubCleaner {
-    let objectCleaner: AnyCleaner<GraphQLObject>
+struct GraphQLFragmenrCleaner: ArgumentCleaner {
+    let objectCleaner: AnyArgumentCleaner<GraphQLObject>
 
     func clean(resolved: GraphQLFragment,
-               using context: Cleaning.Context) throws -> Cleaning.Result<GraphQLFragment> {
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLFragment> {
 
         return try objectCleaner
             .clean(resolved: resolved.object, using: context).map { object in

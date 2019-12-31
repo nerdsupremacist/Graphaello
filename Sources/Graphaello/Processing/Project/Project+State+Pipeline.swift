@@ -32,7 +32,7 @@ extension Pipeline {
         return validated.with(structs: try resolve(validated: validated.structs))
     }
 
-    func clean(resolved: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Resolved> {
+    func clean(resolved: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Cleaned> {
         return resolved.with(structs: try clean(resolved: resolved.structs))
     }
     

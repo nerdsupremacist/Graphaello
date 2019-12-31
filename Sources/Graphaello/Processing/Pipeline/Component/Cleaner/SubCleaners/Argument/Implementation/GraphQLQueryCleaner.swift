@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct GraphQLQueryCleaner: SubCleaner {
-    let componentsCleaner: AnyCleaner<[Field : GraphQLComponent]>
+struct GraphQLQueryCleaner: ArgumentCleaner {
+    let componentsCleaner: AnyArgumentCleaner<[Field : GraphQLComponent]>
 
     func clean(resolved: GraphQLQuery,
-               using context: Cleaning.Context) throws -> Cleaning.Result<GraphQLQuery> {
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLQuery> {
 
         return try componentsCleaner
             .clean(resolved: resolved.components, using: context)

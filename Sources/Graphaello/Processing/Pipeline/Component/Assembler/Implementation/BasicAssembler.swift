@@ -10,7 +10,7 @@ import Foundation
 struct BasicAssembler: Assembler {
     let assembler: RequestAssembler
     
-    func assemble(cleaned: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Assembled> {
+    func assemble(cleaned: Project.State<Stage.Cleaned>) throws -> Project.State<Stage.Assembled> {
         let groupped = Dictionary(grouping: cleaned.allMembers) { $0.api.name }
         let requests = try groupped.mapValues { members -> ApolloCodeGenRequest in
             let fragments = members.compactMap { $0.fragment }

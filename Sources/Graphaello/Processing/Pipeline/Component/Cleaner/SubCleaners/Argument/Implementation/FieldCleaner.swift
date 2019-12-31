@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct FieldCleaner: SubCleaner {
+struct FieldCleaner: ArgumentCleaner {
 
     func clean(resolved: Field,
-               using context: Cleaning.Context) throws -> Cleaning.Result<Field> {
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<Field> {
 
         return context + resolved
     }

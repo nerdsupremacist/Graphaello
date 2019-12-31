@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct GraphQLTypeConditionalCleaner: SubCleaner {
-    let objectCleaner: AnyCleaner<GraphQLObject>
+struct GraphQLTypeConditionalCleaner: ArgumentCleaner {
+    let objectCleaner: AnyArgumentCleaner<GraphQLObject>
 
     func clean(resolved: GraphQLTypeConditional,
-               using context: Cleaning.Context) throws -> Cleaning.Result<GraphQLTypeConditional> {
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLTypeConditional> {
 
         return try objectCleaner
             .clean(resolved: resolved.object, using: context).map { object in

@@ -17,7 +17,7 @@ extension Struct where CurrentStage == Stage.Prepared {
     
     var initializerArguments: [InitializerArgument] {
         let stockArguments = properties
-            .filter { $0.graphqlPath?.isConnection ?? true }
+            .filter { $0.graphqlPath?.resolved.isConnection ?? true }
             .map { InitializerArgument(name: $0.name, type: $0.type) }
         
         let queryArgument = query != nil ? [InitializerArgument(name: "data", type: "Data")] : []

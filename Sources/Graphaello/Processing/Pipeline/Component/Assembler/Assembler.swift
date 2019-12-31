@@ -8,5 +8,5 @@
 import Foundation
 
 protocol Assembler {
-    func assemble(cleaned: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Assembled>
+    func assemble(cleaned: Project.State<Stage.Cleaned>) throws -> Project.State<Stage.Assembled>
 }

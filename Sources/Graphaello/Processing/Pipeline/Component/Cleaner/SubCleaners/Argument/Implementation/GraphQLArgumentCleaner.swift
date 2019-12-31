@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct GraphQLArgumentCleaner: SubCleaner {
+struct GraphQLArgumentCleaner: ArgumentCleaner {
     func clean(resolved: GraphQLArgument,
-               using context: Cleaning.Context) throws -> Cleaning.Result<GraphQLArgument> {
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLArgument> {
 
         return context + resolved
     }

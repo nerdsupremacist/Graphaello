@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct GraphQLComponentCleaner: SubCleaner {
-    let objectCleaner: AnyCleaner<GraphQLObject>
+struct GraphQLComponentCleaner: ArgumentCleaner {
+    let objectCleaner: AnyArgumentCleaner<GraphQLObject>
 
     func clean(resolved: GraphQLComponent,
-               using context: Cleaning.Context) throws -> Cleaning.Result<GraphQLComponent> {
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLComponent> {
 
         switch resolved {
         case .scalar:

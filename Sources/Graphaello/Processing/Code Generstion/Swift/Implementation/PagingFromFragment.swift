@@ -9,7 +9,7 @@ import Foundation
 import Stencil
 
 struct PagingFromFragment {
-    let path: Stage.Resolved.Path
+    let path: Stage.Cleaned.Path
     let query: GraphQLConnectionQuery
 }
 

@@ -8,46 +8,19 @@
 import Foundation
 
 struct BasicCleaner: Cleaner {
-    let queryCleaner: AnyCleaner<GraphQLQuery>
-    let connectionQueryCleaner: AnyCleaner<GraphQLConnectionQuery>
+    let argumentCleaner: AnyArgumentCleaner<Struct<Stage.Resolved>>
 
-    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Resolved> {
-        let query = try queryCleaner.clean(resolved: resolved.query, using: .empty)
-        let connectionQueries = try resolved.connectionQueries.collect(using: query) { try connectionQueryCleaner.clean(resolved: $0, using: $1) }
-        return resolved.with {
-            (.query ~> query.value)
-            (.connectionQueries ~> connectionQueries.value)
-        }
+    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Cleaned> {
+        return try argumentCleaner
+            .clean(resolved: resolved)
+            .with(properties: [])
     }
 }
 
 extension BasicCleaner {
 
-    typealias CleanerFactory<T> = (AnyCleaner<GraphQLObject>) -> AnyCleaner<T>
-    typealias ObjectCleanerFactory = (
-        AnyCleaner<GraphQLArgument>,
-        @escaping CleanerFactory<[Field : GraphQLComponent]>,
-        @escaping CleanerFactory<GraphQLFragment>,
-        @escaping CleanerFactory<GraphQLTypeConditional>
-    ) -> AnyCleaner<GraphQLObject>
-
-    init(argumentCleaner: AnyCleaner<GraphQLArgument>,
-         fieldCleaner: AnyCleaner<Field>,
-         componentCleaner: @escaping CleanerFactory<GraphQLComponent>,
-         fragmentCleaner: @escaping CleanerFactory<GraphQLFragment>,
-         typeConditionalCleaner: @escaping CleanerFactory<GraphQLTypeConditional>,
-         objectCleaner: ObjectCleanerFactory,
-         queryCleaner: (AnyCleaner<[Field : GraphQLComponent]>) -> AnyCleaner<GraphQLQuery>,
-         connectionQueryCleaner: (AnyCleaner<GraphQLQuery>) -> AnyCleaner<GraphQLConnectionQuery>) {
-
-        let componentsCleaner = { DictionaryCleaner(keyCleaner: fieldCleaner, valueCleaner: componentCleaner($0)).any() }
-        let objectCleaner = objectCleaner(argumentCleaner, componentsCleaner, fragmentCleaner, typeConditionalCleaner)
-        let queryCleaner = queryCleaner(componentsCleaner(objectCleaner))
-
-        let connectionQueryCleaner = connectionQueryCleaner(queryCleaner)
-
-        self.init(queryCleaner: queryCleaner,
-                  connectionQueryCleaner: connectionQueryCleaner)
+    init(argumentCleaner: () -> AnyArgumentCleaner<Struct<Stage.Resolved>>) {
+        self.init(argumentCleaner: argumentCleaner())
     }
 
 }
