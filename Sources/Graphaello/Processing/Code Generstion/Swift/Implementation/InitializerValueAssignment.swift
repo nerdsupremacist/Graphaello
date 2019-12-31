@@ -14,7 +14,7 @@ struct InitializerValueAssignment: SwiftCodeTransformable {
     let expression: String
 }
 
-extension Struct where CurrentStage == Stage.Resolved{
+extension Struct where CurrentStage == Stage.Prepared {
     
     var initializerValueAssignments: [InitializerValueAssignment] {
         return properties.map { property in

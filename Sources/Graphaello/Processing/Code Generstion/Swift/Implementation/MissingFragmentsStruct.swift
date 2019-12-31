@@ -11,7 +11,7 @@ struct MissingFragmentsStruct: SwiftCodeTransformable, Hashable {
     let path: [String]
 }
 
-extension Struct where CurrentStage == Stage.Resolved{
+extension Struct where CurrentStage: ResolvedStage {
 
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
         let fromQuery = query?.missingFragmentsStructs ?? []

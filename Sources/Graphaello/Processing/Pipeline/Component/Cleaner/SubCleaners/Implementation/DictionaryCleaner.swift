@@ -13,9 +13,10 @@ struct DictionaryCleaner<Key: Hashable, Value>: SubCleaner {
 
     func clean(resolved: [Key : Value], using context: Cleaning.Context) throws -> Cleaning.Result<[Key : Value]> {
         return try resolved
-            .collect(using: context) { try valueCleaner.clean(resolved: $0, using: $1) }
-            .flatMap { dictionary, context in
-                try dictionary.collect(using: context) { try keyCleaner.clean(resolved: $0, using: $1) }
+            .reduce(context.result(value: [:])) { result, element in
+                let value = try valueCleaner.clean(resolved: element.value, using: result)
+                let key = try keyCleaner.clean(resolved: element.key, using: value)
+                return key.map { result.value.merging([$0 : value.value]) { $1 } }
             }
     }
 }

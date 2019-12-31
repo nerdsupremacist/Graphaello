@@ -91,14 +91,6 @@ extension Dictionary {
 
         return try collect(using: result.context, transform: transform)
     }
-
-    func collect<V: Hashable>(using context: Cleaning.Context,
-                              transform: (Key, Cleaning.Context) throws -> Cleaning.Result<V>) rethrows -> Cleaning.Result<[V : Value]> {
-
-        return try reduce(Cleaning.Result(value: [:], context: context)) { result, element in
-            try transform(element.key, result.context).map { result.value.merging([$0 : element.value]) { $1 } }
-        }
-    }
 }
 
 private enum ClashResolutionStrategy {

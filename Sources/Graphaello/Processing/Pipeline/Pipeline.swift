@@ -15,6 +15,13 @@ protocol Pipeline {
     func validate(parsed: Struct<Stage.Parsed>, using apis: [API]) throws -> Struct<Stage.Validated>
     func resolve(validated: [Struct<Stage.Validated>]) throws -> [Struct<Stage.Resolved>]
     func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Resolved>
+    
+    func assemble(cleaned: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Assembled>
+    
+    func prepare(assembled: Project.State<Stage.Assembled>,
+                 using apollo: ApolloReference) throws -> Project.State<Stage.Prepared>
+    
+    func generate(prepared: Project.State<Stage.Prepared>) throws -> String
 }
 
 extension Pipeline {

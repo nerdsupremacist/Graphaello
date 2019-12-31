@@ -7,45 +7,28 @@
 //
 
 import Foundation
-import SourceKittenFramework
 
 extension Project {
 
     struct State<CurrentStage: StageProtocol> {
         let apis: [API]
         let structs: [Struct<CurrentStage>]
-    }
-    
-}
-
-extension Pipeline {
-    
-    func extract(from project: Project) throws -> Project.State<Stage.Extracted> {
-        let apis = try project.scanAPIs()
-        let swiftFiles = try project.files()
-            .filter { $0.extension == "swift" }
-            .compactMap { File(path: $0.string) }
-    
-        let extracted = try extract(from: swiftFiles)
-        return Project.State(apis: apis, structs: extracted)
-    }
-    
-    func parse(extracted: Project.State<Stage.Extracted>) throws -> Project.State<Stage.Parsed> {
-        return Project.State(apis: extracted.apis,
-                             structs: try parse(extracted: extracted.structs).filter { $0.hasGraphQLValues })
-    }
-    
-    func validate(parsed: Project.State<Stage.Parsed>) throws -> Project.State<Stage.Validated> {
-        return Project.State(apis: parsed.apis,
-                             structs: try validate(parsed: parsed.structs, using: parsed.apis))
-    }
-    
-    func resolve(validated: Project.State<Stage.Validated>) throws -> Project.State<Stage.Resolved> {
-        return Project.State(apis: validated.apis, structs: try resolve(validated: validated.structs))
-    }
-
-    func clean(resolved: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Resolved> {
-        return Project.State(apis: resolved.apis, structs: try clean(resolved: resolved.structs))
+        let context: Context
+        
+        init(apis: [API], structs: [Struct<CurrentStage>]) {
+            self.apis = apis
+            self.structs = structs
+            self.context = .empty
+        }
+        
+        init(apis: [API],
+             structs: [Struct<CurrentStage>],
+             @ContextBuilder context: () throws -> ContextProtocol) rethrows {
+            
+            self.apis = apis
+            self.structs = structs
+            self.context = try Context(context: context)
+        }
     }
     
 }
@@ -58,23 +41,31 @@ extension Project.State where CurrentStage: GraphQLStage {
 
 }
 
-extension Project.State where CurrentStage: ResolvedStage {
-
-    var allConnectionQueries: OrderedSet<GraphQLConnectionQuery> {
-        return structs.flatMap { OrderedSet($0.connectionQueries) }
+extension Project.State {
+    
+    func with<Stage: StageProtocol>(structs: [Struct<Stage>],
+                                    @ContextBuilder context: () throws -> ContextProtocol) rethrows -> Project.State<Stage> {
+        
+        return try Project.State(apis: apis, structs: structs) {
+            self.context
+            try context()
+        }
     }
-
-    var allConnectionFragments: OrderedSet<GraphQLConnectionFragment> {
-        return allConnectionQueries.map { $0.fragment }
+    
+    func with<Stage: StageProtocol>(structs: [Struct<Stage>]) -> Project.State<Stage> {
+        return Project.State(apis: apis, structs: structs) { self.context }
     }
-
-    var allFragments: [GraphQLFragment] {
-        return structs.flatMap { $0.fragments }
-    }
-
-    var allQueries: [GraphQLQuery] {
-        return structs.compactMap { $0.query }
-    }
-
+    
 }
 
+extension Project.State where CurrentStage: GraphQLStage {
+    
+    func with<Stage: GraphQLStage>(@ContextBuilder context: () throws -> ContextProtocol) rethrows -> Project.State<Stage> where Stage.Path == CurrentStage.Path {
+        return try with(structs: structs.map { $0.convert() }, context: context)
+    }
+    
+    func convert<Stage: GraphQLStage>() -> Project.State<Stage> where Stage.Path == CurrentStage.Path {
+        return with { context }
+    }
+    
+}

@@ -12,7 +12,7 @@ struct MissingReferencedFragment: SwiftCodeTransformable, Hashable {
     let fragmentName: String
 }
 
-extension Struct where CurrentStage == Stage.Resolved{
+extension Struct where CurrentStage: ResolvedStage {
 
     var missingReferencedFragments: OrderedSet<MissingReferencedFragment> {
         let fromQuery = query?.missingReferencedFragments ?? []

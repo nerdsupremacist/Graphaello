@@ -55,6 +55,18 @@ extension Struct {
 }
 
 extension Struct where CurrentStage: GraphQLStage {
+    
+    func with<Stage: GraphQLStage>(@ContextBuilder context: () throws -> ContextProtocol) rethrows -> Struct<Stage> where Stage.Path == CurrentStage.Path {
+        return try with(properties: properties.map { $0.convert() }, context: context)
+    }
+    
+    func convert<Stage: GraphQLStage>() -> Struct<Stage> where Stage.Path == CurrentStage.Path {
+        return with { context }
+    }
+    
+}
+
+extension Struct where CurrentStage: GraphQLStage {
 
     var hasGraphQLValues: Bool {
         return properties.contains { $0.graphqlPath != nil }

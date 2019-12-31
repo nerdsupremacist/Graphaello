@@ -1,5 +1,5 @@
 //
-//  Struct<Stage.Resolved>+SwiftCodeTransformable.swift
+//  Struct+Prepared+SwiftCodeTransformable.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 06.12.19.
@@ -9,11 +9,11 @@
 import Foundation
 import Stencil
 
-extension Struct: CodeTransformable where CurrentStage == Stage.Resolved { }
+extension Struct: CodeTransformable where CurrentStage == Stage.Prepared { }
 
-extension Struct: SwiftCodeTransformable where CurrentStage == Stage.Resolved { }
+extension Struct: SwiftCodeTransformable where CurrentStage == Stage.Prepared { }
 
-extension Struct: ExtraValuesSwiftCodeTransformable where CurrentStage == Stage.Resolved {
+extension Struct: ExtraValuesSwiftCodeTransformable where CurrentStage == Stage.Prepared {
     
     func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         return [

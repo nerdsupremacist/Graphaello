@@ -13,7 +13,7 @@ struct InitializerArgument: SwiftCodeTransformable {
     let type: String
 }
 
-extension Struct where CurrentStage == Stage.Resolved {
+extension Struct where CurrentStage == Stage.Prepared {
     
     var initializerArguments: [InitializerArgument] {
         let stockArguments = properties

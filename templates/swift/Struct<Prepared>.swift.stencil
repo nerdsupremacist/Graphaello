@@ -1,4 +1,4 @@
-// MARK: - {{ structResolved.name }}
+// MARK: - {{ structPrepared.name }}
 
 {% for fragment in fragments %}
 extension ApolloStuff.{{ fragment.name|upperCamelized }} : Fragment {
@@ -6,12 +6,12 @@ extension ApolloStuff.{{ fragment.name|upperCamelized }} : Fragment {
 }
 {% endfor %}
 
-extension {{ structResolved.name }} {
+extension {{ structPrepared.name }} {
     {% for fragment in fragments %}
     typealias {{ fragment.target.name }} = ApolloStuff.{{ fragment.name||upperCamelized }}
     {% endfor %}
     {% if query %}
-    typealias Data = ApolloStuff.{{ structResolved.name }}Query.Data
+    typealias Data = ApolloStuff.{{ structPrepared.name }}Query.Data
     {% endif %}
     
     init({{ initializerArguments|codeArray|join:", " }}) {
@@ -24,9 +24,9 @@ extension {{ query.api.name }} {
     
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: ApolloStuff.{{ structResolved.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
+                             query: ApolloStuff.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
         
-            {{ structResolved.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
+            {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
     }
     

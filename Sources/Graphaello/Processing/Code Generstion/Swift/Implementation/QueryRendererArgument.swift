@@ -15,7 +15,7 @@ struct QueryRendererArgument: SwiftCodeTransformable {
     let expression: ExprSyntax?
 }
 
-extension Struct where CurrentStage == Stage.Resolved {
+extension Struct where CurrentStage: ResolvedStage {
     
     var queryRendererArguments: [QueryRendererArgument] {
         let api = query?.api.name

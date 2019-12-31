@@ -16,7 +16,10 @@ enum PipelineFactory {
                              parser: create(),
                              validator: create(),
                              resolver: create(),
-                             cleaner: create())
+                             cleaner: create(),
+                             assembler: create(),
+                             preparator: create(),
+                             generator: create())
     }
     
     private static func create() -> Extractor {
@@ -104,6 +107,24 @@ enum PipelineFactory {
                                                                   typeConditionalCleaner: $3).any() },
                             queryCleaner: { GraphQLQueryCleaner(componentsCleaner: $0).any() },
                             connectionQueryCleaner: { GraphQLConnectionQueryCleaner(queryCleaner: $0).any() })
+    }
+    
+    private static func create() -> Assembler {
+        return BasicAssembler {
+            BasicRequestAssembler()
+        }
+    }
+    
+    private static func create() -> Preparator {
+        return BasicPreparator {
+            BasicApolloCodegenRequestProcessor {
+                BasicApolloProcessInstantiator()
+            }
+        }
+    }
+    
+    private static func create() -> Generator {
+        return BasicGenerator()
     }
 }
 

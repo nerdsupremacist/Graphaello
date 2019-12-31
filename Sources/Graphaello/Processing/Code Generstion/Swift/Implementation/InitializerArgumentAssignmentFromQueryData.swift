@@ -13,7 +13,7 @@ struct InitializerArgumentAssignmentFromQueryData: SwiftCodeTransformable {
     let expression: CodeTransformable
 }
 
-extension Struct where CurrentStage == Stage.Resolved {
+extension Struct where CurrentStage == Stage.Prepared {
     
     var initializerArgumentAssignmentFromQueryData: [InitializerArgumentAssignmentFromQueryData] {
         let stockArguments = properties
@@ -29,9 +29,9 @@ extension Struct where CurrentStage == Stage.Resolved {
     
 }
 
-extension Property where CurrentStage == Stage.Resolved {
+extension Property where CurrentStage == Stage.Prepared {
 
-    fileprivate func expression(in graphQlStruct: Struct<Stage.Resolved>) -> CodeTransformable {
+    fileprivate func expression(in graphQlStruct: Struct<Stage.Prepared>) -> CodeTransformable {
         guard type != graphQlStruct.query?.api.name else { return "self" }
         guard let path = graphqlPath else { return name }
         guard case .some(.connection(let connectionFragment)) = path.referencedFragment else {

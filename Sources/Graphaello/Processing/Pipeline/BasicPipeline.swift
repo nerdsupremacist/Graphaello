@@ -15,6 +15,9 @@ struct BasicPipeline: Pipeline {
     let validator: Validator
     let resolver: Resolver
     let cleaner: Cleaner
+    let assembler: Assembler
+    let preparator: Preparator
+    let generator: Generator
     
     func extract(from file: File) throws -> [Struct<Stage.Extracted>] {
         return try extractor.extract(from: file)
@@ -34,5 +37,19 @@ struct BasicPipeline: Pipeline {
 
     func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Resolved> {
         return try cleaner.clean(resolved: resolved)
+    }
+    
+    func assemble(cleaned: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Assembled> {
+        return try assembler.assemble(cleaned: cleaned)
+    }
+    
+    func prepare(assembled: Project.State<Stage.Assembled>,
+                 using apollo: ApolloReference) throws -> Project.State<Stage.Prepared> {
+        
+        return try preparator.prepare(assembled: assembled, using: apollo)
+    }
+    
+    func generate(prepared: Project.State<Stage.Prepared>) throws -> String {
+        return try generator.generate(prepared: prepared)
     }
 }

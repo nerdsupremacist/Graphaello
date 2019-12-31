@@ -14,7 +14,7 @@ struct QueryArgumentAssignment: SwiftCodeTransformable {
     let expression: ExprSyntax
 }
 
-extension Struct where CurrentStage == Stage.Resolved{
+extension Struct where CurrentStage: ResolvedStage {
     
     var queryArgumentAssignments: [QueryArgumentAssignment] {
         return query?.queryArgumentAssignments ?? []

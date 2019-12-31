@@ -7,4 +7,4 @@
 
 import Foundation
 
-protocol ResolvedStage: StageProtocol { }
+protocol ResolvedStage: GraphQLStage { }

@@ -37,3 +37,11 @@ extension Property {
     }
     
 }
+
+extension Property where CurrentStage: GraphQLStage {
+    
+    func convert<Stage: GraphQLStage>() -> Property<Stage> where Stage.Path == CurrentStage.Path {
+        return Property<Stage>(code: code, name: name, type: type, graphqlPath: graphqlPath)
+    }
+    
+}
