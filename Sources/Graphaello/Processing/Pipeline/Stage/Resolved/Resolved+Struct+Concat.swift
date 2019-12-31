@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Resolved+Struct+Concat.swift
 //  
 //
 //  Created by Mathias Quintero on 31.12.19.

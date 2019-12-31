@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Resolved+Struct+Properties.swift
 //  
 //
 //  Created by Mathias Quintero on 31.12.19.
