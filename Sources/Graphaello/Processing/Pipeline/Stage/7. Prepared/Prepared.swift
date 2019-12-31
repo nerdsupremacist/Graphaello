@@ -9,6 +9,8 @@ import Foundation
 
 extension Stage {
     
+    // The GraphQL Code was given to Apollo and the Networking Code was Generated
+    // Project is read to be turned into Swift Code
     enum Prepared: GraphQLStage, AssembledStage {
         static var pathKey = Context.Key.cleaned
     }

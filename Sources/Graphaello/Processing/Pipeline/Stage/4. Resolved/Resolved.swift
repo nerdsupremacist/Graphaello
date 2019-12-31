@@ -10,6 +10,7 @@ import Foundation
 
 extension Stage {
 
+    // All GraphQL Fragments and Queries where Resolved
     enum Resolved: GraphQLStage, ResolvedStage {
         enum ReferencedFragment {
             case fragment(GraphQLFragment)

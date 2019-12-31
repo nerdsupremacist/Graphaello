@@ -10,6 +10,7 @@ import Foundation
 
 extension Stage {
 
+    // The GraphQL Property Wrappers have been parsed
     enum Parsed: GraphQLStage {
         typealias Information = Path?
 

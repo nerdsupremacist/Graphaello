@@ -11,6 +11,7 @@ import SourceKittenFramework
 
 extension Stage {
 
+    // All structs and their properties were extracted from the project
     enum Extracted: StageProtocol {
         struct Attribute {
             let code: SourceCode

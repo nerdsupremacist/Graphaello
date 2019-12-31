@@ -10,6 +10,8 @@ import Foundation
 
 extension Stage {
 
+    // The GraphQL Paths have been type checked and bundled with the respective Types
+    // + All default arguments have been injected.
     enum Validated: GraphQLStage {
         struct Component {
             enum Reference {

@@ -9,6 +9,7 @@ import Foundation
 
 extension Stage {
     
+    // Name clashes in each query were cleaned
     enum Cleaned: GraphQLStage, ResolvedStage {
         struct Component {
             let validated: Stage.Validated.Component
