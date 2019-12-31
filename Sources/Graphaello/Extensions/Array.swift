@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension Target {
     
     func type(in api: API) throws -> Schema.GraphQLType {
