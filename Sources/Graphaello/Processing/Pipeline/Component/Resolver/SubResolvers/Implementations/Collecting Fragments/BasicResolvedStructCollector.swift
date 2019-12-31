@@ -11,7 +11,7 @@ import Foundation
 struct BasicResolvedStructCollector<Collector: ResolvedValueCollector>: ResolvedStructCollector where Collector.Resolved == Property<Stage.Resolved>, Collector.Parent == Struct<Stage.Resolved>, Collector.Collected == [StructResolution.CollectedValue] {
     let collector: Collector
     
-    func collect(from value: Struct<Stage.Resolved>) throws -> StructResolution.Result<GraphQLStruct> {
+    func collect(from value: Struct<Stage.Resolved>) throws -> StructResolution.Result<Struct<Stage.Resolved>> {
         return try value
             .properties
             .collect { property in
@@ -21,7 +21,12 @@ struct BasicResolvedStructCollector<Collector: ResolvedValueCollector>: Resolved
                 return values.flatMap {  $0 }
             }
             .map { values in
-                let initialResult = GraphQLStruct(definition: value, fragments: [], query: nil, connectionQueries: [])
+                let initialResult = value.with {
+                    (.fragments ~> [])
+                    (.query ~> nil)
+                    (.connectionQueries ~> [])
+                }
+                
                 return try values.reduce(initialResult) { try $0 + $1 }
             }
     }

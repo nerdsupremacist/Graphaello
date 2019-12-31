@@ -18,7 +18,7 @@ struct InputFieldInitializerArgument {
 
 extension InputFieldInitializerArgument: ExtraValuesSwiftCodeTransformable {
 
-    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         return [
             "swiftType": type.swiftType(api: api.name)
         ]

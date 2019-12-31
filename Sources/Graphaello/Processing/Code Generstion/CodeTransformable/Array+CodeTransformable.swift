@@ -11,7 +11,7 @@ import Stencil
 
 extension Array: CodeTransformable where Element: CodeTransformable {
     
-    func code(using context: Context, arguments: [Any?]) throws -> String {
+    func code(using context: Stencil.Context, arguments: [Any?]) throws -> String {
         return try context.render(template: "Array.stencil", context: ["values" : self])
     }
     
@@ -19,7 +19,7 @@ extension Array: CodeTransformable where Element: CodeTransformable {
 
 extension Array {
     
-    func code(using context: Context, arguments: [Any?]) throws -> [String] {
+    func code(using context: Stencil.Context, arguments: [Any?]) throws -> [String] {
         return try compactMap { element in
             switch element {
             case let element as CodeTransformable:

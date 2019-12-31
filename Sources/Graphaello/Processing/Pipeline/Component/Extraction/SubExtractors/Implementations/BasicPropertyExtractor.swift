@@ -19,7 +19,9 @@ struct BasicPropertyExtractor: PropertyExtractor {
 
         return Property(code: code,
                         name: try code.name(),
-                        type: type,
-                        info: attributes)
+                        type: type) {
+            
+            .attributes ~> attributes
+        }
     }
 }

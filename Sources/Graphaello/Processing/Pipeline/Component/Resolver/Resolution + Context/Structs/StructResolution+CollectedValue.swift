@@ -18,9 +18,9 @@ extension StructResolution {
     
 }
 
-extension GraphQLStruct {
+extension Struct where CurrentStage == Stage.Resolved {
     
-    static func + (lhs: GraphQLStruct, rhs: StructResolution.CollectedValue) throws -> GraphQLStruct {
+    static func + (lhs: Struct<Stage.Resolved>, rhs: StructResolution.CollectedValue) throws -> Struct<Stage.Resolved> {
         switch rhs {
         case .query(let query):
             return try lhs + query

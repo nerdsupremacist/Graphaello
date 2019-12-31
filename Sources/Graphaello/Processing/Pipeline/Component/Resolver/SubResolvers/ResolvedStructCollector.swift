@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ResolvedStructCollector {
-    func collect(from value: Struct<Stage.Resolved>) throws -> StructResolution.Result<GraphQLStruct>
+    func collect(from value: Struct<Stage.Resolved>) throws -> StructResolution.Result<Struct<Stage.Resolved>>
 }

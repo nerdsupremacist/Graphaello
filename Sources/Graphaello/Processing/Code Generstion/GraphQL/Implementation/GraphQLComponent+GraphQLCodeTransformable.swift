@@ -10,7 +10,7 @@ import Foundation
 import Stencil
 
 extension GraphQLComponent: ExtraValuesGraphQLCodeTransformable {
-    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         return [
             "object": object ?? false,
         ]

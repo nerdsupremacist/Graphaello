@@ -1,5 +1,5 @@
 //
-//  GraphQLStructResolver.swift
+//  Struct<Stage.Resolved>Resolver.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 08.12.19.
@@ -13,7 +13,7 @@ struct GraphQLStructResolver<Resolver: StructResolver>: StructResolver where Res
     let collector: ResolvedStructCollector
     
     func resolve(validated: Struct<Stage.Validated>,
-                 using context: StructResolution.Context) throws -> StructResolution.Result<GraphQLStruct> {
+                 using context: StructResolution.Context) throws -> StructResolution.Result<Struct<Stage.Resolved>> {
         
         return try resolver
             .resolve(validated: validated, using: context)

@@ -11,13 +11,13 @@ struct BasicCleaner: Cleaner {
     let queryCleaner: AnyCleaner<GraphQLQuery>
     let connectionQueryCleaner: AnyCleaner<GraphQLConnectionQuery>
 
-    func clean(resolved: GraphQLStruct) throws -> GraphQLStruct {
+    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Resolved> {
         let query = try queryCleaner.clean(resolved: resolved.query, using: .empty)
         let connectionQueries = try resolved.connectionQueries.collect(using: query) { try connectionQueryCleaner.clean(resolved: $0, using: $1) }
-        return GraphQLStruct(definition: resolved.definition,
-                             fragments: resolved.fragments,
-                             query: query.value,
-                             connectionQueries: connectionQueries.value)
+        return resolved.with {
+            (.query ~> query.value)
+            (.connectionQueries ~> connectionQueries.value)
+        }
     }
 }
 

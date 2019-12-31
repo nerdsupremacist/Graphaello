@@ -15,7 +15,7 @@ struct PagingFromFragment {
 
 extension PagingFromFragment: ExtraValuesSwiftCodeTransformable {
 
-    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         return [
             "pathExpression": path.expression(),
             "optionalPathExpression": path.expression(queryValueIsOptional: true),

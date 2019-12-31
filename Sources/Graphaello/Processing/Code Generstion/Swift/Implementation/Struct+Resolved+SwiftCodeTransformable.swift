@@ -1,5 +1,5 @@
 //
-//  GraphQLStruct+SwiftCodeTransformable.swift
+//  Struct<Stage.Resolved>+SwiftCodeTransformable.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 06.12.19.
@@ -9,12 +9,15 @@
 import Foundation
 import Stencil
 
-extension GraphQLStruct: ExtraValuesSwiftCodeTransformable {
+extension Struct: CodeTransformable where CurrentStage == Stage.Resolved { }
+
+extension Struct: SwiftCodeTransformable where CurrentStage == Stage.Resolved { }
+
+extension Struct: ExtraValuesSwiftCodeTransformable where CurrentStage == Stage.Resolved {
     
-    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
-        let functionName = definition.name.camelized
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         return [
-            "functionName" : functionName,
+            "functionName" : name.camelized,
             "initializerArguments" : initializerArguments,
             "initializerValueAssignments" : initializerValueAssignments,
             "queryRendererArguments": queryRendererArguments,

@@ -13,10 +13,10 @@ struct InitializerArgument: SwiftCodeTransformable {
     let type: String
 }
 
-extension GraphQLStruct {
+extension Struct where CurrentStage == Stage.Resolved {
     
     var initializerArguments: [InitializerArgument] {
-        let stockArguments = definition.properties
+        let stockArguments = properties
             .filter { $0.graphqlPath?.isConnection ?? true }
             .map { InitializerArgument(name: $0.name, type: $0.type) }
         

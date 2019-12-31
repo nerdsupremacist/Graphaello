@@ -15,12 +15,11 @@ struct QueryRendererArgument: SwiftCodeTransformable {
     let expression: ExprSyntax?
 }
 
-extension GraphQLStruct {
+extension Struct where CurrentStage == Stage.Resolved {
     
     var queryRendererArguments: [QueryRendererArgument] {
         let api = query?.api.name
-        let argumentsFromStruct = definition
-            .properties
+        let argumentsFromStruct = properties
             .compactMap { $0.directArgument }
             .filter { $0.type != api }
 

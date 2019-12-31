@@ -1,5 +1,5 @@
 //
-//  GraphQLStructResolver.swift
+//  Struct<Stage.Resolved>Resolver.swift
 //  Graphaello
 //
 //  Created by Mathias Quintero on 08.12.19.

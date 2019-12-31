@@ -10,9 +10,7 @@ import Foundation
 
 extension Stage {
 
-    enum Resolved: GraphQLStage {
-        typealias Information = Path?
-
+    enum Resolved: GraphQLStage, ResolvedStage {
         enum ReferencedFragment {
             case fragment(GraphQLFragment)
             case connection(GraphQLConnectionFragment)
@@ -22,6 +20,8 @@ extension Stage {
             let validated: Validated.Path
             let referencedFragment: ReferencedFragment?
         }
+        
+        static let pathKey = Context.Key.resolved
     }
 
 }
@@ -47,3 +47,4 @@ extension Stage.Resolved.Path {
     }
 
 }
+

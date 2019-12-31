@@ -10,7 +10,7 @@ import Foundation
 import Stencil
 
 protocol CodeTransformable {
-    func code(using context: Context, arguments: [Any?]) throws -> String
+    func code(using context: Stencil.Context, arguments: [Any?]) throws -> String
 }
 
 extension CodeTransformable {

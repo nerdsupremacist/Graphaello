@@ -10,12 +10,10 @@ import Foundation
 import CLIKit
 
 struct Codegen {
-    let apis: [API]
-    let structs: [GraphQLStruct]
+    private let state: Project.State<Stage.Resolved>
     
-    init(apis: [API], structs: [GraphQLStruct]) {
-        self.apis = apis
-        self.structs = structs.sorted { $0.definition.name <= $1.definition.name }
+    init(state: Project.State<Stage.Resolved>) {
+        self.state = state
     }
 }
 
@@ -76,9 +74,9 @@ extension Codegen {
         Console.print(title: "🎁 Bundling it all together", indentation: 1)
         return try code {
             StructureAPI()
-            apis
-            structs
-            Array(allConnectionFragments)
+            state.apis
+            state.structs
+            Array(state.allConnectionFragments)
             apolloCode
         }
     }
@@ -86,30 +84,14 @@ extension Codegen {
 }
 
 extension Codegen {
-
+    
     private var allMembers: [MemberOfAPI] {
-        let fromConnections = allConnectionFragments.map { MemberOfAPI.fragment($0.fragment) } +
-            allConnectionQueries.map { MemberOfAPI.query($0.query) }
+        let fromConnections = state.allConnectionFragments.map { MemberOfAPI.fragment($0.fragment) } +
+            state.allConnectionQueries.map { MemberOfAPI.query($0.query) }
 
         return fromConnections +
-            allFragments.map(MemberOfAPI.fragment) +
-            allQueries.map(MemberOfAPI.query)
+            state.allFragments.map(MemberOfAPI.fragment) +
+            state.allQueries.map(MemberOfAPI.query)
     }
-
-    var allConnectionQueries: OrderedSet<GraphQLConnectionQuery> {
-        return structs.flatMap { OrderedSet($0.connectionQueries) }
-    }
-
-    var allConnectionFragments: OrderedSet<GraphQLConnectionFragment> {
-        return allConnectionQueries.map { $0.fragment }
-    }
-
-    var allFragments: [GraphQLFragment] {
-        return structs.flatMap { $0.fragments }
-    }
-
-    var allQueries: [GraphQLQuery] {
-        return structs.compactMap { $0.query }
-    }
-
+    
 }

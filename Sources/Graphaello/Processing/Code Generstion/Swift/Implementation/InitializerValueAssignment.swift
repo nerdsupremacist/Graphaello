@@ -14,10 +14,10 @@ struct InitializerValueAssignment: SwiftCodeTransformable {
     let expression: String
 }
 
-extension GraphQLStruct {
+extension Struct where CurrentStage == Stage.Resolved{
     
     var initializerValueAssignments: [InitializerValueAssignment] {
-        return definition.properties.map { property in
+        return properties.map { property in
             switch property.graphqlPath {
             case .some(let path):
                 let expression = path.isConnection ? property.name : path.expression()

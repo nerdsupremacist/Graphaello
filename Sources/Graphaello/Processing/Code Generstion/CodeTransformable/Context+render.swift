@@ -9,7 +9,7 @@
 import Foundation
 import Stencil
 
-extension Context {
+extension Stencil.Context {
     
     func render(template: String, context dictionary: [String : Any]) throws -> String {
         return try push(dictionary: dictionary) {

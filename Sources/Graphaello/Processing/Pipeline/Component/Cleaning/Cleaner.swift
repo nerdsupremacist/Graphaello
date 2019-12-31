@@ -8,5 +8,5 @@
 import Foundation
 
 protocol Cleaner {
-    func clean(resolved: GraphQLStruct) throws -> GraphQLStruct
+    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Resolved>
 }

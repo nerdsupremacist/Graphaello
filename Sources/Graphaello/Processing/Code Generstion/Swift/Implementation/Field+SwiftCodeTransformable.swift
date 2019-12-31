@@ -11,7 +11,7 @@ import Stencil
 
 extension Schema.GraphQLType.Field: ExtraValuesSwiftCodeTransformable {
     
-    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         let isStatic = arguments.contains { $0 as? String == "static" }
         let isOptional = arguments.contains { $0 as? String == "optional" }
         

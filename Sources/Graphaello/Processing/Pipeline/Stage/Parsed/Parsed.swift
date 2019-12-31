@@ -24,6 +24,14 @@ extension Stage {
             let target: Target
             let components: [Component]
         }
+        
+        static var pathKey = Context.Key.parsed
     }
 
+}
+
+extension Context.Key where T == Stage.Parsed.Path? {
+    
+    static let parsed = Context.Key<Stage.Parsed.Path?>()
+    
 }

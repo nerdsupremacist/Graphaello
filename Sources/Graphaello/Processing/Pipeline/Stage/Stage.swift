@@ -8,8 +8,6 @@
 
 import Foundation
 
-protocol StageProtocol {
-    associatedtype Information
-}
+protocol StageProtocol { }
 
 enum Stage { }

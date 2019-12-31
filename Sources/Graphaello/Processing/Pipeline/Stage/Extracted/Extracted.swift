@@ -12,12 +12,24 @@ import SourceKittenFramework
 extension Stage {
 
     enum Extracted: StageProtocol {
-        typealias Information = [Attribute]
-
         struct Attribute {
             let code: SourceCode
             let kind: SwiftDeclarationAttributeKind
         }
     }
 
+}
+
+extension Property where CurrentStage == Stage.Extracted {
+    
+    var attributes: [Stage.Extracted.Attribute] {
+        return context[.attributes]
+    }
+    
+}
+
+extension Context.Key where T == [Stage.Extracted.Attribute] {
+    
+    static let attributes = Context.Key<[Stage.Extracted.Attribute]>()
+    
 }

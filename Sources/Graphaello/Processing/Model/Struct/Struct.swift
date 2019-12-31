@@ -12,18 +12,40 @@ struct Struct<CurrentStage: StageProtocol> {
     let code: SourceCode
     let name: String
     let properties: [Property<CurrentStage>]
+    let context: Context
+    
+    init(code: SourceCode, name: String, properties: [Property<CurrentStage>]) {
+        self.code = code
+        self.name = name
+        self.properties = properties
+        self.context = .empty
+    }
+    
+    init(code: SourceCode, name: String, properties: [Property<CurrentStage>], @ContextBuilder context: () throws -> ContextProtocol) rethrows {
+        self.code = code
+        self.name = name
+        self.properties = properties
+        self.context = try Context(context: context)
+    }
 }
 
 extension Struct {
-
-    func map<Stage: StageProtocol>(_ transform: (CurrentStage.Information) throws -> Stage.Information) rethrows -> Struct<Stage> {
-        return try map { try $0.map { try transform($0) } }
-    }
-
+    
     func map<Stage: StageProtocol>(_ transform: (Property<CurrentStage>) throws -> Property<Stage>) rethrows -> Struct<Stage> {
         return Struct<Stage>(code: code, name: name, properties: try properties.map { try transform($0) })
     }
 
+}
+
+extension Struct {
+    
+    func with(@ContextBuilder context: () throws -> ContextProtocol) rethrows -> Struct<CurrentStage> {
+        return try Struct<CurrentStage>(code: code, name: name, properties: properties) {
+            self.context
+            try context()
+        }
+    }
+    
 }
 
 extension Struct where CurrentStage: GraphQLStage {

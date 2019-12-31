@@ -12,10 +12,10 @@ extension StructResolution {
     
     struct Context {
         private struct FastStruct {
-            let resolved: GraphQLStruct
+            let resolved: Struct<Stage.Resolved>
             let fragments: [String : GraphQLFragment]
             
-            init(resolved: GraphQLStruct) {
+            init(resolved: Struct<Stage.Resolved>) {
                 self.resolved = resolved
                 self.fragments = Dictionary(uniqueKeysWithValues: resolved.fragments.map { ($0.target.name, $0) })
             }
@@ -65,7 +65,7 @@ extension StructResolution.Context {
                                                 failedDueToMissingFragment: [])
     
     static func + (lhs: StructResolution.Context,
-                   rhs: @autoclosure () throws -> StructResolution.StructResult<GraphQLStruct>) rethrows -> StructResolution.Context {
+                   rhs: @autoclosure () throws -> StructResolution.StructResult<Struct<Stage.Resolved>>) rethrows -> StructResolution.Context {
         
         switch try rhs() {
         case .resolved(let resolved):
@@ -75,9 +75,9 @@ extension StructResolution.Context {
         }
     }
     
-    static func + (lhs: StructResolution.Context, rhs: GraphQLStruct) -> StructResolution.Context {
+    static func + (lhs: StructResolution.Context, rhs: Struct<Stage.Resolved>) -> StructResolution.Context {
         let fragmentDictionary = Dictionary(uniqueKeysWithValues: rhs.fragments.map { ($0.name, $0) }).merging(lhs.fragmentDictionary) { $1 }
-        let structsDictionary = [rhs.definition.name : FastStruct(resolved: rhs)].merging(lhs.structsDictionary) { $1 }
+        let structsDictionary = [rhs.name : FastStruct(resolved: rhs)].merging(lhs.structsDictionary) { $1 }
         
         return StructResolution.Context(fragmentDictionary: fragmentDictionary,
                                         structsDictionary: structsDictionary,
@@ -105,7 +105,7 @@ extension StructResolution.Context {
 
 extension StructResolution.Context {
     
-    var resolved: [GraphQLStruct] {
+    var resolved: [Struct<Stage.Resolved>] {
         return structsDictionary.values.map { $0.resolved }
     }
     

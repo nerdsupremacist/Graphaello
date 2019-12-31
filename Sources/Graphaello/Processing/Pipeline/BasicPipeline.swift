@@ -28,11 +28,11 @@ struct BasicPipeline: Pipeline {
         return try validator.validate(parsed: parsed, using: apis)
     }
     
-    func resolve(validated: [Struct<Stage.Validated>]) throws -> [GraphQLStruct] {
+    func resolve(validated: [Struct<Stage.Validated>]) throws -> [Struct<Stage.Resolved>] {
         return try resolver.resolve(validated: validated)
     }
 
-    func clean(resolved: GraphQLStruct) throws -> GraphQLStruct {
+    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Resolved> {
         return try cleaner.clean(resolved: resolved)
     }
 }

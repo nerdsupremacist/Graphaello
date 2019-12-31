@@ -10,12 +10,12 @@ import Foundation
 import Stencil
 
 protocol ExtraValuesGraphQLCodeTransformable: GraphQLCodeTransformable {
-    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any]
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any]
 }
 
 extension ExtraValuesGraphQLCodeTransformable {
 
-    func code(using context: Context, arguments: [Any?]) throws -> String {
+    func code(using context: Stencil.Context, arguments: [Any?]) throws -> String {
         let name = String(describing: Self.self)
         let dictionary = try self.arguments(from: context, arguments: arguments)
             .merging([name.replacingOccurrences(of: "GraphQL", with: "").camelized : self]) { $1 }

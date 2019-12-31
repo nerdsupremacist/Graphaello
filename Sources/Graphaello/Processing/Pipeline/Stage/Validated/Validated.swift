@@ -11,8 +11,6 @@ import Foundation
 extension Stage {
 
     enum Validated: GraphQLStage {
-        typealias Information = Path?
-
         struct Component {
             enum Reference {
                 enum Casting {
@@ -36,6 +34,8 @@ extension Stage {
             let target: Schema.GraphQLType
             let components: [Component]
         }
+        
+        static let pathKey = Context.Key.validated
     }
 
 }
@@ -50,5 +50,11 @@ extension Stage.Validated.Component {
             return .concrete(.init(kind: underlyingType.kind, name: underlyingType.name))
         }
     }
+    
+}
+
+extension Context.Key where T == Stage.Validated.Path? {
+    
+    static let validated = Context.Key<Stage.Validated.Path?>()
     
 }

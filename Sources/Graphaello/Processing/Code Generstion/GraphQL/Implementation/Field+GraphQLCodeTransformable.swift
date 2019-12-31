@@ -10,7 +10,7 @@ import Foundation
 import Stencil
 
 extension Field: ExtraValuesGraphQLCodeTransformable {
-    func arguments(from context: Context, arguments: [Any?]) throws -> [String : Any] {
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         guard context["isInsideFragment"] == nil else { return ["name": name] }
         switch self {
         case .direct:

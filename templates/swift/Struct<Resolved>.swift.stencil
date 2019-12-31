@@ -1,17 +1,17 @@
-// MARK: - {{ graphQlStruct.definition.name }}
+// MARK: - {{ structResolved.name }}
 
-{% for fragment in graphQlStruct.fragments %}
+{% for fragment in structResolved.fragments %}
 extension ApolloStuff.{{ fragment.name|upperCamelized }} : Fragment {
     typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
 }
 {% endfor %}
 
-extension {{ graphQlStruct.definition.name }} {
-    {% for fragment in graphQlStruct.fragments %}
+extension {{ structResolved.definition.name }} {
+    {% for fragment in structResolved.fragments %}
     typealias {{ fragment.target.name }} = ApolloStuff.{{ fragment.name||upperCamelized }}
     {% endfor %}
-    {% if graphQlStruct.query %}
-    typealias Data = ApolloStuff.{{ graphQlStruct.definition.name }}Query.Data
+    {% if structResolved.query %}
+    typealias Data = ApolloStuff.{{ structResolved.name }}Query.Data
     {% endif %}
     
     init({{ initializerArguments|codeArray|join:", " }}) {
@@ -19,14 +19,14 @@ extension {{ graphQlStruct.definition.name }} {
     }
 }
 
-{% if graphQlStruct.query %}
-extension {{ graphQlStruct.query.api.name }} {
+{% if structResolved.query %}
+extension {{ structResolved.query.api.name }} {
     
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: ApolloStuff.{{ graphQlStruct.definition.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
+                             query: ApolloStuff.{{ structResolved.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { data in
         
-            {{ graphQlStruct.definition.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
+            {{ structResolved.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
     }
     
