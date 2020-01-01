@@ -13,7 +13,7 @@ struct BasicCleaner: Cleaner {
     func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Cleaned> {
         return try argumentCleaner
             .clean(resolved: resolved)
-            .with(properties: [])
+            .with(properties: []) // TODO: pass the properties
     }
 }
 
