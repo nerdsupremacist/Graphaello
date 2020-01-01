@@ -86,13 +86,13 @@ extension Stage.Cleaned.Component {
         case (.casting(.up), _, _):
             return []
         case (_, .property(let name), _):
-            return [AttributePath(name: renamed?.camelized ?? name.camelized, kind: .init(from: validated.fieldType))]
+            return [AttributePath(name: alias?.camelized ?? name.camelized, kind: .init(from: validated.fieldType))]
         case (_, .fragment, .some(let fragment)):
             return [AttributePath(name: "fragments", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
         case (_, .fragment, .none):
             return []
         case (_, .call(let name, _), _):
-            return [AttributePath(name: renamed?.camelized ?? name, kind: .init(from: validated.fieldType))]
+            return [AttributePath(name: alias?.camelized ?? name, kind: .init(from: validated.fieldType))]
         }
     }
 

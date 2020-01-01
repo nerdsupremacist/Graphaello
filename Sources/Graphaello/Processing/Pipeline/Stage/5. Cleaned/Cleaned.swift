@@ -13,7 +13,7 @@ extension Stage {
     enum Cleaned: GraphQLStage, ResolvedStage {
         struct Component {
             let validated: Stage.Validated.Component
-            let renamed: String?
+            let alias: String?
         }
         
         struct Path {
