@@ -8,7 +8,7 @@
 import Foundation
 
 struct GraphQLQueryCleaner: ArgumentCleaner {
-    let componentsCleaner: AnyArgumentCleaner<[Field : GraphQLComponent]>
+    let componentsCleaner: AnyArgumentCleaner<[GraphQLField : GraphQLComponent]>
 
     func clean(resolved: GraphQLQuery,
                using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLQuery> {

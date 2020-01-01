@@ -9,10 +9,10 @@ import Foundation
 
 struct FieldCleaner: ArgumentCleaner {
 
-    func clean(resolved: Field,
-               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<Field> {
+    func clean(resolved: GraphQLField,
+               using context: Cleaning.Argument.Context) throws -> Cleaning.Argument.Result<GraphQLField> {
 
-        return context + resolved
+        return (context + resolved.field).map { GraphQLField(field: $0, alias: resolved.alias) }
     }
 
 }

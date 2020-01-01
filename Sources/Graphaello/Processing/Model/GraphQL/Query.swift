@@ -11,7 +11,7 @@ import Foundation
 struct GraphQLQuery: Hashable {
     let name: String
     let api: API
-    let components: [Field : GraphQLComponent]
+    let components: [GraphQLField : GraphQLComponent]
 }
 
 extension GraphQLQuery {

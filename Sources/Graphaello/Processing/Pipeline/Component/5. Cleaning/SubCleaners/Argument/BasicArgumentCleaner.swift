@@ -32,18 +32,18 @@ extension BasicArgumentCleaner {
     typealias CleanerFactory<T> = (AnyArgumentCleaner<GraphQLObject>) -> AnyArgumentCleaner<T>
     typealias ObjectCleanerFactory = (
         AnyArgumentCleaner<GraphQLArgument>,
-        @escaping CleanerFactory<[Field : GraphQLComponent]>,
+        @escaping CleanerFactory<[GraphQLField : GraphQLComponent]>,
         @escaping CleanerFactory<GraphQLFragment>,
         @escaping CleanerFactory<GraphQLTypeConditional>
     ) -> AnyArgumentCleaner<GraphQLObject>
 
     init(argumentCleaner: AnyArgumentCleaner<GraphQLArgument>,
-         fieldCleaner: AnyArgumentCleaner<Field>,
+         fieldCleaner: AnyArgumentCleaner<GraphQLField>,
          componentCleaner: @escaping CleanerFactory<GraphQLComponent>,
          fragmentCleaner: @escaping CleanerFactory<GraphQLFragment>,
          typeConditionalCleaner: @escaping CleanerFactory<GraphQLTypeConditional>,
          objectCleaner: ObjectCleanerFactory,
-         queryCleaner: (AnyArgumentCleaner<[Field : GraphQLComponent]>) -> AnyArgumentCleaner<GraphQLQuery>,
+         queryCleaner: (AnyArgumentCleaner<[GraphQLField : GraphQLComponent]>) -> AnyArgumentCleaner<GraphQLQuery>,
          connectionQueryCleaner: (AnyArgumentCleaner<GraphQLQuery>) -> AnyArgumentCleaner<GraphQLConnectionQuery>) {
 
         let componentsCleaner = { DictionaryCleaner(keyCleaner: fieldCleaner, valueCleaner: componentCleaner($0)).any() }

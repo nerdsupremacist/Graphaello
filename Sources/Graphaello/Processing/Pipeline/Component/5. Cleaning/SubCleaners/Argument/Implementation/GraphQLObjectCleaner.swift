@@ -9,7 +9,7 @@ import Foundation
 
 struct GraphQLObjectCleaner: ArgumentCleaner {
     let argumentCleaner: AnyArgumentCleaner<GraphQLArgument>
-    let componentsCleaner: (AnyArgumentCleaner<GraphQLObject>) -> AnyArgumentCleaner<[Field : GraphQLComponent]>
+    let componentsCleaner: (AnyArgumentCleaner<GraphQLObject>) -> AnyArgumentCleaner<[GraphQLField : GraphQLComponent]>
     let fragmentCleaner: (AnyArgumentCleaner<GraphQLObject>) -> AnyArgumentCleaner<GraphQLFragment>
     let typeConditionalCleaner: (AnyArgumentCleaner<GraphQLObject>) -> AnyArgumentCleaner<GraphQLTypeConditional>
 

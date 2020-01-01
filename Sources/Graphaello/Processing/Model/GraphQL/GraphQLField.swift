@@ -10,6 +10,11 @@ import Foundation
 
 typealias GraphaelloArgument = Argument
 
+struct GraphQLField: Hashable {
+    let field: Field
+    let alias: String?
+}
+
 enum Field: Equatable, Hashable {
     struct Argument: Equatable, Hashable {
         let name: String
@@ -42,6 +47,14 @@ extension Field {
     
     var name: String {
         return definition.name
+    }
+    
+}
+
+extension GraphQLField {
+    
+    var arguments: OrderedSet<GraphQLArgument> {
+        return field.arguments
     }
     
 }

@@ -10,12 +10,12 @@ import Foundation
 
 extension CollectedPath.Valid {
 
-    func queryComponents(propertyName: String) throws -> [Field : GraphQLComponent] {
+    func queryComponents(propertyName: String) throws -> [GraphQLField : GraphQLComponent] {
         switch self {
         case .scalar(let field):
-            return [field : .scalar]
+            return [GraphQLField(field: field, alias: nil) : .scalar]
         case .object(let field, let valid):
-            return [field : .object(valid.object(propertyName: propertyName))]
+            return [GraphQLField(field: field, alias: nil) : .object(valid.object(propertyName: propertyName))]
         case .connection(let connection):
             throw GraphQLFragmentResolverError.cannotIncludeFragmentsInsideAQuery(connection.fragment)
         case .fragment(let fragment):

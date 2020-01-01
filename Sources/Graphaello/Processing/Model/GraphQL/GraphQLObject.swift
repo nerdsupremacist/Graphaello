@@ -9,7 +9,7 @@
 import Foundation
 
 struct GraphQLObject: Hashable {
-    let components: [Field : GraphQLComponent]
+    let components: [GraphQLField : GraphQLComponent]
     let fragments: [GraphQLFragment]
     let typeConditionals: [String : GraphQLTypeConditional]
     let arguments: OrderedSet<GraphQLArgument>
@@ -21,7 +21,7 @@ extension GraphQLObject {
          fragments: [GraphQLFragment],
          typeConditionals: [String : GraphQLTypeConditional]) {
 
-        self.components = components
+        self.components = Dictionary(uniqueKeysWithValues: components.map { (GraphQLField(field: $0.key, alias: nil), $0.value) })
         self.fragments = fragments
         self.typeConditionals = typeConditionals
 
@@ -39,8 +39,12 @@ extension GraphQLObject {
     static func + (lhs: GraphQLObject, rhs: GraphQLObject) -> GraphQLObject {
         let components = lhs.components.merging(rhs.components) { $0 + $1 }
         let fragments = lhs.fragments + rhs.fragments
-        let typeConditional = lhs.typeConditionals.merging(rhs.typeConditionals) { $0 + $1 }
-        return GraphQLObject(components: components, fragments: fragments, typeConditionals: typeConditional)
+        let typeConditionals = lhs.typeConditionals.merging(rhs.typeConditionals) { $0 + $1 }
+        let arguments = lhs.arguments + rhs.arguments
+        return GraphQLObject(components: components,
+                             fragments: fragments,
+                             typeConditionals: typeConditionals,
+                             arguments: arguments)
     }
     
 }
