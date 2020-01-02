@@ -14,7 +14,9 @@ struct BasicCleaner: Cleaner {
     func clean(resolved: [Struct<Stage.Resolved>]) throws -> [Struct<Stage.Cleaned>] {
         let cleanedFieldNames = try resolved.collect(using: .empty) { try fieldNameCleaner.clean(resolved: $0, using: $1) }.value
         let cleanedArguments = try cleanedFieldNames.map { try argumentCleaner.clean(resolved: $0) }
-        return cleanedArguments.map { $0.with(properties: []) } // TODO: pass the properties
+        return cleanedArguments.map {
+            $0.with(properties: $0.properties.map { $0.map { Stage.Cleaned.Path(resolved: $0, components: $0.validated.components.map { Stage.Cleaned.Component(validated: $0, alias: nil) }) } })
+        } // TODO: pass the properties
     }
 }
 
