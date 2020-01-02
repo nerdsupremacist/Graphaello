@@ -120,6 +120,11 @@ enum PipelineFactory {
                     fragmentCleaner: { FragmentFieldNameCleaner(objectCleaner: $0).any() },
                     queryCleaner: { GraphQLQueryFieldNameCleaner(objectCleaner: $0).any() }
                 ).any()
+            },
+            aliasPropagator: {
+                BasicPropertyAliasingPropagator {
+                    BasicComponentAliasingPropagator()
+                }
             }
         )
     }

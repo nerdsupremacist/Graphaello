@@ -21,7 +21,7 @@ struct BasicFieldNameAliasNamer: FieldNameAliasNamer {
         guard let sameName = nonRenamable[field.name], field.field != sameName.field else { return field }
         
         let number = number ?? 1
-        let newRenamed = GraphQLField(field: field.field, alias: "\(field.field.name)_\(number)")
+        let newRenamed = GraphQLField(field: field.field, alias: "\(field.field.name)\(number)")
         return rename(field: newRenamed, nonRenamable: nonRenamable, number: number)
     }
     

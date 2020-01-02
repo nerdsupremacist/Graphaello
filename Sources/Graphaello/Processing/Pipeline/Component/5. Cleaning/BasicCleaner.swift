@@ -10,22 +10,28 @@ import Foundation
 struct BasicCleaner: Cleaner {
     let argumentCleaner: AnyArgumentCleaner<Struct<Stage.Resolved>>
     let fieldNameCleaner: AnyFieldNameCleaner<Struct<Stage.Resolved>>
+    let aliasPropagator: PropertyAliasingPropagator
 
     func clean(resolved: [Struct<Stage.Resolved>]) throws -> [Struct<Stage.Cleaned>] {
         let cleanedFieldNames = try resolved.collect(using: .empty) { try fieldNameCleaner.clean(resolved: $0, using: $1) }.value
         let cleanedArguments = try cleanedFieldNames.map { try argumentCleaner.clean(resolved: $0) }
-        return cleanedArguments.map {
-            $0.with(properties: $0.properties.map { $0.map { Stage.Cleaned.Path(resolved: $0, components: $0.validated.components.map { Stage.Cleaned.Component(validated: $0, alias: nil) }) } })
-        } // TODO: pass the properties
+        return try cleanedArguments
+            .map { cleaned in
+                let properties = try cleaned.properties.map { try aliasPropagator.propagate(property: $0, from: cleaned) }
+                return cleaned.with(properties: properties)
+            }
     }
 }
 
 extension BasicCleaner {
 
     init(argumentCleaner: () -> AnyArgumentCleaner<Struct<Stage.Resolved>>,
-         fieldNameCleaner: () -> AnyFieldNameCleaner<Struct<Stage.Resolved>>) {
+         fieldNameCleaner: () -> AnyFieldNameCleaner<Struct<Stage.Resolved>>,
+         aliasPropagator: () -> PropertyAliasingPropagator) {
         
-        self.init(argumentCleaner: argumentCleaner(), fieldNameCleaner: fieldNameCleaner())
+        self.init(argumentCleaner: argumentCleaner(),
+                  fieldNameCleaner: fieldNameCleaner(),
+                  aliasPropagator: aliasPropagator())
     }
 
 }
