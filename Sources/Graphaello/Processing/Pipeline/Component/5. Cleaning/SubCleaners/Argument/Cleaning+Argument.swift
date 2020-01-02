@@ -17,7 +17,7 @@ extension Cleaning.Argument {
     
     struct Context {
         private let nameMap: [String : GraphQLArgument]
-        private let fieldMap: [Schema.GraphQLType.Field : [String : GraphQLArgument]]
+        private let fieldMap: [Schema.GraphQLType.Field : [String : [Argument : GraphQLArgument]]]
     }
 
     struct Result<Value> {
@@ -128,10 +128,11 @@ extension Cleaning.Argument.Context {
 
         guard let similarName = nameMap[argument.name] else {
             let fieldMap = self.fieldMap
-                .merging([argument.field : [original.name : argument]]) { $0.merging($1) { $1 } }
-            return Cleaning.Argument.Result(value: argument,
-                                   context: Cleaning.Argument.Context(nameMap: nameMap.merging([argument.name : argument]) { $1 },
-                                                             fieldMap: fieldMap))
+                .merging([argument.field : [original.name : [argument.argument : argument]]]) { $0.merging($1) { $0.merging($1) { $1 } } }
+            let context =  Cleaning.Argument.Context(nameMap: nameMap.merging([argument.name : argument]) { $1 },
+                                                     fieldMap: fieldMap)
+            
+            return Cleaning.Argument.Result(value: argument, context: context)
         }
 
         if similarName ~= argument {
@@ -156,9 +157,11 @@ extension Cleaning.Argument.Context {
         case .call(let field, let arguments):
             let fieldMap = lhs.fieldMap[field] ?? [:]
             let arguments = arguments.map { argument in
-                Field.Argument(name: argument.name,
-                               value: argument.value,
-                               queryArgumentName: fieldMap[argument.name]?.name ?? argument.name) } as [Field.Argument]
+                let argumentMap = fieldMap[argument.name] ?? [:]
+                return Field.Argument(name: argument.name,
+                                      value: argument.value,
+                                      queryArgumentName: argumentMap[argument.value]?.name ?? argument.name)
+            } as [Field.Argument]
 
             return lhs.result(value: .call(field, arguments))
         }
