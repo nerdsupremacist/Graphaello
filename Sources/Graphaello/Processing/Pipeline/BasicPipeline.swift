@@ -34,8 +34,8 @@ struct BasicPipeline: Pipeline {
     func resolve(validated: [Struct<Stage.Validated>]) throws -> [Struct<Stage.Resolved>] {
         return try resolver.resolve(validated: validated)
     }
-
-    func clean(resolved: Struct<Stage.Resolved>) throws -> Struct<Stage.Cleaned> {
+    
+    func clean(resolved: [Struct<Stage.Resolved>]) throws -> [Struct<Stage.Cleaned>] {
         return try cleaner.clean(resolved: resolved)
     }
     

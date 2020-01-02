@@ -37,7 +37,7 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
                     let query = GraphQLQuery(name: parent.name, api: path.validated.api, components: components)
 
                     if let connection = collectedPath.connection {
-                        let connectionInnerQuery = GraphQLQuery(name: "\(parent.name)\(connection.fragment.name)",
+                        let connectionInnerQuery = GraphQLQuery(name: "\(parent.name)\(value.name.upperCamelized)\(connection.fragment.name)",
                                                                 api: path.validated.api,
                                                                 components: components)
 

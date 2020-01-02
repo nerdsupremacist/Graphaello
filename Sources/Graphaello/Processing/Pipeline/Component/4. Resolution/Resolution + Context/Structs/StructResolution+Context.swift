@@ -12,23 +12,24 @@ extension StructResolution {
     
     struct Context {
         private struct FastStruct {
-            let resolved: Struct<Stage.Resolved>
             let fragments: [String : GraphQLFragment]
             
             init(resolved: Struct<Stage.Resolved>) {
-                self.resolved = resolved
                 self.fragments = Dictionary(uniqueKeysWithValues: resolved.fragments.map { ($0.target.name, $0) })
             }
         }
 
+        let resolved: [Struct<Stage.Resolved>]
         private let fragmentDictionary: [String : GraphQLFragment]
         private let structsDictionary: [String : FastStruct]
         public let failedDueToMissingFragment: [Struct<Stage.Validated>]
         
-        private init(fragmentDictionary: [String : GraphQLFragment],
+        private init(resolved: [Struct<Stage.Resolved>],
+                     fragmentDictionary: [String : GraphQLFragment],
                      structsDictionary: [String : FastStruct],
                      failedDueToMissingFragment: [Struct<Stage.Validated>]) {
             
+            self.resolved = resolved
             self.fragmentDictionary = fragmentDictionary
             self.structsDictionary = structsDictionary
             self.failedDueToMissingFragment = failedDueToMissingFragment
@@ -60,7 +61,8 @@ extension StructResolution.Context {
 
 extension StructResolution.Context {
     
-    static let empty = StructResolution.Context(fragmentDictionary: [:],
+    static let empty = StructResolution.Context(resolved: [],
+                                                fragmentDictionary: [:],
                                                 structsDictionary: [:],
                                                 failedDueToMissingFragment: [])
     
@@ -79,13 +81,15 @@ extension StructResolution.Context {
         let fragmentDictionary = Dictionary(uniqueKeysWithValues: rhs.fragments.map { ($0.name, $0) }).merging(lhs.fragmentDictionary) { $1 }
         let structsDictionary = [rhs.name : FastStruct(resolved: rhs)].merging(lhs.structsDictionary) { $1 }
         
-        return StructResolution.Context(fragmentDictionary: fragmentDictionary,
+        return StructResolution.Context(resolved: lhs.resolved + [rhs],
+                                        fragmentDictionary: fragmentDictionary,
                                         structsDictionary: structsDictionary,
                                         failedDueToMissingFragment: lhs.failedDueToMissingFragment)
     }
     
     static func + (lhs: StructResolution.Context, rhs: Struct<Stage.Validated>) -> StructResolution.Context {
-        return StructResolution.Context(fragmentDictionary: lhs.fragmentDictionary,
+        return StructResolution.Context(resolved: lhs.resolved,
+                                        fragmentDictionary: lhs.fragmentDictionary,
                                         structsDictionary: lhs.structsDictionary,
                                         failedDueToMissingFragment: lhs.failedDueToMissingFragment + [rhs])
     }
@@ -96,17 +100,10 @@ extension StructResolution.Context {
 extension StructResolution.Context {
     
     func cleared() -> StructResolution.Context {
-        return StructResolution.Context(fragmentDictionary: fragmentDictionary,
+        return StructResolution.Context(resolved: resolved,
+                                        fragmentDictionary: fragmentDictionary,
                                         structsDictionary: structsDictionary,
                                         failedDueToMissingFragment: [])
-    }
-    
-}
-
-extension StructResolution.Context {
-    
-    var resolved: [Struct<Stage.Resolved>] {
-        return structsDictionary.values.map { $0.resolved }
     }
     
 }

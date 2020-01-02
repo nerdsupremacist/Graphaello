@@ -96,19 +96,32 @@ enum PipelineFactory {
     }
 
     private static func create() -> Cleaner {
-        return BasicCleaner {
-            BasicArgumentCleaner(argumentCleaner: GraphQLArgumentCleaner().any(),
-                                 fieldCleaner: FieldCleaner().any(),
-                                 componentCleaner: { GraphQLComponentCleaner(objectCleaner: $0).any() },
-                                 fragmentCleaner: { GraphQLFragmenrCleaner(objectCleaner: $0).any() },
-                                 typeConditionalCleaner: { GraphQLTypeConditionalCleaner(objectCleaner: $0).any() },
-                                 objectCleaner: { GraphQLObjectCleaner(argumentCleaner: $0,
-                                                                       componentsCleaner: $1,
-                                                                       fragmentCleaner: $2,
-                                                                       typeConditionalCleaner: $3).any() },
-                                 queryCleaner: { GraphQLQueryCleaner(componentsCleaner: $0).any() },
-                                 connectionQueryCleaner: { GraphQLConnectionQueryCleaner(queryCleaner: $0).any() }).any()
-        }
+        return BasicCleaner(
+            argumentCleaner: {
+                BasicArgumentCleaner(
+                    argumentCleaner: GraphQLArgumentCleaner().any(),
+                    fieldCleaner: FieldArgumentCleaner().any(),
+                    componentCleaner: { GraphQLComponentCleaner(objectCleaner: $0).any() },
+                    fragmentCleaner: { GraphQLFragmenrCleaner(objectCleaner: $0).any() },
+                    typeConditionalCleaner: { GraphQLTypeConditionalCleaner(objectCleaner: $0).any() },
+                    objectCleaner: { GraphQLObjectCleaner(argumentCleaner: $0,
+                                                          componentsCleaner: $1,
+                                                          fragmentCleaner: $2,
+                                                          typeConditionalCleaner: $3).any() },
+                    queryCleaner: { GraphQLQueryCleaner(componentsCleaner: $0).any() },
+                    connectionQueryCleaner: { GraphQLConnectionQueryCleaner(queryCleaner: $0).any() }
+                ).any()
+            },
+            fieldNameCleaner: {
+                BasicFieldNameCleaner(
+                    objectCleaner: GraphQLObjectFieldNameCleaner {
+                        BasicFieldNameAliasNamer()
+                    }.any(),
+                    fragmentCleaner: { FragmentFieldNameCleaner(objectCleaner: $0).any() },
+                    queryCleaner: { GraphQLQueryFieldNameCleaner(objectCleaner: $0).any() }
+                ).any()
+            }
+        )
     }
     
     private static func create() -> Assembler {
