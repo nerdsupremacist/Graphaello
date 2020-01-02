@@ -17,7 +17,8 @@ struct GraphQLConnectionQueryCleaner: ArgumentCleaner {
             .clean(resolved: resolved.query, using: context)
             .map { query in
                 GraphQLConnectionQuery(query: query,
-                                       fragment: resolved.fragment)
+                                       fragment: resolved.fragment,
+                                       propertyName: resolved.propertyName)
             }
     }
 }

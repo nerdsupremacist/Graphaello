@@ -118,7 +118,8 @@ enum PipelineFactory {
                         BasicFieldNameAliasNamer()
                     }.any(),
                     fragmentCleaner: { FragmentFieldNameCleaner(objectCleaner: $0).any() },
-                    queryCleaner: { GraphQLQueryFieldNameCleaner(objectCleaner: $0).any() }
+                    queryCleaner: { GraphQLQueryFieldNameCleaner(objectCleaner: $0).any() },
+                    matcher: BasicAliasStateMatcher()
                 ).any()
             },
             aliasPropagator: {

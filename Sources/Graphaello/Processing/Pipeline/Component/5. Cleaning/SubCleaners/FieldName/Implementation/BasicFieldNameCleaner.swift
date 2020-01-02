@@ -10,6 +10,7 @@ import Foundation
 struct BasicFieldNameCleaner: FieldNameCleaner {
     let fragmentCleaner: AnyFieldNameCleaner<GraphQLFragment>
     let queryCleaner: AnyFieldNameCleaner<GraphQLQuery>
+    let matcher: AliasStateMatcher
     
     func clean(resolved: Struct<Stage.Resolved>,
                using context: Cleaning.FieldName.Context) throws -> Cleaning.FieldName.Result<Struct<Stage.Resolved>> {
@@ -22,22 +23,22 @@ struct BasicFieldNameCleaner: FieldNameCleaner {
         let query = try queryCleaner.clean(resolved: resolved.query, using: connectionFragments)
         let fragments = try resolved.fragments.collect(using: query) { try fragmentCleaner.clean(resolved: $0, using: $1) }
         
-        let connectionQueries = try resolved.connectionQueries.collect(using: fragments) { query, context -> Cleaning.FieldName.Result<GraphQLConnectionQuery> in
-            let nodeFragment = context[query.fragment.nodeFragment]
-            let fragment = context[query.fragment.fragment]
-            return try queryCleaner
-                .clean(resolved: query.query, using: context)
-                .map { GraphQLConnectionQuery(query: $0,
-                                              fragment: GraphQLConnectionFragment(connection: query.fragment.connection,
-                                                                                  edgeType: query.fragment.edgeType,
-                                                                                  nodeFragment: nodeFragment,
-                                                                                  fragment: fragment)) }
-        }
+        let connectionQueries = resolved.connectionQueries.map { (connectionQuery: GraphQLConnectionQuery) -> GraphQLConnectionQuery in
+            let nodeFragment = fragments.context[connectionQuery.fragment.nodeFragment]
+            let fragment = fragments.context[connectionQuery.fragment.fragment]
+            let query = query.value.map { matcher.match(query: connectionQuery.query, to: $0) } ?? connectionQuery.query
+            return GraphQLConnectionQuery(query: query,
+                                          fragment: GraphQLConnectionFragment(connection: connectionQuery.fragment.connection,
+                                                                              edgeType: connectionQuery.fragment.edgeType,
+                                                                              nodeFragment: nodeFragment,
+                                                                              fragment: fragment),
+                                          propertyName: connectionQuery.propertyName)
+        } as [GraphQLConnectionQuery]
         
-        return connectionQueries.map { connectionQueries in
+        return fragments.map { fragments in
             resolved.with {
                 (.query ~> query.value)
-                (.fragments ~> fragments.value)
+                (.fragments ~> fragments)
                 (.connectionQueries ~> connectionQueries)
             }
         }
@@ -50,9 +51,12 @@ extension BasicFieldNameCleaner {
     
     init(objectCleaner: AnyFieldNameCleaner<GraphQLObject>,
          fragmentCleaner: (AnyFieldNameCleaner<GraphQLObject>) -> AnyFieldNameCleaner<GraphQLFragment>,
-         queryCleaner: (AnyFieldNameCleaner<GraphQLObject>) -> AnyFieldNameCleaner<GraphQLQuery>) {
+         queryCleaner: (AnyFieldNameCleaner<GraphQLObject>) -> AnyFieldNameCleaner<GraphQLQuery>,
+         matcher: AliasStateMatcher) {
         
-        self.init(fragmentCleaner: fragmentCleaner(objectCleaner), queryCleaner: queryCleaner(objectCleaner))
+        self.init(fragmentCleaner: fragmentCleaner(objectCleaner),
+                  queryCleaner: queryCleaner(objectCleaner),
+                  matcher: matcher)
     }
     
 }

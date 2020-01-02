@@ -37,7 +37,11 @@ extension Property where CurrentStage == Stage.Prepared {
         guard case .some(.connection(let connectionFragment)) = path.resolved.referencedFragment else {
             fatalError("Invalid State: should not attempt to get an expression from a regular GraphQL Value. Only from connections.")
         }
-        let query = graphQlStruct.connectionQueries.first { $0.fragment.fragment.name == connectionFragment.fragment.name } ?! fatalError("Invalid State: Query containing the connection fragment doesn't exist")
+        let query = graphQlStruct
+            .connectionQueries
+            .first { $0.fragment.fragment.name == connectionFragment.fragment.name && $0.propertyName == name } ?!
+                fatalError("Invalid State: Query containing the connection fragment doesn't exist")
+        
         return PagingFromFragment(path: path, query: query)
     }
 

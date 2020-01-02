@@ -21,7 +21,7 @@ extension Cleaning.FieldName {
     
     struct Result<Value> {
         let value: Value
-        fileprivate let context: Context
+        let context: Context
     }
     
 }

@@ -41,7 +41,7 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
                                                                 api: path.validated.api,
                                                                 components: components)
 
-                        let connectionQuery = GraphQLConnectionQuery(query: connectionInnerQuery, fragment: connection)
+                        let connectionQuery = GraphQLConnectionQuery(query: connectionInnerQuery, fragment: connection, propertyName: value.name)
                         return [.query(query), .connectionQuery(connectionQuery)]
                     }
                     return [.query(query)]
