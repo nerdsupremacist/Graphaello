@@ -11,9 +11,11 @@ import SourceKittenFramework
 extension Pipeline {
     
     func extract(from project: Project) throws -> Project.State<Stage.Extracted> {
-        let apis = try project.scanAPIs()
+        let apis = try project.scanAPIs().sorted { $0.name <= $1.name }
         let swiftFiles = try project.files()
             .filter { $0.extension == "swift" }
+            .filter { $0.lastComponentWithoutExtension != "Graphaello" }
+            .sorted { $0.lastComponentWithoutExtension <= $1.lastComponentWithoutExtension }
             .compactMap { File(path: $0.string) }
     
         let extracted = try extract(from: swiftFiles)
