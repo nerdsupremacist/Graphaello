@@ -24,7 +24,7 @@ extension {{ query.api.name }} {
     
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: ApolloStuff.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { (data: ApolloStuff.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name } in
+                             query: ApolloStuff.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { (data: ApolloStuff.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
         
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
