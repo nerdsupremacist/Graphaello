@@ -43,7 +43,7 @@ extension GraphQLQuery {
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
         return ["\(name)Query".upperCamelized, "Data"] + components
             .sorted { $0.key.field.name < $1.key.field.name }
-            .flatMap { $0.value.missingFragmentsStructs(field: $0.key.field) }
+            .flatMap { $0.value.missingFragmentsStructs(field: $0.key) }
     }
 
 }
@@ -53,7 +53,7 @@ extension GraphQLObject {
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
         let fromComponents = components
             .sorted { $0.key.field.name < $1.key.field.name }
-            .flatMap { $0.value.missingFragmentsStructs(field: $0.key.field) }
+            .flatMap { $0.value.missingFragmentsStructs(field: $0.key) }
 
         if referencedFragments.isEmpty {
             return fromComponents
@@ -70,10 +70,11 @@ extension GraphQLObject {
 
 extension GraphQLComponent {
 
-    func missingFragmentsStructs(field: Field) -> OrderedSet<MissingFragmentsStruct> {
+    func missingFragmentsStructs(field: GraphQLField) -> OrderedSet<MissingFragmentsStruct> {
         switch self {
         case .object(let object):
-            return field.definition.name.singular.upperCamelized + object.missingFragmentsStructs
+            let name = field.alias ?? field.field.definition.name
+            return name.singular.upperCamelized + object.missingFragmentsStructs
         default:
             return []
         }
