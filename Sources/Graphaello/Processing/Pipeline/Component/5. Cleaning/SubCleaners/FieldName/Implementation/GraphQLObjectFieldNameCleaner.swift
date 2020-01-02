@@ -39,7 +39,6 @@ struct GraphQLObjectFieldNameCleaner: FieldNameCleaner {
                                  fragments: fragments,
                                  typeConditionals: typeConditionals.value,
                                  arguments: resolved.arguments)
-            
         }
     }
     
