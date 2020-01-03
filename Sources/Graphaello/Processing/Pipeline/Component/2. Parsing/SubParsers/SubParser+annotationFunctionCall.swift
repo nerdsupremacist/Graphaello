@@ -13,9 +13,19 @@ extension SubParser {
     
     static func annotationFunctionCall(parser: @escaping () -> SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path?> {
         return .init { call in
-            guard let calledExpression = call.calledExpression as? IdentifierExprSyntax,
-                calledExpression.identifier.text == "GraphQL",
-                let expression = Array(call.argumentList).single()?.expression else { return nil }
+            switch call.calledExpression {
+            case let calledExpression as IdentifierExprSyntax where calledExpression.identifier.text == "GraphQL":
+                break
+            case let calledExpression as SpecializeExprSyntax:
+                guard let identifier = calledExpression.expression as? IdentifierExprSyntax,
+                    identifier.identifier.text == "GraphQL" else { return nil }
+                
+                break
+            default:
+                return nil
+            }
+            
+            guard let expression = Array(call.argumentList).single()?.expression else { return nil }
             
             return try parser().parse(from: expression)
         }
