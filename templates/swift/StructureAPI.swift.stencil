@@ -14,7 +14,7 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
         @Published var isLoading: Bool = false
         @Published var value: Query.Data? = nil
         @Published var error: String? = nil
-        private var cancellable: Cancellable? = nil
+        private var cancellable: Cancellable?
 
         deinit {
             cancel()
@@ -22,24 +22,24 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
 
         func load(client: ApolloClient, query: Query) {
             guard value == nil, !isLoading else { return }
-            self.cancellable = client.fetch(query: query) { [weak self] result in
+            cancellable = client.fetch(query: query) { [weak self] result in
                 defer {
                     self?.cancellable = nil
                     self?.isLoading = false
                 }
                 switch result {
-                case .success(let result):
+                case let .success(result):
                     self?.value = result.data
                     self?.error = result.errors?.map { $0.description }.joined(separator: ", ")
-                case .failure(let error):
+                case let .failure(error):
                     self?.error = error.localizedDescription
                 }
             }
-            self.isLoading = true
+            isLoading = true
         }
 
         func cancel() {
-            self.cancellable?.cancel()
+            cancellable?.cancel()
         }
     }
 
@@ -66,9 +66,9 @@ protocol Fragment {
     associatedtype UnderlyingType
 }
 
-protocol Target { }
+protocol Target {}
 
-protocol API: Target { }
+protocol API: Target {}
 
 protocol Connection: Target {
     associatedtype Node
@@ -83,11 +83,11 @@ extension Optional: Fragment where Wrapped: Fragment {
 }
 
 struct GraphQLPath<TargetType: Target, Value> {
-    fileprivate init() { }
+    fileprivate init() {}
 }
 
 struct GraphQLFragmentPath<TargetType: Target, UnderlyingType> {
-    fileprivate init() { }
+    fileprivate init() {}
 }
 
 extension GraphQLFragmentPath {
@@ -96,36 +96,29 @@ extension GraphQLFragmentPath {
 }
 
 extension GraphQLFragmentPath {
-
     var _fragment: FragmentPath<UnderlyingType> {
         return self
     }
-
 }
 
 extension GraphQLFragmentPath {
-
-    func _forEach<Value, Output>(_ keyPath: KeyPath<GraphQLFragmentPath<TargetType, Value>, GraphQLPath<TargetType, Output>>) -> GraphQLPath<TargetType, [Output]> where UnderlyingType == [Value] {
+    func _forEach<Value, Output>(_: KeyPath<GraphQLFragmentPath<TargetType, Value>, GraphQLPath<TargetType, Output>>) -> GraphQLPath<TargetType, [Output]> where UnderlyingType == [Value] {
         return .init()
     }
 
-    func _forEach<Value, Output>(_ keyPath: KeyPath<GraphQLFragmentPath<TargetType, Value>, GraphQLPath<TargetType, Output>>) -> GraphQLPath<TargetType, [Output]?> where UnderlyingType == [Value]? {
+    func _forEach<Value, Output>(_: KeyPath<GraphQLFragmentPath<TargetType, Value>, GraphQLPath<TargetType, Output>>) -> GraphQLPath<TargetType, [Output]?> where UnderlyingType == [Value]? {
         return .init()
     }
-
 }
 
 extension GraphQLFragmentPath {
-
-
-    func _forEach<Value, Output>(_ keyPath: KeyPath<GraphQLFragmentPath<TargetType, Value>, GraphQLFragmentPath<TargetType, Output>>) -> GraphQLFragmentPath<TargetType, [Output]> where UnderlyingType == [Value] {
+    func _forEach<Value, Output>(_: KeyPath<GraphQLFragmentPath<TargetType, Value>, GraphQLFragmentPath<TargetType, Output>>) -> GraphQLFragmentPath<TargetType, [Output]> where UnderlyingType == [Value] {
         return .init()
     }
 
-    func _forEach<Value, Output>(_ keyPath: KeyPath<GraphQLFragmentPath<TargetType, Value>, GraphQLFragmentPath<TargetType, Output>>) -> GraphQLFragmentPath<TargetType, [Output]?> where UnderlyingType == [Value]? {
+    func _forEach<Value, Output>(_: KeyPath<GraphQLFragmentPath<TargetType, Value>, GraphQLFragmentPath<TargetType, Output>>) -> GraphQLFragmentPath<TargetType, [Output]?> where UnderlyingType == [Value]? {
         return .init()
     }
-
 }
 
 enum GraphQLArgument<Value> {
@@ -139,7 +132,6 @@ enum GraphQLArgument<Value> {
 }
 
 extension GraphQLArgument {
-
     static var argument: GraphQLArgument<Value> {
         return .argument(.forced)
     }
@@ -147,7 +139,6 @@ extension GraphQLArgument {
     static func argument(default value: Value) -> GraphQLArgument<Value> {
         return .argument(.withDefault(value))
     }
-
 }
 
 class Paging<Value: Fragment>: DynamicProperty, ObservableObject {
@@ -220,7 +211,7 @@ struct PagingView<Value: Fragment>: View {
 
         fileprivate var id: String {
             switch self {
-            case .item(_, let int):
+            case let .item(_, int):
                 return int.description
             case .error:
                 return "error"
@@ -243,16 +234,16 @@ struct PagingView<Value: Fragment>: View {
     var body: some View {
         ForEach((paging.values.enumerated().map { Data.item($0.element, $0.offset) } +
                     [paging.isLoading ? Data.loading : nil, paging.error.map(Data.error)].compactMap { $0 }),
-                id: \.id) { data in
+        id: \.id) { data in
 
-            self.loader(data).onAppear {  self.onAppear(data: data) }
+            self.loader(data).onAppear { self.onAppear(data: data) }
         }
     }
 
     private func onAppear(data: Data) {
         guard !paging.isLoading,
             paging.hasMore,
-            case .item(_, let index) = data,
+            case let .item(_, index) = data,
             index > paging.values.count - 2 else { return }
 
         paging.loadMore(pageSize: pageSize)
@@ -260,18 +251,16 @@ struct PagingView<Value: Fragment>: View {
 }
 
 extension PagingView {
-
     init<Loading: View, Error: View, Data: View>(_ paging: Paging<Value>,
                                                  pageSize: Int? = nil,
                                                  loading loadingView: @escaping () -> Loading,
                                                  error errorView: @escaping (Swift.Error) -> Error,
                                                  item itemView: @escaping (Value) -> Data) {
-
         self.init(paging, pageSize: pageSize) { data in
             switch data {
-            case .item(let item, _):
+            case let .item(item, _):
                 return AnyView(itemView(item))
-            case .error(let error):
+            case let .error(error):
                 return AnyView(errorView(error))
             case .loading:
                 return AnyView(loadingView())
@@ -283,7 +272,6 @@ extension PagingView {
                                   pageSize: Int? = nil,
                                   error errorView: @escaping (Swift.Error) -> Error,
                                   item itemView: @escaping (Value) -> Data) {
-
         self.init(paging,
                   pageSize: pageSize,
                   loading: { Text("Loading") },
@@ -295,7 +283,6 @@ extension PagingView {
                                     pageSize: Int? = nil,
                                     loading loadingView: @escaping () -> Loading,
                                     item itemView: @escaping (Value) -> Data) {
-
         self.init(paging,
                   pageSize: pageSize,
                   loading: loadingView,
@@ -306,41 +293,68 @@ extension PagingView {
     init<Data: View>(_ paging: Paging<Value>,
                      pageSize: Int? = nil,
                      item itemView: @escaping (Value) -> Data) {
-
         self.init(paging,
                   pageSize: pageSize,
                   loading: { Text("Loading") },
                   error: { Text("Error: \($0.localizedDescription)") },
                   item: itemView)
     }
+}
 
+protocol GraphQLValueDecoder {
+    associatedtype Encoded
+    associatedtype Decoded
+    
+    static func decode(encoded: Encoded) throws -> Decoded
+}
+
+extension Array: GraphQLValueDecoder where Element: GraphQLValueDecoder {
+    static func decode(encoded: [Element.Encoded]) throws -> [Element.Decoded] {
+        return try encoded.map { try Element.decode(encoded: $0) }
+    }
+}
+
+extension Optional: GraphQLValueDecoder where Wrapped: GraphQLValueDecoder {
+    static func decode(encoded: Wrapped.Encoded?) throws -> Wrapped.Decoded? {
+        return try encoded.map { try Wrapped.decode(encoded: $0) }
+    }
+}
+
+enum NoOpDecoder<T>: GraphQLValueDecoder {
+    static func decode(encoded: T) throws -> T {
+        return encoded
+    }
 }
 
 @propertyWrapper
-struct GraphQL<Value> {
-    var wrappedValue: Value
+struct GraphQL<Decoder: GraphQLValueDecoder> {
+    var wrappedValue: Decoder.Decoded
 
-    init<T: Target>(_: @autoclosure () -> GraphQLPath<T, Value>) {
+    init<T: Target>(_: @autoclosure () -> GraphQLPath<T, Decoder.Encoded>) {
+        fatalError("Initializer with path only should never be used")
+    }
+    
+    init<T: Target, Value>(_: @autoclosure () -> GraphQLPath<T, Value>) where Decoder == NoOpDecoder<Value> {
         fatalError("Initializer with path only should never be used")
     }
 
-    fileprivate init(_ wrappedValue: Value) {
-        self.wrappedValue = wrappedValue
+    fileprivate init(_ wrappedValue: Decoder.Encoded) {
+        self.wrappedValue = try! Decoder.decode(encoded: wrappedValue)
     }
 }
 
-extension GraphQL where Value: Fragment {
-    init<T: Target>(_: @autoclosure () -> GraphQLFragmentPath<T, Value.UnderlyingType>) {
+extension GraphQL {
+    init<T: Target, Value: Fragment>(_: @autoclosure () -> GraphQLFragmentPath<T, Value.UnderlyingType>) where Decoder == NoOpDecoder<Value> {
         fatalError("Initializer with path only should never be used")
     }
 }
 
 extension GraphQL {
-    init<T: API, C: Connection, F: Fragment>(_: @autoclosure () -> GraphQLFragmentPath<T, C>) where Value == Paging<F>, C.Node == F.UnderlyingType {
+    init<T: API, C: Connection, F: Fragment>(_: @autoclosure () -> GraphQLFragmentPath<T, C>) where Decoder == NoOpDecoder<Paging<F>>, C.Node == F.UnderlyingType {
         fatalError("Initializer with path only should never be used")
     }
 
-    init<T: API, C: Connection, F: Fragment>(_: @autoclosure () -> GraphQLFragmentPath<T, C?>) where Value == Paging<F>?, C.Node == F.UnderlyingType {
+    init<T: API, C: Connection, F: Fragment>(_: @autoclosure () -> GraphQLFragmentPath<T, C?>) where Decoder == NoOpDecoder<Paging<F>?>, C.Node == F.UnderlyingType {
         fatalError("Initializer with path only should never be used")
     }
 }
@@ -371,7 +385,7 @@ extension Optional {
 }
 
 extension Array {
-    fileprivate init<Raw: RawRepresentable, Other: RawRepresentable>(_ other: [Other?]) where Element == Raw?,  Other.RawValue == Raw.RawValue {
+    fileprivate init<Raw: RawRepresentable, Other: RawRepresentable>(_ other: [Other?]) where Element == Raw?, Other.RawValue == Raw.RawValue {
         self = other.map { .init($0) }
     }
 }
