@@ -1,17 +1,17 @@
 // MARK: - {{ structPrepared.name }}
 
 {% for fragment in fragments %}
-extension ApolloStuff.{{ fragment.name|upperCamelized }} : Fragment {
+extension Apollo{{ fragment.api.name }}.{{ fragment.name|upperCamelized }} : Fragment {
     typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
 }
 {% endfor %}
 
 extension {{ structPrepared.name }} {
     {% for fragment in fragments %}
-    typealias {{ fragment.target.name }} = ApolloStuff.{{ fragment.name||upperCamelized }}
+    typealias {{ fragment.target.name }} = Apollo{{ fragment.api.name }}.{{ fragment.name||upperCamelized }}
     {% endfor %}
     {% if query %}
-    typealias Data = ApolloStuff.{{ structPrepared.name }}Query.Data
+    typealias Data = Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data
     {% endif %}
     
     init({{ initializerArguments|codeArray|join:", " }}) {
@@ -24,7 +24,7 @@ extension {{ query.api.name }} {
     
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: ApolloStuff.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { (data: ApolloStuff.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
         
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }

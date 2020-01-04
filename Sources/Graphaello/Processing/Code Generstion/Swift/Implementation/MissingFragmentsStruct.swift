@@ -8,6 +8,7 @@
 import Foundation
 
 struct MissingFragmentsStruct: SwiftCodeTransformable, Hashable {
+    let api: API
     let path: [String]
 }
 
@@ -25,7 +26,7 @@ extension Struct where CurrentStage: ResolvedStage {
 extension GraphQLFragment {
 
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
-        return target.name.upperCamelized + object.missingFragmentsStructs
+        return target.name.upperCamelized + object.missingFragmentsStructs(api: api)
     }
 
 }
@@ -33,7 +34,7 @@ extension GraphQLFragment {
 extension GraphQLConnectionFragment {
 
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
-        return fragment.name.upperCamelized + fragment.object.missingFragmentsStructs
+        return fragment.name.upperCamelized + fragment.object.missingFragmentsStructs(api: fragment.api)
     }
 
 }
@@ -43,17 +44,17 @@ extension GraphQLQuery {
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
         return ["\(name)Query".upperCamelized, "Data"] + components
             .sorted { $0.key.field.name < $1.key.field.name }
-            .flatMap { $0.value.missingFragmentsStructs(field: $0.key) }
+            .flatMap { $0.value.missingFragmentsStructs(field: $0.key, api: api) }
     }
 
 }
 
 extension GraphQLObject {
 
-    var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
+    func missingFragmentsStructs(api: API) -> OrderedSet<MissingFragmentsStruct> {
         let fromComponents = components
             .sorted { $0.key.field.name < $1.key.field.name }
-            .flatMap { $0.value.missingFragmentsStructs(field: $0.key) }
+            .flatMap { $0.value.missingFragmentsStructs(field: $0.key, api: api) }
 
         if referencedFragments.isEmpty {
             return fromComponents
@@ -63,18 +64,18 @@ extension GraphQLObject {
             return fromComponents
         }
 
-        return [MissingFragmentsStruct(path: [])] + fromComponents
+        return [MissingFragmentsStruct(api: api, path: [])] + fromComponents
     }
 
 }
 
 extension GraphQLComponent {
 
-    func missingFragmentsStructs(field: GraphQLField) -> OrderedSet<MissingFragmentsStruct> {
+    func missingFragmentsStructs(field: GraphQLField, api: API) -> OrderedSet<MissingFragmentsStruct> {
         switch self {
         case .object(let object):
             let name = field.alias ?? field.field.definition.name
-            return name.singular.upperCamelized + object.missingFragmentsStructs
+            return name.singular.upperCamelized + object.missingFragmentsStructs(api: api)
         default:
             return []
         }
@@ -89,7 +90,7 @@ extension MissingFragmentsStruct {
     }
 
     static func + (lhs: [String], rhs: MissingFragmentsStruct) -> MissingFragmentsStruct {
-        return MissingFragmentsStruct(path: lhs + rhs.path)
+        return MissingFragmentsStruct(api: rhs.api, path: lhs + rhs.path)
     }
 
 }

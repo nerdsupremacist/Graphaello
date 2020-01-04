@@ -10,11 +10,11 @@ import CLIKit
 
 struct BasicApolloProcessInstantiator: ApolloProcessInstantiator {
     
-    func process(for apollo: ApolloReference, schema: Path, graphql: Path, outputFile: Path) throws -> Process {
+    func process(for apollo: ApolloReference, api: API, graphql: Path, outputFile: Path) throws -> Process {
         let path = try apollo.scriptPath()
         let task = Process()
         task.launchPath = "/usr/bin/env"
-        task.arguments = [path.string] + apollo.arguments(schema: schema, graphql: graphql, outputFile: outputFile)
+        task.arguments = [path.string] + apollo.arguments(api: api, graphql: graphql, outputFile: outputFile)
         task.standardOutput = nil
         task.standardError = nil
         return task
@@ -32,13 +32,13 @@ extension ApolloReference {
         }
     }
     
-    fileprivate func arguments(schema: Path, graphql: Path, outputFile: Path) -> [String] {
+    fileprivate func arguments(api: API, graphql: Path, outputFile: Path) -> [String] {
         return [
             command,
-            "--namespace=ApolloStuff",
+            "--namespace=Apollo\(api.name)",
             "--target=swift",
             "--includes=\(graphql)",
-            "--localSchemaFile=\(schema)",
+            "--localSchemaFile=\(api.path)",
             "\(outputFile)",
         ]
     }

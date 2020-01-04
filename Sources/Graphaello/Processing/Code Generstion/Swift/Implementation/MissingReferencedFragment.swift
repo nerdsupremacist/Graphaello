@@ -8,6 +8,7 @@
 import Foundation
 
 struct MissingReferencedFragment: SwiftCodeTransformable, Hashable {
+    let api: API
     let path: [String]
     let fragmentName: String
 }
@@ -26,7 +27,7 @@ extension Struct where CurrentStage: ResolvedStage {
 extension GraphQLFragment {
 
     var missingReferencedFragments: OrderedSet<MissingReferencedFragment> {
-        return target.name.upperCamelized + object.missingReferencedFragments
+        return target.name.upperCamelized + object.missingReferencedFragments(api: api)
     }
 
 }
@@ -34,7 +35,7 @@ extension GraphQLFragment {
 extension GraphQLConnectionFragment {
 
     var missingReferencedFragments: OrderedSet<MissingReferencedFragment> {
-        return fragment.name.upperCamelized + fragment.object.missingReferencedFragments
+        return fragment.name.upperCamelized + fragment.object.missingReferencedFragments(api: fragment.api)
     }
 
 }
@@ -44,21 +45,21 @@ extension GraphQLQuery {
     var missingReferencedFragments: OrderedSet<MissingReferencedFragment> {
         return ["\(name)Query".upperCamelized, "Data"] + components
             .sorted { $0.key.field.name < $1.key.field.name }
-            .flatMap { $0.value.missingReferencedFragments(field: $0.key) }
+            .flatMap { $0.value.missingReferencedFragments(field: $0.key, api: api) }
     }
 
 }
 
 extension GraphQLObject {
 
-    var missingReferencedFragments: OrderedSet<MissingReferencedFragment> {
+    func missingReferencedFragments(api: API) -> OrderedSet<MissingReferencedFragment> {
         let fromComponents = components
             .sorted { $0.key.field.name < $1.key.field.name }
-            .flatMap { $0.value.missingReferencedFragments(field: $0.key) }
+            .flatMap { $0.value.missingReferencedFragments(field: $0.key, api: api) }
 
         let fragments = referencedFragments
             .filter { $0.hasArguments }
-            .map { MissingReferencedFragment(path: [], fragmentName: $0.fragment.name.upperCamelized) }
+            .map { MissingReferencedFragment(api: api, path: [], fragmentName: $0.fragment.name.upperCamelized) }
 
         return OrderedSet(fragments + fromComponents)
     }
@@ -67,11 +68,11 @@ extension GraphQLObject {
 
 extension GraphQLComponent {
 
-    func missingReferencedFragments(field: GraphQLField) -> OrderedSet<MissingReferencedFragment> {
+    func missingReferencedFragments(field: GraphQLField, api: API) -> OrderedSet<MissingReferencedFragment> {
         switch self {
         case .object(let object):
             let name = field.alias ?? field.field.definition.name
-            return name.singular.upperCamelized + object.missingReferencedFragments
+            return name.singular.upperCamelized + object.missingReferencedFragments(api: api)
         default:
             return []
         }
@@ -86,7 +87,7 @@ extension MissingReferencedFragment {
     }
 
     static func + (lhs: [String], rhs: MissingReferencedFragment) -> MissingReferencedFragment {
-        return MissingReferencedFragment(path: lhs + rhs.path, fragmentName: rhs.fragmentName)
+        return MissingReferencedFragment(api: rhs.api, path: lhs + rhs.path, fragmentName: rhs.fragmentName)
     }
 
 }

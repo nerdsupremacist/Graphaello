@@ -9,5 +9,5 @@ import Foundation
 import CLIKit
 
 protocol ApolloProcessInstantiator {
-    func process(for apollo: ApolloReference, schema: Path, graphql: Path, outputFile: Path) throws -> Process
+    func process(for apollo: ApolloReference, api: API, graphql: Path, outputFile: Path) throws -> Process
 }

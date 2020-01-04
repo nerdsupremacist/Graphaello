@@ -1,2 +1,2 @@
-{{ inputFieldInitializerArgument.name }}: {{ swiftType }}
+{{ inputFieldInitializerArgument.name|camelized|keywordProtected }}: {{ swiftType }}
     {% if inputFieldInitializerArgument.defaultValue %} = {{ inputFieldInitializerArgument.defaultValue }}{% endif %}

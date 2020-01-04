@@ -7,11 +7,20 @@
 //
 
 import Foundation
+import Stencil
 import SwiftSyntax
 
-struct QueryArgumentAssignment: SwiftCodeTransformable {
+struct QueryArgumentAssignment {
     let name: String
     let expression: ExprSyntax
+}
+
+extension QueryArgumentAssignment: ExtraValuesSwiftCodeTransformable {
+
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
+        return ["expression" : expression.description]
+    }
+
 }
 
 extension Struct where CurrentStage: ResolvedStage {

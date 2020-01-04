@@ -9,7 +9,7 @@
     {% if needsInitializer %}
     init({{ inputFieldInitializerArguments|codeArray|join:", " }}) {
         {% for inputField in graphQlType.inputFields %}
-        self.{{ inputField.name }} = {{ inputField.name }}
+        self.{{ inputField.name|camelized|keywordProtected }} = {{ inputField.name|camelized|keywordProtected }}
         {% endfor %}
     }
     {% endif %}

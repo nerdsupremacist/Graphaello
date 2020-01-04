@@ -27,7 +27,7 @@ struct BasicApolloCodegenRequestProcessor: ApolloCodegenRequestProcessor {
         
         let swiftPath = folder + "API.swift"
         let process = try instantiator.process(for: apollo,
-                                               schema: Path(request.api.path.string),
+                                               api: request.api,
                                                graphql: graphQLPath,
                                                outputFile: swiftPath)
         

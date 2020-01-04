@@ -1,8 +1,8 @@
-extension ApolloStuff.{{ missingReferencedFragment.path|join:"." }}.Fragments {
+extension Apollo{{ missingReferencedFragment.api.name }}.{{ missingReferencedFragment.path|join:"." }}.Fragments {
 
-    public var {{ missingReferencedFragment.fragmentName|camelized }}: ApolloStuff.{{ missingReferencedFragment.fragmentName }} {
+    public var {{ missingReferencedFragment.fragmentName|camelized }}: Apollo{{ missingReferencedFragment.api.name }}.{{ missingReferencedFragment.fragmentName }} {
         get {
-            return ApolloStuff.{{ missingReferencedFragment.fragmentName }}(unsafeResultMap: resultMap)
+            return Apollo{{ missingReferencedFragment.api.name }}.{{ missingReferencedFragment.fragmentName }}(unsafeResultMap: resultMap)
         }
         set {
             resultMap += newValue.resultMap

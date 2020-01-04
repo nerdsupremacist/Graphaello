@@ -1,1 +1,1 @@
-{{ queryArgumentAssignment.name }}: {{ queryArgumentAssignment.expression }}
+{{ queryArgumentAssignment.name }}: {{ expression }}
