@@ -7,71 +7,16 @@ import SwiftUI
 
 // MARK: Basic API
 
-private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
-    typealias ContentFactory = (Query.Data) -> Content
-
-    private final class ViewModel: ObservableObject {
-        @Published var isLoading: Bool = false
-        @Published var value: Query.Data? = nil
-        @Published var error: String? = nil
-        private var cancellable: Cancellable?
-
-        deinit {
-            cancel()
-        }
-
-        func load(client: ApolloClient, query: Query) {
-            guard value == nil, !isLoading else { return }
-            cancellable = client.fetch(query: query) { [weak self] result in
-                defer {
-                    self?.cancellable = nil
-                    self?.isLoading = false
-                }
-                switch result {
-                case let .success(result):
-                    self?.value = result.data
-                    self?.error = result.errors?.map { $0.description }.joined(separator: ", ")
-                case let .failure(error):
-                    self?.error = error.localizedDescription
-                }
-            }
-            isLoading = true
-        }
-
-        func cancel() {
-            cancellable?.cancel()
-        }
-    }
-
-    let client: ApolloClient
-    let query: Query
-    let factory: ContentFactory
-
-    @ObservedObject private var viewModel = ViewModel()
-
-    var body: some View {
-        return VStack {
-            viewModel.error.map { Text("Error: \($0)") }
-            viewModel.value.map(factory)
-            viewModel.isLoading ? Text("Loading") : nil
-        }.onAppear {
-            self.viewModel.load(client: self.client, query: self.query)
-        }.onDisappear {
-            self.viewModel.cancel()
-        }
-    }
-}
-
-protocol Fragment {
-    associatedtype UnderlyingType
-}
-
 protocol Target {}
 
 protocol API: Target {}
 
 protocol Connection: Target {
     associatedtype Node
+}
+
+protocol Fragment {
+    associatedtype UnderlyingType
 }
 
 extension Array: Fragment where Element: Fragment {
@@ -81,6 +26,8 @@ extension Array: Fragment where Element: Fragment {
 extension Optional: Fragment where Wrapped: Fragment {
     typealias UnderlyingType = Wrapped.UnderlyingType?
 }
+
+// MARK: - Basic API: Paths
 
 struct GraphQLPath<TargetType: Target, Value> {
     fileprivate init() {}
@@ -121,6 +68,8 @@ extension GraphQLFragmentPath {
     }
 }
 
+// MARK: - Basic API: Arguments
+
 enum GraphQLArgument<Value> {
     enum QueryArgument {
         case withDefault(Value)
@@ -140,6 +89,8 @@ extension GraphQLArgument {
         return .argument(.withDefault(value))
     }
 }
+
+// MARK: - Basic API: Paging
 
 class Paging<Value: Fragment>: DynamicProperty, ObservableObject {
     fileprivate struct Response {
@@ -200,6 +151,63 @@ class Paging<Value: Fragment>: DynamicProperty, ObservableObject {
         isLoading = false
         hasMore = false
         self.error = error
+    }
+}
+
+// MARK: - Basic API: Views
+
+private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
+    typealias ContentFactory = (Query.Data) -> Content
+
+    private final class ViewModel: ObservableObject {
+        @Published var isLoading: Bool = false
+        @Published var value: Query.Data? = nil
+        @Published var error: String? = nil
+        private var cancellable: Cancellable?
+
+        deinit {
+            cancel()
+        }
+
+        func load(client: ApolloClient, query: Query) {
+            guard value == nil, !isLoading else { return }
+            cancellable = client.fetch(query: query) { [weak self] result in
+                defer {
+                    self?.cancellable = nil
+                    self?.isLoading = false
+                }
+                switch result {
+                case let .success(result):
+                    self?.value = result.data
+                    self?.error = result.errors?.map { $0.description }.joined(separator: ", ")
+                case let .failure(error):
+                    self?.error = error.localizedDescription
+                }
+            }
+            isLoading = true
+        }
+
+        func cancel() {
+            cancellable?.cancel()
+        }
+    }
+
+    let client: ApolloClient
+    let query: Query
+    let factory: ContentFactory
+
+    @ObservedObject private var viewModel = ViewModel()
+
+    var body: some View {
+        return VStack {
+            viewModel.error.map { Text("Error: \($0)") }
+            viewModel.value.map(factory)
+            viewModel.isLoading ? Text("Loading") : nil
+        }.onAppear {
+            self.viewModel.load(client: self.client, query: self.query)
+        }.onDisappear {
+            self.viewModel.cancel()
+        }
     }
 }
 
@@ -301,6 +309,8 @@ extension PagingView {
     }
 }
 
+// MARK: - Basic API: Decoders
+
 protocol GraphQLValueDecoder {
     associatedtype Encoded
     associatedtype Decoded
@@ -325,6 +335,8 @@ enum NoOpDecoder<T>: GraphQLValueDecoder {
         return encoded
     }
 }
+
+// MARK: - Basic API: Graph QL Property Wrapper
 
 @propertyWrapper
 struct GraphQL<Decoder: GraphQLValueDecoder> {
@@ -358,6 +370,8 @@ extension GraphQL {
         fatalError("Initializer with path only should never be used")
     }
 }
+
+// MARK: - Basic API: Type Conversion
 
 extension RawRepresentable {
     fileprivate init<Other: RawRepresentable>(_ other: Other) where Other.RawValue == RawValue {
