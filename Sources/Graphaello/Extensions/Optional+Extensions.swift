@@ -13,7 +13,9 @@ infix operator ?!: NilCoalescingPrecedence
 extension Optional {
 
     static func ?!(lhs: Wrapped?, rhs: @autoclosure () -> Error) throws -> Wrapped {
-        guard let lhs = lhs else { throw rhs() }
+        guard let lhs = lhs else {
+            throw rhs()
+        }
         return lhs
     }
     

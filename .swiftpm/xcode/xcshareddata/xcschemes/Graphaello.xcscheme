@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "codegen --project /Users/mathiasquintero/master-thesis/starwars --apollo derivedData --skipFormatting"
+            argument = "codegen --project /Users/mathiasquintero/master-thesis/TodoApp --apollo derivedData --skipFormatting"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

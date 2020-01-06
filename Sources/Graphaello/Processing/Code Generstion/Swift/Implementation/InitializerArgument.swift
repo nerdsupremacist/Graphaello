@@ -21,7 +21,7 @@ extension Struct where CurrentStage == Stage.Prepared {
             .map { InitializerArgument(name: $0.name, type: $0.type) }
         
         let queryArgument = query != nil ? [InitializerArgument(name: "data", type: "Data")] : []
-        let fragmentArguments = fragments.map { InitializerArgument(name: $0.target.name.camelized, type: $0.target.name) }
+        let fragmentArguments = fragments.map { InitializerArgument(name: $0.target.name.camelized, type: $0.target.name.upperCamelized) }
         
         return stockArguments + queryArgument + fragmentArguments
     }

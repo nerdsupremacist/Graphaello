@@ -12,27 +12,27 @@ struct {{ api.name }}: API {
 }
 
 {% for type in api.types %}
-extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }} {
+extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name|upperCamelized }} {
     {{ type.fields|code }}
 
     {% for interface in type.interfaces %}
-    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{interface.name}}> { .init() }
+    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{ interface.name|upperCamelized }}> { .init() }
     {% endfor %}
 
     {% for possibleType in type.possibleTypes %}
-    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{possibleType.name}}?> { .init() }
+    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{ possibleType.name|upperCamelized }}?> { .init() }
     {% endfor %}
 }
 
-extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name }}? {
+extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name|upperCamelized }}? {
     {{ type.fields|code:"optional" }}
 
     {% for interface in type.interfaces %}
-    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{interface.name}}?> { .init() }
+    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{ interface.name|upperCamelized }}?> { .init() }
     {% endfor %}
 
     {% for possibleType in type.possibleTypes %}
-    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{possibleType.name}}?> { .init() }
+    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{ possibleType.name|upperCamelized }}?> { .init() }
     {% endfor %}
 }
 {% endfor %}

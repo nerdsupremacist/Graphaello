@@ -15,7 +15,7 @@ extension StructResolution {
             let fragments: [String : GraphQLFragment]
             
             init(resolved: Struct<Stage.Resolved>) {
-                self.fragments = Dictionary(uniqueKeysWithValues: resolved.fragments.map { ($0.target.name, $0) })
+                self.fragments = Dictionary(uniqueKeysWithValues: resolved.fragments.map { ($0.target.name.upperCamelized, $0) })
             }
         }
 

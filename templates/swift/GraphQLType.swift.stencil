@@ -1,8 +1,8 @@
-{% if graphQlType.inputFields %}struct{% else %}enum{% endif %} {{ graphQlType.name }}: {%if hasEnumValues %}String, {% endif %}Target{% if connectionNodeType %}, Connection{% endif %} {
+{% if graphQlType.inputFields %}struct{% else %}enum{% endif %} {{ graphQlType.name|upperCamelized }}: {%if hasEnumValues %}String, {% endif %}Target{% if connectionNodeType %}, Connection{% endif %} {
 
     {% if connectionNodeType %}typealias Node = {{ connectionNodeType }}{% endif %}
-    typealias Path<V> = GraphQLPath<{{ graphQlType.name }}, V>
-    typealias FragmentPath<V> = GraphQLFragmentPath<{{ graphQlType.name }}, V>
+    typealias Path<V> = GraphQLPath<{{ graphQlType.name|upperCamelized }}, V>
+    typealias FragmentPath<V> = GraphQLFragmentPath<{{ graphQlType.name|upperCamelized }}, V>
 
     {{ graphQlType.inputFields|code }}
 
@@ -20,12 +20,12 @@
     {{ graphQlType.fields|code:"static" }}
 
     {% for interface in graphQlType.interfaces %}
-    static var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{interface.name}}> { .init() }
+    static var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ interface.name|upperCamelized }}> { .init() }
     {% endfor %}
 
     {% for possibleType in graphQlType.possibleTypes %}
-    static var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{possibleType.name}}?> { .init() }
+    static var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ possibleType.name|upperCamelized }}?> { .init() }
     {% endfor %}
     
-    static var _fragment: FragmentPath<{{graphQlType.name}}> { .init() }
+    static var _fragment: FragmentPath<{{ graphQlType.name|upperCamelized }}> { .init() }
 }

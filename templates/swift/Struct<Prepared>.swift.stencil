@@ -2,13 +2,13 @@
 
 {% for fragment in fragments %}
 extension Apollo{{ fragment.api.name }}.{{ fragment.name|upperCamelized }} : Fragment {
-    typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name }}
+    typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name|upperCamelized }}
 }
 {% endfor %}
 
 extension {{ structPrepared.name }} {
     {% for fragment in fragments %}
-    typealias {{ fragment.target.name }} = Apollo{{ fragment.api.name }}.{{ fragment.name||upperCamelized }}
+    typealias {{ fragment.target.name|upperCamelized }} = Apollo{{ fragment.api.name }}.{{ fragment.name|upperCamelized }}
     {% endfor %}
     {% if query %}
     typealias Data = Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data

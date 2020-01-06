@@ -32,7 +32,8 @@ extension Array where Element == API {
 extension Array where Element == Schema.GraphQLType {
     
     subscript(name: String) -> Element? {
-        return first { $0.name == name }
+        let name = name.upperCamelized
+        return first { $0.name.upperCamelized == name }
     }
     
 }
