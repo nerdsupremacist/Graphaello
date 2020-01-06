@@ -11,6 +11,8 @@ protocol Target {}
 
 protocol API: Target {}
 
+protocol MutationTarget: Target { }
+
 protocol Connection: Target {
     associatedtype Node
 }

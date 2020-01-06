@@ -7,6 +7,15 @@ struct {{ api.name }}: API {
     typealias Path<V> = GraphQLPath<{{ api.name }}, V>
     typealias FragmentPath<V> = GraphQLFragmentPath<{{ api.name }}, V>
 
+    {% if api.mutation %}
+    enum Mutation: MutationTarget {
+        typealias Path<V> = GraphQLPath<{{ api.name }}.Mutation, V>
+        typealias FragmentPath<V> = GraphQLFragmentPath<{{ api.name }}.Mutation, V>
+
+        {{ api.mutation.fields|code:"static" }}
+    }
+    {% endif %}
+
     {{ api.query.fields|code:"static" }}
     {{ api.types|code }}
 }

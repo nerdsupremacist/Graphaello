@@ -12,6 +12,7 @@ import PathKit
 class API {
     let name: String
     let query: Schema.GraphQLType
+    let mutation: Schema.GraphQLType?
     let types: [Schema.GraphQLType]
     let scalars: [Schema.GraphQLType]
     let path: Path
@@ -20,10 +21,15 @@ class API {
         self.name = name
 
         self.query = schema.types.first { $0.name == schema.queryType.name } ?! fatalError("Expected a query type")
+        self.mutation = schema.mutationType.map { mutationType in
+            schema.types.first { $0.name == mutationType.name } ?! fatalError("Expected the referenced mutation type to exist")
+        }
+
+        let alreadyIncluded = Set([schema.queryType.name, schema.mutationType?.name].compactMap { $0 })
 
         self.types = schema.types
             .filter { $0.includeInReport }
-            .filter { $0.name != schema.queryType.name }
+            .filter { !alreadyIncluded.contains($0.name) }
         
         self.scalars = schema.types.filter { $0.isScalar }
         self.path = path
