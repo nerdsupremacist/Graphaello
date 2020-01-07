@@ -29,6 +29,10 @@ extension Optional: Fragment where Wrapped: Fragment {
     typealias UnderlyingType = Wrapped.UnderlyingType?
 }
 
+protocol Mutation {
+    associatedtype Value
+}
+
 // MARK: - Basic API: Paths
 
 struct GraphQLPath<TargetType: Target, Value> {
@@ -371,6 +375,18 @@ extension GraphQL {
     init<T: API, C: Connection, F: Fragment>(_: @autoclosure () -> GraphQLFragmentPath<T, C?>) where Decoder == NoOpDecoder<Paging<F>?>, C.Node == F.UnderlyingType {
         fatalError("Initializer with path only should never be used")
     }
+}
+
+extension GraphQL {
+
+    init<T: MutationTarget, MutationType: Mutation>(_: @autoclosure () -> GraphQLPath<T, MutationType.Value>) where Decoder == NoOpDecoder<MutationType> {
+        fatalError("Initializer with path only should never be used")
+    }
+
+    init<T: MutationTarget, MutationType: Mutation>(_: @autoclosure () -> GraphQLFragmentPath<T, MutationType.Value.UnderlyingType>) where Decoder == NoOpDecoder<MutationType>, MutationType.Value: Fragment {
+        fatalError("Initializer with path only should never be used")
+    }
+
 }
 
 // MARK: - Basic API: Type Conversion

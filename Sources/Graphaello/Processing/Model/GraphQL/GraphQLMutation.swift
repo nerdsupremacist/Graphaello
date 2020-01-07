@@ -12,6 +12,7 @@ struct GraphQLMutation {
     let target: Schema.GraphQLType
     let name: String
     let object: GraphQLObject
+    let referencedFragment: GraphQLFragment?
 }
 
 extension GraphQLMutation {

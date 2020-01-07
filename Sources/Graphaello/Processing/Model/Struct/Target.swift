@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Target {
+enum Target: Equatable {
     case query
     case mutation
     case object(String)

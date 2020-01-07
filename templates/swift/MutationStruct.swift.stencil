@@ -1,0 +1,28 @@
+struct {{ mutationStruct.mutation.name }}{% if mutationStruct.mutation.referencedFragment %}<V: Fragment>{% endif %}: Mutation{% if mutationStruct.mutation.referencedFragment %}where V.UnderlyingType == {{ mutationStruct.mutation.referencedFragment.target.name|upperCamelized }}{% endif %} {
+
+    {% if mutationStruct.mutation.referencedFragment %}
+    typealias Value == V
+    {% else %}
+    typealias Value == Bool
+    {% endif %}
+
+    let api: {{ mutationStruct.mutation.api.name }}
+}
+
+{% if mutationStruct.mutation.referencedFragment %}
+extension {{ mutationStruct.mutation.name }} where V == Apollo{{ mutationStruct.mutation.api.name }}.{{ mutationStruct.mutation.name }}Mutation {
+
+    func commit() {
+        fatalError()
+    }
+
+}
+{% else %}
+extension {{ mutationStruct.mutation.name }} {
+
+    func commit() {
+        fatalError()
+    }
+
+}
+{% endif %}
