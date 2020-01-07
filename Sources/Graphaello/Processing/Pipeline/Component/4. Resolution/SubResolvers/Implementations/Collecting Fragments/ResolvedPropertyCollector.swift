@@ -45,6 +45,19 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
                         return [.query(query), .connectionQuery(connectionQuery)]
                     }
                     return [.query(query)]
+
+                case .mutation:
+                    let object = collectedPath.object(propertyName: value.name)
+                    let name = value
+                        .type
+                        .replacingOccurrences(of: #"<.*>"#, with: "", options: .regularExpression)
+                        .replacingOccurrences(of: #"[\[\]\.\?]"#, with: "", options: .regularExpression)
+
+                    let mutation = GraphQLMutation(api: path.validated.api,
+                                                   target: path.validated.target,
+                                                   name: name,
+                                                   object: object)
+                    return [.mutation(mutation)]
                 
                 case .object:
                     let simpleDefinitionName = parent.name.replacingOccurrences(of: #"[\[\]\.\?]"#, with: "", options: .regularExpression)

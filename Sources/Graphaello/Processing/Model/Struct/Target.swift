@@ -10,5 +10,6 @@ import Foundation
 
 enum Target {
     case query
+    case mutation
     case object(String)
 }

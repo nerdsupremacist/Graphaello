@@ -14,6 +14,7 @@ extension Stage {
     enum Resolved: GraphQLStage, ResolvedStage {
         enum ReferencedFragment {
             case fragment(GraphQLFragment)
+            case mutation(GraphQLFragment)
             case connection(GraphQLConnectionFragment)
         }
 
@@ -35,6 +36,8 @@ extension Stage.Resolved.ReferencedFragment {
             return fragment
         case .connection(let connection):
             return connection.fragment
+        case .mutation(let fragment):
+            return fragment
         }
     }
 

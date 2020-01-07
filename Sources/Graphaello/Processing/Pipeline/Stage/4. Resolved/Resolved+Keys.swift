@@ -25,6 +25,12 @@ extension Context.Key where T == GraphQLQuery? {
     
 }
 
+extension Context.Key where T == [GraphQLMutation] {
+
+    static let mutations = Context.Key<[GraphQLMutation]>()
+
+}
+
 extension Context.Key where T == [GraphQLConnectionQuery] {
     
     static let connectionQueries = Context.Key<[GraphQLConnectionQuery]>()

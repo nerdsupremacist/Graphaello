@@ -25,6 +25,10 @@ struct PathResolver: ValueResolver {
             guard let fragment = context[fragmentName] else { return .missingFragment }
             return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: .fragment(fragment)))
 
+        case .mutation(let wrapperName, let fragmentName):
+            guard let fragment = context[fragmentName] else { return .missingFragment }
+            return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: .mutation(fragment)))
+
         case .paging(let nodeFragmentName):
             guard let connectionType = value.components.last?.underlyingType else { fatalError() }
             guard let nodeFragment = context[nodeFragmentName] else { return .missingFragment }

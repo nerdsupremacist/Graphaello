@@ -19,18 +19,24 @@ extension Struct where CurrentStage: ResolvedStage {
     var connectionQueries: [GraphQLConnectionQuery] {
         return context[.connectionQueries]
     }
+
+    var mutations: [GraphQLMutation] {
+        return context[.mutations]
+    }
     
     init(code: SourceCode,
          name: String,
          properties: [Property<CurrentStage>],
          fragments: [GraphQLFragment],
          query: GraphQLQuery?,
-         connectionQueries: [GraphQLConnectionQuery]) {
+         connectionQueries: [GraphQLConnectionQuery],
+         mutations: [GraphQLMutation]) {
         
         self.init(code: code, name: name, properties: properties) {
             (.fragments ~> fragments)
             (.query ~> query)
             (.connectionQueries ~> connectionQueries)
+            (.mutations ~> mutations)
         }
     }
     

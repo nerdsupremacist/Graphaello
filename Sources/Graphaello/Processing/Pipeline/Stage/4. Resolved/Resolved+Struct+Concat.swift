@@ -26,5 +26,9 @@ extension Struct where CurrentStage: ResolvedStage {
     static func + (lhs: Struct<CurrentStage>, rhs: GraphQLConnectionQuery) -> Struct<CurrentStage> {
         return lhs.with { .connectionQueries ~> (lhs.connectionQueries + [rhs]) }
     }
+
+    static func + (lhs: Struct<CurrentStage>, rhs: GraphQLMutation) -> Struct<CurrentStage> {
+        return lhs.with { .mutations ~> (lhs.mutations + [rhs]) }
+    }
     
 }

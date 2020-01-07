@@ -13,7 +13,7 @@ extension Stage.Cleaned.Path {
         let first: AttributePath
 
         switch resolved.validated.parsed.target {
-        case .query:
+        case .query, .mutation:
             first = AttributePath(name: "data", kind: queryValueIsOptional ? .optional(.value) : .value)
         case .object(let type):
             first = AttributePath(name: type.camelized, kind: .value)

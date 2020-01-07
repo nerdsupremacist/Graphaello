@@ -27,6 +27,8 @@ struct ResolvedComponentCollector: ResolvedValueCollector {
                 return .resolved(.fragment(fragment))
             case .some(.connection(let connection)):
                 return .resolved(.connection(connection))
+            case .some(.mutation(let fragment)):
+                return .resolved(.fragment(fragment))
             case .none:
                 return .missingFragment
             }

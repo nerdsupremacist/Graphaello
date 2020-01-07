@@ -21,7 +21,9 @@ struct BasicPropertyAliasingPropagator: PropertyAliasingPropagator {
                 components = try resolved
                     .query
                     .map { try propagator.propagate(components: path.validated.components, from: $0) }
-                
+
+            case .mutation:
+                components = nil
                 
             case .object(let type):
                 components = try resolved

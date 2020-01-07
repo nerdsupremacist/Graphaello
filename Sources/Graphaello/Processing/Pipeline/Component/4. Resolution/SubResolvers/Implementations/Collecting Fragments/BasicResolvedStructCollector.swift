@@ -24,6 +24,7 @@ struct BasicResolvedStructCollector<Collector: ResolvedValueCollector>: Resolved
                     (.fragments ~> [])
                     (.query ~> nil)
                     (.connectionQueries ~> [])
+                    (.mutations ~> [])
                 }
                 
                 return try values.reduce(initialResult) { try $0 + $1 }

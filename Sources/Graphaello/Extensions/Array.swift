@@ -14,6 +14,8 @@ extension Target {
         switch self {
         case .query:
             return api.query
+        case .mutation:
+            return try api.mutation ?! GraphQLPathValidationError.typeNotFound("Mutation", api: api)
         case .object(let name):
             return try api.types[name] ?! GraphQLPathValidationError.typeNotFound(name, api: api)
         }
