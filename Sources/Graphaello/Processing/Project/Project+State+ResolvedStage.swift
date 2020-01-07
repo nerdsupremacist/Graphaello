@@ -25,4 +25,8 @@ extension Project.State where CurrentStage: ResolvedStage {
         return structs.compactMap { $0.query }
     }
 
+    var allMutations: [GraphQLMutation] {
+        return structs.flatMap { $0.mutations }
+    }
+
 }

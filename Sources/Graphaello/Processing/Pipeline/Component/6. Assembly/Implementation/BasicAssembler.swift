@@ -15,8 +15,13 @@ struct BasicAssembler: Assembler {
         let requests = try groupped.mapValues { members -> ApolloCodeGenRequest in
             let fragments = members.compactMap { $0.fragment }
             let queries = members.compactMap { $0.query }
-            let api = fragments.first?.api ?? queries.first?.api ?! fatalError("No Queries or Fragments in Group")
-            return try assembler.assemble(queries: queries, fragments: fragments, for: api)
+            let mutations = members.compactMap { $0.mutation }
+            let api = members.first?.api ?! fatalError("No Queries, Fragments or Mutations in Group")
+
+            return try assembler.assemble(queries: queries,
+                                          fragments: fragments,
+                                          mutations: mutations,
+                                          for: api)
         }
         
         return cleaned.with { .requests ~> requests.values.sorted { $0.api.name <= $1.api.name } }
@@ -37,6 +42,7 @@ extension Project.State where CurrentStage: ResolvedStage {
     fileprivate enum MemberOfAPI {
         case fragment(GraphQLFragment)
         case query(GraphQLQuery)
+        case mutation(GraphQLMutation)
         
         var api: API {
             switch self {
@@ -44,6 +50,8 @@ extension Project.State where CurrentStage: ResolvedStage {
                 return fragment.api
             case .query(let query):
                 return query.api
+            case .mutation(let mutation):
+                return mutation.api
             }
         }
         
@@ -56,6 +64,11 @@ extension Project.State where CurrentStage: ResolvedStage {
             guard case .query(let query) = self else { return nil }
             return query
         }
+
+        var mutation: GraphQLMutation? {
+            guard case .mutation(let mutation) = self else { return nil }
+            return mutation
+        }
     }
 
     fileprivate var allMembers: [MemberOfAPI] {
@@ -64,6 +77,7 @@ extension Project.State where CurrentStage: ResolvedStage {
 
         return fromConnections +
             allFragments.map(MemberOfAPI.fragment) +
-            allQueries.map(MemberOfAPI.query)
+            allQueries.map(MemberOfAPI.query) +
+            allMutations.map(MemberOfAPI.mutation)
     }
 }

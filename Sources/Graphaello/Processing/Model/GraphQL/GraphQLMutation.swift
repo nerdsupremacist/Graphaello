@@ -13,3 +13,11 @@ struct GraphQLMutation {
     let name: String
     let object: GraphQLObject
 }
+
+extension GraphQLMutation {
+
+    var arguments: OrderedSet<GraphQLArgument> {
+        return object.arguments
+    }
+
+}

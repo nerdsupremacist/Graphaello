@@ -19,11 +19,19 @@ struct GraphQLCodeQueryArgument: ExtraValuesGraphQLCodeTransformable {
 }
 
 extension GraphQLQuery {
-    
+
     var graphQLCodeQueryArgument: [GraphQLCodeQueryArgument] {
         return arguments.map { GraphQLCodeQueryArgument(name: $0.name, type: $0.type) }
     }
     
+}
+
+extension GraphQLMutation {
+
+    var graphQLCodeQueryArgument: [GraphQLCodeQueryArgument] {
+        return arguments.map { GraphQLCodeQueryArgument(name: $0.name, type: $0.type) }
+    }
+
 }
 
 extension Field {
