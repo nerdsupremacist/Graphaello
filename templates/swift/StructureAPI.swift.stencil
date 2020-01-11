@@ -345,8 +345,18 @@ enum NoOpDecoder<T>: GraphQLValueDecoder {
 // MARK: - Basic API: Graph QL Property Wrapper
 
 @propertyWrapper
-struct GraphQL<Decoder: GraphQLValueDecoder> {
-    var wrappedValue: Decoder.Decoded
+struct GraphQL<Decoder: GraphQLValueDecoder>: DynamicProperty {
+    @State
+    private var value: Decoder.Decoded
+    
+    var wrappedValue: Decoder.Decoded {
+        get {
+            return value
+        }
+        nonmutating set {
+            value = newValue
+        }
+    }
 
     init<T: Target>(_: @autoclosure () -> GraphQLPath<T, Decoder.Encoded>) {
         fatalError("Initializer with path only should never be used")
@@ -357,7 +367,7 @@ struct GraphQL<Decoder: GraphQLValueDecoder> {
     }
 
     fileprivate init(_ wrappedValue: Decoder.Encoded) {
-        self.wrappedValue = try! Decoder.decode(encoded: wrappedValue)
+        self._value = State(initialValue: try! Decoder.decode(encoded: wrappedValue))
     }
 }
 
