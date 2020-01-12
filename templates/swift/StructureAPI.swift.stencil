@@ -4,6 +4,7 @@
 import Apollo
 import Foundation
 import SwiftUI
+import Combine
 
 // MARK: Basic API
 
@@ -31,6 +32,10 @@ extension Optional: Fragment where Wrapped: Fragment {
 
 protocol Mutation {
     associatedtype Value
+    
+    var isLoading: AnyPublisher<Bool, Never> { get }
+    var value: AnyPublisher<Value, Never> { get }
+    var error: AnyPublisher<Error, Never> { get }
 }
 
 // MARK: - Basic API: Paths
@@ -169,7 +174,7 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
         @Published var isLoading: Bool = false
         @Published var value: Query.Data? = nil
         @Published var error: String? = nil
-        private var cancellable: Cancellable?
+        private var cancellable: Apollo.Cancellable?
 
         deinit {
             cancel()
