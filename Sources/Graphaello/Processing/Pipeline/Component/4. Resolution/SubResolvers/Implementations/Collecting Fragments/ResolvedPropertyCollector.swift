@@ -41,13 +41,18 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
                                                                 api: path.validated.api,
                                                                 components: components)
 
-                        let connectionQuery = GraphQLConnectionQuery(query: connectionInnerQuery, fragment: connection, propertyName: value.name)
+                        let connectionQuery = GraphQLConnectionQuery(query: connectionInnerQuery,
+                                                                     fragment: connection,
+                                                                     propertyName: value.name)
+                        
                         return [.query(query), .connectionQuery(connectionQuery)]
                     }
+                    
                     return [.query(query)]
 
                 case .mutation:
                     let object = collectedPath.object(propertyName: value.name)
+                    // TODO: Use SwiftSyntax here to get to the proper name for the mutation
                     let name = value
                         .type
                         .replacingOccurrences(of: #"<.*>"#, with: "", options: .regularExpression)
@@ -58,12 +63,15 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
                                                    name: name,
                                                    object: object,
                                                    referencedFragment: path.referencedFragment?.fragment)
+                    
                     return [.mutation(mutation)]
                 
                 case .object:
                     let simpleDefinitionName = parent.name.replacingOccurrences(of: #"[\[\]\.\?]"#, with: "", options: .regularExpression)
                     let object = collectedPath.object(propertyName: value.name)
-                    let fragment = GraphQLFragment(name: "\(simpleDefinitionName)\(path.validated.target.name)", api: path.validated.api, target: path.validated.target, object: object)
+                    let fragment = GraphQLFragment(name: "\(simpleDefinitionName)\(path.validated.target.name)",
+                                                   api: path.validated.api,
+                                                   target: path.validated.target, object: object)
                     
                     return [.fragment(fragment)]
                 }

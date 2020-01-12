@@ -19,15 +19,17 @@ struct PathResolver: ValueResolver {
             return .resolved(.init(validated: value, referencedFragment: nil))
         }
         
+        if case .mutation = value.parsed.target {
+            let fragmentName = try StructResolution.ReferencedMutationResultFragment(typeName: property.type).fragmentName
+            guard let fragment = context[fragmentName] else { return .missingFragment }
+            return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: .mutationResult(fragment)))
+        }
+        
         switch try StructResolution.ReferencedFragment(typeName: property.type) {
 
         case .name(let fragmentName):
             guard let fragment = context[fragmentName] else { return .missingFragment }
             return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: .fragment(fragment)))
-
-        case .mutation(let wrapperName, let fragmentName):
-            guard let fragment = context[fragmentName] else { return .missingFragment }
-            return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: .mutation(fragment)))
 
         case .paging(let nodeFragmentName):
             guard let connectionType = value.components.last?.underlyingType else { fatalError() }

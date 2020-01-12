@@ -24,17 +24,13 @@ extension StructResolution.ReferencedFragment {
             try self.init(syntax: expression.expression)
 
         case let expression as SpecializeExprSyntax:
-            guard let argument = Array(expression.genericArgumentClause.arguments).single() else {
+            guard expression.expression.description == "Paging",
+                let argument = Array(expression.genericArgumentClause.arguments).single() else {
+                
                 throw GraphQLFragmentResolverError.invalidTypeNameForFragment(syntax.description)
             }
 
-            switch expression.expression.description {
-            case "Paging":
-                self = .paging(with: try StructResolution.FragmentName(syntax: argument.argumentType))
-            default:
-                self = .mutation(wrapperName: expression.expression.description,
-                                 try StructResolution.FragmentName(syntax: argument.argumentType))
-            }
+            self = .paging(with: try StructResolution.FragmentName(syntax: argument.argumentType))
 
         default:
             self = .name(try StructResolution.FragmentName(syntax: syntax))
