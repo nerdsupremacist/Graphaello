@@ -54,7 +54,7 @@ extension Schema.GraphQLType.Field.TypeReference {
         }
     }
 
-    func swiftType(api: String?) -> String {
+    func swiftType(api: String?, for fragment: GraphQLFragment? = nil) -> String {
         switch self {
 
         case .concrete(let definition):
@@ -72,17 +72,22 @@ extension Schema.GraphQLType.Field.TypeReference {
                     return "String?"
                 }
             }
+            
+            if let fragment = fragment {
+                assert(fragment.target.name == definition.name)
+                return "Apollo\(api.upperCamelized).\(fragment.name.upperCamelized)?"
+            }
 
             return "\(api).\(name.upperCamelized)?"
 
         case .complex(let definition, let ofType):
             switch definition.kind {
             case .list:
-                return "[\(ofType.swiftType(api: api))]?"
+                return "[\(ofType.swiftType(api: api, for: fragment))]?"
             case .nonNull:
-                return String(ofType.swiftType(api: api).dropLast())
+                return String(ofType.swiftType(api: api, for: fragment).dropLast())
             case .scalar, .object, .enum, .interface, .inputObject, .union:
-                return ofType.swiftType(api: api)
+                return ofType.swiftType(api: api, for: fragment)
             }
         }
     }

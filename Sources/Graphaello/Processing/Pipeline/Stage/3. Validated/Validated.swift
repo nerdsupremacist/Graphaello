@@ -66,23 +66,30 @@ extension Stage.Validated.Path {
     var returnType: Schema.GraphQLType.Field.TypeReference {
         guard let last = components.last else { fatalError() }
         return components
-            .dropFirst()
+            .dropLast()
             .reversed()
             .reduce(last.fieldType) { returnType, component in
-                
-                switch (returnType, component.fieldType) {
-                case (.concrete, .concrete):
-                    return returnType
-                case (.complex(let definition, let ofType), .concrete) where definition.kind == .nonNull:
-                    return ofType
-                case (.complex, .concrete):
-                    return returnType
-                case (.complex(let lhs, _), .complex(let rhs, _)) where lhs.kind == .nonNull && rhs.kind == .nonNull:
-                    return returnType
-                case (_, .complex(let definition, _)):
-                    return .complex(definition, ofType: returnType)
-                }
+                component.fieldType.embed(returnType: returnType)
             }
+    }
+    
+}
+
+extension Schema.GraphQLType.Field.TypeReference {
+    
+    fileprivate func embed(returnType: Schema.GraphQLType.Field.TypeReference) -> Schema.GraphQLType.Field.TypeReference {
+        switch (returnType, self) {
+        case (.concrete, .concrete):
+            return returnType
+        case (.complex(let definition, let ofType), .concrete) where definition.kind == .nonNull:
+            return ofType
+        case (.complex, .concrete):
+            return returnType
+        case (.complex(let lhs, _), .complex(let rhs, _)) where lhs.kind == .nonNull && rhs.kind == .nonNull:
+            return returnType
+        case (_, .complex(let definition, let ofType)):
+            return .complex(definition, ofType: ofType.embed(returnType: returnType))
+        }
     }
     
 }

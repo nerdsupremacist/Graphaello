@@ -13,7 +13,8 @@ struct MutationStruct: ExtraValuesSwiftCodeTransformable {
     
     func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
         return [
-            "swiftType": mutation.returnType.swiftType(api: mutation.api.name),
+            "swiftUnderlyingType": mutation.returnType.swiftType(api: mutation.api.name),
+            "swiftType": mutation.returnType.swiftType(api: mutation.api.name, for: mutation.referencedFragment),
             "queryRendererArguments": mutation.queryRendererArguments,
             "queryArgumentAssignments": mutation.queryArgumentAssignments,
             "expression": Stage.Cleaned.Path(resolved: mutation.path,

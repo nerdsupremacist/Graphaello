@@ -24,6 +24,11 @@ extension Struct where CurrentStage: ResolvedStage {
         return context[.mutations]
     }
     
+    var additionalReferencedAPIs: OrderedSet<AdditionalReferencedAPI<CurrentStage>> {
+        let types = Dictionary(properties.filter { $0.graphqlPath == nil }.map { ($0.type, $0) }) { $1 }
+        return OrderedSet(mutations.map { AdditionalReferencedAPI(api: $0.api, property: types[$0.api.name]) })
+    }
+    
     init(code: SourceCode,
          name: String,
          properties: [Property<CurrentStage>],

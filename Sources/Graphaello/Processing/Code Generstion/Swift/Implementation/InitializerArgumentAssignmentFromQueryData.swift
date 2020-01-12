@@ -21,10 +21,15 @@ extension Struct where CurrentStage == Stage.Prepared {
             .map { InitializerArgumentAssignmentFromQueryData(name: $0.name,
                                                               expression: $0.expression(in: self)) }
         
+        let extraAPIArguments = additionalReferencedAPIs
+            .filter { $0.property == nil }
+            .map { InitializerArgumentAssignmentFromQueryData(name: $0.api.name.camelized,
+                                                              expression: $0.expression(in: self)) }
+        
         let queryArgument = query != nil ? [InitializerArgumentAssignmentFromQueryData(name: "data", expression: "data")] : []
         let fragmentArguments = fragments.map { InitializerArgumentAssignmentFromQueryData(name: $0.target.name.camelized, expression: $0.target.name.camelized) }
         
-        return stockArguments + queryArgument + fragmentArguments
+        return stockArguments + extraAPIArguments + queryArgument + fragmentArguments
     }
     
 }
@@ -45,4 +50,13 @@ extension Property where CurrentStage == Stage.Prepared {
         return PagingFromFragment(path: path, query: query)
     }
 
+}
+
+extension AdditionalReferencedAPI {
+    
+    fileprivate func expression(in graphQlStruct: Struct<Stage.Prepared>) -> CodeTransformable {
+        guard api != graphQlStruct.query?.api else { return "self" }
+        return api.name.camelized
+    }
+    
 }

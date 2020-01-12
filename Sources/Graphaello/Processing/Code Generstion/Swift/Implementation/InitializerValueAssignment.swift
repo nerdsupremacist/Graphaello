@@ -20,7 +20,7 @@ extension Struct where CurrentStage == Stage.Prepared {
         return properties.map { property in
             switch property.graphqlPath {
             case .some(let path):
-                let expression = path.initializerExpression() ?? property.name
+                let expression = path.initializerExpression(in: self) ?? property.name
                 return InitializerValueAssignment(name: property.name,
                                                   expression: "GraphQL(\(expression))")
             case .none:
@@ -33,10 +33,11 @@ extension Struct where CurrentStage == Stage.Prepared {
 
 extension Stage.Cleaned.Path {
 
-    func initializerExpression() -> String? {
+    func initializerExpression<Stage: ResolvedStage>(in parent: Struct<Stage>) -> String? {
         if resolved.isMutation {
-            // TODO: fix naming
-            return ".init(api: \(resolved.validated.api.name.camelized))"
+            let referencedAPI = parent.additionalReferencedAPIs.first { $0.api == resolved.validated.api } ?! fatalError()
+            let name = referencedAPI.property?.name ?? referencedAPI.api.name.camelized
+            return ".init(api: \(name))"
         }
 
         if resolved.isConnection {

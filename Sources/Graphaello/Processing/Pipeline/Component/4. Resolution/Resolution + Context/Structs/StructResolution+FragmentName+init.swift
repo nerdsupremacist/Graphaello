@@ -23,6 +23,8 @@ extension StructResolution.FragmentName {
         case let expression as ArrayExprSyntax:
             guard let syntax = Array(expression.elements).single()?.expression else { throw GraphQLFragmentResolverError.invalidTypeNameForFragment(expression.description) }
             try self.init(syntax: syntax)
+        case let expression as ArrayTypeSyntax:
+            try self.init(syntax: expression.elementType)
         case let expression as OptionalTypeSyntax:
             try self.init(syntax: expression.wrappedType)
         case let expression as MemberTypeIdentifierSyntax:

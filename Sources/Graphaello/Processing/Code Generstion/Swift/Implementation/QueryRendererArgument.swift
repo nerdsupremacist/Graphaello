@@ -22,6 +22,11 @@ extension Struct where CurrentStage: ResolvedStage {
         let argumentsFromStruct = properties
             .compactMap { $0.directArgument }
             .filter { $0.type != api }
+        
+        let extraAPIArguments = additionalReferencedAPIs
+            .filter { $0.property == nil }
+            .filter { $0.api.name != api }
+            .map { QueryRendererArgument(name: $0.api.name.camelized, type: $0.api.name, expression: nil) }
 
         let argumentsFromQuery = query?
             .arguments
@@ -32,7 +37,7 @@ extension Struct where CurrentStage: ResolvedStage {
                                              expression: argument.defaultValue)
             } ?? []
 
-        return argumentsFromQuery + argumentsFromStruct
+        return argumentsFromQuery + argumentsFromStruct + extraAPIArguments
     }
     
 }
