@@ -6,9 +6,20 @@
 //
 
 import Foundation
+import Stencil
 
-struct MutationStruct: SwiftCodeTransformable {
+struct MutationStruct: ExtraValuesSwiftCodeTransformable {
     let mutation: GraphQLMutation
+    
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
+        return [
+            "swiftType": mutation.returnType.swiftType(api: mutation.api.name),
+            "queryRendererArguments": mutation.queryRendererArguments,
+            "queryArgumentAssignments": mutation.queryArgumentAssignments,
+            "expression": Stage.Cleaned.Path(resolved: mutation.path,
+                                             components: mutation.path.validated.components.map { Stage.Cleaned.Component(validated: $0, alias: nil) }).expression()
+        ]
+    }
 }
 
 extension Struct where CurrentStage: ResolvedStage {

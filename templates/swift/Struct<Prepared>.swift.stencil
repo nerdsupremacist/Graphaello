@@ -33,5 +33,6 @@ extension {{ query.api.name }} {
 }
 {% endif %}
 
+{{ mutationStructs|code }}
 {{ missingFragmentsStructs|code }}
 {{ missingReferencedFragments|code }}

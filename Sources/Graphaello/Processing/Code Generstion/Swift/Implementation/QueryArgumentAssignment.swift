@@ -60,6 +60,15 @@ extension GraphQLConnectionQuery {
 
 }
 
+extension GraphQLMutation {
+    
+    var queryArgumentAssignments: [QueryArgumentAssignment] {
+        return arguments.map { QueryArgumentAssignment(name: $0.name,
+                                                       expression: $0.assignmentExpression) }
+    }
+    
+}
+
 extension GraphQLArgument {
 
     var assignmentExpression: ExprSyntax {

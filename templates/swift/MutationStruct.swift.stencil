@@ -1,28 +1,40 @@
-struct {{ mutationStruct.mutation.name }}{% if mutationStruct.mutation.referencedFragment %}<V: Fragment>{% endif %}: Mutation{% if mutationStruct.mutation.referencedFragment %}where V.UnderlyingType == {{ mutationStruct.mutation.referencedFragment.target.name|upperCamelized }}{% endif %} {
+extension {{ structPrepared.name }} {
+    struct {{ mutationStruct.mutation.name }}{% if mutationStruct.mutation.referencedFragment %}<V: Fragment>{% endif %}: Mutation{% if mutationStruct.mutation.referencedFragment %} where V.UnderlyingType == {{ swiftType }}{% endif %} {
 
-    {% if mutationStruct.mutation.referencedFragment %}
-    typealias Value == V
-    {% else %}
-    typealias Value == Bool
-    {% endif %}
+        {% if mutationStruct.mutation.referencedFragment %}
+        typealias Value = V
+        {% else %}
+        typealias Value = {{ swiftType }}
+        {% endif %}
+        
+        @State private(set) var isLoading = false
+        @State private(set) var error: Error? = nil
+        @State private(set) var value: Value? = .none
 
-    let api: {{ mutationStruct.mutation.api.name }}
+        let api: {{ mutationStruct.mutation.api.name }}
+    }
 }
 
 {% if mutationStruct.mutation.referencedFragment %}
-extension {{ mutationStruct.mutation.name }} where V == Apollo{{ mutationStruct.mutation.api.name }}.{{ mutationStruct.mutation.name }}Mutation {
-
-    func commit() {
-        fatalError()
-    }
-
-}
+extension {{ structPrepared.name }}.{{ mutationStruct.mutation.name }} where V == Apollo{{ mutationStruct.mutation.api.name }}. {
 {% else %}
-extension {{ mutationStruct.mutation.name }} {
+extension {{ structPrepared.name }}.{{ mutationStruct.mutation.name }} {
+{% endif %}
 
-    func commit() {
-        fatalError()
+    @discardableResult
+    func commit({{ queryRendererArguments|codeArray|join:", " }}) -> Self {
+        isLoading = true
+        api.client.perform(mutation: Apollo{{ mutationStruct.mutation.api.name }}.{{ mutationStruct.mutation.name }}Mutation({{ queryArgumentAssignments|codeArray|join:", " }})) { result in
+            self.isLoading = false
+            switch result {
+            case .success(let response):
+                guard let data = response.data else { return }
+                self.value = {{ expression }}
+            case .failure(let error):
+                self.error = error
+            }
+        }
+        return self
     }
 
 }
-{% endif %}

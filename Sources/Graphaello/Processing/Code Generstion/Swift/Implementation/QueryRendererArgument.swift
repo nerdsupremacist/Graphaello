@@ -37,6 +37,20 @@ extension Struct where CurrentStage: ResolvedStage {
     
 }
 
+extension GraphQLMutation {
+    
+    var queryRendererArguments: [QueryRendererArgument] {
+        return arguments
+            .filter { !$0.isHardCoded }
+            .map { argument in
+                return QueryRendererArgument(name: argument.name.camelized,
+                                             type: argument.type.swiftType(api: api.name),
+                                             expression: argument.defaultValue)
+            }
+    }
+    
+}
+
 extension Property where CurrentStage: GraphQLStage {
     
     fileprivate var directArgument: QueryRendererArgument? {

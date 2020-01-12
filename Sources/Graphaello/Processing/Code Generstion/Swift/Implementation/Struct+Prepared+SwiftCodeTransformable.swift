@@ -25,6 +25,7 @@ extension Struct: ExtraValuesSwiftCodeTransformable where CurrentStage == Stage.
             "queryRendererArguments": queryRendererArguments,
             "queryArgumentAssignments": queryArgumentAssignments,
             "initializerArgumentAssignmentFromQueryData": initializerArgumentAssignmentFromQueryData,
+            "mutationStructs": mutationStructs,
             "missingFragmentsStructs": Array(missingFragmentsStructs),
             "missingReferencedFragments": Array(missingReferencedFragments),
         ]

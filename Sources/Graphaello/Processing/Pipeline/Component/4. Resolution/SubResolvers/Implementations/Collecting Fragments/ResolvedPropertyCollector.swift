@@ -61,6 +61,8 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
                     let mutation = GraphQLMutation(api: path.validated.api,
                                                    target: path.validated.target,
                                                    name: name,
+                                                   path: path,
+                                                   returnType: path.validated.returnType,
                                                    object: object,
                                                    referencedFragment: path.referencedFragment?.fragment)
                     

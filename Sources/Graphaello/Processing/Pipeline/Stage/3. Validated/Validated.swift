@@ -60,3 +60,29 @@ extension Context.Key where T == Stage.Validated.Path? {
     static let validated = Context.Key<Stage.Validated.Path?>()
     
 }
+
+extension Stage.Validated.Path {
+    
+    var returnType: Schema.GraphQLType.Field.TypeReference {
+        guard let last = components.last else { fatalError() }
+        return components
+            .dropFirst()
+            .reversed()
+            .reduce(last.fieldType) { returnType, component in
+                
+                switch (returnType, component.fieldType) {
+                case (.concrete, .concrete):
+                    return returnType
+                case (.complex(let definition, let ofType), .concrete) where definition.kind == .nonNull:
+                    return ofType
+                case (.complex, .concrete):
+                    return returnType
+                case (.complex(let lhs, _), .complex(let rhs, _)) where lhs.kind == .nonNull && rhs.kind == .nonNull:
+                    return returnType
+                case (_, .complex(let definition, _)):
+                    return .complex(definition, ofType: returnType)
+                }
+            }
+    }
+    
+}
