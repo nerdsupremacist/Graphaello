@@ -357,6 +357,10 @@ struct GraphQL<Decoder: GraphQLValueDecoder>: DynamicProperty {
             value = newValue
         }
     }
+    
+    var projectedValue: Binding<Decoder.Decoded> {
+        return Binding(get: { return self.wrappedValue }, set: { newValue in self.wrappedValue = newValue })
+    }
 
     init<T: Target>(_: @autoclosure () -> GraphQLPath<T, Decoder.Encoded>) {
         fatalError("Initializer with path only should never be used")
