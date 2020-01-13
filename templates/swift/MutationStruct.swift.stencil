@@ -1,28 +1,23 @@
 extension {{ structPrepared.name }} {
-    class {{ mutationStruct.mutation.name }}{% if mutationStruct.mutation.referencedFragment %}<V: Fragment>{% endif %}: Mutation{% if mutationStruct.mutation.referencedFragment %} where V.UnderlyingType == {{ swiftUnderlyingType }}{% endif %} {
+    class {{ mutationStruct.mutation.name }}{% if mutationStruct.mutation.referencedFragment %}<V: Fragment>{% endif %}: Mutation, ObservableObject{% if mutationStruct.mutation.referencedFragment %} where V.UnderlyingType == {{ swiftUnderlyingType }}{% endif %} {
 
         {% if mutationStruct.mutation.referencedFragment %}
         typealias Value = V
         {% else %}
         typealias Value = {{ swiftType }}
         {% endif %}
-        
-        @Published private var _isLoading = false
-        @Published private var _error: Error? = nil
-        @Published private var _value: Value? = .none
 
-        private let api: {{ mutationStruct.mutation.api.name }}
-        
-        var isLoading: AnyPublisher<Bool, Never> {
-            return $_isLoading.eraseToAnyPublisher()
+        @Published private var internalIsLoading = false
+        private let subject = PassthroughSubject<Value, Error>()
+
+        private let api: Todos
+
+        var isLoading: Bool {
+            return internalIsLoading
         }
-        
-        var value: AnyPublisher<Value, Never> {
-            return $_value.compactMap { $0 }.eraseToAnyPublisher()
-        }
-        
-        var error: AnyPublisher<Error, Never> {
-            return $_error.compactMap { $0 }.eraseToAnyPublisher()
+
+        var value: AnyPublisher<Value, Error> {
+            return subject.eraseToAnyPublisher()
         }
         
         init(api: {{ mutationStruct.mutation.api.name }}) {
@@ -39,15 +34,15 @@ extension {{ structPrepared.name }}.{{ mutationStruct.mutation.name }} {
 
     @discardableResult
     func commit({{ queryRendererArguments|codeArray|join:", " }}) -> Self {
-        _isLoading = true
+        internalIsLoading = true
         api.client.perform(mutation: Apollo{{ mutationStruct.mutation.api.name }}.{{ mutationStruct.mutation.name }}Mutation({{ queryArgumentAssignments|codeArray|join:", " }})) { result in
-            self._isLoading = false
+            self.internalIsLoading = false
             switch result {
             case let .success(response):
                 guard let data = response.data else { return }
-                self._value = {{ expression }}
+                self.subject.send({{ expression }})
             case let .failure(error):
-                self._error = error
+                self.subject.send(completion: .failure(error))
             }
         }
         return self

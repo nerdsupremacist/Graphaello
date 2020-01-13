@@ -30,12 +30,11 @@ extension Optional: Fragment where Wrapped: Fragment {
     typealias UnderlyingType = Wrapped.UnderlyingType?
 }
 
-protocol Mutation {
+protocol Mutation: ObservableObject {
     associatedtype Value
     
-    var isLoading: AnyPublisher<Bool, Never> { get }
-    var value: AnyPublisher<Value, Never> { get }
-    var error: AnyPublisher<Error, Never> { get }
+    var isLoading: Bool { get }
+    var value: AnyPublisher<Value, Error> { get }
 }
 
 // MARK: - Basic API: Paths
@@ -347,37 +346,70 @@ enum NoOpDecoder<T>: GraphQLValueDecoder {
     }
 }
 
+// MARK: - Basic API: HACK - AnyObservableObject
+
+private class AnyObservableObject: ObservableObject {
+    let objectWillChange = ObservableObjectPublisher()
+    var cancellable: AnyCancellable? = nil
+
+    func use<O: ObservableObject>(_ object: O) {
+        cancellable?.cancel()
+        cancellable = object.objectWillChange.sink { [unowned self] _ in self.objectWillChange.send() }
+    }
+}
+
 // MARK: - Basic API: Graph QL Property Wrapper
 
 @propertyWrapper
 struct GraphQL<Decoder: GraphQLValueDecoder>: DynamicProperty {
     @State
     private var value: Decoder.Decoded
-    
+
+    @ObservedObject
+    private var observed: AnyObservableObject = AnyObservableObject()
+    private let updateObserved: ((Decoder.Decoded) -> Void)?
+
     var wrappedValue: Decoder.Decoded {
         get {
             return value
         }
         nonmutating set {
             value = newValue
+            updateObserved?(newValue)
         }
     }
-    
+
     var projectedValue: Binding<Decoder.Decoded> {
-        return Binding(get: { return self.wrappedValue }, set: { newValue in self.wrappedValue = newValue })
+        return Binding(get: { self.wrappedValue }, set: { newValue in self.wrappedValue = newValue })
     }
 
     init<T: Target>(_: @autoclosure () -> GraphQLPath<T, Decoder.Encoded>) {
         fatalError("Initializer with path only should never be used")
     }
-    
+
     init<T: Target, Value>(_: @autoclosure () -> GraphQLPath<T, Value>) where Decoder == NoOpDecoder<Value> {
         fatalError("Initializer with path only should never be used")
     }
 
     fileprivate init(_ wrappedValue: Decoder.Encoded) {
-        self._value = State(initialValue: try! Decoder.decode(encoded: wrappedValue))
+        _value = State(initialValue: try! Decoder.decode(encoded: wrappedValue))
+        updateObserved = nil
     }
+}
+
+extension GraphQL where Decoder.Decoded: ObservableObject {
+
+    fileprivate init(_ wrappedValue: Decoder.Encoded) {
+        let value = try! Decoder.decode(encoded: wrappedValue)
+        _value = State(initialValue: value)
+
+        let observed = AnyObservableObject()
+        observed.use(value)
+
+        self.observed = observed
+        updateObserved = { observed.use($0) }
+    }
+
 }
 
 extension GraphQL {
