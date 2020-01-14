@@ -38,10 +38,10 @@ extension Struct where CurrentStage: ResolvedStage {
          mutations: [GraphQLMutation]) {
         
         self.init(code: code, name: name, properties: properties) {
-            (.fragments ~> fragments)
-            (.query ~> query)
-            (.connectionQueries ~> connectionQueries)
-            (.mutations ~> mutations)
+            .fragments ~> fragments;
+            .query ~> query;
+            .connectionQueries ~> connectionQueries;
+            .mutations ~> mutations;
         }
     }
     

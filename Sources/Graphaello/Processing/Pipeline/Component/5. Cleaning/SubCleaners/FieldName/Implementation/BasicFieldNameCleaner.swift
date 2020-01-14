@@ -37,9 +37,9 @@ struct BasicFieldNameCleaner: FieldNameCleaner {
         
         return fragments.map { fragments in
             resolved.with {
-                (.query ~> query.value)
-                (.fragments ~> fragments)
-                (.connectionQueries ~> connectionQueries)
+                .query ~> query.value;
+                .fragments ~> fragments;
+                .connectionQueries ~> connectionQueries;
             }
         }
     }

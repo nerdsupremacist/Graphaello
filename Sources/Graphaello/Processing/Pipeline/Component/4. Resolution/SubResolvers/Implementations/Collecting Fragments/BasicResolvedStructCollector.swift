@@ -21,10 +21,10 @@ struct BasicResolvedStructCollector<Collector: ResolvedValueCollector>: Resolved
             }
             .map { values in
                 let initialResult = validated.with(properties: properties) {
-                    (.fragments ~> [])
-                    (.query ~> nil)
-                    (.connectionQueries ~> [])
-                    (.mutations ~> [])
+                    .fragments ~> [];
+                    .query ~> nil;
+                    .connectionQueries ~> [];
+                    .mutations ~> [];
                 }
                 
                 return try values.reduce(initialResult) { try $0 + $1 }

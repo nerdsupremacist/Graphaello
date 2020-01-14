@@ -20,8 +20,8 @@ struct BasicArgumentCleaner: ArgumentCleaner {
         
         return connectionQueries.map { connectionQueries in
             resolved.with {
-                (.query ~> query.value)
-                (.connectionQueries ~> connectionQueries)
+                .query ~> query.value;
+                .connectionQueries ~> connectionQueries;
             }
         }
     }

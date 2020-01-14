@@ -7,17 +7,12 @@ extension {{ structPrepared.name }} {
         typealias Value = {{ swiftType }}
         {% endif %}
 
-        @Published private var internalIsLoading = false
-        private let subject = PassthroughSubject<Value, Error>()
+        @Published private var mutationCounter = 0
 
         private let api: Todos
 
         var isLoading: Bool {
-            return internalIsLoading
-        }
-
-        var value: AnyPublisher<Value, Error> {
-            return subject.eraseToAnyPublisher()
+            return mutationCounter > 0
         }
         
         init(api: {{ mutationStruct.mutation.api.name }}) {
@@ -33,16 +28,16 @@ extension {{ structPrepared.name }}.{{ mutationStruct.mutation.name }} {
 {% endif %}
 
     @discardableResult
-    func commit({{ queryRendererArguments|codeArray|join:", " }}) -> Self {
-        internalIsLoading = true
+    func commit({{ queryRendererArguments|codeArray|join:", " }}, completion: ((Result<Value, Error>) -> Void)? = nil) -> Self {
+        mutationCounter += 1
         api.client.perform(mutation: Apollo{{ mutationStruct.mutation.api.name }}.{{ mutationStruct.mutation.name }}Mutation({{ queryArgumentAssignments|codeArray|join:", " }})) { result in
-            self.internalIsLoading = false
+            self.mutationCounter -= 1
             switch result {
             case let .success(response):
                 guard let data = response.data else { return }
-                self.subject.send({{ expression }})
+                completion?(.success({{ expression }}))
             case let .failure(error):
-                self.subject.send(completion: .failure(error))
+                completion?(.failure(error))
             }
         }
         return self

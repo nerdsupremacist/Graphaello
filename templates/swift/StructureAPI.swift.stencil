@@ -2,9 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 import Apollo
+import Combine
 import Foundation
 import SwiftUI
-import Combine
 
 // MARK: Basic API
 
@@ -12,7 +12,7 @@ protocol Target {}
 
 protocol API: Target {}
 
-protocol MutationTarget: Target { }
+protocol MutationTarget: Target {}
 
 protocol Connection: Target {
     associatedtype Node
@@ -32,9 +32,16 @@ extension Optional: Fragment where Wrapped: Fragment {
 
 protocol Mutation: ObservableObject {
     associatedtype Value
-    
+
     var isLoading: Bool { get }
-    var value: AnyPublisher<Value, Error> { get }
+}
+
+protocol CurrentValueMutation: ObservableObject {
+    associatedtype Value
+
+    var isLoading: Bool { get }
+    var value: Value { get }
+    var error: Error? { get }
 }
 
 // MARK: - Basic API: Paths
@@ -324,7 +331,7 @@ extension PagingView {
 protocol GraphQLValueDecoder {
     associatedtype Encoded
     associatedtype Decoded
-    
+
     static func decode(encoded: Encoded) throws -> Decoded
 }
 
@@ -350,7 +357,7 @@ enum NoOpDecoder<T>: GraphQLValueDecoder {
 
 private class AnyObservableObject: ObservableObject {
     let objectWillChange = ObservableObjectPublisher()
-    var cancellable: AnyCancellable? = nil
+    var cancellable: AnyCancellable?
 
     func use<O: ObservableObject>(_ object: O) {
         cancellable?.cancel()
@@ -398,7 +405,6 @@ struct GraphQL<Decoder: GraphQLValueDecoder>: DynamicProperty {
 }
 
 extension GraphQL where Decoder.Decoded: ObservableObject {
-
     fileprivate init(_ wrappedValue: Decoder.Encoded) {
         let value = try! Decoder.decode(encoded: wrappedValue)
         _value = State(initialValue: value)
@@ -409,7 +415,6 @@ extension GraphQL where Decoder.Decoded: ObservableObject {
         self.observed = observed
         updateObserved = { observed.use($0) }
     }
-
 }
 
 extension GraphQL {
@@ -429,7 +434,6 @@ extension GraphQL {
 }
 
 extension GraphQL {
-
     init<T: MutationTarget, MutationType: Mutation>(_: @autoclosure () -> GraphQLPath<T, MutationType.Value>) where Decoder == NoOpDecoder<MutationType> {
         fatalError("Initializer with path only should never be used")
     }
@@ -437,7 +441,16 @@ extension GraphQL {
     init<T: MutationTarget, MutationType: Mutation>(_: @autoclosure () -> GraphQLFragmentPath<T, MutationType.Value.UnderlyingType>) where Decoder == NoOpDecoder<MutationType>, MutationType.Value: Fragment {
         fatalError("Initializer with path only should never be used")
     }
+}
 
+extension GraphQL {
+    init<T: Target, M: MutationTarget, MutationType: CurrentValueMutation>(_: @autoclosure () -> GraphQLPath<T, MutationType.Value>, mutation _: @autoclosure () -> GraphQLPath<M, MutationType.Value>) where Decoder == NoOpDecoder<MutationType> {
+        fatalError("Initializer with path only should never be used")
+    }
+
+    init<T: Target, M: MutationTarget, MutationType: CurrentValueMutation>(_: @autoclosure () -> GraphQLFragmentPath<T, MutationType.Value.UnderlyingType>, mutation _: @autoclosure () -> GraphQLFragmentPath<M, MutationType.Value.UnderlyingType>) where Decoder == NoOpDecoder<MutationType>, MutationType.Value: Fragment {
+        fatalError("Initializer with path only should never be used")
+    }
 }
 
 // MARK: - Basic API: Type Conversion
