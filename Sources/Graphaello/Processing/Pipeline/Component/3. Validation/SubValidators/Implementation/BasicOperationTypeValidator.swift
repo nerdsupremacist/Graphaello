@@ -30,7 +30,7 @@ struct BasicOperationTypeValidator: OperationTypeValidator {
         case (.complex(let outerListDefinition, .complex(let nonNullDefinition, .complex(let innerListDefinition, .concrete(let itemDefinition)))), .flatten) where outerListDefinition.kind == .list && nonNullDefinition.kind == .list && innerListDefinition.kind == .list:
             return .complex(outerListDefinition, ofType: .concrete(itemDefinition))
 
-        case (_, .withDefault):
+        case (_, .withDefault), (_, .nonNull):
             return .complex(.init(kind: .nonNull, name: nil), ofType: returnType)
 
         default:

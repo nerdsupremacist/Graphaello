@@ -34,6 +34,10 @@ extension SubParser {
                 guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
                 return try parent.parse(from: base).appending(operation: .flatten)
 
+            case "_nonNull":
+                guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
+                return try parent.parse(from: base).appending(operation: .nonNull)
+
             case "_withDefault":
                 guard let expression = Array(expression.argumentList).single()?.expression,
                     let base = called.base else { fatalError() }

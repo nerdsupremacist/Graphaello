@@ -55,7 +55,7 @@ extension Expression {
             default:
                 fatalError()
             }
-        case .operation(.withDefault, let expression):
+        case .operation(.nonNull, let expression), .operation(.withDefault, let expression):
             guard case .optional(let kind) = expression.kind else { fatalError() }
             return kind
         }
@@ -107,6 +107,8 @@ extension Expression {
             return "(\(expression.expression())).flatMap { $0 }"
         case .operation(.withDefault(let defaultValue), let expression):
             return "\(expression.expression()) ?? \(defaultValue.description)"
+        case .operation(.nonNull, let expression):
+            return "\(expression.expression())!"
         case (.attributePath(let path, .none)):
             return path.expression()
         case (.attributePath(let path, .some(let expression))):
