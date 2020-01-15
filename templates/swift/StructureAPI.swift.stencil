@@ -125,6 +125,12 @@ extension GraphQLPath {
     }
 }
 
+extension GraphQLFragmentPath {
+    func _withDefault<T>(_: @autoclosure () -> T) -> GraphQLFragmentPath<TargetType, T> where UnderlyingType == T? {
+        return .init()
+    }
+}
+
 extension GraphQLPath {
     func _withDefault<T>(_ default: @autoclosure () -> T) -> GraphQLPath<TargetType, T> where Value == T? {
         return .init()

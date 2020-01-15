@@ -30,7 +30,7 @@ struct BasicComponentAliasingPropagator: ComponentAliasingPropagator {
         
         switch first.reference {
         
-        case .fragment, .casting(.up):
+        case .fragment, .casting(.up), .type:
             let rest = try propagate(components: Array(components.dropFirst()), from: object)
             return [Stage.Cleaned.Component(validated: first, alias: nil)] + rest
             

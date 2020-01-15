@@ -39,6 +39,10 @@ extension SourceCode {
         return Kind(rawValue: try decode(key: .kind))
     }
 
+    func accesibility() throws -> Accessibility {
+        return Accessibility(rawValue: try decode(key: "key.accessibility"))
+    }
+
     func length() throws -> Int64 {
         try decode(key: .length)
     }

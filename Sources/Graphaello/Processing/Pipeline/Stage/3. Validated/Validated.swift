@@ -13,6 +13,11 @@ extension Stage {
     // The GraphQL Paths have been type checked and bundled with the respective Types
     // + All default arguments have been injected.
     enum Validated: GraphQLStage {
+        enum TypeReference {
+            case concrete(Schema.GraphQLType.Field.TypeReference)
+            case field(Schema.GraphQLType.Field.TypeReference)
+        }
+
         struct Component {
             enum Reference {
                 enum Casting {
@@ -23,6 +28,7 @@ extension Stage {
                 case field(Schema.GraphQLType.Field)
                 case fragment
                 case casting(Casting)
+                case type(Schema.GraphQLType.Field.TypeReference)
             }
             
             let reference: Reference
@@ -43,16 +49,36 @@ extension Stage {
 }
 
 extension Stage.Validated.Component {
-    
-    var fieldType: Schema.GraphQLType.Field.TypeReference {
+
+    var type: Stage.Validated.TypeReference {
         switch reference {
         case .field(let field):
-            return field.type
+            return .field(field.type)
         case .fragment, .casting:
-            return .concrete(.init(kind: underlyingType.kind, name: underlyingType.name))
+            return .field(.concrete(.init(kind: underlyingType.kind, name: underlyingType.name)))
+        case .type(let type):
+            return .concrete(type)
         }
     }
     
+    var fieldType: Schema.GraphQLType.Field.TypeReference? {
+        guard case .field(let fieldType) = type else { return nil }
+        return fieldType
+    }
+    
+}
+
+extension Stage.Validated.TypeReference {
+
+    var type: Schema.GraphQLType.Field.TypeReference {
+        switch self {
+        case .concrete(let type):
+            return type
+        case .field(let type):
+            return type
+        }
+    }
+
 }
 
 extension Context.Key where T == Stage.Validated.Path? {
@@ -62,17 +88,43 @@ extension Context.Key where T == Stage.Validated.Path? {
 }
 
 extension Stage.Validated.Path {
+
+    var returnType: Schema.GraphQLType.Field.TypeReference {
+        return components.returnType
+    }
+
+}
+
+extension RandomAccessCollection where Element == Stage.Validated.Component {
     
     var returnType: Schema.GraphQLType.Field.TypeReference {
-        guard let last = components.last else { fatalError() }
-        return components
-            .dropLast()
+        guard let last = last else { fatalError() }
+        return dropLast()
             .reversed()
-            .reduce(last.fieldType) { returnType, component in
-                component.fieldType.embed(returnType: returnType)
+            .reduce(last.type) { returnType, component in
+                switch returnType {
+                case .concrete:
+                    return returnType
+                case .field(let returnType):
+                    return component.embed(returnType: returnType)
+                }
             }
+            .type
     }
     
+}
+
+extension Stage.Validated.Component {
+
+    fileprivate func embed(returnType: Schema.GraphQLType.Field.TypeReference) -> Stage.Validated.TypeReference {
+        switch type {
+        case .concrete(let type):
+            return .concrete(type.embed(returnType: returnType))
+        case .field(let type):
+            return .field(type.embed(returnType: returnType))
+        }
+    }
+
 }
 
 extension Schema.GraphQLType.Field.TypeReference {

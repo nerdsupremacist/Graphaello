@@ -13,7 +13,7 @@ struct ResolvedComponentCollector: ResolvedValueCollector {
                  in parent: Stage.Resolved.Path) -> StructResolution.Result<CollectedPath.Valid?> {
         
         switch (value.reference, value.parsed) {
-        case (_, .operation):
+        case (_, .operation), (.type, _):
             return .resolved(nil)
         case (.casting(.up), _):
             return .resolved(nil)

@@ -9,6 +9,7 @@
 import Foundation
 
 struct BasicComponentValidator: ComponentValidator {
+    let operationValidator: OperationTypeValidator
     let transpiler: GraphQLToSwiftTranspiler
     
     func validate(component: Stage.Parsed.Component,
@@ -17,7 +18,8 @@ struct BasicComponentValidator: ComponentValidator {
         switch (component, context.type) {
 
         case (.operation(let operation), _):
-            let component = Stage.Validated.Component(reference: .fragment,
+            let type = try operationValidator.validate(operation: operation, using: context)
+            let component = Stage.Validated.Component(reference: .type(type),
                                                       underlyingType: context.type.graphQLType,
                                                       parsed: component)
 
@@ -87,8 +89,8 @@ struct BasicComponentValidator: ComponentValidator {
 
 extension BasicComponentValidator {
 
-    init(transpiler: () -> GraphQLToSwiftTranspiler) {
-        self.init(transpiler: transpiler())
+    init(operationValidator: () -> OperationTypeValidator, transpiler: () -> GraphQLToSwiftTranspiler) {
+        self.init(operationValidator: operationValidator(), transpiler: transpiler())
     }
 
 }

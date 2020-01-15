@@ -70,9 +70,10 @@ enum PipelineFactory {
     private static func create() -> Validator {
         return BasicValidator {
             BasicPathValidator {
-                BasicComponentValidator {
-                    BasicGraphQLToSwiftTranspiler()
-                }
+                BasicComponentValidator(
+                    operationValidator: { BasicOperationTypeValidator() },
+                    transpiler: { BasicGraphQLToSwiftTranspiler() }
+                )
             }
         }
     }
