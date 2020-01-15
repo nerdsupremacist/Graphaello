@@ -28,11 +28,16 @@ extension SubParser {
 
             case "_compactMap":
                 guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
-                return try parent.parse(from: base)
+                return try parent.parse(from: base).appending(operation: .compactMap)
 
             case "_flatten":
                 guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
-                return try parent.parse(from: base)
+                return try parent.parse(from: base).appending(operation: .flatten)
+
+            case "_withDefault":
+                guard let expression = Array(expression.argumentList).single()?.expression,
+                    let base = called.base else { fatalError() }
+                return try parent.parse(from: base).appending(operation: .withDefault(expression))
 
             default:
                 break
@@ -62,6 +67,11 @@ extension Stage.Parsed.Path {
 
     fileprivate func appending(name: String, arguments: [Field.Argument]) throws -> Self {
         return .init(apiName: apiName, target: target, components: components + [.call(name, arguments)])
+    }
+
+
+    fileprivate func appending(operation: Operation) throws -> Self {
+        return .init(apiName: apiName, target: target, components: components + [.operation(operation)])
     }
 
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftSyntax
 
 extension Stage {
 
@@ -18,6 +19,7 @@ extension Stage {
             case property(String)
             case fragment
             case call(String, [Field.Argument])
+            case operation(Operation)
         }
 
         struct Path {

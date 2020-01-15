@@ -82,17 +82,31 @@ extension Stage.Cleaned.Component {
     fileprivate func path(referencedFragment: GraphQLFragment?) -> [AttributePath] {
         switch (validated.reference, validated.parsed, referencedFragment) {
         case (.casting(.down), _, _):
-            return [AttributePath(name: "as\(validated.underlyingType.name)", kind: .optional(.value))]
+            return [
+                AttributePath(name: "as\(validated.underlyingType.name)",
+                              kind: .optional(.value))
+            ]
         case (.casting(.up), _, _):
             return []
+        case (_, .operation(let operation), _):
+            fatalError()
         case (_, .property(let name), _):
-            return [AttributePath(name: alias?.camelized ?? name.camelized, kind: .init(from: validated.fieldType))]
+            return [
+                AttributePath(name: alias?.camelized ?? name.camelized,
+                              kind: .init(from: validated.fieldType))
+            ]
         case (_, .fragment, .some(let fragment)):
-            return [AttributePath(name: "fragments", kind: .value), AttributePath(name: fragment.name.camelized, kind: .value)]
+            return [
+                AttributePath(name: "fragments", kind: .value),
+                AttributePath(name: fragment.name.camelized, kind: .value)
+            ]
         case (_, .fragment, .none):
             return []
         case (_, .call(let name, _), _):
-            return [AttributePath(name: alias?.camelized ?? name, kind: .init(from: validated.fieldType))]
+            return [
+                AttributePath(name: alias?.camelized ?? name,
+                              kind: .init(from: validated.fieldType))
+            ]
         }
     }
 

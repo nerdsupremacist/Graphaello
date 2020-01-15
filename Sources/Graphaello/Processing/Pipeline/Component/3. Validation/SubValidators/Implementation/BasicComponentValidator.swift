@@ -16,6 +16,13 @@ struct BasicComponentValidator: ComponentValidator {
         
         switch (component, context.type) {
 
+        case (.operation(let operation), _):
+            let component = Stage.Validated.Component(reference: .fragment,
+                                                      underlyingType: context.type.graphQLType,
+                                                      parsed: component)
+
+            return .init(component: component, type: context.type)
+
         case (.property(let name), .object(let type)):
             if let interface = type.interfaces?[name.upperCamelized] {
                 let type = try context.api[interface.name] ?!
