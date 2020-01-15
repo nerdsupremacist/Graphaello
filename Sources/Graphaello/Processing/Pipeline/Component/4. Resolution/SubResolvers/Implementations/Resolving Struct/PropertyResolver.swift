@@ -9,6 +9,7 @@
 import Foundation
 
 struct PropertyResolver<Resolver: ValueResolver>: ValueResolver where Resolver.Parent == Property<Stage.Validated>, Resolver.Value == Stage.Validated.Path, Resolver.Resolved == Stage.Resolved.Path {
+
     let resolver: Resolver
     
     func resolve(value: Property<Stage.Validated>,
@@ -25,7 +26,6 @@ struct PropertyResolver<Resolver: ValueResolver>: ValueResolver where Resolver.P
                 Property(code: value.code, name: value.name, type: value.type, graphqlPath: path)
             }
     }
-    
 }
 
 extension PropertyResolver {
