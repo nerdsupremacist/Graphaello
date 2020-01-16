@@ -18,7 +18,8 @@ extension Struct where CurrentStage == Stage.Prepared {
     var initializerArguments: [InitializerArgument] {
         let stockArguments = properties
             .filter { $0.graphqlPath?.resolved.isConnection ?? true }
-            .map { InitializerArgument(name: $0.name, type: $0.type) }
+            .map { InitializerArgument(name: $0.name,
+                                       type: $0.type.contains("->") ? "@escaping \($0.type)" : $0.type) }
         
         let extraAPIArguments = additionalReferencedAPIs.filter { $0.property == nil }.map { InitializerArgument(name: $0.api.name.camelized, type: $0.api.name) }
         

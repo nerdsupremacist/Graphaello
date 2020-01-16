@@ -60,7 +60,9 @@ extension Property where CurrentStage: GraphQLStage {
     
     fileprivate var directArgument: QueryRendererArgument? {
         guard graphqlPath == nil else { return nil }
-        return QueryRendererArgument(name: name, type: type, expression: nil)
+        return QueryRendererArgument(name: name,
+                                     type: type.contains("->") ? "@escaping \(type)" : type,
+                                     expression: nil)
     }
     
 }
