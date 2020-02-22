@@ -8,7 +8,9 @@ Graphaello is a Code Generation Command Line Tool that allows you to use propert
 Let's cut the chase and go directly to our first example of a View using Graphaello:
 
 ```swift
+// Define a Cell
 struct CharacterCell: View {
+    // Use the GraphQL Property Wrapper
     @GraphQL(StarWars.Person.name)
     var name: String?
 
@@ -23,6 +25,22 @@ struct CharacterCell: View {
         }
     }
 }
+
+// Define the List
+struct CharacterList: View {
+    @GraphQL(StarWars.allPeople._nonNull())
+    var characters: Paging<CharacterCell.Person>
+
+    var body: some View {
+        List {
+            PagingView(characters) { character in
+                CharacterCell(person: character)
+            }
+        }
+    }
+}
+
+let content = api.characterList()
 ```
 
 **And did I mention it's all type safe?!?!**
