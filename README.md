@@ -27,6 +27,14 @@ struct CharacterCell: View {
 
 **And did I mention it's all type safe?!?!**
 
+```swift
+@GraphQL(StarWars.Person.name)
+var name: String? // works
+
+@GraphQL(StarWars.Person.name)
+var name: Bool // doesn't work
+```
+
 ## Instalation
 
 Graphaello can be installed via Homebrew:
