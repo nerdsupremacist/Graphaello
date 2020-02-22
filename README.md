@@ -44,6 +44,8 @@ brew tap nerdsupremacist/graphaello
 brew install graphaello
 ```
 
+Please remember that Graphaello is in its early stages and is therefore not production ready. Use at your own caution. 
+
 ## Usage
 
 We will cover how to use Graphaello from two sides. 
