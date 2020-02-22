@@ -40,7 +40,7 @@ var name: Bool // doesn't work
 Graphaello can be installed via Homebrew:
 
 ```
-brew tap mmq/formulae https://bitbucket.ase.in.tum.de/scm/mmq/formulae.git
+brew tap nerdsupremacist/formulas
 brew install graphaello
 ```
 
