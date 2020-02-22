@@ -1,3 +1,5 @@
+![Low Effort Graphaello Logo](logo.png)
+
 # Graphaello
 
 Use GraphQL directly from your SwiftUI.
