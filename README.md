@@ -40,7 +40,7 @@ var name: Bool // doesn't work
 Graphaello can be installed via Homebrew:
 
 ```
-brew tap nerdsupremacist/formulas
+brew tap nerdsupremacist/graphaello
 brew install graphaello
 ```
 
