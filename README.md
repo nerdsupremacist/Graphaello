@@ -25,22 +25,6 @@ struct CharacterCell: View {
         }
     }
 }
-
-// Define the List
-struct CharacterList: View {
-    @GraphQL(StarWars.allPeople._nonNull())
-    var characters: Paging<CharacterCell.Person>
-
-    var body: some View {
-        List {
-            PagingView(characters) { character in
-                CharacterCell(person: character)
-            }
-        }
-    }
-}
-
-let content = api.characterList()
 ```
 
 **And did I mention it's all type safe?!?!**
