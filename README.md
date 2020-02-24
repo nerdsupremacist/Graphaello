@@ -13,6 +13,17 @@ The main features of Graphaello are:
 - Paging Support
 - Only write Swift
 
+## Examples
+
+| Countries        | Music      |
+| ------------- |-------------|
+| ![](https://github.com/nerdsupremacist/graphaello-countries-example/blob/master/demo.gif?raw=true)      | ![](https://github.com/nerdsupremacist/graphaello-music-example/blob/master/demo.gif?raw=true) |
+| Simple Hello World App that displays information about a lot of different countries | More complex App that uses Paging and a lot of reusable components |
+| Uses [Countries API](https://countries.trevorblades.com)      | Uses [GraphBrains](https://github.com/exogen/graphbrainz)      |
+| [Repo](https://github.com/nerdsupremacist/graphaello-countries-example) | [Repo](https://github.com/nerdsupremacist/graphaello-music-example)      |
+
+## TLDR?
+
 Let's cut the chase and go directly to our first example of a View using Graphaello:
 
 ```swift
