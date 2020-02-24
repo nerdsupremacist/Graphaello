@@ -12,7 +12,7 @@ The main features of Graphaello are:
 - Type-Safety
 - Reusable Components
 - Paging Support
-- Only write Swift
+- Only write Swift (your Swift code is your GraphQL code) 
 
 If you're looking for something like this, but for other platforms, Graphaello is heavily inspired by [Relay](https://github.com/facebook/relay).
 
