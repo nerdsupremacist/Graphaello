@@ -15,6 +15,8 @@ The main features of Graphaello are:
 
 ## Examples
 
+Code snippets are cool, but how does this look in a real project? Here are some Example Apps that you can take a look at.
+
 | Countries        | Music      |
 | ------------- |-------------|
 | ![](https://github.com/nerdsupremacist/graphaello-countries-example/blob/master/demo.gif?raw=true)      | ![](https://github.com/nerdsupremacist/graphaello-music-example/blob/master/demo.gif?raw=true) |
