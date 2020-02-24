@@ -13,6 +13,8 @@ The main features of Graphaello are:
 - Paging Support
 - Only write Swift
 
+If you're looking for something like this, but for other platforms, Graphaello is heavily inspired by [Relay](https://github.com/facebook/relay).
+
 ## Examples
 
 Code snippets are cool, but how does this look in a real project? Here are some Example Apps that you can take a look at.
