@@ -178,7 +178,9 @@ struct TodoCell: View {
             Spacer()
             
             Button(completed ? "Mark as not done" : "Mark as done) {
-              toggle.commit(id: self.id)
+              toggle.commit(id: self.id) { completed in 
+                self.completed = completed
+              } 
             }
 
             ActivityIndicator().animated(toggle.isLoading)
