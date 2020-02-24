@@ -180,7 +180,7 @@ struct TodoCell: View {
 
             Spacer()
             
-            Button(completed ? "Mark as not done" : "Mark as done) {
+            Button(completed ? "Mark as not done" : "Mark as done") {
               toggle.commit(id: self.id) { completed in 
                 self.completed = completed
               } 
