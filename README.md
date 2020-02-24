@@ -1,6 +1,6 @@
 ![Low Effort Graphaello Logo](logo.png)
 
-# Graphaello
+# Graphaello (Alpha)
 
 Use GraphQL directly from your SwiftUI Views.
 Graphaello is a Code Generation Command Line Tool that allows you to use property wrappers in your SwiftUI Views, to use data from GraphQL.
