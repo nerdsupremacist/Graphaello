@@ -5,6 +5,14 @@
 Use GraphQL directly from your SwiftUI Views.
 Graphaello is a Code Generation Command Line Tool that allows you to use property wrappers in your SwiftUI Views, to use data from GraphQL.
 
+The main features of Graphaello are:
+
+- Loading and Error States
+- Type-Safety
+- Reusable Components
+- Paging Support
+- Only write Swift
+
 Let's cut the chase and go directly to our first example of a View using Graphaello:
 
 ```swift
