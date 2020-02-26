@@ -7,12 +7,12 @@ Graphaello is a Code Generation Command Line Tool that allows you to use propert
 
 The main features of Graphaello are:
 
-- Loading and Error States
-- Declarative
-- Type-Safety
-- Reusable Components
-- Paging Support
-- Only write Swift (your Swift code is your GraphQL code) 
+- 🕓/❗️ Loading and Error States
+- 📝 Declarative
+- 🔐 Type-Safety
+- 🧰 Reusable Components
+- 📖 Paging Support
+- 🐦 Only write Swift (your Swift code is your GraphQL code) 
 
 If you're looking for something like this, but for other platforms, Graphaello is heavily inspired by [Relay](https://github.com/facebook/relay).
 
