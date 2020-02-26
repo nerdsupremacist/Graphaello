@@ -7,7 +7,7 @@ Graphaello is a Code Generation Command Line Tool that allows you to use propert
 
 The main features of Graphaello are:
 
-- 🕓/❗️ Loading and Error States
+- 🕓/❗️ Loading and Error State handling
 - 📝 Declarative
 - 🔐 Type-Safety
 - 🧰 Reusable Components
