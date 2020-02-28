@@ -61,7 +61,7 @@ var name: String? // works
 var name: Bool // doesn't work
 ```
 
-## Instalation
+## Installation
 
 Graphaello can be installed via Homebrew:
 
