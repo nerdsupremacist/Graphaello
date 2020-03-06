@@ -63,6 +63,10 @@ var name: Bool // doesn't work
 
 ## Installation
 
+Please remember that Graphaello is in its early stages and is therefore not production ready. Use at your own caution. 
+
+### Via Homebrew
+
 Graphaello can be installed via Homebrew:
 
 ```
@@ -70,7 +74,15 @@ brew tap nerdsupremacist/graphaello
 brew install graphaello
 ```
 
-Please remember that Graphaello is in its early stages and is therefore not production ready. Use at your own caution. 
+### From Source
+
+Or if you are one of those, you can install it directly from the source code. You do you!
+
+```
+git clone https://github.com/nerdsupremacist/Graphaello.git
+cd Graphaello
+sudo make install 
+```
 
 ## Usage
 
