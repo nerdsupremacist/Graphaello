@@ -51,6 +51,25 @@ struct CharacterCell: View {
 }
 ```
 
+This code tells Graphaello to:
+- Generate a GraphQL [Fragment](https://graphql.org/learn/queries/#fragments): A reusable definition of the `Person` type, made especially for your View:
+
+```graphql
+fragment CharacterCell_Person on Person {
+    name
+    homeworld {
+        name
+    }
+}
+```
+
+- Create an initializer for your View using this type:
+
+```swift
+let person: CharacterCell.Person = ...
+let view = CharacterCell(person: person)
+```
+
 **And did I mention it's all type safe?!?!**
 
 ```swift
@@ -129,7 +148,7 @@ If your view has a sub view with it's own data, your view doesn't need to know t
 ```swift
 struct CharacterDetail: View {
     @GraphQL(StarWars.Person._fragment)
-    var headerCell: CharacterCell.Person // The type CharacterCell.Person is created by Graphaello for you
+    var headerCell: CharacterCell.Person
     
     @GraphQL(StarWars.Person.eyes)
     var eyes: String?
