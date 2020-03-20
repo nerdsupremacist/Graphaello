@@ -395,7 +395,7 @@ Contributions are welcome and encouraged!
 This is currenlty a research project. More details about how it works, will be published later.
 
 ## License
-Runtime is available under the MIT license. See the LICENSE file for more info.
+Graphaello is available under the MIT license. See the LICENSE file for more info.
 
 This project is being done under the supervision of the Chair for Applied Software Enginnering at the Technical University of Munich. The chair has everlasting rights to use and maintain this tool.
 
