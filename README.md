@@ -391,6 +391,12 @@ API Name: you can change what the API will be called. If not Provided it will be
 ## Contributions
 Contributions are welcome and encouraged!
 
+## Related Work
+
+![](https://github.com/nerdsupremacist/GraphZahl/raw/master/logo.png)
+
+Graphaello works best when coupled with [GraphZahl](https://github.com/nerdsupremacist/GraphZahl) on the Server Side. GraphZahl enables you to implement your GraphQL Server Declaratively in Swift with Zero Boilerplate.
+
 ## Learn
 This is currenlty a research project. More details about how it works, will be published later.
 
