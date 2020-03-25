@@ -13,7 +13,7 @@ struct InputFieldInitializerArgument {
     let name: String
     let api: API
     let type: Schema.GraphQLType.Field.TypeReference
-    let defaultValue: ExprSyntaxProtocol?
+    let defaultValue: ExprSyntax?
 }
 
 extension InputFieldInitializerArgument: ExtraValuesSwiftCodeTransformable {
@@ -34,7 +34,7 @@ extension Schema.GraphQLType {
         return try inputFields.map { field in
             let defaultValue = try transpiler.expression(from: field.defaultValue,
                                                          for: field.type,
-                                                         using: api)
+                                                         using: api)?.erased()
 
             return InputFieldInitializerArgument(name: field.name,
                                                  api: api,

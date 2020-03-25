@@ -1,6 +1,6 @@
 //
 //  File 2.swift
-//  
+//
 //
 //  Created by Mathias Quintero on 12/20/19.
 //
@@ -14,29 +14,26 @@ extension StructResolution.ReferencedFragment {
         guard let syntax = try SourceCode(content: typeName).syntaxTree().singleItem() else  {
             throw GraphQLFragmentResolverError.invalidTypeNameForFragment(typeName)
         }
-        try self.init(syntax: syntax)
+        try self.init(syntax: syntax.erased())
     }
 
-    fileprivate init(syntax: SyntaxProtocol) throws {
-        switch syntax {
+    fileprivate init(syntax: Syntax) throws {
+        switch syntax.as(SyntaxEnum.self) {
 
-        case let expression as ExprSyntax:
-            try self.init(syntax: expression.withoutErasure())
+        case .optionalChainingExpr(let expression):
+            try self.init(syntax: expression.expression.erased())
 
-        case let expression as OptionalChainingExprSyntax:
-            try self.init(syntax: expression.expression)
-
-        case let expression as SpecializeExprSyntax:
+        case .specializeExpr(let expression):
             guard expression.expression.description == "Paging",
                 let argument = Array(expression.genericArgumentClause.arguments).single() else {
                 
                 throw GraphQLFragmentResolverError.invalidTypeNameForFragment(syntax.description)
             }
 
-            self = .paging(with: try StructResolution.FragmentName(syntax: argument.argumentType))
+            self = .paging(with: try StructResolution.FragmentName(syntax: argument.argumentType.erased()))
 
         default:
-            self = .name(try StructResolution.FragmentName(syntax: syntax))
+            self = .name(try StructResolution.FragmentName(syntax: syntax.erased()))
 
         }
     }

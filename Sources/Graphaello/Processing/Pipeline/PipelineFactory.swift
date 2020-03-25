@@ -32,12 +32,12 @@ enum PipelineFactory {
                 .syntaxTree {
                     .annotationFunctionCall {
                         .pathExpression(
-                            memberAccess: { (parent: SubParser<ExprSyntaxProtocol, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path> in
+                            memberAccess: { (parent: SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path> in
                                 .memberAccess(parent: parent) {
                                     .baseMemberAccess()
                                 }
                             },
-                            functionCall: { (parent: SubParser<ExprSyntaxProtocol, Stage.Parsed.Path>) in
+                            functionCall: { (parent: SubParser<ExprSyntax, Stage.Parsed.Path>) in
                                 .functionCall(parent: parent) {
                                     .argumentList {
                                         .argumentExpression(
@@ -154,20 +154,20 @@ enum PipelineFactory {
 
 extension SubParser {
     
-    fileprivate static func pathExpression(memberAccess: @escaping (SubParser<ExprSyntaxProtocol, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path>,
-                                           functionCall: @escaping (SubParser<ExprSyntaxProtocol, Stage.Parsed.Path>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path>) -> SubParser<ExprSyntaxProtocol, Stage.Parsed.Path> {
+    fileprivate static func pathExpression(memberAccess: @escaping (SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path>,
+                                           functionCall: @escaping (SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path>) -> SubParser<ExprSyntax, Stage.Parsed.Path> {
         
         return .expressionWithParent(memberAccess: memberAccess, functionCall: functionCall)
     }
     
     fileprivate static func argumentExpression(memberAccess: @escaping () -> SubParser<MemberAccessExprSyntax, Argument>,
-                                               functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Argument>) -> SubParser<ExprSyntaxProtocol, Argument> {
+                                               functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Argument>) -> SubParser<ExprSyntax, Argument> {
         
         return .expression(memberAccess: memberAccess, functionCall: functionCall)
     }
     
     fileprivate static func queryArgumentExpression(memberAccess: @escaping () -> SubParser<MemberAccessExprSyntax, Argument.QueryArgument>,
-                                                    functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Argument.QueryArgument>) -> SubParser<ExprSyntaxProtocol, Argument.QueryArgument> {
+                                                    functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Argument.QueryArgument>) -> SubParser<ExprSyntax, Argument.QueryArgument> {
         // Add default
         return .expression(memberAccess: memberAccess, functionCall: functionCall)
     }

@@ -12,7 +12,7 @@ import SwiftSyntax
 
 struct QueryArgumentAssignment {
     let name: String
-    let expression: ExprSyntaxProtocol
+    let expression: ExprSyntax
 }
 
 extension QueryArgumentAssignment: ExtraValuesSwiftCodeTransformable {
@@ -45,14 +45,16 @@ extension GraphQLConnectionQuery {
     var queryArgumentAssignments: [QueryArgumentAssignment] {
         return query.queryArgumentAssignments.map { assignment in
             if assignment.name == "first" {
+                let expression = SequenceExprSyntax(lhs: IdentifierExprSyntax(identifier: "_pageSize").erased(),
+                                                    rhs: assignment.expression,
+                                                    binaryOperator: BinaryOperatorExprSyntax(text: "??"))
+                
                 return QueryArgumentAssignment(name: assignment.name,
-                                               expression: SequenceExprSyntax(lhs: IdentifierExprSyntax(identifier: "_pageSize"),
-                                                                              rhs: assignment.expression,
-                                                                              binaryOperator: BinaryOperatorExprSyntax(text: "??")) )
+                                               expression: expression.erased())
             }
             if assignment.name == "after" {
                 return QueryArgumentAssignment(name: assignment.name,
-                                               expression: IdentifierExprSyntax(identifier: "_cursor"))
+                                               expression: IdentifierExprSyntax(identifier: "_cursor").erased())
             }
             return assignment
         }
@@ -71,16 +73,16 @@ extension GraphQLMutation {
 
 extension GraphQLArgument {
 
-    var assignmentExpression: ExprSyntaxProtocol {
+    var assignmentExpression: ExprSyntax {
         if case .value(let expression) = argument {
             return expression
         }
 
         if type.isScalar {
-            return IdentifierExprSyntax(identifier: name.camelized)
+            return IdentifierExprSyntax(identifier: name.camelized).erased()
         } else {
-            return FunctionCallExprSyntax(target: MemberAccessExprSyntax(base: nil, name: "init"),
-                                          arguments: [(nil, IdentifierExprSyntax(identifier: name.camelized))])
+            return FunctionCallExprSyntax(target: MemberAccessExprSyntax(base: nil, name: "init").erased(),
+                                          arguments: [(nil, IdentifierExprSyntax(identifier: name.camelized).erased())]).erased()
         }
     }
 

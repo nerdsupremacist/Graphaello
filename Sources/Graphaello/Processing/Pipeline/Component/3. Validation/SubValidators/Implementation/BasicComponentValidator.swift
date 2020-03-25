@@ -106,7 +106,7 @@ extension Schema.GraphQLType.Field {
             let value = try otherArguments[argument.name] ??
                 transpiler.expression(from: argument.defaultValue,
                                       for: argument.type,
-                                      using: api).map { .argument(.withDefault($0)) } ?? .argument(.forced)
+                                      using: api).map { .argument(.withDefault($0.erased())) } ?? .argument(.forced)
 
             return Field.Argument(name: argument.name, value: value)
         }

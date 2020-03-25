@@ -12,7 +12,7 @@ enum Operation: Equatable {
     case flatten
     case compactMap
     case nonNull
-    case withDefault(ExprSyntaxProtocol)
+    case withDefault(ExprSyntax)
 
     static func == (lhs: Operation, rhs: Operation) -> Bool {
         switch (lhs, rhs) {

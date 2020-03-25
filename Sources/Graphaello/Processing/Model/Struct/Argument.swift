@@ -11,7 +11,7 @@ import SwiftSyntax
 
 enum Argument: Equatable, Hashable {
     enum QueryArgument: Equatable, Hashable {
-        case withDefault(ExprSyntaxProtocol)
+        case withDefault(ExprSyntax)
         case forced
 
         func hash(into hasher: inout Hasher) {
@@ -35,7 +35,7 @@ enum Argument: Equatable, Hashable {
         }
     }
 
-    case value(ExprSyntaxProtocol)
+    case value(ExprSyntax)
     case argument(QueryArgument)
 
     func hash(into hasher: inout Hasher) {

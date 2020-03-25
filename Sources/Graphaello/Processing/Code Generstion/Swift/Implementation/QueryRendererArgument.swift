@@ -12,7 +12,7 @@ import SwiftSyntax
 struct QueryRendererArgument: SwiftCodeTransformable {
     let name: String
     let type: String
-    let expression: ExprSyntaxProtocol?
+    let expression: ExprSyntax?
 }
 
 extension Struct where CurrentStage: ResolvedStage {

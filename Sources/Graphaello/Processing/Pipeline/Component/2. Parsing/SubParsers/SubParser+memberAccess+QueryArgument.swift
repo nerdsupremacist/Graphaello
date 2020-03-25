@@ -16,7 +16,7 @@ extension SubParser {
             if expression.name.text == "forced" {
                 return .forced
             } else {
-                return .withDefault(expression)
+                return .withDefault(expression.erased())
             }
         }
     }
