@@ -15,32 +15,32 @@ extension SubParser {
                              parser: @escaping () -> SubParser<TupleExprElementListSyntax, [Field.Argument]>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path> {
         
         return .init { expression in
-            guard let called = expression.calledExpression.asProtocol(ExprSyntaxProtocol.self) as? MemberAccessExprSyntax else {
+            guard let called = expression.calledExpression.withoutErasure() as? MemberAccessExprSyntax else {
                 throw ParseError.cannotInstantiateObjectFromExpression(expression, type: Stage.Parsed.Path.self)
             }
 
             switch called.name.text {
 
             case "_forEach":
-                guard let keyPathExpression = Array(expression.argumentList).single()?.expression.asProtocol(ExprSyntaxProtocol.self) as? KeyPathExprSyntax,
-                    let base = called.base else { fatalError() }
+                guard let keyPathExpression = Array(expression.argumentList).single()?.expression.withoutErasure() as? KeyPathExprSyntax,
+                    let base = called.base?.withoutErasure() else { fatalError() }
                 return try parent.parse(from: keyPathExpression.expression.asMemberAccessOf(expression: base))
 
             case "_compactMap":
-                guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
+                guard Array(expression.argumentList).isEmpty, let base = called.base?.withoutErasure() else { fatalError() }
                 return try parent.parse(from: base).appending(operation: .compactMap)
 
             case "_flatten":
-                guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
+                guard Array(expression.argumentList).isEmpty, let base = called.base?.withoutErasure() else { fatalError() }
                 return try parent.parse(from: base).appending(operation: .flatten)
 
             case "_nonNull":
-                guard Array(expression.argumentList).isEmpty, let base = called.base else { fatalError() }
+                guard Array(expression.argumentList).isEmpty, let base = called.base?.withoutErasure() else { fatalError() }
                 return try parent.parse(from: base).appending(operation: .nonNull)
 
             case "_withDefault":
                 guard let expression = Array(expression.argumentList).single()?.expression,
-                    let base = called.base else { fatalError() }
+                    let base = called.base?.withoutErasure() else { fatalError() }
                 return try parent.parse(from: base).appending(operation: .withDefault(expression))
 
             default:
@@ -50,7 +50,7 @@ extension SubParser {
 
             let arguments = try parser().parse(from: expression.argumentList)
 
-            switch called.base?.asProtocol(ExprSyntaxProtocol.self) {
+            switch called.base?.withoutErasure() {
             case .some(let base as IdentifierExprSyntax):
                 return try Stage.Parsed.Path(apiName: base.identifier.text,
                                              target: .query,
@@ -83,7 +83,7 @@ extension Stage.Parsed.Path {
 extension ExprSyntax {
 
     fileprivate func asMemberAccessOf(expression base: ExprSyntaxProtocol) -> ExprSyntaxProtocol {
-        switch self.asProtocol(ExprSyntaxProtocol.self) {
+        switch withoutErasure() {
         case let expression as MemberAccessExprSyntax:
             return MemberAccessExprSyntax(base: expression.base?.asMemberAccessOf(expression: base) ?? base,
                                           name: expression.name.text)
@@ -102,7 +102,7 @@ extension ExprSyntax {
             }
 
         default:
-            return ExprSyntax(self)
+            return self
 
         }
     }

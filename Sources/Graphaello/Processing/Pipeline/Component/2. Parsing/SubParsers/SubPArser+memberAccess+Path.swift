@@ -15,7 +15,7 @@ extension SubParser {
                              parser: @escaping () -> SubParser<BaseMemberAccess, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path> {
         
         return .init { expression in
-            switch expression.base?.asProtocol(ExprSyntaxProtocol.self) {
+            switch expression.base?.withoutErasure() {
             case .some(let base as IdentifierExprSyntax):
                 let access = BaseMemberAccess(base: base.identifier.text, accessedField: expression.name.text)
                 return try parser().parse(from: access)

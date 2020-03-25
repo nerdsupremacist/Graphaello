@@ -36,6 +36,8 @@ extension SubParser {
                                    default defaultCase: @escaping (ExprSyntaxProtocol) -> Result<Output, Error>) -> SubParser<ExprSyntaxProtocol, Output> {
         
         return .init { expression, parser in
+            assert(!(expression is ExprSyntax))
+
             switch expression {
             case let expression as MemberAccessExprSyntax:
                 return try memberAccess(parser).parse(from: expression)

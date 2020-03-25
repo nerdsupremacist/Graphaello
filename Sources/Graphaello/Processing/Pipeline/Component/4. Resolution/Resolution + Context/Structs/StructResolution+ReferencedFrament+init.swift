@@ -20,6 +20,9 @@ extension StructResolution.ReferencedFragment {
     fileprivate init(syntax: SyntaxProtocol) throws {
         switch syntax {
 
+        case let expression as ExprSyntax:
+            try self.init(syntax: expression.withoutErasure())
+
         case let expression as OptionalChainingExprSyntax:
             try self.init(syntax: expression.expression)
 

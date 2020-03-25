@@ -16,12 +16,12 @@ extension StructResolution.FragmentName {
         case let expression as IdentifierExprSyntax:
             self = .fullName(expression.identifier.text)
         case let expression as MemberAccessExprSyntax:
-            guard let base = expression.base else { throw GraphQLFragmentResolverError.invalidTypeNameForFragment(syntax.description) }
+            guard let base = expression.base?.withoutErasure() else { throw GraphQLFragmentResolverError.invalidTypeNameForFragment(syntax.description) }
             self = .typealiasOnStruct(base.description, expression.name.text)
         case let expression as OptionalChainingExprSyntax:
-            try self.init(syntax: expression.expression)
+            try self.init(syntax: expression.expression.withoutErasure())
         case let expression as ArrayExprSyntax:
-            guard let syntax = Array(expression.elements).single()?.expression else { throw GraphQLFragmentResolverError.invalidTypeNameForFragment(expression.description) }
+            guard let syntax = Array(expression.elements).single()?.expression.withoutErasure() else { throw GraphQLFragmentResolverError.invalidTypeNameForFragment(expression.description) }
             try self.init(syntax: syntax)
         case let expression as ArrayTypeSyntax:
             try self.init(syntax: expression.elementType)

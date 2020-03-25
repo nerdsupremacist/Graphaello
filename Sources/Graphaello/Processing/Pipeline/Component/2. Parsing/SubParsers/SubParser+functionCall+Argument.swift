@@ -13,11 +13,11 @@ extension SubParser {
     
     static func functionCall(parser: @escaping () -> SubParser<ExprSyntaxProtocol, Argument.QueryArgument>) -> SubParser<FunctionCallExprSyntax, Argument> {
         return .init { expression in
-            guard let calledMember = expression.calledExpression.asProtocol(ExprSyntaxProtocol.self) as? MemberAccessExprSyntax else {
+            guard let calledMember = expression.calledExpression.withoutErasure() as? MemberAccessExprSyntax else {
                 throw ParseError.cannotInstantiateObjectFromExpression(expression, type: Argument.self)
             }
 
-            let argument = Array(expression.argumentList).single()?.expression
+            let argument = Array(expression.argumentList).single()?.expression.withoutErasure()
 
             switch (calledMember.name.text, argument) {
             case ("value", .some(let expression)):

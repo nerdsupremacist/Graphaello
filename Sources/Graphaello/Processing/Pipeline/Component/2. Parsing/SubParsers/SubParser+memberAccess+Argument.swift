@@ -13,7 +13,9 @@ extension SubParser {
     
     static func memberAccess() -> SubParser<MemberAccessExprSyntax, Argument> {
         return .init { member in
-            guard member.name.text == "argument" else { throw ParseError.cannotInstantiateObjectFromExpression(member, type: Argument.self) }
+            guard member.name.text == "argument" else {
+                throw ParseError.cannotInstantiateObjectFromExpression(member, type: Argument.self)
+            }
             return .argument(.forced)
         }
     }

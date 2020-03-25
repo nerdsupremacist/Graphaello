@@ -12,7 +12,7 @@ import SwiftSyntax
 extension SourceFileSyntax {
     
     func singleItem() -> SyntaxProtocol? {
-        return Array(statements).single()?.item
+        return Array(statements).single()?.item.asProtocol(SyntaxProtocol.self)
     }
     
 }

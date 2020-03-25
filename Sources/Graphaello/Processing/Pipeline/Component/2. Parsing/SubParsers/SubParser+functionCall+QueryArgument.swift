@@ -13,7 +13,7 @@ extension SubParser {
     
     static func functionCall() -> SubParser<FunctionCallExprSyntax, Argument.QueryArgument> {
         return .init { expression in
-            if let calledMember = expression.calledExpression.asProtocol(ExprSyntaxProtocol.self) as? MemberAccessExprSyntax,
+            if let calledMember = expression.calledExpression.withoutErasure() as? MemberAccessExprSyntax,
                 calledMember.name.text == "withDefault" {
 
                 guard let argument = Array(expression.argumentList).single() else {

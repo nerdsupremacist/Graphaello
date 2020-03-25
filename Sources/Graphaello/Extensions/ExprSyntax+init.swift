@@ -143,11 +143,3 @@ extension Collection {
     }
 
 }
-
-extension ExprSyntaxProtocol {
-
-    func erased() -> ExprSyntax {
-        return ExprSyntax(self)
-    }
-
-}
