@@ -11,18 +11,18 @@ import SwiftSyntax
 
 extension SubParser {
     
-    static func functionCall(parent: SubParser<ExprSyntax, Stage.Parsed.Path>,
-                             parser: @escaping () -> SubParser<FunctionCallArgumentListSyntax, [Field.Argument]>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path> {
+    static func functionCall(parent: SubParser<ExprSyntaxProtocol, Stage.Parsed.Path>,
+                             parser: @escaping () -> SubParser<TupleExprElementListSyntax, [Field.Argument]>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path> {
         
         return .init { expression in
-            guard let called = expression.calledExpression as? MemberAccessExprSyntax else {
+            guard let called = expression.calledExpression.asProtocol(ExprSyntaxProtocol.self) as? MemberAccessExprSyntax else {
                 throw ParseError.cannotInstantiateObjectFromExpression(expression, type: Stage.Parsed.Path.self)
             }
 
             switch called.name.text {
 
             case "_forEach":
-                guard let keyPathExpression = Array(expression.argumentList).single()?.expression as? KeyPathExprSyntax,
+                guard let keyPathExpression = Array(expression.argumentList).single()?.expression.asProtocol(ExprSyntaxProtocol.self) as? KeyPathExprSyntax,
                     let base = called.base else { fatalError() }
                 return try parent.parse(from: keyPathExpression.expression.asMemberAccessOf(expression: base))
 
@@ -50,7 +50,7 @@ extension SubParser {
 
             let arguments = try parser().parse(from: expression.argumentList)
 
-            switch called.base {
+            switch called.base?.asProtocol(ExprSyntaxProtocol.self) {
             case .some(let base as IdentifierExprSyntax):
                 return try Stage.Parsed.Path(apiName: base.identifier.text,
                                              target: .query,
@@ -82,8 +82,8 @@ extension Stage.Parsed.Path {
 
 extension ExprSyntax {
 
-    fileprivate func asMemberAccessOf(expression base: ExprSyntax) -> ExprSyntax {
-        switch self {
+    fileprivate func asMemberAccessOf(expression base: ExprSyntaxProtocol) -> ExprSyntaxProtocol {
+        switch self.asProtocol(ExprSyntaxProtocol.self) {
         case let expression as MemberAccessExprSyntax:
             return MemberAccessExprSyntax(base: expression.base?.asMemberAccessOf(expression: base) ?? base,
                                           name: expression.name.text)
@@ -94,14 +94,15 @@ extension ExprSyntax {
 
         case let expression as FunctionCallExprSyntax:
             return FunctionCallExprSyntax { builder in
-                builder.useCalledExpression(expression.calledExpression.asMemberAccessOf(expression: base))
+                let called = expression.calledExpression.asMemberAccessOf(expression: base)
+                builder.useCalledExpression(called.erased())
                 for argument in expression.argumentList {
                     builder.addArgument(argument)
                 }
             }
 
         default:
-            return self
+            return ExprSyntax(self)
 
         }
     }

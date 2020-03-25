@@ -11,13 +11,13 @@ import SwiftSyntax
 
 extension SubParser {
     
-    static func annotationFunctionCall(parser: @escaping () -> SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path?> {
+    static func annotationFunctionCall(parser: @escaping () -> SubParser<ExprSyntaxProtocol, Stage.Parsed.Path>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path?> {
         return .init { call in
-            switch call.calledExpression {
+            switch call.calledExpression.asProtocol(ExprSyntaxProtocol.self) {
             case let calledExpression as IdentifierExprSyntax where calledExpression.identifier.text == "GraphQL":
                 break
             case let calledExpression as SpecializeExprSyntax:
-                guard let identifier = calledExpression.expression as? IdentifierExprSyntax,
+                guard let identifier = calledExpression.expression.asProtocol(ExprSyntaxProtocol.self) as? IdentifierExprSyntax,
                     identifier.identifier.text == "GraphQL" else { return nil }
                 
                 break

@@ -12,7 +12,7 @@ struct GraphQLArgument: Hashable {
     let name: String
     let field: Schema.GraphQLType.Field
     let type: Schema.GraphQLType.Field.TypeReference
-    let defaultValue: ExprSyntax?
+    let defaultValue: ExprSyntaxProtocol?
     let argument: Argument
 
     static func == (lhs: GraphQLArgument, rhs: GraphQLArgument) -> Bool {

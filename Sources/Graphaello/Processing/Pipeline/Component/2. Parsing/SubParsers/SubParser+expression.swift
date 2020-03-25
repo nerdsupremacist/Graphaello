@@ -11,8 +11,8 @@ import SwiftSyntax
 
 extension SubParser {
     
-    static func expressionWithParent(memberAccess: @escaping (SubParser<ExprSyntax, Output>) -> SubParser<MemberAccessExprSyntax, Output>,
-                                     functionCall: @escaping (SubParser<ExprSyntax, Output>) -> SubParser<FunctionCallExprSyntax, Output>) -> SubParser<ExprSyntax, Output> {
+    static func expressionWithParent(memberAccess: @escaping (SubParser<ExprSyntaxProtocol, Output>) -> SubParser<MemberAccessExprSyntax, Output>,
+                                     functionCall: @escaping (SubParser<ExprSyntaxProtocol, Output>) -> SubParser<FunctionCallExprSyntax, Output>) -> SubParser<ExprSyntaxProtocol, Output> {
         
         return SubParser.expression(memberAccess: memberAccess,
                            functionCall: functionCall) { expression in
@@ -22,7 +22,7 @@ extension SubParser {
     }
     
     static func expression(memberAccess: @escaping () -> SubParser<MemberAccessExprSyntax, Output>,
-                           functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Output>) -> SubParser<ExprSyntax, Output> {
+                           functionCall: @escaping () -> SubParser<FunctionCallExprSyntax, Output>) -> SubParser<ExprSyntaxProtocol, Output> {
         
         return .expressionWithParent(memberAccess: { _ in memberAccess() }, functionCall: { _ in functionCall() })
     }
@@ -31,9 +31,9 @@ extension SubParser {
 
 extension SubParser {
     
-    private static func expression(memberAccess: @escaping (SubParser<ExprSyntax, Output>) -> SubParser<MemberAccessExprSyntax, Output>,
-                                   functionCall: @escaping (SubParser<ExprSyntax, Output>) -> SubParser<FunctionCallExprSyntax, Output>,
-                                   default defaultCase: @escaping (ExprSyntax) -> Result<Output, Error>) -> SubParser<ExprSyntax, Output> {
+    private static func expression(memberAccess: @escaping (SubParser<ExprSyntaxProtocol, Output>) -> SubParser<MemberAccessExprSyntax, Output>,
+                                   functionCall: @escaping (SubParser<ExprSyntaxProtocol, Output>) -> SubParser<FunctionCallExprSyntax, Output>,
+                                   default defaultCase: @escaping (ExprSyntaxProtocol) -> Result<Output, Error>) -> SubParser<ExprSyntaxProtocol, Output> {
         
         return .init { expression, parser in
             switch expression {

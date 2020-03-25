@@ -12,7 +12,7 @@ import SwiftSyntax
 
 struct QueryArgumentAssignment {
     let name: String
-    let expression: ExprSyntax
+    let expression: ExprSyntaxProtocol
 }
 
 extension QueryArgumentAssignment: ExtraValuesSwiftCodeTransformable {
@@ -71,7 +71,7 @@ extension GraphQLMutation {
 
 extension GraphQLArgument {
 
-    var assignmentExpression: ExprSyntax {
+    var assignmentExpression: ExprSyntaxProtocol {
         if case .value(let expression) = argument {
             return expression
         }

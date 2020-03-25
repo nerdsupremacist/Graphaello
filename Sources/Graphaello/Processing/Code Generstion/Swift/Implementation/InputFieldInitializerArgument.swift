@@ -13,7 +13,7 @@ struct InputFieldInitializerArgument {
     let name: String
     let api: API
     let type: Schema.GraphQLType.Field.TypeReference
-    let defaultValue: ExprSyntax?
+    let defaultValue: ExprSyntaxProtocol?
 }
 
 extension InputFieldInitializerArgument: ExtraValuesSwiftCodeTransformable {

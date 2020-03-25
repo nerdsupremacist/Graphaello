@@ -11,7 +11,7 @@ import SwiftSyntax
 
 extension StructResolution.FragmentName {
     
-    init(syntax: Syntax) throws {
+    init(syntax: SyntaxProtocol) throws {
         switch syntax {
         case let expression as IdentifierExprSyntax:
             self = .fullName(expression.identifier.text)

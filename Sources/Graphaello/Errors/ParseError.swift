@@ -13,8 +13,8 @@ enum ParseError: Error, CustomStringConvertible {
     case missingKey(String, in: SourceCode)
     case valueNotTransformable(SourceKitRepresentable, to: SourceKitRepresentable.Type, in: SourceCode)
     case expectedSingleSubtructure(in: [SourceCode])
-    case cannotInstantiateObjectFromExpression(ExprSyntax, type: Any.Type)
-    case expectedBaseForCalls(expression: ExprSyntax)
+    case cannotInstantiateObjectFromExpression(ExprSyntaxProtocol, type: Any.Type)
+    case expectedBaseForCalls(expression: ExprSyntaxProtocol)
 
     var description: String {
         switch self {

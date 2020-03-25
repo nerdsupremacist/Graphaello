@@ -11,9 +11,9 @@ import SwiftSyntax
 
 extension SubParser {
     
-    static func functionCall(parser: @escaping () -> SubParser<ExprSyntax, Argument.QueryArgument>) -> SubParser<FunctionCallExprSyntax, Argument> {
+    static func functionCall(parser: @escaping () -> SubParser<ExprSyntaxProtocol, Argument.QueryArgument>) -> SubParser<FunctionCallExprSyntax, Argument> {
         return .init { expression in
-            guard let calledMember = expression.calledExpression as? MemberAccessExprSyntax else {
+            guard let calledMember = expression.calledExpression.asProtocol(ExprSyntaxProtocol.self) as? MemberAccessExprSyntax else {
                 throw ParseError.cannotInstantiateObjectFromExpression(expression, type: Argument.self)
             }
 

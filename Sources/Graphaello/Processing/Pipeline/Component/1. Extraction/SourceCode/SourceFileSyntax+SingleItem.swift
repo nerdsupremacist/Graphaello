@@ -11,7 +11,7 @@ import SwiftSyntax
 
 extension SourceFileSyntax {
     
-    func singleItem() -> Syntax? {
+    func singleItem() -> SyntaxProtocol? {
         return Array(statements).single()?.item
     }
     

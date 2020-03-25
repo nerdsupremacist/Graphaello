@@ -14,7 +14,7 @@ extension StructResolution.ReferencedMutationResultFragment {
         try self.init(syntax: try SourceCode(content: typeName).syntaxTree().singleItem() ?! GraphQLFragmentResolverError.invalidTypeNameForFragment(typeName))
     }
 
-    fileprivate init(syntax: Syntax) throws {
+    fileprivate init(syntax: SyntaxProtocol) throws {
         try self.init(expression: try syntax as? SpecializeExprSyntax ?! GraphQLFragmentResolverError.invalidTypeNameForFragment(syntax.description))
     }
     

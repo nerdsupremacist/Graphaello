@@ -17,7 +17,7 @@ extension StructResolution.ReferencedFragment {
         try self.init(syntax: syntax)
     }
 
-    fileprivate init(syntax: Syntax) throws {
+    fileprivate init(syntax: SyntaxProtocol) throws {
         switch syntax {
 
         case let expression as OptionalChainingExprSyntax:
