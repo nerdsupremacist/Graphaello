@@ -4,8 +4,8 @@ import SwiftSyntax
 
 extension ExprSyntax {
 
-    func switchOver() -> SyntaxEnum {
-        return _syntaxNode.as(SyntaxEnum.self)
+    func `as`(_: SyntaxEnum.Type) -> SyntaxEnum {
+      return Syntax(self).as(SyntaxEnum.self)
     }
 
 }

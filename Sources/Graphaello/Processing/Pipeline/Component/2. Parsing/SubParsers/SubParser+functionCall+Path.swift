@@ -81,7 +81,7 @@ extension Stage.Parsed.Path {
 extension ExprSyntax {
 
     fileprivate func asMemberAccessOf(expression base: ExprSyntax) -> ExprSyntax {
-        switch switchOver() {
+        switch self.as(SyntaxEnum.self) {
         case .memberAccessExpr(let expression):
             return MemberAccessExprSyntax(base: expression.base?.asMemberAccessOf(expression: base) ?? base,
                                           name: expression.name.text).erased()

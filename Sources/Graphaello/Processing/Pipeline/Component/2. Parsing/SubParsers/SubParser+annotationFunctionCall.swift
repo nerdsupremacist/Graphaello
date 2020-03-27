@@ -13,7 +13,7 @@ extension SubParser {
     
     static func annotationFunctionCall(parser: @escaping () -> SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path?> {
         return .init { call in
-            switch call.calledExpression.switchOver() {
+            switch call.calledExpression.as(SyntaxEnum.self) {
             case .identifierExpr(let calledExpression) where calledExpression.identifier.text == "GraphQL":
                 break
             case .specializeExpr(let calledExpression):
