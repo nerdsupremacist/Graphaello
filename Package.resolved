@@ -14,9 +14,9 @@
         "package": "CLIKit",
         "repositoryURL": "https://github.com/nerdsupremacist/CLIKit.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "7ae40a74e125c1302598fb90789bd11cb461b963",
-          "version": null
+          "version": "0.3.5"
         }
       },
       {
@@ -59,9 +59,9 @@
         "package": "Ogma",
         "repositoryURL": "https://github.com/nerdsupremacist/Ogma.git",
         "state": {
-          "branch": "master",
-          "revision": "9e5a832a757d79b1bb21d910145ba9650229a3c8",
-          "version": null
+          "branch": null,
+          "revision": "541e3c43d68d64296533d28b0b32bfb9fe189a4f",
+          "version": "0.1.2"
         }
       },
       {
@@ -114,8 +114,8 @@
         "repositoryURL": "https://github.com/apple/swift-syntax.git",
         "state": {
           "branch": null,
-          "revision": "3e3eb191fcdbecc6031522660c4ed6ce25282c25",
-          "version": "0.50100.0"
+          "revision": "0688b9cfc4c3dd234e4f55f1f056b2affc849873",
+          "version": "0.50200.0"
         }
       },
       {

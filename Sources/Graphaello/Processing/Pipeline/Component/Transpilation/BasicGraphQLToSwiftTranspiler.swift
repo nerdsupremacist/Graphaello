@@ -12,7 +12,7 @@ struct BasicGraphQLToSwiftTranspiler: GraphQLToSwiftTranspiler {
 
     func expression(from value: GraphQLValue?,
                     for type: Schema.GraphQLType.Field.TypeReference,
-                    using api: API) throws -> ExprSyntax? {
+                    using api: API) throws -> ExprSyntaxProtocol? {
 
         guard let value = value else {
             if case .complex(let definition, _) = type, definition.kind == .nonNull {
@@ -23,26 +23,26 @@ struct BasicGraphQLToSwiftTranspiler: GraphQLToSwiftTranspiler {
             }
         }
 
-        return try expression(from: value, for: type, using: api) as ExprSyntax
+        return try expression(from: value, for: type, using: api) as ExprSyntaxProtocol
     }
 
     func expression(from value: GraphQLValue,
                     for type: Schema.GraphQLType.Field.TypeReference,
-                    using api: API) throws -> ExprSyntax {
+                    using api: API) throws -> ExprSyntaxProtocol {
 
         switch (value, type) {
 
         case (.array(let array), .complex(let definition, let type)):
             guard definition.kind == .list else { break }
             let expressions = try array
-                .map { try expression(from: $0, for: type, using: api) } as [ExprSyntax]
+                .map { try expression(from: $0, for: type, using: api) } as [ExprSyntaxProtocol]
 
             return ArrayExprSyntax(expressions: expressions)
 
         case (.dictionary(let dictionary), .concrete(let definition)):
             guard definition.kind == .inputObject, let name = definition.name else { break }
             let type = api[name]?.graphQLType ?! fatalError()
-            let expressions: [(String, ExprSyntax)] = try type
+            let expressions: [(String, ExprSyntaxProtocol)] = try type
                 .inputFields?
                 .map { field in
                     let value = dictionary[field.name] ?? field.defaultValue ?! fatalError()

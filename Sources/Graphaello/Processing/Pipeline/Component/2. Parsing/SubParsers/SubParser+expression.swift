@@ -36,10 +36,10 @@ extension SubParser {
                                    default defaultCase: @escaping (ExprSyntax) -> Result<Output, Error>) -> SubParser<ExprSyntax, Output> {
         
         return .init { expression, parser in
-            switch expression {
-            case let expression as MemberAccessExprSyntax:
+            switch expression.as(SyntaxEnum.self) {
+            case .memberAccessExpr(let expression):
                 return try memberAccess(parser).parse(from: expression)
-            case let expression as FunctionCallExprSyntax:
+            case .functionCallExpr(let expression):
                 return try functionCall(parser).parse(from: expression)
             default:
                 return try defaultCase(expression).get()

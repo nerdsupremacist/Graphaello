@@ -34,7 +34,7 @@ extension Schema.GraphQLType {
         return try inputFields.map { field in
             let defaultValue = try transpiler.expression(from: field.defaultValue,
                                                          for: field.type,
-                                                         using: api)
+                                                         using: api)?.erased()
 
             return InputFieldInitializerArgument(name: field.name,
                                                  api: api,

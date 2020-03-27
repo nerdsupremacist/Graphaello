@@ -15,15 +15,14 @@ extension SubParser {
                              parser: @escaping () -> SubParser<BaseMemberAccess, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path> {
         
         return .init { expression in
-            switch expression.base {
-            case .some(let base as IdentifierExprSyntax):
+            guard let base = expression.base else { throw ParseError.expectedBaseForCalls(expression: expression.erased()) }
+
+            if let base = base.as(IdentifierExprSyntax.self) {
                 let access = BaseMemberAccess(base: base.identifier.text, accessedField: expression.name.text)
                 return try parser().parse(from: access)
-            case .some(let base):
-                return try parent.parse(from: base).appending(name: expression.name.text)
-            default:
-                throw ParseError.expectedBaseForCalls(expression: expression)
             }
+
+            return try parent.parse(from: base).appending(name: expression.name.text)
         }
     }
     

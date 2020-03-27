@@ -1,6 +1,6 @@
 //
 //  StructResolution+ReferencedFrament.swift
-//  
+//
 //
 //  Created by Mathias Quintero on 12/20/19.
 //

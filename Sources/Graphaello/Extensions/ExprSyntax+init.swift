@@ -21,11 +21,11 @@ extension IdentifierExprSyntax {
 
 extension SequenceExprSyntax {
 
-    init(lhs: ExprSyntax, rhs: ExprSyntax, binaryOperator: BinaryOperatorExprSyntax) {
+    init(lhs: ExprSyntaxProtocol, rhs: ExprSyntaxProtocol, binaryOperator: BinaryOperatorExprSyntax) {
         self = SequenceExprSyntax { builder in
-            builder.addElement(lhs)
-            builder.addElement(binaryOperator)
-            builder.addElement(rhs)
+            builder.addElement(lhs.erased())
+            builder.addElement(binaryOperator.erased())
+            builder.addElement(rhs.erased())
         }
     }
 
@@ -33,7 +33,7 @@ extension SequenceExprSyntax {
 
 extension ArrayExprSyntax {
 
-    init(expressions: [ExprSyntax]) {
+    init(expressions: [ExprSyntaxProtocol]) {
         let leftSquare = SyntaxFactory.makeLeftSquareBracketToken()
         let rightSquare = SyntaxFactory.makeRightSquareBracketToken()
         self = ArrayExprSyntax { builder in
@@ -62,10 +62,10 @@ extension BinaryOperatorExprSyntax {
 
 extension ArrayElementSyntax {
 
-    init(expression: ExprSyntax, useTrailingComma: Bool) {
+    init(expression: ExprSyntaxProtocol, useTrailingComma: Bool) {
         let comma = SyntaxFactory.makeCommaToken()
         self = ArrayElementSyntax { builder in
-            builder.useExpression(expression)
+            builder.useExpression(expression.erased())
             if useTrailingComma {
                 builder.useTrailingComma(comma)
             }
@@ -76,12 +76,12 @@ extension ArrayElementSyntax {
 
 extension MemberAccessExprSyntax {
 
-    init(base: ExprSyntax?, name: String) {
+    init(base: ExprSyntaxProtocol?, name: String) {
         let dot = SyntaxFactory.makePeriodToken()
         let name = SyntaxFactory.makeIdentifier(name)
         self = MemberAccessExprSyntax { builder in
             if let base = base {
-                builder.useBase(base)
+                builder.useBase(base.erased())
             }
             builder.useDot(dot)
             builder.useName(name)
@@ -92,17 +92,17 @@ extension MemberAccessExprSyntax {
 
 extension FunctionCallExprSyntax {
 
-    init(target: ExprSyntax, arguments: [(String?, ExprSyntax)]) {
+    init(target: ExprSyntaxProtocol, arguments: [(String?, ExprSyntaxProtocol)]) {
         let leftParen = SyntaxFactory.makeLeftParenToken()
         let rightParen = SyntaxFactory.makeRightParenToken()
 
         self = FunctionCallExprSyntax { builder in
-            builder.useCalledExpression(target)
+            builder.useCalledExpression(target.erased())
             builder.useLeftParen(leftParen)
             arguments.forEach { argument, isLast in
-                builder.addArgument(FunctionCallArgumentSyntax(name: argument.0,
-                                                               value: argument.1,
-                                                               useTrailingComma: !isLast))
+                builder.addArgument(TupleExprElementSyntax(name: argument.0,
+                                                           value: argument.1,
+                                                           useTrailingComma: !isLast))
             }
             builder.useRightParen(rightParen)
         }
@@ -110,12 +110,12 @@ extension FunctionCallExprSyntax {
 
 }
 
-extension FunctionCallArgumentSyntax {
+extension TupleExprElementSyntax {
 
-    init(name: String?, value: ExprSyntax, useTrailingComma: Bool) {
+    init(name: String?, value: ExprSyntaxProtocol, useTrailingComma: Bool) {
         let comma = SyntaxFactory.makeCommaToken()
 
-        self = FunctionCallArgumentSyntax { builder in
+        self = TupleExprElementSyntax { builder in
             if let name = name {
                 let label = SyntaxFactory.makeIdentifier(name)
                 let colon = SyntaxFactory.makeColonToken()
@@ -124,7 +124,7 @@ extension FunctionCallArgumentSyntax {
                 builder.useColon(colon)
             }
 
-            builder.useExpression(value)
+            builder.useExpression(value.erased())
             if useTrailingComma {
                 builder.useTrailingComma(comma)
             }

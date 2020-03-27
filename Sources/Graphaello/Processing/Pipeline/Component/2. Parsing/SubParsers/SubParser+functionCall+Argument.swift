@@ -13,8 +13,8 @@ extension SubParser {
     
     static func functionCall(parser: @escaping () -> SubParser<ExprSyntax, Argument.QueryArgument>) -> SubParser<FunctionCallExprSyntax, Argument> {
         return .init { expression in
-            guard let calledMember = expression.calledExpression as? MemberAccessExprSyntax else {
-                throw ParseError.cannotInstantiateObjectFromExpression(expression, type: Argument.self)
+            guard let calledMember = expression.calledExpression.as(MemberAccessExprSyntax.self) else {
+                throw ParseError.cannotInstantiateObjectFromExpression(expression.erased(), type: Argument.self)
             }
 
             let argument = Array(expression.argumentList).single()?.expression
@@ -27,7 +27,7 @@ extension SubParser {
             case ("argument", .none):
                 return .argument(.forced)
             default:
-                throw ParseError.cannotInstantiateObjectFromExpression(calledMember, type: Argument.self)
+                throw ParseError.cannotInstantiateObjectFromExpression(calledMember.erased(), type: Argument.self)
             }
         }
     }

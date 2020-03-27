@@ -12,22 +12,22 @@ import SwiftSyntax
 extension StructResolution.FragmentName {
     
     init(syntax: Syntax) throws {
-        switch syntax {
-        case let expression as IdentifierExprSyntax:
+        switch syntax.as(SyntaxEnum.self) {
+        case .identifierExpr(let expression):
             self = .fullName(expression.identifier.text)
-        case let expression as MemberAccessExprSyntax:
+        case .memberAccessExpr(let expression):
             guard let base = expression.base else { throw GraphQLFragmentResolverError.invalidTypeNameForFragment(syntax.description) }
             self = .typealiasOnStruct(base.description, expression.name.text)
-        case let expression as OptionalChainingExprSyntax:
-            try self.init(syntax: expression.expression)
-        case let expression as ArrayExprSyntax:
+        case .optionalChainingExpr(let expression):
+            try self.init(syntax: expression.expression.erased())
+        case .arrayExpr(let expression):
             guard let syntax = Array(expression.elements).single()?.expression else { throw GraphQLFragmentResolverError.invalidTypeNameForFragment(expression.description) }
-            try self.init(syntax: syntax)
-        case let expression as ArrayTypeSyntax:
-            try self.init(syntax: expression.elementType)
-        case let expression as OptionalTypeSyntax:
-            try self.init(syntax: expression.wrappedType)
-        case let expression as MemberTypeIdentifierSyntax:
+            try self.init(syntax: syntax.erased())
+        case .arrayType(let expression):
+            try self.init(syntax: expression.elementType.erased())
+        case .optionalType(let expression):
+            try self.init(syntax: expression.wrappedType.erased())
+        case .memberTypeIdentifier(let expression):
             self = .typealiasOnStruct(expression.baseType.description, expression.name.text)
         default:
             throw GraphQLFragmentResolverError.invalidTypeNameForFragment(syntax.description)
