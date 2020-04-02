@@ -10,7 +10,7 @@ import Foundation
 struct BasicFieldNameAliasNamer: FieldNameAliasNamer {
     
     func rename(field: GraphQLField, nonRenamable: [GraphQLField]) throws -> GraphQLField {
-        let nonRenamable = Dictionary(uniqueKeysWithValues: nonRenamable.map { ($0.name, $0) })
+        let nonRenamable = Dictionary(uniqueKeysWithValues: nonRenamable.map { ($0.name.singular, $0) })
         return rename(field: field, nonRenamable: nonRenamable)
     }
     
@@ -18,7 +18,7 @@ struct BasicFieldNameAliasNamer: FieldNameAliasNamer {
                         nonRenamable: [String : GraphQLField],
                         number: Int? = nil) -> GraphQLField {
         
-        guard let sameName = nonRenamable[field.name], field.field != sameName.field else { return field }
+        guard let sameName = nonRenamable[field.name.singular], field.field != sameName.field else { return field }
         
         let number = number ?? 1
         let newRenamed = GraphQLField(field: field.field, alias: "\(field.field.name)\(number)")
