@@ -20,12 +20,12 @@ If you're looking for something like this, but for other platforms, Graphaello i
 
 Code snippets are cool, but how does this look in a real project? Here are some Example Apps that you can take a look at.
 
-| Countries        | Music      |
-| ------------- |-------------|
-| ![](https://github.com/nerdsupremacist/graphaello-countries-example/blob/master/demo.gif?raw=true)      | ![](https://github.com/nerdsupremacist/graphaello-music-example/blob/master/demo.gif?raw=true) |
-| Simple Hello World App that displays information about a lot of different countries | More complex App that uses Paging and a lot of reusable components |
-| Uses [Countries API](https://countries.trevorblades.com)      | Uses [GraphBrains](https://github.com/exogen/graphbrainz)      |
-| [Repo](https://github.com/nerdsupremacist/graphaello-countries-example) | [Repo](https://github.com/nerdsupremacist/graphaello-music-example)      |
+| Countries        | Music      | CovidUI |
+| ------------- |-------------| ---------- |
+| ![](https://github.com/nerdsupremacist/graphaello-countries-example/blob/master/demo.gif?raw=true)      | ![](https://github.com/nerdsupremacist/graphaello-music-example/blob/master/demo.gif?raw=true) | ![](https://github.com/nerdsupremacist/CovidUI/blob/master/demo.gif?raw=true) |
+| Simple Hello World App that displays information about a lot of different countries | More complex App that uses Paging and a lot of reusable components | Integrationg Test, displaying data from my own GraphQL API: CovidQL
+| Uses [Countries API](https://countries.trevorblades.com)      | Uses [GraphBrains](https://github.com/exogen/graphbrainz)      | Uses [CovidQL](https://github.com/nerdsupremacist/CovidQL)
+| [Repo](https://github.com/nerdsupremacist/graphaello-countries-example) | [Repo](https://github.com/nerdsupremacist/graphaello-music-example)      | [Repo](https://github.com/nerdsupremacist/CovidUI)
 
 ## TLDR?
 
