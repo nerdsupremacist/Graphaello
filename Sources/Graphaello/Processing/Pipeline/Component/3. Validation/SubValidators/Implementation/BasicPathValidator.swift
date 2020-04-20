@@ -21,7 +21,7 @@ struct BasicPathValidator: PathValidator {
         }
 
         let components: [Stage.Validated.Component]
-        if case .object = validatedContext.type, validatedContext.components.last?.parsed != .fragment {
+        if validatedContext.type.graphQLType.kind.isFragment, validatedContext.components.last?.parsed != .fragment {
             components = validatedContext.components + [validatedContext.fragmentComponent()]
         } else {
             components = validatedContext.components

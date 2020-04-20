@@ -95,7 +95,7 @@ extension Schema.GraphQLType.Field.TypeReference {
     var isFragment: Bool {
         switch self {
         case .concrete(let definition):
-            return definition.kind != .scalar
+            return definition.kind.isFragment
         case .complex(_, let ofType):
             return ofType.isFragment
         }

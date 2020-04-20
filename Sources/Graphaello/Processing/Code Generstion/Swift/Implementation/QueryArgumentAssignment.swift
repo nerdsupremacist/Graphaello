@@ -77,13 +77,8 @@ extension GraphQLArgument {
         if case .value(let expression) = argument {
             return expression
         }
-
-        if type.isScalar {
-            return IdentifierExprSyntax(identifier: name.camelized).erased()
-        } else {
-            return FunctionCallExprSyntax(target: MemberAccessExprSyntax(base: nil, name: "init").erased(),
-                                          arguments: [(nil, IdentifierExprSyntax(identifier: name.camelized).erased())]).erased()
-        }
+        
+        return IdentifierExprSyntax(identifier: name.camelized).erased()
     }
 
 }

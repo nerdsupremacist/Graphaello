@@ -22,3 +22,17 @@ extension Schema.GraphQLType {
     }
     
 }
+
+extension Schema.GraphQLType.Kind {
+
+
+    var isFragment: Bool {
+        switch self {
+        case .object, .interface, .union:
+            return true
+        case .scalar, .enum, .nonNull, .list, .inputObject:
+            return false
+        }
+    }
+
+}
