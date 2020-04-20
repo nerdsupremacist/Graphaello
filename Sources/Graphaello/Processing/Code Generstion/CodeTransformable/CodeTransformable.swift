@@ -15,8 +15,9 @@ protocol CodeTransformable {
 
 extension CodeTransformable {
     
-    func code(using environment: Environment) throws -> String {
-        return try environment.renderTemplate(name: "CodeTransformable.stencil", context: ["value" : self])
+    func code(using environment: Environment, context: [String : Any] = [:]) throws -> String {
+        let context = context.merging(["value" : self]) { $1 }
+        return try environment.renderTemplate(name: "CodeTransformable.stencil", context: context)
     }
     
 }

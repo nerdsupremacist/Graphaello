@@ -1,3 +1,6 @@
+{% if shouldBeTypealias %}
+typealias {{ graphQlType.name|upperCamelized }} = Apollo{{ api.name }}.{{ graphQlType.name|upperCamelized }}
+{% else %}
 {% if graphQlType.inputFields %}struct{% else %}enum{% endif %} {{ graphQlType.name|upperCamelized }}: {%if hasEnumValues %}String, {% endif %}Target{% if connectionNodeType %}, Connection{% endif %} {
 
     {% if connectionNodeType %}typealias Node = {{ connectionNodeType }}{% endif %}
@@ -29,3 +32,4 @@
     
     static var _fragment: FragmentPath<{{ graphQlType.name|upperCamelized }}> { .init() }
 }
+{% endif %}
