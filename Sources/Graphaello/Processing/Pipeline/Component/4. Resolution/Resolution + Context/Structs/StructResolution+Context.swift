@@ -15,7 +15,7 @@ extension StructResolution {
             let fragments: [String : GraphQLFragment]
             
             init(resolved: Struct<Stage.Resolved>) {
-                self.fragments = Dictionary(uniqueKeysWithValues: resolved.fragments.map { ($0.target.name.upperCamelized, $0) })
+                self.fragments = Dictionary(uniqueKeysWithValues: resolved.fragments.map { ($0.target.name.lowercased(), $0) })
             }
         }
 
@@ -53,7 +53,7 @@ extension StructResolution.Context {
         case .fullName(let name):
             return fragmentDictionary[name]
         case .typealiasOnStruct(let structName, let typeName):
-            return structsDictionary[structName]?.fragments[typeName]
+            return structsDictionary[structName]?.fragments[typeName.lowercased()]
         }
     }
     
