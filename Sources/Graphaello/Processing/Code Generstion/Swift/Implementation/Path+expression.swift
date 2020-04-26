@@ -35,8 +35,8 @@ extension Expression {
 
     var kind: AttributePath.Kind {
         switch self {
-        case .attributePath(let path, _):
-            return path.last?.kind ?? .value
+        case .attributePath(let path, let expression):
+            return path.reduce(expression?.kind ?? .value) { $0 + $1.kind }
         case .operation(.compactMap, let expression):
             switch expression.kind {
             case .array(.optional(let kind)):
@@ -92,6 +92,30 @@ extension Expression {
             return .attributePath(lhs + rhs, on: expression)
         case (_, .none):
             return lhs
+        }
+    }
+
+}
+
+extension AttributePath.Kind {
+
+    fileprivate static func + (lhs: AttributePath.Kind, rhs: AttributePath.Kind) -> AttributePath.Kind {
+        switch lhs {
+        case .optional(let lhs):
+            let resolved = lhs + rhs
+            switch resolved {
+            case .optional:
+                return resolved
+            case .array, .value:
+                return .optional(resolved)
+            }
+
+        case .array(let lhs):
+            return .array(lhs + rhs)
+
+        case .value:
+            return rhs
+
         }
     }
 
