@@ -54,7 +54,7 @@ struct BasicGraphQLToSwiftTranspiler: GraphQLToSwiftTranspiler {
                                           arguments: expressions)
 
         case (.identifier(let identifier), .concrete(let type)):
-            guard type.kind == .enum, let name = type.name else { break }
+            guard type.kind == .enum, let name = type.name?.upperCamelized else { break }
             return MemberAccessExprSyntax(base: MemberAccessExprSyntax(base: IdentifierExprSyntax(identifier: api.name),
                                                                        name: name),
                                           name: identifier.camelized)
