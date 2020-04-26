@@ -41,7 +41,29 @@ extension Property where CurrentStage == Stage.Prepared {
 
     var usedTypes: Set<Schema.GraphQLType> {
         guard let path = graphqlPath else { return [] }
-        return [path.components.last!.validated.underlyingType]
+        let arguments = path.components.flatMap { $0.usedTypes(api: path.resolved.validated.api) }
+        return Set(arguments).union([path.components.last!.validated.underlyingType])
+    }
+
+}
+
+extension Stage.Cleaned.Component {
+
+    func usedTypes(api: API) -> Set<Schema.GraphQLType> {
+        return validated.reference.usedTypes(api: api)
+    }
+
+}
+
+extension Stage.Validated.Component.Reference {
+
+    func usedTypes(api: API) -> Set<Schema.GraphQLType> {
+        switch self {
+        case .casting, .fragment, .type:
+            return []
+        case .field(let field):
+            return Set(field.arguments.compactMap { api[$0.type.underlyingTypeName]?.graphQLType })
+        }
     }
 
 }
