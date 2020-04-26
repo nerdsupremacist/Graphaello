@@ -1,5 +1,5 @@
 {% if shouldBeTypealias %}
-typealias {{ graphQlType.name|upperCamelized }} = Apollo{{ api.name }}.{{ graphQlType.name|upperCamelized }}
+typealias {{ graphQlType.name|upperCamelized }} = Apollo{{ api.name }}.{{ graphQlType.name }}
 {% else %}
 {% if graphQlType.inputFields %}struct{% else %}enum{% endif %} {{ graphQlType.name|upperCamelized }}: {%if hasEnumValues %}String, {% endif %}Target{% if connectionNodeType %}, Connection{% endif %} {
 
