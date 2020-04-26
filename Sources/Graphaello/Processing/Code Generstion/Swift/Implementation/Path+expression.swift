@@ -132,7 +132,7 @@ extension Expression {
         case .operation(.withDefault(let defaultValue), let expression):
             return "\(expression.expression()) ?? \(defaultValue.description)"
         case .operation(.nonNull, let expression):
-            return "\(expression.expression())!"
+            return "(\(expression.expression()))!"
         case (.attributePath(let path, .none)):
             return path.expression()
         case (.attributePath(let path, .some(let expression))):
