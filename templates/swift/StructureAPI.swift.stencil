@@ -245,6 +245,8 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
         @Published var isLoading: Bool = false
         @Published var value: Query.Data? = nil
         @Published var error: String? = nil
+
+        private var previous: Query?
         private var cancellable: Apollo.Cancellable?
 
         deinit {
@@ -252,7 +254,8 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
         }
 
         func load(client: ApolloClient, query: Query) {
-            guard value == nil, !isLoading else { return }
+            guard previous !== query || (value == nil && !isLoading)  else { return }
+            previous = query
             cancellable = client.fetch(query: query) { [weak self] result in
                 defer {
                     self?.cancellable = nil
@@ -280,14 +283,27 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
 
     @ObservedObject private var viewModel = ViewModel()
 
+    @State private var hasAppeared = false
+
     var body: some View {
+        if hasAppeared {
+            self.viewModel.load(client: self.client, query: self.query)
+        }
         return VStack {
             viewModel.error.map { Text("Error: \($0)") }
             viewModel.value.map(factory)
             viewModel.isLoading ? Text("Loading") : nil
-        }.onAppear {
+        }
+        .onAppear {
+            DispatchQueue.main.async {
+                self.hasAppeared = true
+            }
             self.viewModel.load(client: self.client, query: self.query)
-        }.onDisappear {
+        }
+        .onDisappear {
+            DispatchQueue.main.async {
+                self.hasAppeared = false
+            }
             self.viewModel.cancel()
         }
     }
