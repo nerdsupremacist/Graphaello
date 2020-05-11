@@ -14,9 +14,11 @@ private let decoder = JSONDecoder()
 
 private struct WrappedSchema: Codable {
     enum CodingKeys: String, CodingKey {
+        case url
         case schema = "__schema"
     }
-    
+
+    let url: URL?
     let schema: Schema
 }
 
@@ -30,7 +32,7 @@ extension Project {
                 let (file, apiName) = file
                 let data = try Data(contentsOf: file.url)
                 let wrapped = try decoder.decode(WrappedSchema.self, from: data)
-                return API(name: apiName, schema: wrapped.schema, path: file)
+                return API(name: apiName, schema: wrapped.schema, path: file, url: wrapped.url)
             }
     }
     

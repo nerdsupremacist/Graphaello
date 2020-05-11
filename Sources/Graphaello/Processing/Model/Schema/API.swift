@@ -16,8 +16,9 @@ class API {
     let types: [Schema.GraphQLType]
     let scalars: [Schema.GraphQLType]
     let path: Path
+    let url: URL?
 
-    init(name: String, schema: Schema, path: Path) {
+    init(name: String, schema: Schema, path: Path, url: URL?) {
         self.name = name
 
         self.query = schema.types.first { $0.name == schema.queryType.name } ?! fatalError("Expected a query type")
@@ -33,6 +34,7 @@ class API {
         
         self.scalars = schema.types.filter { $0.isScalar }
         self.path = path
+        self.url = url
     }
 }
 
