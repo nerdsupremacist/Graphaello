@@ -170,4 +170,5 @@ fileprivate let irregulars = [
     "child": "children",
     "sex": "sexes",
     "move": "moves",
+    "movie": "movies",
     "zombie": "zombies"]
