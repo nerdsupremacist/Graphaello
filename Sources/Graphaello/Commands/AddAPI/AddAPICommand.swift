@@ -149,7 +149,8 @@ class AddAPICommand : Command {
         Console.print(title: "🔬 Deserializing Data")
 
         guard let data = responseData else { return }
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [String : Any], let object = json["data"] else { return }
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [String : Any], var object = json["data"] as? [String : Any] else { return }
+        object["url"] = url.absoluteString
         let content = try JSONSerialization.data(withJSONObject: object)
 
         Console.print(title: "💉 Adding Schema to Project")
