@@ -20,6 +20,32 @@ struct {{ api.name }}: API {
     {{ api.types|code }}
 }
 
+extension {{ api.name }} {
+
+    init(url: URL{% if api.url %} = URL(string: "{{ api.url }}")!{% endif %},
+         client: URLSessionClient = URLSessionClient(),
+         sendOperationIdentifiers: Bool = false,
+         useGETForQueries: Bool = false,
+         enableAutoPersistedQueries: Bool = false,
+         useGETForPersistedQueryRetry: Bool = false,
+         requestCreator: RequestCreator = ApolloRequestCreator(),
+         delegate: HTTPNetworkTransportDelegate? = nil,
+         store: ApolloStore = ApolloStore(cache: InMemoryNormalizedCache())) {
+
+        let networkTransport = HTTPNetworkTransport(url: url,
+                                                     client: client,
+                                                     sendOperationIdentifiers: sendOperationIdentifiers,
+                                                     useGETForQueries: useGETForQueries,
+                                                     enableAutoPersistedQueries: enableAutoPersistedQueries,
+                                                     useGETForPersistedQueryRetry: useGETForQueries,
+                                                     requestCreator: requestCreator)
+
+        networkTransport.delegate = delegate
+        self.init(client: ApolloClient(networkTransport: networkTransport, store: store))
+    }
+
+}
+
 {% for type in api.types %}
 extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name|upperCamelized }} {
     {{ type.fields|code }}
