@@ -310,6 +310,12 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
 }
 
 struct PagingView<Value: Fragment>: View {
+    enum Mode {
+        case list
+        case vertical(alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil)
+        case horizontal(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil)
+    }
+
     enum Data {
         case item(Value, Int)
         case loading
@@ -328,21 +334,54 @@ struct PagingView<Value: Fragment>: View {
     }
 
     @ObservedObject private var paging: Paging<Value>
+    private let mode: Mode
     private let pageSize: Int?
     private var loader: (Data) -> AnyView
 
-    init(_ paging: Paging<Value>, pageSize: Int?, loader: @escaping (Data) -> AnyView) {
+    @State private var visibleRect: CGRect = .zero
+
+    init(_ paging: Paging<Value>, mode: Mode = .list, pageSize: Int? = nil, loader: @escaping (Data) -> AnyView) {
         self.paging = paging
+        self.mode = mode
         self.pageSize = pageSize
         self.loader = loader
     }
 
     var body: some View {
-        ForEach((paging.values.enumerated().map { Data.item($0.element, $0.offset) } +
-                    [paging.isLoading ? Data.loading : nil, paging.error.map(Data.error)].compactMap { $0 }),
-        id: \.id) { data in
+        let data = self.paging.values.enumerated().map { Data.item($0.element, $0.offset) } +
+            [self.paging.isLoading ? Data.loading : nil, self.paging.error.map(Data.error)].compactMap { $0 }
 
-            self.loader(data).onAppear { self.onAppear(data: data) }
+        switch mode {
+        case .list:
+            return AnyView(
+                List(data, id: \.id) { data in
+                    self.loader(data).onAppear { self.onAppear(data: data) }
+                }
+            )
+        case .vertical(let alignment, let spacing):
+            return AnyView(
+                ScrollView(.horizontal, showsIndicators: false) {
+                    VStack(alignment: alignment, spacing: spacing) {
+                        ForEach(data, id: \.id) { data in
+                            self.loader(data).ifVisible(in: self.visibleRect, in: .named("InfiniteVerticalScroll")) { self.onAppear(data: data) }
+                        }
+                    }
+                }
+                .coordinateSpace(name: "InfiniteVerticalScroll")
+                .rectReader($visibleRect, in: .named("InfiniteVerticalScroll"))
+            )
+        case .horizontal(let alignment, let spacing):
+            return AnyView(
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: alignment, spacing: spacing) {
+                        ForEach(data, id: \.id) { data in
+                            self.loader(data).ifVisible(in: self.visibleRect, in: .named("InfiniteHorizontalScroll")) { self.onAppear(data: data) }
+                        }
+                    }
+                }
+                .coordinateSpace(name: "InfiniteHorizontalScroll")
+                .rectReader($visibleRect, in: .named("InfiniteHorizontalScroll"))
+            )
         }
     }
 
@@ -358,11 +397,12 @@ struct PagingView<Value: Fragment>: View {
 
 extension PagingView {
     init<Loading: View, Error: View, Data: View>(_ paging: Paging<Value>,
+                                                 mode: Mode = .list,
                                                  pageSize: Int? = nil,
                                                  loading loadingView: @escaping () -> Loading,
                                                  error errorView: @escaping (Swift.Error) -> Error,
                                                  item itemView: @escaping (Value) -> Data) {
-        self.init(paging, pageSize: pageSize) { data in
+        self.init(paging, mode: mode, pageSize: pageSize) { data in
             switch data {
             case let .item(item, _):
                 return AnyView(itemView(item))
@@ -375,10 +415,12 @@ extension PagingView {
     }
 
     init<Error: View, Data: View>(_ paging: Paging<Value>,
+                                  mode: Mode = .list,
                                   pageSize: Int? = nil,
                                   error errorView: @escaping (Swift.Error) -> Error,
                                   item itemView: @escaping (Value) -> Data) {
         self.init(paging,
+                  mode: mode,
                   pageSize: pageSize,
                   loading: { Text("Loading") },
                   error: errorView,
@@ -386,10 +428,12 @@ extension PagingView {
     }
 
     init<Loading: View, Data: View>(_ paging: Paging<Value>,
+                                    mode: Mode = .list,
                                     pageSize: Int? = nil,
                                     loading loadingView: @escaping () -> Loading,
                                     item itemView: @escaping (Value) -> Data) {
         self.init(paging,
+                  mode: mode,
                   pageSize: pageSize,
                   loading: loadingView,
                   error: { Text("Error: \($0.localizedDescription)") },
@@ -397,15 +441,50 @@ extension PagingView {
     }
 
     init<Data: View>(_ paging: Paging<Value>,
+                     mode: Mode = .list,
                      pageSize: Int? = nil,
                      item itemView: @escaping (Value) -> Data) {
         self.init(paging,
+                  mode: mode,
                   pageSize: pageSize,
                   loading: { Text("Loading") },
                   error: { Text("Error: \($0.localizedDescription)") },
                   item: itemView)
     }
 }
+
+extension PagingView.Mode {
+
+    static var vertical: PagingView.Mode { .vertical() }
+
+    static var horizontal: PagingView.Mode { .horizontal() }
+
+}
+
+extension View {
+    fileprivate func rectReader(_ binding: Binding<CGRect>, in space: CoordinateSpace) -> some View {
+        self.background(GeometryReader { (geometry) -> AnyView in
+            let rect = geometry.frame(in: space)
+            DispatchQueue.main.async {
+                binding.wrappedValue = rect
+            }
+            return AnyView(Rectangle().fill(Color.clear))
+        })
+    }
+}
+
+extension View {
+   fileprivate  func ifVisible(in rect: CGRect, in space: CoordinateSpace, execute: @escaping () -> Void) -> some View {
+        self.background(GeometryReader { (geometry) -> AnyView in
+            let frame = geometry.frame(in: space)
+            if frame.intersects(rect) {
+                execute()
+            }
+            return AnyView(Rectangle().fill(Color.clear))
+        })
+    }
+}
+
 
 // MARK: - Basic API: Decoders
 
@@ -416,21 +495,60 @@ protocol GraphQLValueDecoder {
     static func decode(encoded: Encoded) throws -> Decoded
 }
 
-extension Array: GraphQLValueDecoder where Element: GraphQLValueDecoder {
-    static func decode(encoded: [Element.Encoded]) throws -> [Element.Decoded] {
-        return try encoded.map { try Element.decode(encoded: $0) }
-    }
-}
-
-extension Optional: GraphQLValueDecoder where Wrapped: GraphQLValueDecoder {
-    static func decode(encoded: Wrapped.Encoded?) throws -> Wrapped.Decoded? {
-        return try encoded.map { try Wrapped.decode(encoded: $0) }
-    }
-}
-
 enum NoOpDecoder<T>: GraphQLValueDecoder {
     static func decode(encoded: T) throws -> T {
         return encoded
+    }
+}
+
+// MARK: - Basic API: Scalar Handling
+
+protocol GraphQLScalar {
+    associatedtype Scalar
+    init(from scalar: Scalar) throws
+}
+
+extension Array: GraphQLScalar where Element: GraphQLScalar {
+
+    init(from scalar: [Element.Scalar]) throws {
+        self = try scalar.map { try Element(from: $0) }
+    }
+
+}
+
+extension Optional: GraphQLScalar where Wrapped: GraphQLScalar {
+
+    init(from scalar: Wrapped.Scalar?) throws {
+        guard let scalar = scalar else {
+            self = .none
+            return
+        }
+        self = .some(try Wrapped(from: scalar))
+    }
+
+}
+
+extension URL: GraphQLScalar {
+    typealias Scalar = String
+
+    private struct URLScalarDecodingError: Error {
+        let string: String
+    }
+
+    init(from string: Scalar) throws {
+        guard let url = URL(string: string) else {
+            throw URLScalarDecodingError(string: string)
+        }
+        self = url
+    }
+}
+
+enum ScalarDecoder<ScalarType: GraphQLScalar>: GraphQLValueDecoder {
+    typealias Encoded = ScalarType.Scalar
+    typealias Decoded = ScalarType
+
+    static func decode(encoded: ScalarType.Scalar) throws -> ScalarType {
+        return try ScalarType(from: encoded)
     }
 }
 
@@ -476,6 +594,10 @@ struct GraphQL<Decoder: GraphQLValueDecoder>: DynamicProperty {
     }
 
     init<T: Target, Value>(_: @autoclosure () -> GraphQLPath<T, Value>) where Decoder == NoOpDecoder<Value> {
+        fatalError("Initializer with path only should never be used")
+    }
+
+    init<T: Target, Value: GraphQLScalar>(_: @autoclosure () -> GraphQLPath<T, Value.Scalar>) where Decoder == ScalarDecoder<Value> {
         fatalError("Initializer with path only should never be used")
     }
 
