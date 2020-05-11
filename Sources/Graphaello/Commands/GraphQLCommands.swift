@@ -15,4 +15,5 @@ class GraphQLCommands: Commands {
     let `init` = InitCommand()
     let codegen = CodegenCommand()
     let add = AddAPICommand()
+    let update = UpdateAPICommand()
 }
