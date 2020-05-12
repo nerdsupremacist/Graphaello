@@ -11,7 +11,8 @@ import SwiftSyntax
 
 extension SubParser {
     
-    static func functionCall(parent: SubParser<ExprSyntax, Stage.Parsed.Path>,
+    static func functionCall(extracted: Stage.Extracted.Attribute,
+                             parent: SubParser<ExprSyntax, Stage.Parsed.Path>,
                              parser: @escaping () -> SubParser<TupleExprElementListSyntax, [Field.Argument]>) -> SubParser<FunctionCallExprSyntax, Stage.Parsed.Path> {
         
         return .init { expression in
@@ -54,7 +55,8 @@ extension SubParser {
             guard let base = called.base else { throw ParseError.expectedBaseForCalls(expression: expression.erased()) }
 
             if let base = base.as(IdentifierExprSyntax.self) {
-                return try Stage.Parsed.Path(apiName: base.identifier.text,
+                return try Stage.Parsed.Path(extracted: extracted,
+                                             apiName: base.identifier.text,
                                              target: .query,
                                              components: []).appending(name: called.name.text, arguments: arguments)
             }
@@ -68,12 +70,12 @@ extension SubParser {
 extension Stage.Parsed.Path {
 
     fileprivate func appending(name: String, arguments: [Field.Argument]) throws -> Self {
-        return .init(apiName: apiName, target: target, components: components + [.call(name, arguments)])
+        return .init(extracted: extracted, apiName: apiName, target: target, components: components + [.call(name, arguments)])
     }
 
 
     fileprivate func appending(operation: Operation) throws -> Self {
-        return .init(apiName: apiName, target: target, components: components + [.operation(operation)])
+        return .init(extracted: extracted, apiName: apiName, target: target, components: components + [.operation(operation)])
     }
 
 }

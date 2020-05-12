@@ -23,6 +23,7 @@ extension Stage {
         }
 
         struct Path {
+            let extracted: Stage.Extracted.Attribute
             let apiName: String
             let target: Target
             let components: [Component]

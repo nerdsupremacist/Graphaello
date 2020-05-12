@@ -28,17 +28,17 @@ enum PipelineFactory {
     
     private static func create() -> Parser {
         return BasicParser {
-            .attribute {
+            .attribute { extracted in
                 .syntaxTree {
                     .annotationFunctionCall {
                         .pathExpression(
                             memberAccess: { (parent: SubParser<ExprSyntax, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path> in
-                                .memberAccess(parent: parent) {
+                                .memberAccess(extracted: extracted, parent: parent) {
                                     .baseMemberAccess()
                                 }
                             },
                             functionCall: { (parent: SubParser<ExprSyntax, Stage.Parsed.Path>) in
-                                .functionCall(parent: parent) {
+                                .functionCall(extracted: extracted, parent: parent) {
                                     .argumentList {
                                         .argumentExpression(
                                             memberAccess: {

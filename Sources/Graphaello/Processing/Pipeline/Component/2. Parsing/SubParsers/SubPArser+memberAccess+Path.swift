@@ -11,14 +11,15 @@ import SwiftSyntax
 
 extension SubParser {
     
-    static func memberAccess(parent: SubParser<ExprSyntax, Stage.Parsed.Path>,
+    static func memberAccess(extracted: Stage.Extracted.Attribute,
+                             parent: SubParser<ExprSyntax, Stage.Parsed.Path>,
                              parser: @escaping () -> SubParser<BaseMemberAccess, Stage.Parsed.Path>) -> SubParser<MemberAccessExprSyntax, Stage.Parsed.Path> {
         
         return .init { expression in
             guard let base = expression.base else { throw ParseError.expectedBaseForCalls(expression: expression.erased()) }
 
             if let base = base.as(IdentifierExprSyntax.self) {
-                let access = BaseMemberAccess(base: base.identifier.text, accessedField: expression.name.text)
+                let access = BaseMemberAccess(extracted: extracted, base: base.identifier.text, accessedField: expression.name.text)
                 return try parser().parse(from: access)
             }
 
@@ -31,7 +32,8 @@ extension SubParser {
 extension Stage.Parsed.Path {
 
     fileprivate func appending(name: String) -> Self {
-        return .init(apiName: apiName,
+        return .init(extracted: extracted,
+                     apiName: apiName,
                      target: target,
                      components: components + [name == "_fragment" ? .fragment : .property(name)])
     }
