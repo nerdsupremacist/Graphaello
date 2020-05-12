@@ -28,7 +28,7 @@ extension SourceCode {
     }
 
     func elements() throws -> [SourceCode] {
-        return try decodeArray(key: .elements).map { SourceCode(file: file, dictionary: $0) }
+        return try decodeArray(key: .elements).map { SourceCode(file: file, parent: self, dictionary: $0) }
     }
 
     func fullXMLDocs() throws -> String {
@@ -64,7 +64,7 @@ extension SourceCode {
     }
 
     func substructure() throws -> [SourceCode] {
-        return try decodeArray(key: .substructure).map { SourceCode(file: file, dictionary: $0) }
+        return try decodeArray(key: .substructure).map { SourceCode(file: file, parent: self, dictionary: $0) }
     }
 
     func typeName() throws -> String {
@@ -76,7 +76,7 @@ extension SourceCode {
     }
 
     func attributes() throws -> [SourceCode] {
-        return try decodeArray(key: "key.attributes").map { SourceCode(file: file, dictionary: $0) }
+        return try decodeArray(key: "key.attributes").map { SourceCode(file: file, parent: self, dictionary: $0) }
     }
 
     func attribute() throws -> SwiftDeclarationAttributeKind {
