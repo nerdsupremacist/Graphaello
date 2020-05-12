@@ -16,7 +16,9 @@ struct BasicParser: Parser {
             return try property.with {
                 try .parsed ~> property.attributes
                     .compactMap { attribute in
-                        try parser.parse(from: attribute)
+                        try locateErrors(with: attribute.code.location) {
+                            try parser.parse(from: attribute)
+                        }
                     }
                     .first
             }

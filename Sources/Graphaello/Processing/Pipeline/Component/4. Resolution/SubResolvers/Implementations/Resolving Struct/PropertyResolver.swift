@@ -19,12 +19,14 @@ struct PropertyResolver<Resolver: ValueResolver>: ValueResolver where Resolver.P
         guard let path = value.graphqlPath else {
             return .resolved(Property(code: value.code, name: value.name, type: value.type, graphqlPath: nil))
         }
-        
-        return try resolver
-            .resolve(value: path, in: value, using: context)
-            .map { path in
-                Property(code: value.code, name: value.name, type: value.type, graphqlPath: path)
-            }
+
+        return try locateErrors(with: path.parsed.extracted.code.location) {
+            return try resolver
+                .resolve(value: path, in: value, using: context)
+                .map { path in
+                    Property(code: value.code, name: value.name, type: value.type, graphqlPath: path)
+                }
+        }
     }
 }
 

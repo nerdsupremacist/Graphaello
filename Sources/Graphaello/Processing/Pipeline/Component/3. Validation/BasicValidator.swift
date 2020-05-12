@@ -14,7 +14,9 @@ struct BasicValidator: Validator {
     func validate(parsed: Struct<Stage.Parsed>, using apis: [API]) throws -> Struct<Stage.Validated> {
         return try parsed.map { path in
             return try path.map { path in
-                return try validator.validate(path: path, using: apis)
+                return try locateErrors(with: path.extracted.code.location) {
+                    return try validator.validate(path: path, using: apis)
+                }
             }
         }
     }
