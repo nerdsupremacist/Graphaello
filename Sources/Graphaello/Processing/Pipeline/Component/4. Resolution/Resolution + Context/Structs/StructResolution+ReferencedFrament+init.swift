@@ -11,7 +11,7 @@ import SwiftSyntax
 extension StructResolution.ReferencedFragment {
 
     init(typeName: String) throws {
-        guard let syntax = try SourceCode(content: typeName).syntaxTree().singleItem() else  {
+        guard let syntax = try SyntaxParser.parse(source: typeName).singleItem() else  {
             throw GraphQLFragmentResolverError.invalidTypeNameForFragment(typeName)
         }
         try self.init(syntax: syntax.erased())
