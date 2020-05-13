@@ -7,6 +7,7 @@ class FileCache<Key: Hashable> {
     private let folder: Path
     private let index: Path
     private let capacity: Int
+    private let hasher: Hasher
     private var hashStore: OrderedSet<Int>
 
     init(folder: Path, capacity: Int) throws {
@@ -17,6 +18,8 @@ class FileCache<Key: Hashable> {
         if !folder.exists {
             try folder.mkpath()
         }
+
+        hasher = try reliableHasher()
 
         if index.exists {
             let bytes = Array(try index.read())
@@ -31,7 +34,7 @@ class FileCache<Key: Hashable> {
     }
 
     func load(key: Key) throws -> Data? {
-        let hash = try computeHash(of: key)
+        let hash = computeHash(of: key)
         let file = self.file(for: hash)
         if file.exists {
             assert(hashStore.contains(hash))
@@ -43,7 +46,7 @@ class FileCache<Key: Hashable> {
     }
 
     func store(data: Data, for key: Key) throws {
-        let hash = try computeHash(of: key)
+        let hash = computeHash(of: key)
 
         if hashStore.contains(hash) && hashStore.count >= capacity {
             try evictLeastRecentlyUsed()
@@ -101,8 +104,8 @@ extension FileCache {
         return folder + String(hash)
     }
 
-    private func computeHash(of key: Key) throws -> Int {
-        var hasher = try reliableHasher()
+    private func computeHash(of key: Key) -> Int {
+        var hasher = self.hasher
         key.hash(into: &hasher)
         return hasher.finalize()
     }
