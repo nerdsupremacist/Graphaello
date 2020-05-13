@@ -113,6 +113,12 @@ class AddAPICommand : Command {
     @CommandRequiredInput(description: "URL to the GraphQL API.")
     var url: URL
 
+    @CommandFlag(description: "Should not cache generated code.")
+    var skipCache: Bool
+
+    @CommandOption(default: 100, description: "Maximum number of items that should be cached.")
+    var cacheSize: Int
+
     var description: String {
         return "Adds/Updates an API Schema to your project"
     }
@@ -162,6 +168,8 @@ class AddAPICommand : Command {
             let codegen = CodegenCommand()
             codegen.project = self.project
             codegen.apollo = .binary
+            codegen.skipCache = skipCache
+            codegen.cacheSize = cacheSize
             try codegen.run()
         } else {
             Console.print("✅ Done")

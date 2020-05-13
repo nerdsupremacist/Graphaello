@@ -29,6 +29,12 @@ class InitCommand : Command {
     @CommandFlag(description: "Skip the code generation step.")
     var skipGencode: Bool
 
+    @CommandFlag(description: "Should not cache generated code.")
+    var skipCache: Bool
+
+    @CommandOption(default: 100, description: "Maximum number of items that should be cached.")
+    var cacheSize: Int
+
     var description: String {
         return "Configures Graphaello for an Xcode Project"
     }
@@ -66,6 +72,8 @@ class InitCommand : Command {
             let codegen = CodegenCommand()
             codegen.project = self.project
             codegen.apollo = .binary
+            codegen.skipCache = skipCache
+            codegen.cacheSize = cacheSize
             try codegen.run()
         } else {
             Console.print("✅ Done")

@@ -16,6 +16,12 @@ class UpdateAPICommand : Command {
     @CommandFlag(description: "Skip the code generation step.")
     var skipGencode: Bool
 
+    @CommandFlag(description: "Should not cache generated code.")
+    var skipCache: Bool
+
+    @CommandOption(default: 100, description: "Maximum number of items that should be cached.")
+    var cacheSize: Int
+
     @CommandRequiredInput(description: "Name for the API.")
     var apiName: String
 
@@ -42,6 +48,8 @@ class UpdateAPICommand : Command {
         addAPICommand.apiName = apiName
         addAPICommand.project = project
         addAPICommand.skipGencode = skipGencode
+        addAPICommand.skipCache = skipCache
+        addAPICommand.cacheSize = cacheSize
         addAPICommand.url = url
         try addAPICommand.run()
     }
