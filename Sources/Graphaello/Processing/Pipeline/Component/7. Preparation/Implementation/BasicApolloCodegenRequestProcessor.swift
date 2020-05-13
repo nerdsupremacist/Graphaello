@@ -13,7 +13,7 @@ struct BasicApolloCodegenRequestProcessor: ApolloCodegenRequestProcessor {
 
     func process(request: ApolloCodeGenRequest,
                  using apollo: ApolloReference,
-                 cache: FileCache<AnyHashable>?) throws -> ApolloCodeGenResponse {
+                 cache: PersistentCache<AnyHashable>?) throws -> ApolloCodeGenResponse {
 
         let code = try cache.tryCache(key: request) {
             try process(request: request, using: apollo)

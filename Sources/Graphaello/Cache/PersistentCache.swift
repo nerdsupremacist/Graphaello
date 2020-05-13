@@ -1,16 +1,15 @@
 
 import Foundation
-import Runtime
 import PathKit
 
-class FileCache<Key: Hashable> {
+public class PersistentCache<Key: Hashable> {
     private let folder: Path
     private let index: Path
     private let capacity: Int
-    private let hasher: Hasher
+    private let hasher: Hasher = Hasher.constantAccrossExecutions()
     private var hashStore: OrderedSet<Int>
 
-    init(folder: Path, capacity: Int) throws {
+    public init(folder: Path, capacity: Int) throws {
         self.folder = folder
         self.index = folder + ".index"
         self.capacity = capacity
@@ -18,8 +17,6 @@ class FileCache<Key: Hashable> {
         if !folder.exists {
             try folder.mkpath()
         }
-
-        hasher = try reliableHasher()
 
         if index.exists {
             let bytes = Array(try index.read())
@@ -33,7 +30,7 @@ class FileCache<Key: Hashable> {
         try! store()
     }
 
-    func load(key: Key) throws -> Data? {
+    public func load(key: Key) throws -> Data? {
         let hash = computeHash(of: key)
         let file = self.file(for: hash)
         if file.exists {
@@ -45,7 +42,7 @@ class FileCache<Key: Hashable> {
         }
     }
 
-    func store(data: Data, for key: Key) throws {
+    public func store(data: Data, for key: Key) throws {
         let hash = computeHash(of: key)
 
         if hashStore.contains(hash) && hashStore.count >= capacity {
@@ -57,27 +54,27 @@ class FileCache<Key: Hashable> {
     }
 }
 
-extension FileCache {
+extension PersistentCache {
 
-    struct StringCannotBeStoredInCacheError : Error {
+    private struct StringCannotBeStoredInCacheError : Error {
         let string: String
         let encoding: String.Encoding
     }
 
-    func load(key: Key, encoding: String.Encoding = .utf8) throws -> String? {
+    public func load(key: Key, encoding: String.Encoding = .utf8) throws -> String? {
         return try load(key: key).flatMap { String(data: $0, encoding: encoding) }
     }
 
-    func store(string: String, for key: Key, encoding: String.Encoding = .utf8) throws {
+    public func store(string: String, for key: Key, encoding: String.Encoding = .utf8) throws {
         guard let data = string.data(using: encoding) else { throw StringCannotBeStoredInCacheError(string: string, encoding: encoding) }
         try store(data: data, for: key)
     }
 
 }
 
-extension FileCache {
+extension PersistentCache {
 
-    func tryCache(key: Key, encoding: String.Encoding = .utf8, builder: () throws -> String) throws -> String {
+    public func tryCache(key: Key, encoding: String.Encoding = .utf8, builder: () throws -> String) throws -> String {
         if let cached = try load(key: key, encoding: encoding) {
             return cached
         }
@@ -89,16 +86,7 @@ extension FileCache {
 
 }
 
-extension Optional {
-    func tryCache<Key : Hashable>(key: Key,
-                                  encoding: String.Encoding = .utf8,
-                                  builder: () throws -> String) throws -> String where Wrapped == FileCache<Key> {
-        guard let wrapped = self else { return try builder() }
-        return try wrapped.tryCache(key: key, encoding: encoding, builder: builder)
-    }
-}
-
-extension FileCache {
+extension PersistentCache {
 
     private func file(for hash: Int) -> Path {
         return folder + String(hash)
@@ -147,30 +135,35 @@ extension Collection {
 
 }
 
-// Stolen from https://github.com/apple/swift/blob/master/stdlib/public/core/SipHash.swift
-// in order to replicate the exact format in bytes
-private struct _State {
-  private var v0: UInt64 = 0x736f6d6570736575
-  private var v1: UInt64 = 0x646f72616e646f6d
-  private var v2: UInt64 = 0x6c7967656e657261
-  private var v3: UInt64 = 0x7465646279746573
-  private var v4: UInt64 = 0
-  private var v5: UInt64 = 0
-  private var v6: UInt64 = 0
-  private var v7: UInt64 = 0
+extension Hasher {
+    // Stolen from https://github.com/apple/swift/blob/master/stdlib/public/core/SipHash.swift
+    // in order to replicate the exact format in bytes
+    private struct _State {
+      private var v0: UInt64 = 0x736f6d6570736575
+      private var v1: UInt64 = 0x646f72616e646f6d
+      private var v2: UInt64 = 0x6c7967656e657261
+      private var v3: UInt64 = 0x7465646279746573
+      private var v4: UInt64 = 0
+      private var v5: UInt64 = 0
+      private var v6: UInt64 = 0
+      private var v7: UInt64 = 0
+    }
+
+    static func constantAccrossExecutions() -> Hasher {
+        let offset = MemoryLayout<Hasher>.size - MemoryLayout<_State>.size
+        var hasher = Hasher()
+        withUnsafeMutableBytes(of: &hasher) { pointer in
+            pointer.baseAddress!.storeBytes(of: _State(), toByteOffset: offset, as: _State.self)
+        }
+        return hasher
+    }
 }
 
-private func reliableHasher() throws -> Hasher {
-    return try createInstance { coreProperty in
-        return try createInstance(of: coreProperty.type) { property in
-            switch property.name {
-            case "_buffer":
-                return try createInstance(of: property.type)
-            case "_state":
-                return withUnsafeBytes(of: _State()) { $0.baseAddress!.unsafeLoad(as: property.type) }
-            default:
-                fatalError()
-            }
-        }
+extension Optional {
+    func tryCache<Key : Hashable>(key: Key,
+                                  encoding: String.Encoding = .utf8,
+                                  builder: () throws -> String) throws -> String where Wrapped == PersistentCache<Key> {
+        guard let wrapped = self else { return try builder() }
+        return try wrapped.tryCache(key: key, encoding: encoding, builder: builder)
     }
 }

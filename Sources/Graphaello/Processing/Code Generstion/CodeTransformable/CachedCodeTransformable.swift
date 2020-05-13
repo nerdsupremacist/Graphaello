@@ -4,7 +4,7 @@ import Stencil
 
 extension CodeTransformable where Self: Hashable {
 
-    func cached(using cache: FileCache<AnyHashable>?) -> CachedCodeTransformable<Self> {
+    func cached(using cache: PersistentCache<AnyHashable>?) -> CachedCodeTransformable<Self> {
         return CachedCodeTransformable(code: self, cache: cache)
     }
 
@@ -12,7 +12,7 @@ extension CodeTransformable where Self: Hashable {
 
 struct CachedCodeTransformable<Code : CodeTransformable & Hashable> : CodeTransformable {
     let code: Code
-    let cache: FileCache<AnyHashable>?
+    let cache: PersistentCache<AnyHashable>?
 
     func code(using context: Stencil.Context, arguments: [Any?]) throws -> String {
         return try cache.tryCache(key: code) {

@@ -52,10 +52,17 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "codegen --project /Users/mathias.quintero/master-thesis/graphaello-countries-example --apollo derivedData"
+            argument = "codegen --project /Users/mathias.quintero/Desktop/MoviesTest --apollo derivedData"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "BUILD_ROOT"
+            value = "/Users/mathias.quintero/Library/Developer/Xcode/DerivedData/MoviesTest-bryrtftymaxoeobmbqnuwkfamsbs/Build/Products"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

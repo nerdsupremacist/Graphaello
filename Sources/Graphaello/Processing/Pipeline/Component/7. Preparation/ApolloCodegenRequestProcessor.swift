@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ApolloCodegenRequestProcessor {
-    func process(request: ApolloCodeGenRequest, using apollo: ApolloReference, cache: FileCache<AnyHashable>?) throws -> ApolloCodeGenResponse
+    func process(request: ApolloCodeGenRequest, using apollo: ApolloReference, cache: PersistentCache<AnyHashable>?) throws -> ApolloCodeGenResponse
 }

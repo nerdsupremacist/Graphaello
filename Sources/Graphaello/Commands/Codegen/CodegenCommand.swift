@@ -41,7 +41,7 @@ class CodegenCommand : Command {
         Console.print(result: "Using \(inverse: project.fileName)")
 
         let cacheFolder = PathKit.Path(project.path.deletingLastComponent.string) + ".build" + "graphaello"
-        let cache = skipCache ? nil : try FileCache<AnyHashable>(folder: cacheFolder, capacity: cacheSize)
+        let cache = skipCache ? nil : try PersistentCache<AnyHashable>(folder: cacheFolder, capacity: cacheSize)
 
         Console.print(title: "☕️ Extracting APIs + Structs:")
         let extracted = try pipeline.extract(from: project).with(cache: cache)
