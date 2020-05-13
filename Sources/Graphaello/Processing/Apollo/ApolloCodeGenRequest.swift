@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ApolloCodeGenRequest {
+struct ApolloCodeGenRequest: Hashable {
     let api: API
     let code: String
 }

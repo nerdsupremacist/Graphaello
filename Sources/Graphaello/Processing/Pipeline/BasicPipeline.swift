@@ -49,7 +49,7 @@ struct BasicPipeline: Pipeline {
         return try preparator.prepare(assembled: assembled, using: apollo)
     }
     
-    func generate(prepared: Project.State<Stage.Prepared>) throws -> String {
-        return try generator.generate(prepared: prepared)
+    func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String {
+        return try generator.generate(prepared: prepared, useFormatting: useFormatting)
     }
 }

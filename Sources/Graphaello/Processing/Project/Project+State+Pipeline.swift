@@ -19,7 +19,7 @@ extension Pipeline {
             .compactMap { File(path: $0.string) }
     
         let extracted = try extract(from: swiftFiles)
-        return Project.State(apis: apis, structs: extracted)
+        return Project.State(apis: apis, structs: extracted, cache: nil)
     }
     
     func parse(extracted: Project.State<Stage.Extracted>) throws -> Project.State<Stage.Parsed> {

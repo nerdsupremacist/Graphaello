@@ -8,11 +8,27 @@
 
 import Foundation
 
-struct GraphQLObject: Hashable {
-    let components: [GraphQLField : GraphQLComponent]
+struct GraphQLObject {
+    @OrderedHashableDictionary
+    var components: [GraphQLField : GraphQLComponent]
+
     let fragments: [GraphQLFragment]
-    let typeConditionals: [String : GraphQLTypeConditional]
+
+    @OrderedHashableDictionary
+    var typeConditionals: [String : GraphQLTypeConditional]
+
     let arguments: OrderedSet<GraphQLArgument>
+}
+
+extension GraphQLObject: Hashable {
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(_components)
+        hasher.combine(fragments)
+        hasher.combine(_typeConditionals)
+        hasher.combine(arguments.sorted { $0.name < $1.name })
+    }
+
 }
 
 extension GraphQLObject {
@@ -21,9 +37,11 @@ extension GraphQLObject {
          fragments: [GraphQLFragment],
          typeConditionals: [String : GraphQLTypeConditional]) {
 
-        self.components = Dictionary(uniqueKeysWithValues: components.map { (GraphQLField(field: $0.key, alias: nil), $0.value) })
+        self._components = OrderedHashableDictionary(
+            wrappedValue: Dictionary(uniqueKeysWithValues: components.map { (GraphQLField(field: $0.key, alias: nil), $0.value) })
+        )
         self.fragments = fragments
-        self.typeConditionals = typeConditionals
+        self._typeConditionals = OrderedHashableDictionary(wrappedValue: typeConditionals)
 
         let currentLevel = components.keys.flatMap { $0.arguments }
         let fromComponents = components.values.flatMap { $0.arguments }

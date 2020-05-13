@@ -11,7 +11,9 @@ import Foundation
 struct GraphQLQuery: Hashable {
     let name: String
     let api: API
-    let components: [GraphQLField : GraphQLComponent]
+
+    @OrderedHashableDictionary
+    var components: [GraphQLField : GraphQLComponent]
 }
 
 extension GraphQLQuery {

@@ -29,12 +29,30 @@
         }
       },
       {
+        "package": "CRuntime",
+        "repositoryURL": "https://github.com/nerdsupremacist/CRuntime.git",
+        "state": {
+          "branch": null,
+          "revision": "95f911318d8c885f6fc05e971471f94adfd39405",
+          "version": "2.1.2"
+        }
+      },
+      {
         "package": "CwlCatchException",
         "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
         "state": {
           "branch": null,
           "revision": "7cd2f8cacc4d22f21bc0b2309c3b18acf7957b66",
           "version": "1.2.0"
+        }
+      },
+      {
+        "package": "CwlDemangle",
+        "repositoryURL": "https://github.com/mattgallagher/CwlDemangle.git",
+        "state": {
+          "branch": null,
+          "revision": "b268c08207d2990664605c49b2c71cbd0df3445b",
+          "version": "0.1.0"
         }
       },
       {
@@ -80,6 +98,15 @@
           "branch": null,
           "revision": "33682c2f6230c60614861dfc61df267e11a1602f",
           "version": "2.2.0"
+        }
+      },
+      {
+        "package": "Runtime",
+        "repositoryURL": "https://github.com/nerdsupremacist/Runtime.git",
+        "state": {
+          "branch": "master",
+          "revision": "3c87a4e966baff36c8d0bc35620f833a55c6f201",
+          "version": null
         }
       },
       {

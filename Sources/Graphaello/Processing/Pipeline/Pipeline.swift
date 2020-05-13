@@ -21,7 +21,7 @@ protocol Pipeline {
     func prepare(assembled: Project.State<Stage.Assembled>,
                  using apollo: ApolloReference) throws -> Project.State<Stage.Prepared>
     
-    func generate(prepared: Project.State<Stage.Prepared>) throws -> String
+    func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String
 }
 
 extension Pipeline {

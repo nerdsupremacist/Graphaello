@@ -9,12 +9,15 @@ import Foundation
 
 struct BasicGenerator: Generator {
     
-    func generate(prepared: Project.State<Stage.Prepared>) throws -> String {
+    func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String {
         return try code(context: ["usedTypes" : prepared.usedTypes]) {
-            StructureAPI()
-            prepared.apis
-            prepared.structs
-            Array(prepared.allConnectionFragments)
+            StructureAPI().withFormatting(format: useFormatting)
+            prepared.apis.map { $0.withFormatting(format: useFormatting).cached(using: prepared.cache) }
+
+            // TODO: Find a way to cache structs as well
+            prepared.structs.map { $0.withFormatting(format: useFormatting) }
+
+            prepared.allConnectionFragments.map { $0.withFormatting(format: useFormatting).cached(using: prepared.cache) }
             prepared.responses.map { $0.code }
         }
     }

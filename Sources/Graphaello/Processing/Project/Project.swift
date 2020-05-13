@@ -12,7 +12,7 @@ import CLIKit
 import XcodeProj
 
 struct Project {
-    private let path: CLIKit.Path
+    let path: CLIKit.Path
     private let xcodeProject: XcodeProj
     private let sourcesPath: PathKit.Path
 

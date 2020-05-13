@@ -46,6 +46,11 @@ extension API: Hashable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(name)
+        hasher.combine(query)
+        hasher.combine(mutation)
+        hasher.combine(types)
+        hasher.combine(scalars)
+        hasher.combine(url)
     }
 
 }

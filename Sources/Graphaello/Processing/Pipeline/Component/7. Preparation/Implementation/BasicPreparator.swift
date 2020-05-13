@@ -12,7 +12,7 @@ struct BasicPreparator: Preparator {
     
     func prepare(assembled: Project.State<Stage.Assembled>, using apollo: ApolloReference) throws -> Project.State<Stage.Prepared> {
         return try assembled.with {
-            try .responses ~> assembled.requests.map { try processor.process(request: $0, using: apollo) }
+            try .responses ~> assembled.requests.map { try processor.process(request: $0, using: apollo, cache: assembled.cache) }
         }
     }
 }

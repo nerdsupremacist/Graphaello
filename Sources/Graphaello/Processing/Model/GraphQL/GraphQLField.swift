@@ -10,9 +10,13 @@ import Foundation
 
 typealias GraphaelloArgument = Argument
 
-struct GraphQLField: Hashable {
+struct GraphQLField: Hashable, Comparable {
     let field: Field
     let alias: String?
+
+    static func < (lhs: GraphQLField, rhs: GraphQLField) -> Bool {
+        return lhs.field.name < rhs.field.name
+    }
 }
 
 enum Field: Equatable, Hashable {
