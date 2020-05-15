@@ -1,10 +1,3 @@
-//
-//  Path+expression.swift
-//  
-//
-//  Created by Mathias Quintero on 12/21/19.
-//
-
 import Foundation
 
 extension Stage.Cleaned.Path {

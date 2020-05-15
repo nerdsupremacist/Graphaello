@@ -1,10 +1,3 @@
-//
-//  Resolved+Struct+Properties.swift
-//  
-//
-//  Created by Mathias Quintero on 31.12.19.
-//
-
 import Foundation
 
 extension Struct where CurrentStage: ResolvedStage {

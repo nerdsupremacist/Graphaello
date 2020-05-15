@@ -1,10 +1,3 @@
-//
-//  ComponentAliasingPropagator.swift
-//  
-//
-//  Created by Mathias Quintero on 02.01.20.
-//
-
 import Foundation
 
 protocol ComponentAliasingPropagator {

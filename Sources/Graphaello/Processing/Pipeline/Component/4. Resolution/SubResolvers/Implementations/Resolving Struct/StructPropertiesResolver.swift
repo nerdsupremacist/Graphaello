@@ -1,11 +1,3 @@
-//
-//  ValidatedStructResolver.swift
-//  Graphaello
-//
-//  Created by Mathias Quintero on 08.12.19.
-//  Copyright © 2019 Mathias Quintero. All rights reserved.
-//
-
 import Foundation
 
 struct StructPropertiesResolver<Resolver: ValueResolver>: StructResolver where Resolver.Value == Property<Stage.Validated>, Resolver.Resolved == Property<Stage.Resolved>, Resolver.Parent == Struct<Stage.Validated> {

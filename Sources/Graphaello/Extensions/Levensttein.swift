@@ -1,14 +1,3 @@
-
-// Taken from https://github.com/virumax/Levenshtein-swift4/blob/master/Tools.swift
-
-//
-//  Tools.swift
-//  Levenshtein — swift
-//
-//  Created by Virumax on 6/20/18.
-//  Copyright © Virendra Ravalji. All rights reserved.
-//
-
 import Foundation
 
 /**

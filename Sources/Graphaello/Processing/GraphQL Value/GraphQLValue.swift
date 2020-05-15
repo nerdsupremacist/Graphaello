@@ -1,10 +1,3 @@
-//
-//  GraphQLValue.swift
-//  
-//
-//  Created by Mathias Quintero on 12/18/19.
-//
-
 import Foundation
 
 public indirect enum GraphQLValue: Hashable {

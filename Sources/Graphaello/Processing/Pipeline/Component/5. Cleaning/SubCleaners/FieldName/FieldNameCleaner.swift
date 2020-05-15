@@ -1,10 +1,3 @@
-//
-//  FieldNameCleaner.swift
-//  
-//
-//  Created by Mathias Quintero on 01.01.20.
-//
-
 import Foundation
 
 

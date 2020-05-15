@@ -1,10 +1,3 @@
-//
-//  GraphQLType+ConnectionEdgeType.swift
-//  
-//
-//  Created by Mathias Quintero on 12/19/19.
-//
-
 import Foundation
 
 extension Schema.GraphQLType {

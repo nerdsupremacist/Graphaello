@@ -1,10 +1,3 @@
-//
-//  BasicGraphQLToSwiftTranspiler.swift
-//  
-//
-//  Created by Mathias Quintero on 12/18/19.
-//
-
 import Foundation
 import SwiftSyntax
 

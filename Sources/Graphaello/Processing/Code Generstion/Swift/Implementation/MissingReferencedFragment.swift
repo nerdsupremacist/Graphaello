@@ -1,10 +1,3 @@
-//
-//  MissingReferencedFragment.swift
-//
-//
-//  Created by Mathias Quintero on 12/19/19.
-//
-
 import Foundation
 
 struct MissingReferencedFragment: SwiftCodeTransformable, Hashable {

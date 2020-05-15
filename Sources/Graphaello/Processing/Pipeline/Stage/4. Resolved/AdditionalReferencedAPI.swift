@@ -1,10 +1,3 @@
-//
-//  AdditionalReferencedAPI.swift
-//  
-//
-//  Created by Mathias Quintero on 12.01.20.
-//
-
 import Foundation
 
 struct AdditionalReferencedAPI<CurrentStage: ResolvedStage>: Hashable {

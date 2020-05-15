@@ -1,11 +1,3 @@
-//
-//  BasicResolvedStructCollector.swift
-//  Graphaello
-//
-//  Created by Mathias Quintero on 09.12.19.
-//  Copyright © 2019 Mathias Quintero. All rights reserved.
-//
-
 import Foundation
 
 struct BasicResolvedStructCollector<Collector: ResolvedValueCollector>: ResolvedStructCollector where Collector.Resolved == Property<Stage.Resolved>, Collector.Parent == Struct<Stage.Validated>, Collector.Collected == [StructResolution.CollectedValue] {

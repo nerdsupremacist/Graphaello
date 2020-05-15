@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Mathias.Quintero on 5/11/20.
-//
-
 import Foundation
 import CLIKit
 

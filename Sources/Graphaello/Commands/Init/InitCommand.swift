@@ -1,10 +1,3 @@
-//
-//  InitCommand.swift
-//  
-//
-//  Created by Mathias Quintero on 12/15/19.
-//
-
 import Foundation
 import CLIKit
 import XcodeProj

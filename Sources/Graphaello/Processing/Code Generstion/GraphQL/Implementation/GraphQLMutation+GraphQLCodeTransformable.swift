@@ -1,10 +1,3 @@
-//
-//  GraphQLMutation+GraphQLCodeTransformable.swift
-//  
-//
-//  Created by Mathias Quintero on 1/7/20.
-//
-
 import Foundation
 import Stencil
 

@@ -1,10 +1,3 @@
-//
-//  DictionaryCleaner.swift
-//  
-//
-//  Created by Mathias Quintero on 12/28/19.
-//
-
 import Foundation
 
 struct DictionaryCleaner<Key: Hashable, Value>: ArgumentCleaner {

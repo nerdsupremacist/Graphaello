@@ -1,10 +1,3 @@
-//
-//  Project+State+Pipeline.swift
-//  
-//
-//  Created by Mathias Quintero on 31.12.19.
-//
-
 import Foundation
 import SourceKittenFramework
 

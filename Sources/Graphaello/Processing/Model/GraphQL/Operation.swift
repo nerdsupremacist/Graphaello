@@ -1,10 +1,3 @@
-//
-//  Operation.swift
-//  
-//
-//  Created by Mathias Quintero on 1/15/20.
-//
-
 import Foundation
 import SwiftSyntax
 

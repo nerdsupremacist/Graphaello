@@ -1,10 +1,3 @@
-//
-//  GraphQLObjectCleaner.swift
-//  
-//
-//  Created by Mathias Quintero on 1/1/19.
-//
-
 import Foundation
 
 struct GraphQLObjectCleaner: ArgumentCleaner {

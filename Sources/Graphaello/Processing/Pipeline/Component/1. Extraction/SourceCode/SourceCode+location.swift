@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Mathias.Quintero on 5/12/20.
-//
-
 import Foundation
 
 extension SourceCode {

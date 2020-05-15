@@ -1,10 +1,3 @@
-//
-//  GraphQLMutation.swift
-//  
-//
-//  Created by Mathias Quintero on 1/7/20.
-//
-
 import Foundation
 
 struct GraphQLMutation {

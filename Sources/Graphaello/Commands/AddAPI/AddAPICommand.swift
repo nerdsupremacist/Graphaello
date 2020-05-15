@@ -1,10 +1,3 @@
-//
-//  AddAPICommand.swift
-//  
-//
-//  Created by Mathias Quintero on 12/26/19.
-//
-
 import Foundation
 import CLIKit
 

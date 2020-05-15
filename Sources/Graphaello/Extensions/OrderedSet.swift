@@ -1,10 +1,3 @@
-//
-//  OrderedSet.swift
-//  
-//
-//  Created by Mathias Quintero on 12/18/19.
-//
-
 import Foundation
 
 /// An ordered set is an ordered collection of instances of `Element` in which

@@ -1,10 +1,3 @@
-//
-//  OperationTypeValidator.swift
-//  
-//
-//  Created by Mathias Quintero on 1/15/20.
-//
-
 import Foundation
 
 protocol OperationTypeValidator {

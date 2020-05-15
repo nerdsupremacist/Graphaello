@@ -1,13 +1,3 @@
-//
-//  Inflector.swift
-//  SwiftPatch
-//
-//  Created by draveness on 17/03/2017.
-//  Copyright © 2017 draveness. All rights reserved.
-//
-
-// copied from https://github.com/draveness/RbSwift
-
 import Foundation
 
 private let inflector = Inflector()

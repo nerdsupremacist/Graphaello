@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Mathias Quintero on 02.01.20.
-//
-
 import Foundation
 
 struct GraphQLQueryFieldNameCleaner: FieldNameCleaner {

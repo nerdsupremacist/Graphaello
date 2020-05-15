@@ -1,11 +1,3 @@
-//
-//  PropertyResolver.swift
-//  Graphaello
-//
-//  Created by Mathias Quintero on 08.12.19.
-//  Copyright © 2019 Mathias Quintero. All rights reserved.
-//
-
 import Foundation
 
 struct PropertyResolver<Resolver: ValueResolver>: ValueResolver where Resolver.Parent == Property<Stage.Validated>, Resolver.Value == Stage.Validated.Path, Resolver.Resolved == Stage.Resolved.Path {

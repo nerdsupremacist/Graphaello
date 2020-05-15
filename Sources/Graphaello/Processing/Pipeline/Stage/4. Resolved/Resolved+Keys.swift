@@ -1,10 +1,3 @@
-//
-//  Resolved+Keys.swift
-//  
-//
-//  Created by Mathias Quintero on 31.12.19.
-//
-
 import Foundation
 
 extension Context.Key where T == Stage.Resolved.Path? {

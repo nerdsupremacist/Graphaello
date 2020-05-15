@@ -1,11 +1,3 @@
-//
-//  String+lowerCasingFirst.swift
-//  Graphaello
-//
-//  Created by Mathias Quintero on 06.12.19.
-//  Copyright © 2019 Mathias Quintero. All rights reserved.
-//
-
 import Foundation
 
 // Copied and adapted from https://gist.github.com/reitzig/67b41e75176ddfd432cb09392a270218
