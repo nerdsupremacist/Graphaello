@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Mathias Quintero on 12/18/19.
-//
-
 import Foundation
 import Ogma
 
@@ -20,14 +13,14 @@ extension GraphQLValue {
             RegexTokenGenerator(pattern: #"\]"#).map(to: .closeSquareBracket),
             RegexTokenGenerator(pattern: ",").map(to: .comma),
             RegexTokenGenerator(pattern: ":").map(to: .colon),
-            RegexTokenGenerator(word: "true").map(to: .true),
-            RegexTokenGenerator(word: "false").map(to: .false),
-            RegexTokenGenerator(word: "null").map(to: .null),
-            RegexTokenGenerator(pattern: #"[a-zA-Z][a-zA-Z\-_0-9]*"#).map(Token.identifier),
+            RegexTokenGenerator(word: "true").map(to: .value(.bool(true))),
+            RegexTokenGenerator(word: "false").map(to: .value(.bool(true))),
+            RegexTokenGenerator(word: "null").map(to: .value(.null)),
+            RegexTokenGenerator(pattern: #"[a-zA-Z][a-zA-Z\-_0-9]*"#).map { .value(.identifier($0)) },
 
-            StringLiteralTokenGenerator().map(Token.string),
-            DoubleLiteralTokenGenerator().map(Token.double),
-            IntLiteralTokenGenerator().map(Token.int),
+            StringLiteralTokenGenerator().map { .value(.string($0)) },
+            DoubleLiteralTokenGenerator().map { .value(.double($0)) },
+            IntLiteralTokenGenerator().map { .value(.int($0)) },
 
             WhiteSpaceTokenGenerator().ignore(),
         ]

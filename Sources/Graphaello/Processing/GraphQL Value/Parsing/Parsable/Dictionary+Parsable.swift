@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Mathias Quintero on 12/18/19.
-//
-
 import Foundation
 import Ogma
 
@@ -14,9 +7,9 @@ extension Dictionary: Parsable where Key == String, Value == GraphQLValue {
     public static let parser: AnyParser<Token, [String : GraphQLValue]> = {
         let key: AnyParser<Token, String> = .consuming { token in
             switch token {
-            case .string(let string):
+            case .value(.string(let string)):
                 return string
-            case .identifier(let identifier):
+            case .value(.identifier(let identifier)):
                 return identifier
             default:
                 return nil
