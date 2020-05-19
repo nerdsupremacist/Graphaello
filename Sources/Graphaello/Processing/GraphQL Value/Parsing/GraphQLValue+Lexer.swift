@@ -14,7 +14,7 @@ extension GraphQLValue {
             RegexTokenGenerator(pattern: ",").map(to: .comma),
             RegexTokenGenerator(pattern: ":").map(to: .colon),
             RegexTokenGenerator(word: "true").map(to: .value(.bool(true))),
-            RegexTokenGenerator(word: "false").map(to: .value(.bool(true))),
+            RegexTokenGenerator(word: "false").map(to: .value(.bool(false))),
             RegexTokenGenerator(word: "null").map(to: .value(.null)),
             RegexTokenGenerator(pattern: #"[a-zA-Z][a-zA-Z\-_0-9]*"#).map { .value(.identifier($0)) },
 
