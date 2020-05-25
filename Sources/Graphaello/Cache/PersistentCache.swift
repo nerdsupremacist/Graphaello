@@ -8,6 +8,16 @@ public class PersistentCache<Key: Hashable> {
     private let hasher: Hasher = Hasher.constantAccrossExecutions()
     private var hashStore: OrderedSet<Int>
 
+    convenience init(project: Project, capacity: Int) throws {
+        let parentFolder = Path(NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!)
+
+        var hasher = Hasher.constantAccrossExecutions()
+        project.path.hash(into: &hasher)
+        let folder = parentFolder + "graphaello" + "\(hasher.finalize())"
+
+        try self.init(folder: folder, capacity: capacity)
+    }
+
     public init(folder: Path, capacity: Int) throws {
         self.folder = folder
         self.index = folder + ".index"
