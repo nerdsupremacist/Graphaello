@@ -11,10 +11,20 @@ extension Stage.Cleaned.Path {
         case .object(let type):
             first = AttributePath(name: type.camelized, kind: .value)
         }
-
-        return components
+        
+        let expression = components
             .reduce(.attributePath([first], on: nil)) { $0 + $1.path(referencedFragment: resolved.referencedFragment?.fragment) }
-            .expression()
+        
+        if resolved.isReferencedFragmentASingleFragmentStruct {
+            let completeExpression = expression + .path([
+                AttributePath(name: "referencedSingleFragmentStruct()", kind: .value)
+            ])
+            
+            return completeExpression.expression()
+        } else {
+            return expression.expression()
+        }
+
     }
 
 }

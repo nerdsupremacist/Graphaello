@@ -20,6 +20,7 @@ extension Struct: ExtraValuesSwiftCodeTransformable where CurrentStage == Stage.
             "mutationStructs": mutationStructs,
             "missingFragmentsStructs": Array(missingFragmentsStructs),
             "missingReferencedFragments": Array(missingReferencedFragments),
+            "singleFragment": singleFragment ?? false,
         ]
     }
     

@@ -52,14 +52,14 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "codegen --project /Users/mathias.quintero/Desktop/MoviesTest --apollo derivedData"
+            argument = "codegen --project /Users/mathiasquintero/CovidUI --apollo derivedData"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "BUILD_ROOT"
-            value = "/Users/mathias.quintero/Library/Developer/Xcode/DerivedData/MoviesTest-bryrtftymaxoeobmbqnuwkfamsbs/Build/Products"
+            value = "/Users/mathiasquintero/Library/Developer/Xcode/DerivedData/CovidUI-cjkfjxbxqnaapgglporvyzdgduwo/Build/Products"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

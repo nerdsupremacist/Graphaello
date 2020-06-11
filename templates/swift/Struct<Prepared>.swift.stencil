@@ -18,6 +18,19 @@ extension {{ structPrepared.name }} {
         self.init({{ initializerValueAssignments|codeArray|join:", " }})
     }
 }
+{% if singleFragment %}
+extension {{ structPrepared.name }} : Fragment {
+    typealias UnderlyingType = {{ singleFragment.api.name }}.{{ singleFragment.target.name|upperCamelized }}
+}
+
+extension Apollo{{ singleFragment.api.name }}.{{ singleFragment.name|upperCamelized }} {
+    
+    func referencedSingleFragmentStruct() -> {{ structPrepared.name }} {
+        return {{ structPrepared.name }}({{ singleFragment.target.name|camelized }}: self)
+    }
+    
+}
+{% endif %}
 
 {% if query %}
 extension {{ query.api.name }} {

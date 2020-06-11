@@ -13,6 +13,7 @@ extension Stage {
         struct Path {
             let validated: Validated.Path
             let referencedFragment: ReferencedFragment?
+            let isReferencedFragmentASingleFragmentStruct: Bool
         }
         
         static let pathKey = Context.Key.resolved
@@ -48,3 +49,14 @@ extension Stage.Resolved.Path {
 
 }
 
+extension Struct where CurrentStage: ResolvedStage {
+    
+    var singleFragment: GraphQLFragment? {
+        guard let fragment = fragments.first,
+            fragments.count == 1,
+            properties.filter({ $0.graphqlPath == nil }).isEmpty else { return nil }
+        
+        return fragment
+    }
+    
+}
