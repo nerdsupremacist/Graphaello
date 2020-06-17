@@ -1,18 +1,45 @@
 .imageWrapper {					// Sets the background image in the header area
-	height: 714px;
+	height: 764px;
 	background: 
 		linear-gradient(
 		rgba($image-overlay-color, $image-overlay-transparency), 
 		rgba($image-overlay-color, $image-overlay-transparency)
-		   ),
-		
-		url($header-image);
+		   );
 
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: top;
 	border-radius: 0px 0px 40px 40px;
 
+}
+
+#particles-js {
+	position: absolute;
+	width: 100%;
+	height: 764px;
+	background-color: #3A4045;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: top;
+	border-radius: 0px 0px 40px 40px;
+  }
+
+#particles-js-overlay {
+	position: absolute;
+	width: 100%;
+	height: 764px;
+	background-color: linear-gradient(
+		rgba($image-overlay-color, $image-overlay-transparency), 
+		rgba($image-overlay-color, $image-overlay-transparency)
+	);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: top;
+	border-radius: 0px 0px 40px 40px;
+  }
+
+.headerName {
+	font-family : "Menlo", monospace
 }
 
 .headerBackground {
@@ -127,7 +154,6 @@ header {
 } 
 
 .headerIcon {
-	width: 50px;
 	height: 50px;
 	-webkit-clip-path: url(#shape);
 	clip-path: url(#shape);
@@ -261,12 +287,15 @@ nav > ul li a:active {
 
 .appIconShadow {
 	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
 	filter: $drop-shadow;
+	align-items: flex-center;
 }
 
 .appIconLarge {
-	width: 120px;
-	height: 120px;
+	height: 180px;
 	-webkit-clip-path: url(#shape120);
 	clip-path: url(#shape120);
 }
@@ -275,13 +304,15 @@ nav > ul li a:active {
 	display: flex;
 	flex: 0 1 auto;
 	flex-direction: column;
-	align-items: start;
+	align-items: flex-center;
 	justify-content: center;
-	margin-left: 30px;
+	width: 100%;
 }
 
 .appName {
 	color: $app-title-color;
+	text-align: center;
+	font-family : "Menlo", monospace
 }
 
 .appPrice {
@@ -530,6 +561,15 @@ nav > ul li a:active {
 	color: $feature-text-color;
 	margin-top: 8px;
 	line-height: 1.5;
+}
+
+.mainButton {
+	background-color: $social-icons-background-color;
+	color: $social-icons-foreground-color;
+	border-radius: 20px;
+	padding: 16px;
+	margin-right: 10px
+	margin-top 10px;
 }
 
 @media only screen and (max-width: 992px) {
