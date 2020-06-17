@@ -365,9 +365,13 @@ nav > ul li a:active {
 } 
 
 .downloadButtonsContainer {
-	display: inline-block;
 	margin-top: 42px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
 	filter: $drop-shadow;
+	align-items: flex-center;
 }
 
 @media only screen and (max-width: 992px) {
