@@ -13,6 +13,96 @@
 
 }
 
+.mainContent {
+	grid-area: m;
+	display: inline-block;
+	flex: 1 1 auto;
+	align-content: flex-start;
+	justify-content: flex-start;
+	flex-grow: 1;
+	flex-wrap: wrap;
+	margin-top: 93px;
+	margin-left: 64px;
+	margin-right: 64px;
+}
+
+.mainContent > h1 {
+	color: $feature-title-color;
+	margin-bottom: 16px;
+}
+
+.mainContent > p {
+	color: $feature-text-color;
+	margin-top: 16px;
+	line-height: 1.5;
+}
+
+.mainContent > .highlighter-rouge > .highlight {
+	margin-top: 16px;
+	padding-top: 8px;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-radius: 20px;
+}
+
+.mainContent > .highlighter-rouge > .highlight > pre {
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 8px;
+	padding-right: 8px;
+	background-color: 'transparent';
+}
+
+.mainContent > .side-by-side-code {
+	display: grid;
+	margin-left: -32px;
+	margin-right: -32px;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: auto;
+	grid-column-gap: 16px;
+	grid-template-areas: 
+		"c c c c c c c c c c p p";
+
+	justify-content: center;
+	align-items: center;
+}
+
+.mainContent > .side-by-side-code > .highlighter-rouge {
+	grid-area: c;
+	display: inline-block;
+	flex: 1 1 auto;
+}
+
+.mainContent > .side-by-side-code > .highlighter-rouge > .highlight {
+	margin-top: 16px;
+	padding-top: 8px;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-radius: 20px;
+}
+
+.mainContent > .side-by-side-code > .highlighter-rouge > .highlight > pre {
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 8px;
+	padding-right: 8px;
+	background-color: 'transparent';
+}
+
+.mainContent > .side-by-side-code > p {
+	color: $feature-text-color;
+	text-align: center;
+	line-height: 1.5;
+	margin-top: 16px;
+}
+
+.mainContent > .side-by-side-code > p > img {
+	grid-area: p;
+	display: inline-block;
+	flex: 1 1 auto;
+	width: 300px
+}
+
 #particles-js {
 	position: absolute;
 	width: 100%;
@@ -71,6 +161,7 @@
 	grid-template-areas: 
 		"h h h h h h h h h h h h"
 		"p p p p p i i i i i i i"
+		"m m m m m m m m m m m m"
 		"c c c c c c c c c c c c"
 		"f f f f f f f f f f f f";
 }
@@ -97,8 +188,24 @@
 			"h h h h h h h h h h h h"
 			"i i i i i i i i i i i i"
 			"p p p p p p p p p p p p"
+			"m m m m m m m m m m m m"
 			"c c c c c c c c c c c c"
 			"f f f f f f f f f f f f";
+	}
+
+	.mainContent > .side-by-side-code {
+		display: grid;
+		margin-left: 16px;
+		margin-right: 16px;
+		grid-template-columns: repeat(12, 1fr);
+		grid-template-rows: auto auto;
+		grid-column-gap: 30px;
+		grid-template-areas: 
+			"c c c c c c c c c c c c"
+			"p p p p p p p p p p p p";
+	
+		justify-content: center;
+		align-content: center;
 	}
 }
 
@@ -576,13 +683,37 @@ nav > ul li a:active {
 	margin-top 10px;
 }
 
+.mainButton > a {
+	color: $image-overlay-color;
+}
+
+.contentButton {
+	display: flex;
+	justify-content: center;
+}
+
+.contentButton > a {
+	color: $app-title-color;
+	background-color: $image-overlay-color;
+	border-radius: 20px;
+	padding: 16px;
+	margin-right: 10px
+	margin-top 10px;
+	text-align: center;
+	justify-content: center;
+}
+
 @media only screen and (max-width: 992px) {
+
+	.mainContent {
+		margin-top: 11px;
+	} 
 
 	.features {
 		flex-grow: 1;
 		flex-direction: row;
 		flex-wrap: wrap;
-		margin-top: 11px;
+		margin-top: 32px;
 	}
 
 	.feature {
