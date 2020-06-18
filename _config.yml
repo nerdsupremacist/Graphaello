@@ -73,8 +73,16 @@ social_icons_background_color             : "#e6e6e6"
 footer_text_color                         : "#666666"
 
 
-
-
+links:
+  - name: GitHub
+    url: https://github.com/nerdsupremacist/Graphaello
+    include_in_header: true
+  - name: GraphQL
+    url: https://graphql.org
+    include_in_header: false
+  - name: GraphZahl
+    url: https://github.com/nerdsupremacist/GraphZahl
+    include_in_header: false
 
 
 

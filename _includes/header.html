@@ -18,7 +18,11 @@
 				{% endif %}
 			{% endfor %}
 
-			<li><a href="https://github.com/nerdsupremacist/Graphaello" target="_self">GitHub</a></li>
+			{% for link in site.links %}
+				{% if link.include_in_header == true %}
+				<li><a href="{{ link.url }}" target="_self">{{ link.name }}</a></li>
+				{% endif %}
+			{% endfor %}
 		</ul>
 	</nav>
 </header>
