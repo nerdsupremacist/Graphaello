@@ -979,3 +979,88 @@ Markdown CSS adopted from https://github.com/sindresorhus/github-markdown-css
 .markdown-body .pl-12 {
   padding-left: 128px!important;
 }
+
+
+.markdown-body > .highlighter-rouge > .highlight {
+	margin-top: 16px;
+	padding-top: 8px;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-radius: 20px;
+}
+
+.markdown-body > .highlighter-rouge > .highlight > pre {
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 8px;
+	padding-right: 8px;
+	background-color: 'transparent';
+}
+
+.markdown-body > .side-by-side-code {
+	display: grid;
+  margin-left: -64px;
+	margin-right: -64px;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: auto;
+	grid-column-gap: 16px;
+	grid-template-areas: 
+		"c c c c c c c c c c p p";
+
+	justify-content: center;
+	align-items: center;
+}
+
+.markdown-body > .side-by-side-code > .highlighter-rouge {
+	grid-area: c;
+	display: inline-block;
+	flex: 1 1 auto;
+}
+
+.markdown-body > .side-by-side-code > .highlighter-rouge > .highlight {
+	margin-top: 16px;
+	padding-top: 8px;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-radius: 20px;
+}
+
+.markdown-body > .side-by-side-code > .highlighter-rouge > .highlight > pre {
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 8px;
+	padding-right: 8px;
+	background-color: 'transparent';
+}
+
+.markdown-body > .side-by-side-code > p {
+	color: $feature-text-color;
+	text-align: center;
+	line-height: 1.5;
+	margin-top: 16px;
+}
+
+.markdown-body > .side-by-side-code > p > img {
+	grid-area: p;
+	display: inline-block;
+	flex: 1 1 auto;
+  width: 300px;
+  max-width: 300px;
+}
+
+@media only screen and (max-width: 1080px) {
+	.markdown-body > .side-by-side-code {
+		display: grid;
+		margin-left: 8px;
+		margin-right: 8px;
+		grid-template-columns: repeat(12, 1fr);
+		grid-template-rows: auto auto;
+		grid-column-gap: 30px;
+		grid-template-areas: 
+			"c c c c c c c c c c c c"
+			"p p p p p p p p p p p p";
+	
+		justify-content: center;
+		align-content: center;
+	}
+}

@@ -26,83 +26,6 @@
 	margin-right: 64px;
 }
 
-.mainContent > h1 {
-	color: $feature-title-color;
-	margin-bottom: 16px;
-}
-
-.mainContent > p {
-	color: $feature-text-color;
-	margin-top: 16px;
-	line-height: 1.5;
-}
-
-.mainContent > .highlighter-rouge > .highlight {
-	margin-top: 16px;
-	padding-top: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	border-radius: 20px;
-}
-
-.mainContent > .highlighter-rouge > .highlight > pre {
-	padding-top: 16px;
-	padding-bottom: 16px;
-	padding-left: 8px;
-	padding-right: 8px;
-	background-color: 'transparent';
-}
-
-.mainContent > .side-by-side-code {
-	display: grid;
-	margin-left: -32px;
-	margin-right: -32px;
-	grid-template-columns: repeat(12, 1fr);
-	grid-template-rows: auto;
-	grid-column-gap: 16px;
-	grid-template-areas: 
-		"c c c c c c c c c c p p";
-
-	justify-content: center;
-	align-items: center;
-}
-
-.mainContent > .side-by-side-code > .highlighter-rouge {
-	grid-area: c;
-	display: inline-block;
-	flex: 1 1 auto;
-}
-
-.mainContent > .side-by-side-code > .highlighter-rouge > .highlight {
-	margin-top: 16px;
-	padding-top: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	border-radius: 20px;
-}
-
-.mainContent > .side-by-side-code > .highlighter-rouge > .highlight > pre {
-	padding-top: 16px;
-	padding-bottom: 16px;
-	padding-left: 8px;
-	padding-right: 8px;
-	background-color: 'transparent';
-}
-
-.mainContent > .side-by-side-code > p {
-	color: $feature-text-color;
-	text-align: center;
-	line-height: 1.5;
-	margin-top: 16px;
-}
-
-.mainContent > .side-by-side-code > p > img {
-	grid-area: p;
-	display: inline-block;
-	flex: 1 1 auto;
-	width: 300px
-}
-
 #particles-js {
 	position: absolute;
 	width: 100%;
@@ -179,7 +102,6 @@
 }
 
 @media only screen and (max-width: 992px) {
-
 	.container {
 		grid-column-gap: 0px;
 		grid-template-columns: 1;
@@ -191,21 +113,6 @@
 			"m m m m m m m m m m m m"
 			"c c c c c c c c c c c c"
 			"f f f f f f f f f f f f";
-	}
-
-	.mainContent > .side-by-side-code {
-		display: grid;
-		margin-left: 16px;
-		margin-right: 16px;
-		grid-template-columns: repeat(12, 1fr);
-		grid-template-rows: auto auto;
-		grid-column-gap: 30px;
-		grid-template-areas: 
-			"c c c c c c c c c c c c"
-			"p p p p p p p p p p p p";
-	
-		justify-content: center;
-		align-content: center;
 	}
 }
 
@@ -692,7 +599,7 @@ nav > ul li a:active {
 	justify-content: center;
 }
 
-.contentButton > a {
+.markdown-body > .contentButton > a {
 	color: $app-title-color;
 	background-color: $image-overlay-color;
 	border-radius: 20px;
