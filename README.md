@@ -393,7 +393,7 @@ Contributions are welcome and encouraged!
 
 ## Related Work
 
-![](https://github.com/nerdsupremacist/GraphZahl/raw/master/logo.png)
+![](https://github.com/nerdsupremacist/GraphZahl/raw/develop/logo.png)
 
 Graphaello works best when coupled with [GraphZahl](https://github.com/nerdsupremacist/GraphZahl) on the Server Side. GraphZahl enables you to implement your GraphQL Server Declaratively in Swift with Zero Boilerplate.
 
