@@ -26,6 +26,19 @@ struct Struct<CurrentStage: StageProtocol> {
 
 extension Struct {
     
+    var macros: [String] {
+        return code.targets.map { "GRAPHAELLO_\($0.snakeUpperCased)_TARGET" }
+    }
+    
+    var unifiedMacroFlag: String {
+        guard !code.targets.isEmpty else { return "0" }
+        return macros.joined(separator: " || ")
+    }
+    
+}
+
+extension Struct {
+    
     func map<Stage: StageProtocol>(_ transform: (Property<CurrentStage>) throws -> Property<Stage>) rethrows -> Struct<Stage> {
         return Struct<Stage>(code: code, name: name, inheritedTypes: inheritedTypes, properties: try properties.map { try transform($0) })
     }

@@ -24,12 +24,22 @@ extension Project {
 }
 
 extension Project {
-
-    func files() throws -> [PathKit.Path] {
-        return try xcodeProject
-            .pbxproj
-            .buildFiles
-            .compactMap { try $0.file?.fullPath(sourceRoot: sourcesPath) }
+    
+    struct PathWithTargets {
+        let path: PathKit.Path
+        let targets: [String]
+    }
+    
+    func files() throws -> [PathWithTargets] {
+        return try filesAndTargets().map { PathWithTargets(path: $0.key, targets: $0.value) }
+    }
+    
+    func filesAndTargets() throws -> [PathKit.Path : [String]] {
+        let filesAndTargets = try xcodeProject.pbxproj.nativeTargets.flatMap { target -> [(String, PathKit.Path)] in
+            let files = try target.sourceFiles().compactMap { try $0.fullPath(sourceRoot: sourcesPath) }
+            return files.map { (target.name, $0) }
+        }
+        return Dictionary(grouping: filesAndTargets) { $0.1 }.mapValues { $0.map { $0.0 } }
     }
 
 }
@@ -56,7 +66,8 @@ extension Project {
 
     private func path(for file: String) throws -> PathKit.Path {
         return try files()
-            .first { $0.lastComponent == file } ?? create(file: file)
+            .first { $0.path.lastComponent == file }?
+            .path ?? create(file: file)
     }
 
     private func create(file: String) throws -> PathKit.Path {
@@ -116,4 +127,46 @@ extension Project {
         return true
     }
 
+}
+
+extension Project {
+    
+    struct Target {
+        let name: String
+        let configurationName: String
+        let currentMacros: [String]
+    }
+    
+    func changeMacros(byTarget body: (Target) -> [String]) throws {
+        let targets = xcodeProject.pbxproj.nativeTargets
+        var changes = false
+        targets.forEach { target in
+            guard let configs = target.buildConfigurationList?.buildConfigurations else { return }
+            configs.forEach { config in
+                let currentMacros = (config.buildSettings["SWIFT_ACTIVE_COMPILATION_CONDITIONS"] as? String)?.split(separator: " ").map(String.init) ?? []
+                let targetInfo = Target(name: target.name, configurationName: config.name, currentMacros: currentMacros)
+                let newMacros = body(targetInfo)
+
+                guard newMacros != currentMacros else { return }
+                changes = true
+                let macros = ["$(inherited)"] + newMacros
+                config.buildSettings["SWIFT_ACTIVE_COMPILATION_CONDITIONS"] = macros.joined(separator: " ")
+            }
+        }
+        
+        guard changes else { return }
+        try save()
+    }
+    
+}
+
+extension Project {
+    
+    func addGraphaelloMacrosToEachTarget() throws {
+        try changeMacros { target in
+            let previous = target.currentMacros.filter { !$0.starts(with: "GRAPHAELLO_") }
+            return previous + ["GRAPHAELLO_\(target.name.snakeUpperCased)_TARGET"]
+        }
+    }
+    
 }

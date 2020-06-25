@@ -1,5 +1,6 @@
 // MARK: - {{ structPrepared.name }}
 
+#if {{ unifiedMacroFlag }}
 {% for fragment in fragments %}
 extension Apollo{{ fragment.api.name }}.{{ fragment.name|upperCamelized }} : Fragment {
     typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name|upperCamelized }}
@@ -58,3 +59,4 @@ extension {{ query.api.name }} {
 {{ mutationStructs|code }}
 {{ missingFragmentsStructs|code }}
 {{ missingReferencedFragments|code }}
+#endif

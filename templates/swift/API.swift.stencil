@@ -1,5 +1,7 @@
 // MARK: - {{ api.name }}
 
+#if {{ unifiedMacroFlag }}
+
 struct {{ api.name }}: API {
     let client: ApolloClient
 
@@ -71,3 +73,5 @@ extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.nam
     {% endfor %}
 }
 {% endfor %}
+
+#endif

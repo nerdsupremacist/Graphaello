@@ -9,8 +9,9 @@ class API {
     let scalars: [Schema.GraphQLType]
     let path: Path
     let url: URL?
+    let targets: [String]
 
-    init(name: String, schema: Schema, path: Path, url: URL?) {
+    init(name: String, schema: Schema, path: Path, url: URL?, targets: [String]) {
         self.name = name
 
         self.query = schema.types.first { $0.name == schema.queryType.name } ?! fatalError("Expected a query type")
@@ -27,7 +28,21 @@ class API {
         self.scalars = schema.types.filter { $0.isScalar }
         self.path = path
         self.url = url
+        self.targets = targets
     }
+}
+
+extension API {
+    
+    var macros: [String] {
+        return targets.map { "GRAPHAELLO_\($0.snakeUpperCased)_TARGET" }
+    }
+    
+    var unifiedMacroFlag: String {
+        guard !targets.isEmpty else { return "0" }
+        return macros.joined(separator: " || ")
+    }
+    
 }
 
 extension API: Hashable {
@@ -43,6 +58,9 @@ extension API: Hashable {
         hasher.combine(types)
         hasher.combine(scalars)
         hasher.combine(url)
+        
+        // Version. Bump this number when the structure of the generated code for an API is changed
+        hasher.combine(3)
     }
 
 }

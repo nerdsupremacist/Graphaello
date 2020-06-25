@@ -1,10 +1,12 @@
 import Foundation
 import SourceKittenFramework
+import PathKit
 
 struct SourceCode {
     let file: File
     let index: LineColumnIndex
     let location: Location
+    let targets: [String]
     let dictionary: [String : SourceKitRepresentable]
 }
 
@@ -22,26 +24,25 @@ extension SourceCode {
             location = offset.map { parent.location(of: Int($0)) } ?? parent.location
         }
 
-        self.init(file: file, index: parent.index, location: location, dictionary: dictionary)
+        self.init(file: file, index: parent.index, location: location, targets: parent.targets, dictionary: dictionary)
     }
 
 }
 
 extension SourceCode {
 
-    init(file: File, index: LineColumnIndex, location: Location) throws {
-        self.init(file: file,
+    init(file: FileWithTargets, index: LineColumnIndex, location: Location) throws {
+        self.init(file: file.file,
                   index: index,
                   location: location,
-                  dictionary: try Structure(file: file).dictionary)
+                  targets: file.targets,
+                  dictionary: try Structure(file: file.file).dictionary)
     }
 
-    init(content: String, index: LineColumnIndex, location: Location) throws {
-        try self.init(file: File(contents: content), index: index, location: location)
-    }
-
-    init(content: String, location: Location) throws {
-        try self.init(file: File(contents: content), index: LineColumnIndex(string: content), location: location)
+    init(content: String, parent: SourceCode, location: Location) throws {
+        try self.init(file: FileWithTargets(file: File(contents: content), targets: parent.targets),
+                      index: LineColumnIndex(string: content),
+                      location: location)
     }
 
 }

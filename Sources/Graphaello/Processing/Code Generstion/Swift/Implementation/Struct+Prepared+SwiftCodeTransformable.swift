@@ -24,6 +24,7 @@ extension Struct: ExtraValuesSwiftCodeTransformable where CurrentStage == Stage.
             "missingReferencedFragments": Array(missingReferencedFragments),
             "singleFragment": singleFragment ?? false,
             "isSwiftUIView" : !swiftUIViewProtocols.intersection(inheritedTypes).isEmpty,
+            "unifiedMacroFlag" : unifiedMacroFlag,
         ]
     }
     

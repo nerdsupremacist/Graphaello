@@ -18,7 +18,7 @@ extension SourceCode {
         let length = try bodyLength()
         let body = file.content(start: start, length: length)
 
-        return try SourceCode(content: body, location: location(of: Int(start)))
+        return try SourceCode(content: body, parent: self, location: location(of: Int(start)))
     }
 
 }

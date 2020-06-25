@@ -35,6 +35,7 @@ class InitCommand : Command {
     func run() throws {
         Console.print(title: "🚀 Initializing Project")
         let project = try self.project.open()
+        try project.addGraphaelloMacrosToEachTarget()
 
         Console.print(title: "🛠  Integrating Apollo")
         let integratedPackage = try project.addDependencyIfNotThere(name: "apollo-ios",

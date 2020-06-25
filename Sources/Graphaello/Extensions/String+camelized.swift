@@ -35,6 +35,19 @@ extension String {
         return parts.map { String($0).uppercasingFirst }.joined(separator: "")
     }
 
+    var snakeCased: String {
+        guard !isEmpty else {
+            return ""
+        }
+
+        return parts.map { String($0).lowercased() }.joined(separator: "_")
+    }
+    
+
+    var snakeUpperCased: String {
+        return snakeCased.uppercased()
+    }
+    
     private var parts: [String] {
         let basics = replacingOccurrences(of: "([a-z])([A-Z])",
                                           with: "$1 $2",

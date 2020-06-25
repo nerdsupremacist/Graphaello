@@ -30,6 +30,9 @@ class CodegenCommand : Command {
     func run() throws {
         Console.print(title: "🧪 Starting Codegen:")
         let project = try self.project.open()
+        // In case there's a new target add the necessary macros
+        try project.addGraphaelloMacrosToEachTarget()
+        
         Console.print(result: "Using \(inverse: project.fileName)")
         let cache = skipCache ? nil : try PersistentCache<AnyHashable>(project: project, capacity: cacheSize)
 
