@@ -11,7 +11,7 @@ struct BasicPipeline: Pipeline {
     let preparator: Preparator
     let generator: Generator
     
-    func extract(from file: FileWithTargets) throws -> [Struct<Stage.Extracted>] {
+    func extract(from file: WithTargets<File>) throws -> [Struct<Stage.Extracted>] {
         return try extractor.extract(from: file)
     }
     

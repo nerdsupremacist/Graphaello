@@ -18,13 +18,13 @@ extension Project {
     
     func scanAPIs() throws -> [API] {
         return try files()
-            .filter { $0.path.extension == "json" }
-            .compactMap { file in file.path.apiName.map { (file, $0) } }
+            .filter { $0.value.extension == "json" }
+            .compactMap { file in file.value.apiName.map { (file, $0) } }
             .map { file in
                 let (file, apiName) = file
-                let data = try Data(contentsOf: file.path.url)
+                let data = try Data(contentsOf: file.value.url)
                 let wrapped = try decoder.decode(WrappedSchema.self, from: data)
-                return API(name: apiName, schema: wrapped.schema, path: file.path, url: wrapped.url, targets: file.targets)
+                return API(name: apiName, schema: wrapped.schema, path: file.value, url: wrapped.url, targets: file.targets)
             }
     }
     

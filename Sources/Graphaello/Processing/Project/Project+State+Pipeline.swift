@@ -6,13 +6,11 @@ extension Pipeline {
     func extract(from project: Project) throws -> Project.State<Stage.Extracted> {
         let apis = try project.scanAPIs().sorted { $0.name <= $1.name }
         let swiftFiles = try project.files()
-            .filter { $0.path.extension == "swift" }
-            .filter { $0.path.lastComponentWithoutExtension != "Graphaello" }
-            .sorted { $0.path.lastComponentWithoutExtension <= $1.path.lastComponentWithoutExtension }
+            .filter { $0.value.extension == "swift" }
+            .filter { $0.value.lastComponentWithoutExtension != "Graphaello" }
+            .sorted { $0.value.lastComponentWithoutExtension <= $1.value.lastComponentWithoutExtension }
             .compactMap { pathWithTargets in
-                File(path: pathWithTargets.path.string).map { file in
-                    FileWithTargets(file: file, targets: pathWithTargets.targets)
-                }
+                pathWithTargets.compactMap { File(path: $0.string) }
             }
     
         let extracted = try extract(from: swiftFiles)

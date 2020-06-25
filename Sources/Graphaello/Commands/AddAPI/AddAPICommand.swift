@@ -153,7 +153,7 @@ class AddAPICommand : Command {
         let content = try JSONSerialization.data(withJSONObject: object)
 
         Console.print(title: "💉 Adding Schema to Project")
-        try project.open().writeFile(name: "\(apiName).graphql.json", data: content)
+        try project.open().writeFile(name: "\(apiName).graphql.json", data: content, kind: .resource)
 
         Console.print("")
 

@@ -31,16 +31,16 @@ extension SourceCode {
 
 extension SourceCode {
 
-    init(file: FileWithTargets, index: LineColumnIndex, location: Location) throws {
-        self.init(file: file.file,
+    init(file: WithTargets<File>, index: LineColumnIndex, location: Location) throws {
+        self.init(file: file.value,
                   index: index,
                   location: location,
                   targets: file.targets,
-                  dictionary: try Structure(file: file.file).dictionary)
+                  dictionary: try Structure(file: file.value).dictionary)
     }
 
     init(content: String, parent: SourceCode, location: Location) throws {
-        try self.init(file: FileWithTargets(file: File(contents: content), targets: parent.targets),
+        try self.init(file: WithTargets<File>(value: File(contents: content), targets: parent.targets),
                       index: LineColumnIndex(string: content),
                       location: location)
     }
