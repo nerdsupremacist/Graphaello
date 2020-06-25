@@ -24,13 +24,14 @@ extension Struct where CurrentStage: ResolvedStage {
     
     init(code: SourceCode,
          name: String,
+         inheritedTypes: [String],
          properties: [Property<CurrentStage>],
          fragments: [GraphQLFragment],
          query: GraphQLQuery?,
          connectionQueries: [GraphQLConnectionQuery],
          mutations: [GraphQLMutation]) {
         
-        self.init(code: code, name: name, properties: properties) {
+        self.init(code: code, name: name, inheritedTypes: inheritedTypes, properties: properties) {
             .fragments ~> fragments;
             .query ~> query;
             .connectionQueries ~> connectionQueries;

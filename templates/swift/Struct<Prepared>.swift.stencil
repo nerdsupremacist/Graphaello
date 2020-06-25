@@ -35,6 +35,7 @@ extension Apollo{{ singleFragment.api.name }}.{{ singleFragment.name|upperCameli
 {% if query %}
 extension {{ query.api.name }} {
     
+    {% if isSwiftUIView %}
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
                              query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
@@ -42,6 +43,14 @@ extension {{ query.api.name }} {
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
     }
+    {% else %}
+    func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %}, {% endif %}completion: @escaping (Result<{{ structPrepared.name }}, GraphQLLoadingError<{{ query.api.name }}>>) -> Void) {
+        let query = Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})
+        fetch(query: query) { result in
+            completion(result.map { data in {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }}) })
+        }
+    }
+    {% endif %}
     
 }
 {% endif %}

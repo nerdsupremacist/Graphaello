@@ -8,9 +8,10 @@ struct BasicStructExtractor: StructExtractor {
             .filter { try $0.kind() == .varInstance }
             .compactMap { try propertyExtractor.extract(code: $0) }
             .filter { try !$0.isComputed() && !$0.hasValue() && !$0.isPrivate() }
-
+        
         return Struct(code: code,
                       name: try code.name(),
+                      inheritedTypes: try code.optional { try $0.inheritedtypes().map { try $0.name() } } ?? [],
                       properties: properties)
     }
 }

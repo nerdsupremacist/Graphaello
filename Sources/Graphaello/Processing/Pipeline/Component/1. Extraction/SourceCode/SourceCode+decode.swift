@@ -63,8 +63,8 @@ extension SourceCode {
         try decode(key: .typeName)
     }
 
-    func inheritedtypes() throws -> [SourceKitRepresentable] {
-        try decode(key: .inheritedtypes)
+    func inheritedtypes() throws -> [SourceCode] {
+        return try decodeArray(key: .inheritedtypes).map { SourceCode(file: file, parent: self, dictionary: $0) }
     }
 
     func attributes() throws -> [SourceCode] {

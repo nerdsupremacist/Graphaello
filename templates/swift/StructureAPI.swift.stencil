@@ -10,7 +10,28 @@ import SwiftUI
 
 protocol Target {}
 
-protocol API: Target {}
+protocol API: Target {
+    var client: ApolloClient { get }
+}
+
+extension API {
+    func fetch<Query: GraphQLQuery>(query: Query, completion: @escaping (Result<Query.Data, GraphQLLoadingError<Self>>) -> Void) {
+        client.fetch(query: query) { result in
+            switch result {
+            case .success(let result):
+                guard let data = result.data else {
+                    if let errors = result.errors, errors.count > 0 {
+                        return completion(.failure(.graphQLErrors(errors)))
+                    }
+                    return completion(.failure(.emptyData(api: self)))
+                }
+                completion(.success(data))
+            case .failure(let error):
+                completion(.failure(.networkError(error)))
+            }
+        }
+    }
+}
 
 protocol MutationTarget: Target {}
 
@@ -234,6 +255,14 @@ class Paging<Value: Fragment>: DynamicProperty, ObservableObject {
         hasMore = false
         self.error = error
     }
+}
+
+// MARK: - Basic API: Error Types
+
+enum GraphQLLoadingError<T : API> : Error {
+    case emptyData(api: T)
+    case graphQLErrors([GraphQLError])
+    case networkError(Error)
 }
 
 // MARK: - Basic API: Views

@@ -3,19 +3,22 @@ import Foundation
 struct Struct<CurrentStage: StageProtocol> {
     let code: SourceCode
     let name: String
+    let inheritedTypes: [String]
     let properties: [Property<CurrentStage>]
     let context: Context
     
-    init(code: SourceCode, name: String, properties: [Property<CurrentStage>]) {
+    init(code: SourceCode, name: String, inheritedTypes: [String], properties: [Property<CurrentStage>]) {
         self.code = code
         self.name = name
+        self.inheritedTypes = inheritedTypes
         self.properties = properties
         self.context = .empty
     }
     
-    init(code: SourceCode, name: String, properties: [Property<CurrentStage>], @ContextBuilder context: () throws -> ContextProtocol) rethrows {
+    init(code: SourceCode, name: String, inheritedTypes: [String], properties: [Property<CurrentStage>], @ContextBuilder context: () throws -> ContextProtocol) rethrows {
         self.code = code
         self.name = name
+        self.inheritedTypes = inheritedTypes
         self.properties = properties
         self.context = try Context(context: context)
     }
@@ -24,20 +27,20 @@ struct Struct<CurrentStage: StageProtocol> {
 extension Struct {
     
     func map<Stage: StageProtocol>(_ transform: (Property<CurrentStage>) throws -> Property<Stage>) rethrows -> Struct<Stage> {
-        return Struct<Stage>(code: code, name: name, properties: try properties.map { try transform($0) })
+        return Struct<Stage>(code: code, name: name, inheritedTypes: inheritedTypes, properties: try properties.map { try transform($0) })
     }
 
 }
 
 extension Struct {
     func with<Stage: StageProtocol>(properties: [Property<Stage>]) -> Struct<Stage> {
-        return Struct<Stage>(code: code, name: name, properties: properties) { context }
+        return Struct<Stage>(code: code, name: name, inheritedTypes: inheritedTypes, properties: properties) { context }
     }
     
     func with<Stage: StageProtocol>(properties: [Property<Stage>],
                                     @ContextBuilder context: () throws -> ContextProtocol) rethrows -> Struct<Stage> {
         
-        return try Struct<Stage>(code: code, name: name, properties: properties) {
+        return try Struct<Stage>(code: code, name: name, inheritedTypes: inheritedTypes, properties: properties) {
             self.context
             try context()
         }

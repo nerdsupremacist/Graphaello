@@ -1,6 +1,8 @@
 import Foundation
 import Stencil
 
+private let swiftUIViewProtocols: Set<String> = ["View"]
+
 extension Struct: CodeTransformable where CurrentStage == Stage.Prepared { }
 
 extension Struct: SwiftCodeTransformable where CurrentStage == Stage.Prepared { }
@@ -21,6 +23,7 @@ extension Struct: ExtraValuesSwiftCodeTransformable where CurrentStage == Stage.
             "missingFragmentsStructs": Array(missingFragmentsStructs),
             "missingReferencedFragments": Array(missingReferencedFragments),
             "singleFragment": singleFragment ?? false,
+            "isSwiftUIView" : !swiftUIViewProtocols.intersection(inheritedTypes).isEmpty,
         ]
     }
     
