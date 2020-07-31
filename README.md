@@ -116,7 +116,7 @@ Almost all examples will refer to the Star Wars API: https://swapi-graphql.netli
 
 #### Views
 
-You very easily use infromation from a GraphQL API directly from your SwiftUI View:
+You very easily use information from a GraphQL API directly from your SwiftUI View:
 
 For example this `CharacterCell` displays a single Cell with a Person's Name and Home World
 
