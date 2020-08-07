@@ -1,5 +1,7 @@
 import Foundation
 
+private let specialAttributes: Set<String> = ["Binding"]
+
 struct BasicPropertyExtractor: PropertyExtractor {
     let attributeExtractor: AttributeExtractor
 
@@ -9,9 +11,15 @@ struct BasicPropertyExtractor: PropertyExtractor {
             .optional { try $0.attributes() }?
             .map { try attributeExtractor.extract(code: $0) } ?? []
 
+        let finalType = attributes
+            .filter { $0.kind == ._custom }
+            .map { String($0.code.content.dropFirst()) }
+            .first { specialAttributes.contains($0) }
+            .map { "\($0)<\(type)>" } ?? type
+
         return Property(code: code,
                         name: try code.name(),
-                        type: type) {
+                        type: finalType) {
             
             .attributes ~> attributes
         }
