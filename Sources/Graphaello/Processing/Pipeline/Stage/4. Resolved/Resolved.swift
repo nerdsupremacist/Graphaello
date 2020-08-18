@@ -54,6 +54,7 @@ extension Struct where CurrentStage: ResolvedStage {
     var singleFragment: GraphQLFragment? {
         guard let fragment = fragments.first,
             fragments.count == 1,
+            mutations.isEmpty,
             properties.filter({ $0.graphqlPath == nil }).isEmpty else { return nil }
         
         return fragment
