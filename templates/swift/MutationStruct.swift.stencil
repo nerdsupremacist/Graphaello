@@ -9,7 +9,7 @@ extension {{ structPrepared.name }} {
 
         @Published private var mutationCounter = 0
 
-        private let api: Todos
+        private let api: {{ mutationStruct.mutation.api.name }}
 
         var isLoading: Bool {
             return mutationCounter > 0
