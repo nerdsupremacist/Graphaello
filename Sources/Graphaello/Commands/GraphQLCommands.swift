@@ -8,4 +8,5 @@ class GraphQLCommands: Commands {
     let codegen = CodegenCommand()
     let add = AddAPICommand()
     let update = UpdateAPICommand()
+    let clearCache = ClearCacheCommand()
 }

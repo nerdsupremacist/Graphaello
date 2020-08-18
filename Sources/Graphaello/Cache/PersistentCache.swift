@@ -39,6 +39,10 @@ public class PersistentCache<Key: Hashable> {
         try! store()
     }
 
+    public func clear() throws {
+        try folder.delete()
+    }
+
     public func load(key: Key) throws -> Data? {
         let hash = computeHash(of: key)
         let file = self.file(for: hash)
