@@ -265,6 +265,27 @@ enum GraphQLLoadingError<T : API> : Error {
     case networkError(Error)
 }
 
+// MARK: - Basic API: Refresh
+
+protocol QueryRefreshController {
+    func refresh()
+    func refresh(completion: @escaping (Error?) -> Void)
+}
+
+private struct QueryRefreshControllerEnvironmentKey: EnvironmentKey {
+    static let defaultValue: QueryRefreshController? = nil
+}
+
+extension EnvironmentValues {
+    var queryRefreshController: QueryRefreshController? {
+        get {
+            self[QueryRefreshControllerEnvironmentKey.self]
+        } set {
+            self[QueryRefreshControllerEnvironmentKey.self] = newValue
+        }
+    }
+}
+
 // MARK: - Basic API: Views
 
 private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
@@ -283,9 +304,17 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
         }
 
         func load(client: ApolloClient, query: Query) {
-            guard previous !== query || (value == nil && !isLoading)  else { return }
+            guard previous !== query || (value == nil && !isLoading) else { return }
+            perform(client: client, query: query)
+        }
+
+        func refresh(client: ApolloClient, query: Query, completion: ((Error?) -> Void)? = nil) {
+            perform(client: client, query: query, cachePolicy: .fetchIgnoringCacheData, completion: completion)
+        }
+
+        private func perform(client: ApolloClient, query: Query, cachePolicy: CachePolicy = .returnCacheDataElseFetch, completion: ((Error?) -> Void)? = nil) {
             previous = query
-            cancellable = client.fetch(query: query) { [weak self] result in
+            cancellable = client.fetch(query: query, cachePolicy: cachePolicy) { [weak self] result in
                 defer {
                     self?.cancellable = nil
                     self?.isLoading = false
@@ -294,8 +323,10 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
                 case let .success(result):
                     self?.value = result.data
                     self?.error = result.errors?.map { $0.description }.joined(separator: ", ")
+                    completion?(nil)
                 case let .failure(error):
                     self?.error = error.localizedDescription
+                    completion?(error)
                 }
             }
             isLoading = true
@@ -306,12 +337,25 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
         }
     }
 
+    private struct RefreshController: QueryRefreshController {
+        let client: ApolloClient
+        let query: Query
+        let viewModel: ViewModel
+
+        func refresh() {
+            viewModel.refresh(client: client, query: query)
+        }
+
+        func refresh(completion: @escaping (Error?) -> Void) {
+            viewModel.refresh(client: client, query: query, completion: completion)
+        }
+    }
+
     let client: ApolloClient
     let query: Query
     let factory: ContentFactory
 
     @ObservedObject private var viewModel = ViewModel()
-
     @State private var hasAppeared = false
 
     var body: some View {
@@ -319,9 +363,12 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
             self.viewModel.load(client: self.client, query: self.query)
         }
         return VStack {
+            viewModel.isLoading && viewModel.value == nil ? Text("Loading") : nil
             viewModel.error.map { Text("Error: \($0)") }
-            viewModel.value.map(factory)
-            viewModel.isLoading ? Text("Loading") : nil
+            viewModel
+                .value
+                .map(factory)
+                .environment(\.queryRefreshController, RefreshController(client: client, query: query, viewModel: viewModel))
         }
         .onAppear {
             DispatchQueue.main.async {
@@ -597,8 +644,10 @@ private class AnyObservableObject: ObservableObject {
 
 @propertyWrapper
 struct GraphQL<Decoder: GraphQLValueDecoder>: DynamicProperty {
+    private let initialValue: Decoder.Decoded
+
     @State
-    private var value: Decoder.Decoded
+    private var value: Decoder.Decoded? = nil
 
     @ObservedObject
     private var observed: AnyObservableObject = AnyObservableObject()
@@ -606,7 +655,7 @@ struct GraphQL<Decoder: GraphQLValueDecoder>: DynamicProperty {
 
     var wrappedValue: Decoder.Decoded {
         get {
-            return value
+            return value ?? initialValue
         }
         nonmutating set {
             value = newValue
@@ -631,15 +680,20 @@ struct GraphQL<Decoder: GraphQLValueDecoder>: DynamicProperty {
     }
 
     fileprivate init(_ wrappedValue: Decoder.Encoded) {
-        _value = State(initialValue: try! Decoder.decode(encoded: wrappedValue))
+        initialValue = try! Decoder.decode(encoded: wrappedValue)
         updateObserved = nil
+    }
+
+    mutating func update() {
+        _value.update()
+        _observed.update()
     }
 }
 
 extension GraphQL where Decoder.Decoded: ObservableObject {
     fileprivate init(_ wrappedValue: Decoder.Encoded) {
         let value = try! Decoder.decode(encoded: wrappedValue)
-        _value = State(initialValue: value)
+        initialValue = value
 
         let observed = AnyObservableObject()
         observed.use(value)
