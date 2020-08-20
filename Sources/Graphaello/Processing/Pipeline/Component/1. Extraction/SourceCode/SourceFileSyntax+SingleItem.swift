@@ -4,7 +4,7 @@ import SwiftSyntax
 extension SourceFileSyntax {
     
     func singleItem() -> Syntax? {
-        return Array(statements).single()?.item
+        return statements.filter { !$0.item.isUnknown }.single()?.item
     }
     
 }
