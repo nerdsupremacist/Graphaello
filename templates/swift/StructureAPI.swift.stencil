@@ -286,15 +286,71 @@ extension EnvironmentValues {
     }
 }
 
+
+// MARK: - Error Handling
+
+
+enum QueryError {
+    case network(Error)
+    case graphql([GraphQLError])
+}
+extension QueryError: CustomStringConvertible {
+
+    var description: String {
+        switch self {
+        case .network(let error):
+            return error.localizedDescription
+        case .graphql(let errors):
+            return errors.map { $0.description }.joined(separator: ", ")
+        }
+    }
+
+}
+
+extension QueryError {
+
+    var networkError: Error? {
+        guard case .network(let error) = self else { return nil }
+        return error
+    }
+
+    var graphQLErrors: [GraphQLError]? {
+        guard case .graphql(let errors) = self else { return nil }
+        return errors
+    }
+
+}
+
+protocol QueryErrorController {
+    var error: QueryError? { get }
+    func clear()
+}
+
+
+private struct QueryErrorControllerEnvironmentKey: EnvironmentKey {
+    static let defaultValue: QueryErrorController? = nil
+}
+
+extension EnvironmentValues {
+    var queryErrorController: QueryErrorController? {
+        get {
+            self[QueryErrorControllerEnvironmentKey.self]
+        } set {
+            self[QueryErrorControllerEnvironmentKey.self] = newValue
+        }
+    }
+}
+
 // MARK: - Basic API: Views
 
-private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
+private struct QueryRenderer<Query: GraphQLQuery, Loading: View, Error: View, Content: View>: View {
     typealias ContentFactory = (Query.Data) -> Content
+    typealias ErrorFactory = (QueryError) -> Error
 
     private final class ViewModel: ObservableObject {
         @Published var isLoading: Bool = false
         @Published var value: Query.Data? = nil
-        @Published var error: String? = nil
+        @Published var error: QueryError? = nil
 
         private var previous: Query?
         private var cancellable: Apollo.Cancellable?
@@ -308,11 +364,11 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
             perform(client: client, query: query)
         }
 
-        func refresh(client: ApolloClient, query: Query, completion: ((Error?) -> Void)? = nil) {
+        func refresh(client: ApolloClient, query: Query, completion: ((Swift.Error?) -> Void)? = nil) {
             perform(client: client, query: query, cachePolicy: .fetchIgnoringCacheData, completion: completion)
         }
 
-        private func perform(client: ApolloClient, query: Query, cachePolicy: CachePolicy = .returnCacheDataElseFetch, completion: ((Error?) -> Void)? = nil) {
+        private func perform(client: ApolloClient, query: Query, cachePolicy: CachePolicy = .returnCacheDataElseFetch, completion: ((Swift.Error?) -> Void)? = nil) {
             previous = query
             cancellable = client.fetch(query: query, cachePolicy: cachePolicy) { [weak self] result in
                 defer {
@@ -322,10 +378,10 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
                 switch result {
                 case let .success(result):
                     self?.value = result.data
-                    self?.error = result.errors?.map { $0.description }.joined(separator: ", ")
+                    self?.error = result.errors.map { .graphql($0) }
                     completion?(nil)
                 case let .failure(error):
-                    self?.error = error.localizedDescription
+                    self?.error = .network(error)
                     completion?(error)
                 }
             }
@@ -346,13 +402,27 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
             viewModel.refresh(client: client, query: query)
         }
 
-        func refresh(completion: @escaping (Error?) -> Void) {
+        func refresh(completion: @escaping (Swift.Error?) -> Void) {
             viewModel.refresh(client: client, query: query, completion: completion)
+        }
+    }
+
+    private struct ErrorController: QueryErrorController {
+        let viewModel: ViewModel
+
+        var error: QueryError? {
+            return viewModel.error
+        }
+
+        func clear() {
+            viewModel.error = nil
         }
     }
 
     let client: ApolloClient
     let query: Query
+    let loading: Loading
+    let error: ErrorFactory
     let factory: ContentFactory
 
     @ObservedObject private var viewModel = ViewModel()
@@ -363,12 +433,13 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
             self.viewModel.load(client: self.client, query: self.query)
         }
         return VStack {
-            viewModel.isLoading && viewModel.value == nil ? Text("Loading") : nil
-            viewModel.error.map { Text("Error: \($0)") }
+            viewModel.isLoading && viewModel.value == nil && viewModel.error == nil ? loading : nil
+            viewModel.value == nil ? viewModel.error.map(error) : nil
             viewModel
                 .value
                 .map(factory)
                 .environment(\.queryRefreshController, RefreshController(client: client, query: query, viewModel: viewModel))
+                .environment(\.queryErrorController, ErrorController(viewModel: viewModel))
         }
         .onAppear {
             DispatchQueue.main.async {
@@ -382,6 +453,20 @@ private struct QueryRenderer<Query: GraphQLQuery, Content: View>: View {
             }
             self.viewModel.cancel()
         }
+    }
+}
+
+private struct BasicErrorView : View {
+    let error: QueryError
+
+    var body: some View {
+        Text("Error: \(error.description)")
+    }
+}
+
+private struct BasicLoadingView : View {
+    var body: some View {
+        Text("Loading")
     }
 }
 

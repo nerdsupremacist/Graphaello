@@ -37,10 +37,46 @@ extension Apollo{{ singleFragment.api.name }}.{{ singleFragment.name|upperCameli
 extension {{ query.api.name }} {
     
     {% if isSwiftUIView %}
+    func {{ functionName }}<Loading : View, Error: View>({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %},{% endif %}
+        @ViewBuilder loading: () -> Loading,
+        @ViewBuilder error: @escaping (QueryError) -> Error) -> some View {
+        return QueryRenderer(client: client,
+                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
+                             loading: loading(),
+                             error: error) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+        
+            {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
+        }
+    }
+
+    func {{ functionName }}<Loading : View>({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %},{% endif %}
+        @ViewBuilder loading: () -> Loading) -> some View {
+        return QueryRenderer(client: client,
+                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
+                             loading: loading(),
+                             error: { BasicErrorView(error: $0) }) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+
+            {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
+        }
+    }
+
+    func {{ functionName }}<Error : View>({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %},{% endif %}
+        @ViewBuilder error: @escaping (QueryError) -> Error) -> some View {
+        return QueryRenderer(client: client,
+                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
+                             loading: BasicLoadingView(),
+                             error: error) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+
+            {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
+        }
+    }
+
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
-        
+                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
+                             loading: BasicLoadingView(),
+                             error: { BasicErrorView(error: $0) }) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
     }

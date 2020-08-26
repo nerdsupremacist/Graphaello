@@ -39,7 +39,7 @@ extension {{ api.name }} {
                                                      sendOperationIdentifiers: sendOperationIdentifiers,
                                                      useGETForQueries: useGETForQueries,
                                                      enableAutoPersistedQueries: enableAutoPersistedQueries,
-                                                     useGETForPersistedQueryRetry: useGETForQueries,
+                                                     useGETForPersistedQueryRetry: useGETForPersistedQueryRetry,
                                                      requestCreator: requestCreator)
 
         networkTransport.delegate = delegate
