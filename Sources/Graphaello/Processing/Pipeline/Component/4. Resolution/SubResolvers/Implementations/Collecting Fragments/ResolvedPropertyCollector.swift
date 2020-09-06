@@ -45,14 +45,22 @@ struct ResolvedPropertyCollector<Collector: ResolvedValueCollector>: ResolvedVal
                 case .mutation:
                     let object = collectedPath.object(propertyName: value.name)
                     // TODO: Use SwiftSyntax here to get to the proper name for the mutation
-                    let name = value
-                        .type
-                        .replacingOccurrences(of: #"<.*>"#, with: "", options: .regularExpression)
-                        .replacingOccurrences(of: #"[\[\]\.\?]"#, with: "", options: .regularExpression)
+                    let name: String
+                    switch value.type {
+                    case .concrete(let type):
+                        name = type
+                            .replacingOccurrences(of: #"<.*>"#, with: "", options: .regularExpression)
+                            .replacingOccurrences(of: #"[\[\]\.\?]"#, with: "", options: .regularExpression)
+                    case .inferred:
+                        var hasher = Hasher.constantAccrossExecutions()
+                        path.validated.parsed.extracted.code.content.hash(into: &hasher)
+                        name = "Inferred\(hasher.finalize())"
+                    }
 
                     let mutation = GraphQLMutation(api: path.validated.api,
                                                    target: path.validated.target,
                                                    name: name,
+                                                   parentName: parent.name,
                                                    path: path,
                                                    returnType: path.validated.returnType,
                                                    object: object,

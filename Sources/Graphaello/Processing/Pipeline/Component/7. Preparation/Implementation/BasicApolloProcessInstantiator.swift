@@ -8,8 +8,8 @@ struct BasicApolloProcessInstantiator: ApolloProcessInstantiator {
         let task = Process()
         task.launchPath = "/usr/bin/env"
         task.arguments = [path.string] + apollo.arguments(api: api, graphql: graphql, outputFile: outputFile)
-        task.standardOutput = nil
-        task.standardError = nil
+//        task.standardOutput = nil
+//        task.standardError = nil
         return task
     }
     

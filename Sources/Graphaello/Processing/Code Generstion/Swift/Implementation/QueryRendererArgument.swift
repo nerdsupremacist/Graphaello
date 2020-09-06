@@ -51,7 +51,7 @@ extension GraphQLMutation {
 extension Property where CurrentStage: GraphQLStage {
     
     fileprivate var directArgument: QueryRendererArgument? {
-        guard graphqlPath == nil else { return nil }
+        guard graphqlPath == nil, case .concrete(let type) = type else { return nil }
         return QueryRendererArgument(name: name,
                                      type: type.contains("->") ? "@escaping \(type)" : type,
                                      expression: nil)

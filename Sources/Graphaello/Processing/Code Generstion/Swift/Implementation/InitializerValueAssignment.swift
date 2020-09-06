@@ -9,13 +9,14 @@ struct InitializerValueAssignment: SwiftCodeTransformable {
 extension Struct where CurrentStage == Stage.Prepared {
     
     var initializerValueAssignments: [InitializerValueAssignment] {
-        return properties.map { property in
+        return properties.compactMap { property in
             switch property.graphqlPath {
             case .some(let path):
                 let expression = path.initializerExpression(in: self) ?? property.name
                 return InitializerValueAssignment(name: property.name,
                                                   expression: "GraphQL(\(expression))")
             case .none:
+                guard case .concrete = property.type else { return nil }
                 return InitializerValueAssignment(name: property.name, expression: property.name)
             }
         }

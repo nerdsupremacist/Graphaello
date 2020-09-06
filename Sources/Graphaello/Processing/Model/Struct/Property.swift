@@ -1,12 +1,17 @@
 import Foundation
 
+enum PropertyType: Hashable {
+    case concrete(String)
+    case inferred
+}
+
 struct Property<CurrentStage: StageProtocol> {
     let code: SourceCode
     let name: String
-    let type: String
+    let type: PropertyType
     let context: Context
     
-    init(code: SourceCode, name: String, type: String, @ContextBuilder context: () throws -> ContextProtocol) rethrows {
+    init(code: SourceCode, name: String, type: PropertyType, @ContextBuilder context: () throws -> ContextProtocol) rethrows {
         self.code = code
         self.name = name
         self.type = type

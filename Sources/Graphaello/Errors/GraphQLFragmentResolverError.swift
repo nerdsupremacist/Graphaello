@@ -1,6 +1,7 @@
 import Foundation
 
 enum GraphQLFragmentResolverError: Error, CustomStringConvertible {
+    case cannotInferFragmentType(Schema.GraphQLType)
     case invalidTypeNameForFragment(String)
     case failedToDecodeAnyOfTheStructsDueToPossibleRecursion([Struct<Stage.Validated>])
     case cannotResolveFragmentOrQueryWithEmptyPath(Stage.Resolved.Path)
@@ -10,6 +11,8 @@ enum GraphQLFragmentResolverError: Error, CustomStringConvertible {
 
     var description: String {
         switch self {
+        case .cannotInferFragmentType(let type):
+            return "Usage of GraphQL object type \(type.name) must have a selection of subfields. Please use a value from this object or map it to a Fragment."
         case .invalidTypeNameForFragment(let name):
             return "Failed to parse \(name) as a Fragment"
         case .failedToDecodeAnyOfTheStructsDueToPossibleRecursion(let structs):
@@ -48,9 +51,9 @@ extension Sequence where Element == Struct<Stage.Validated> {
 
         return flatMap { validated -> [Property<Stage.Validated>] in
             return validated.properties.filter { property in
-                guard property.graphqlPath?.returnType.isFragment == true else { return false }
+                guard case .concrete(let type) = property.type, property.graphqlPath?.returnType.isFragment == true else { return false }
                 do {
-                    let fragment = try StructResolution.ReferencedFragment(typeName: property.type)
+                    let fragment = try StructResolution.ReferencedFragment(typeName: type)
                     switch fragment {
 
                     case .name(.fullName(let name)):

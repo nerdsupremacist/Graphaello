@@ -4,7 +4,7 @@ import SwiftSyntax
 extension Property where CurrentStage == Stage.Extracted {
     
     func isComputed() throws -> Bool {
-        if type.hasPrefix("some ") {
+        if case .concrete(let type) = type, type.hasPrefix("some ") {
             return true
         }
         

@@ -10,6 +10,10 @@ extension Struct where CurrentStage == Stage.Prepared {
     var initializerArgumentAssignmentFromQueryData: [InitializerArgumentAssignmentFromQueryData] {
         let stockArguments = properties
             .filter { $0.graphqlPath?.resolved.isConnection ?? true }
+            .filter { property in
+                guard case .concrete = property.type else { return false }
+                return true
+            }
             .map { InitializerArgumentAssignmentFromQueryData(name: $0.name,
                                                               expression: $0.expression(in: self)) }
         
@@ -29,8 +33,12 @@ extension Struct where CurrentStage == Stage.Prepared {
 extension Property where CurrentStage == Stage.Prepared {
 
     fileprivate func expression(in graphQlStruct: Struct<Stage.Prepared>) -> CodeTransformable {
-        guard type != graphQlStruct.query?.api.name else { return "self" }
-        guard let path = graphqlPath else { return name }
+        guard let path = graphqlPath else {
+            if case .concrete(let type) = type, type == graphQlStruct.query?.api.name {
+                return "self"
+            }
+            return name
+        }
         guard case .some(.connection(let connectionFragment)) = path.resolved.referencedFragment else {
             fatalError("Invalid State: should not attempt to get an expression from a regular GraphQL Value. Only from connections.")
         }

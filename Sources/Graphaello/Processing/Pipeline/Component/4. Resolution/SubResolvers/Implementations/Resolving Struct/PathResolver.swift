@@ -10,14 +10,18 @@ struct PathResolver: ValueResolver {
         guard value.components.last?.parsed == .fragment else {
             return .resolved(.init(validated: value, referencedFragment: nil, isReferencedFragmentASingleFragmentStruct: false))
         }
-        
+
+        guard case .concrete(let type) = property.type else {
+            throw GraphQLFragmentResolverError.cannotInferFragmentType(value.components.last!.underlyingType)
+        }
+
         if case .mutation = value.parsed.target {
-            let fragmentName = try StructResolution.ReferencedMutationResultFragment(typeName: property.type).fragmentName
+            let fragmentName = try StructResolution.ReferencedMutationResultFragment(typeName: type).fragmentName
             guard let result = context[fragmentName] else { return .missingFragment }
             return .resolved(Stage.Resolved.Path(validated: value, referencedFragment: .mutationResult(result.fragment), isReferencedFragmentASingleFragmentStruct: result.isReferencedFragmentASingleFragmentStruct))
         }
         
-        switch try StructResolution.ReferencedFragment(typeName: property.type) {
+        switch try StructResolution.ReferencedFragment(typeName: type) {
 
         case .name(let fragmentName):
             guard let result = context[fragmentName] else { return .missingFragment }

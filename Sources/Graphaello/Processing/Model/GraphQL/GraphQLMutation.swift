@@ -4,6 +4,7 @@ struct GraphQLMutation {
     let api: API
     let target: Schema.GraphQLType
     let name: String
+    let parentName: String
     let path: Stage.Resolved.Path
     let returnType: Schema.GraphQLType.Field.TypeReference
     let object: GraphQLObject
