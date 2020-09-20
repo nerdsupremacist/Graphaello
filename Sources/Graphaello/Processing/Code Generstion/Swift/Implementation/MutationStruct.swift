@@ -8,8 +8,8 @@ struct MutationStruct: ExtraValuesSwiftCodeTransformable {
         return [
             "swiftUnderlyingType": mutation.returnType.swiftType(api: mutation.api.name),
             "swiftType": mutation.returnType.swiftType(api: mutation.api.name, for: mutation.referencedFragment),
-            "queryRendererArguments": mutation.queryRendererArguments,
-            "queryArgumentAssignments": mutation.queryArgumentAssignments,
+            "queryRendererArguments": Array(mutation.queryRendererArguments),
+            "queryArgumentAssignments": Array(mutation.queryArgumentAssignments),
             "expression": Stage.Cleaned.Path(resolved: mutation.path,
                                              components: mutation.path.validated.components.map { Stage.Cleaned.Component(validated: $0, alias: nil) }).expression()
         ]
