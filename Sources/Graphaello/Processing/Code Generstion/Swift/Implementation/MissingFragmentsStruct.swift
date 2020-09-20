@@ -9,7 +9,7 @@ extension Struct where CurrentStage: ResolvedStage {
 
     var missingFragmentsStructs: OrderedSet<MissingFragmentsStruct> {
         let fromQuery = query?.missingFragmentsStructs ?? []
-        let fromFragments = fragments.flatMap { $0.missingFragmentsStructs }
+        let fromFragments = fragments.flatMap { $0.name.upperCamelized + $0.object.missingFragmentsStructs(api: $0.api) }
         let fromConnectionQueries = connectionQueries.flatMap { $0.query.missingFragmentsStructs }
         return fromQuery + fromFragments + fromConnectionQueries
     }
@@ -49,15 +49,28 @@ extension GraphQLObject {
             .sorted { $0.key.field.name < $1.key.field.name }
             .flatMap { $0.value.missingFragmentsStructs(field: $0.key, api: api) }
 
+        let fromTypeConditionals = typeConditionals
+            .sorted { $0.key < $1.key }
+            .flatMap {  $0.value.missingFragmentsStructs(api: api) }
+
         if referencedFragments.isEmpty {
-            return fromComponents
+            return fromComponents + fromTypeConditionals
         }
 
         if referencedFragments.contains(where: { !$0.hasArguments }) {
-            return fromComponents
+            return fromComponents + fromTypeConditionals
         }
 
-        return [MissingFragmentsStruct(api: api, path: [])] + fromComponents
+        return [MissingFragmentsStruct(api: api, path: [])] + fromComponents + fromTypeConditionals
+    }
+
+}
+
+extension GraphQLTypeConditional {
+
+    func missingFragmentsStructs(api: API) -> OrderedSet<MissingFragmentsStruct> {
+        let name = "As \(type.name)"
+        return name.singular.upperCamelized + object.missingFragmentsStructs(api: api)
     }
 
 }
