@@ -1,15 +1,25 @@
 import Foundation
 import SwiftSyntax
 
-struct QueryRendererArgument: SwiftCodeTransformable {
+struct QueryRendererArgument: SwiftCodeTransformable, Hashable {
     let name: String
     let type: String
     let expression: ExprSyntax?
+
+    static func == (lhs: QueryRendererArgument, rhs: QueryRendererArgument) -> Bool {
+        return lhs.name == rhs.name && lhs.type == rhs.type && lhs.expression?.description == rhs.expression?.description
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(type)
+        hasher.combine(expression?.description)
+    }
 }
 
 extension Struct where CurrentStage: ResolvedStage {
     
-    var queryRendererArguments: [QueryRendererArgument] {
+    var queryRendererArguments: OrderedSet<QueryRendererArgument> {
         let api = query?.api.name
         let argumentsFromStruct = properties
             .compactMap { $0.directArgument }
@@ -29,14 +39,14 @@ extension Struct where CurrentStage: ResolvedStage {
                                              expression: argument.defaultValue)
             } ?? []
 
-        return argumentsFromQuery + argumentsFromStruct + extraAPIArguments
+        return OrderedSet(argumentsFromQuery + argumentsFromStruct + extraAPIArguments)
     }
     
 }
 
 extension GraphQLMutation {
     
-    var queryRendererArguments: [QueryRendererArgument] {
+    var queryRendererArguments: OrderedSet<QueryRendererArgument> {
         return arguments
             .filter { !$0.isHardCoded }
             .map { argument in

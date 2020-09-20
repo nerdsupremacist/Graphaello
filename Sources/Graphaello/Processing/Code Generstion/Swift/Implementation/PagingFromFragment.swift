@@ -12,7 +12,7 @@ extension PagingFromFragment: ExtraValuesSwiftCodeTransformable {
         return [
             "pathExpression": path.expression(),
             "optionalPathExpression": path.expression(queryValueIsOptional: true),
-            "queryArgumentAssignments": query.queryArgumentAssignments
+            "queryArgumentAssignments": Array(query.queryArgumentAssignments)
         ]
     }
 

@@ -1,7 +1,7 @@
 import Foundation
 import Stencil
 
-struct GraphQLCodeQueryArgument: ExtraValuesGraphQLCodeTransformable {
+struct GraphQLCodeQueryArgument: ExtraValuesGraphQLCodeTransformable, Hashable {
     let name: String
     let type: Schema.GraphQLType.Field.TypeReference
 
@@ -12,7 +12,7 @@ struct GraphQLCodeQueryArgument: ExtraValuesGraphQLCodeTransformable {
 
 extension GraphQLQuery {
 
-    var graphQLCodeQueryArgument: [GraphQLCodeQueryArgument] {
+    var graphQLCodeQueryArgument: OrderedSet<GraphQLCodeQueryArgument> {
         return arguments.map { GraphQLCodeQueryArgument(name: $0.name, type: $0.type) }
     }
     
@@ -20,7 +20,7 @@ extension GraphQLQuery {
 
 extension GraphQLMutation {
 
-    var graphQLCodeQueryArgument: [GraphQLCodeQueryArgument] {
+    var graphQLCodeQueryArgument: OrderedSet<GraphQLCodeQueryArgument> {
         return arguments.map { GraphQLCodeQueryArgument(name: $0.name, type: $0.type) }
     }
 

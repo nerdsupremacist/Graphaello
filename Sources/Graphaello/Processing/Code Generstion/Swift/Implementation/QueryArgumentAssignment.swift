@@ -2,9 +2,18 @@ import Foundation
 import Stencil
 import SwiftSyntax
 
-struct QueryArgumentAssignment {
+struct QueryArgumentAssignment: Hashable {
     let name: String
     let expression: ExprSyntax
+
+    static func == (lhs: QueryArgumentAssignment, rhs: QueryArgumentAssignment) -> Bool {
+        return lhs.name == rhs.name && lhs.expression.description == rhs.expression.description
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(expression.description)
+    }
 }
 
 extension QueryArgumentAssignment: ExtraValuesSwiftCodeTransformable {
@@ -17,7 +26,7 @@ extension QueryArgumentAssignment: ExtraValuesSwiftCodeTransformable {
 
 extension Struct where CurrentStage: ResolvedStage {
     
-    var queryArgumentAssignments: [QueryArgumentAssignment] {
+    var queryArgumentAssignments: OrderedSet<QueryArgumentAssignment> {
         return query?.queryArgumentAssignments ?? []
     }
     
@@ -25,7 +34,7 @@ extension Struct where CurrentStage: ResolvedStage {
 
 extension GraphQLQuery {
     
-    var queryArgumentAssignments: [QueryArgumentAssignment] {
+    var queryArgumentAssignments: OrderedSet<QueryArgumentAssignment> {
         return arguments.map { QueryArgumentAssignment(name: $0.name,
                                                        expression: $0.assignmentExpression) }
     }
@@ -34,7 +43,7 @@ extension GraphQLQuery {
 
 extension GraphQLConnectionQuery {
 
-    var queryArgumentAssignments: [QueryArgumentAssignment] {
+    var queryArgumentAssignments: OrderedSet<QueryArgumentAssignment> {
         return query.queryArgumentAssignments.map { assignment in
             if assignment.name == "first" {
                 let expression = SequenceExprSyntax(lhs: IdentifierExprSyntax(identifier: "_pageSize").erased(),
@@ -56,7 +65,7 @@ extension GraphQLConnectionQuery {
 
 extension GraphQLMutation {
     
-    var queryArgumentAssignments: [QueryArgumentAssignment] {
+    var queryArgumentAssignments: OrderedSet<QueryArgumentAssignment> {
         return arguments.map { QueryArgumentAssignment(name: $0.name,
                                                        expression: $0.assignmentExpression) }
     }
