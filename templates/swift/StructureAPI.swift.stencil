@@ -473,8 +473,8 @@ private struct BasicLoadingView : View {
 struct PagingView<Value: Fragment>: View {
     enum Mode {
         case list
-        case vertical(alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil)
-        case horizontal(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil)
+        case vertical(alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil, insets: EdgeInsets = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        case horizontal(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil, insets: EdgeInsets = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
     }
 
     enum Data {
@@ -519,7 +519,7 @@ struct PagingView<Value: Fragment>: View {
                     self.loader(data).onAppear { self.onAppear(data: data) }
                 }
             )
-        case .vertical(let alignment, let spacing):
+        case let .vertical(alignment, spacing, insets):
             return AnyView(
                 ScrollView(.horizontal, showsIndicators: false) {
                     VStack(alignment: alignment, spacing: spacing) {
@@ -527,11 +527,12 @@ struct PagingView<Value: Fragment>: View {
                             self.loader(data).ifVisible(in: self.visibleRect, in: .named("InfiniteVerticalScroll")) { self.onAppear(data: data) }
                         }
                     }
+                    .padding(insets)
                 }
                 .coordinateSpace(name: "InfiniteVerticalScroll")
                 .rectReader($visibleRect, in: .named("InfiniteVerticalScroll"))
             )
-        case .horizontal(let alignment, let spacing):
+        case let .horizontal(alignment, spacing, insets):
             return AnyView(
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: alignment, spacing: spacing) {
@@ -539,6 +540,7 @@ struct PagingView<Value: Fragment>: View {
                             self.loader(data).ifVisible(in: self.visibleRect, in: .named("InfiniteHorizontalScroll")) { self.onAppear(data: data) }
                         }
                     }
+                    .padding(insets)
                 }
                 .coordinateSpace(name: "InfiniteHorizontalScroll")
                 .rectReader($visibleRect, in: .named("InfiniteHorizontalScroll"))
@@ -615,12 +617,40 @@ extension PagingView {
 }
 
 extension PagingView.Mode {
+    static func vertical(alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil, padding edges: Edge.Set, by padding: CGFloat) -> PagingView.Mode {
+        return .vertical(alignment: alignment,
+                         spacing: spacing,
+                         insets: EdgeInsets(top: edges.contains(.top) ? padding : 0,
+                                            leading: edges.contains(.leading) ? padding : 0,
+                                            bottom: edges.contains(.bottom) ? padding : 0,
+                                            trailing: edges.contains(.trailing) ? padding : 0))
+    }
+
+
+    static func vertical(alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil, padding: CGFloat) -> PagingView.Mode {
+        return .vertical(alignment: alignment, spacing: spacing, padding: .all, by: padding)
+    }
 
     static var vertical: PagingView.Mode { .vertical() }
 
-    static var horizontal: PagingView.Mode { .horizontal() }
 
+    static func horizontal(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil, padding edges: Edge.Set, by padding: CGFloat) -> PagingView.Mode {
+        return .horizontal(alignment: alignment,
+                           spacing: spacing,
+                           insets: EdgeInsets(top: edges.contains(.top) ? padding : 0,
+                                              leading: edges.contains(.leading) ? padding : 0,
+                                              bottom: edges.contains(.bottom) ? padding : 0,
+                                            trailing: edges.contains(.trailing) ? padding : 0))
+    }
+
+
+    static func horizontal(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil, padding: CGFloat) -> PagingView.Mode {
+        return .horizontal(alignment: alignment, spacing: spacing, padding: .all, by: padding)
+    }
+
+    static var horizontal: PagingView.Mode { .horizontal() }
 }
+
 
 extension View {
     fileprivate func rectReader(_ binding: Binding<CGRect>, in space: CoordinateSpace) -> some View {
