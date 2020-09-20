@@ -202,7 +202,7 @@ extension Stage.Cleaned.Component {
         switch (validated.reference, validated.parsed, referencedFragment) {
         case (.casting(.down), _, _):
             return .path([
-                AttributePath(name: "as\(validated.underlyingType.name)",
+                AttributePath(name: "as\(validated.underlyingType.name.upperCamelized)",
                               kind: .optional(.value))
             ])
         case (.casting(.up), _, _):
