@@ -80,6 +80,14 @@ var name: String? // works
 var name: Bool // doesn't work
 ```
 
+**AAAAaaaaand:** if it's a scalar then you don't even need to specify the type!!
+
+```swift
+
+@GraphQL(StarWars.Person.name)
+var name // Swift knows it's a String?
+```
+
 ## Installation
 
 Please remember that Graphaello is in its early stages and is therefore not production ready. Use at your own caution. 
