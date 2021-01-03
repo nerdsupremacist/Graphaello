@@ -38,18 +38,14 @@ jobs:
           asset_path: ./release.tar.gz
           asset_name: release.tar.gz
           asset_content_type: application/zip
-      - name: Extract tag name
-        id: tag
-        uses: actions/github-script@0.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            return context.payload.ref.replace(/\/refs\/tags\//, '');
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - uses: mislav/bump-homebrew-formula-action@v1
         with:
           formula-name: graphaello
           homebrew-tap: nerdsupremacist/homebrew-graphaello
           base-branch: master
-          download-url: https://github.com/nerdsupremacist/Graphaello/releases/download/${{ steps.tag.outputs.result }}/release.tar.gz
+          download-url: https://github.com/nerdsupremacist/Graphaello/releases/download/${{ steps.get_version.outputs.VERSION }}/release.tar.gz
         env:
           COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }} 
