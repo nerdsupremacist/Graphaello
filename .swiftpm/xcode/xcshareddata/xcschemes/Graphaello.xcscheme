@@ -52,14 +52,14 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "codegen --project /Users/mathiasquintero/Projects/MindfulEating/iOS/app --apollo derivedData"
+            argument = "codegen --project /Users/mathiasquintero/Desktop/Movies --apollo derivedData"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "BUILD_ROOT"
-            value = "/Users/mathiasquintero/Library/Developer/Xcode/DerivedData/MindfulEating-akqgqpdhznbxrxebrmxqsqvkqovi/Build/Products"
+            value = "/Users/mathiasquintero/Library/Developer/Xcode/DerivedData/Movies-apxlimunewwqyhdzxrrdiuocwyez/Build/Products"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

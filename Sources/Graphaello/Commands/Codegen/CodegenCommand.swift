@@ -48,6 +48,12 @@ class CodegenCommand : Command {
 
         Console.print(title: "📚 Parsing Paths From Structs:")
         let parsed = try pipeline.parse(extracted: extracted)
+
+        let warnings = try pipeline.diagnose(parsed: parsed)
+        warnings.forEach { warning in
+            print(warning.description)
+        }
+
         Console.print(result: "Found \(parsed.structs.count) structs with values from GraphQL")
         parsed.structs.forEach { parsed in
             Console.print(result: "\(inverse: parsed.name)", indentation: 2)

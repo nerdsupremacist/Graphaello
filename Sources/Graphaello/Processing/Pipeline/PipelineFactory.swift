@@ -11,7 +11,8 @@ enum PipelineFactory {
                              cleaner: create(),
                              assembler: create(),
                              preparator: create(),
-                             generator: create())
+                             generator: create(),
+                             diagnoser: UnusedWarningDiagnoser())
     }
     
     private static func create() -> Extractor {

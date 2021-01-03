@@ -32,5 +32,9 @@ extension Pipeline {
     func clean(resolved: Project.State<Stage.Resolved>) throws -> Project.State<Stage.Cleaned> {
         return resolved.with(structs: try clean(resolved: resolved.structs))
     }
+
+    func diagnose(parsed: Project.State<Stage.Parsed>) throws -> [Warning] {
+        return try parsed.structs.flatMap { try diagnose(parsed: $0) }
+    }
     
 }

@@ -14,6 +14,8 @@ protocol Pipeline {
                  using apollo: ApolloReference) throws -> Project.State<Stage.Prepared>
     
     func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String
+
+    func diagnose(parsed: Struct<Stage.Parsed>) throws -> [Warning]
 }
 
 extension Pipeline {
