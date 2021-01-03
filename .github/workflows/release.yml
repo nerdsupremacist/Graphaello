@@ -22,9 +22,19 @@ jobs:
         run: mkdir release
       - name: Build Artifacts
         run: make install prefix=./release
-      - name: Upload the artifacts
-        uses: skx/github-action-publish-binaries@master
+      - name: Archive Artifacts
+        run: tar -cf release.tar.gz release/*
+      - name: Get Release ID
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: 'release/*'
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: ./release.tar.gz
+          asset_name: release.tar.gz
+          asset_content_type: application/zip
