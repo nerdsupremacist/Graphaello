@@ -41,7 +41,7 @@ class InitCommand : Command {
         let integratedPackage = try project.addDependencyIfNotThere(name: "apollo-ios",
                                                                     productName: "Apollo",
                                                                     repositoryURL: "https://github.com/apollographql/apollo-ios.git",
-                                                                    version: .upToNextMajorVersion("0.28.0"))
+                                                                    version: .upToNextMinorVersion("0.28.0"))
 
         if integratedPackage {
             Console.print(result: "Successfully added Apollo Package")
