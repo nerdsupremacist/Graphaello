@@ -1,10 +1,10 @@
 on:
   release:
     types: [created]
-name: Handle Release
+name: Release
 jobs:
   generate:
-    name: Upload Binaries
+    name: Release
     runs-on: macos-latest
     steps:
       - name: Checkout the repository
@@ -38,10 +38,11 @@ jobs:
           asset_path: ./release.tar.gz
           asset_name: release.tar.gz
           asset_content_type: application/zip
-      - name: Get the version
+      - name: Get Tag Name
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-      - uses: mislav/bump-homebrew-formula-action@v1
+      - name: Update Hombrew Formula
+        uses: mislav/bump-homebrew-formula-action@v1
         with:
           formula-name: graphaello
           homebrew-tap: nerdsupremacist/homebrew-graphaello
