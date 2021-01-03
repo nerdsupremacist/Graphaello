@@ -1,4 +1,6 @@
 import Foundation
 import Stencil
 
-struct StructureAPI: SwiftCodeTransformable { }
+struct StructureAPI: SwiftCodeTransformable, Hashable {
+    let version = 1
+}
