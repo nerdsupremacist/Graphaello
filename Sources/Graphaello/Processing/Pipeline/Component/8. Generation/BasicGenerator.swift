@@ -3,10 +3,15 @@ import Foundation
 struct BasicGenerator: Generator {
     
     func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String {
-        let sortedUsedTypes = prepared.usedTypes.map(\.name).sorted()
+        let usedTypesThatTriggerCacheMiss = prepared
+            .usedTypes
+            .filter { !$0.kind.isFragment }
+            .map(\.name)
+            .sorted()
+
         return try code(context: ["usedTypes" : prepared.usedTypes]) {
-            StructureAPI().withFormatting(format: useFormatting)
-            prepared.apis.map { $0.withFormatting(format: useFormatting).cached(alongWith: sortedUsedTypes, using: prepared.cache) }
+            StructureAPI().withFormatting(format: useFormatting).cached(using: prepared.cache)
+            prepared.apis.map { $0.withFormatting(format: useFormatting).cached(alongWith: usedTypesThatTriggerCacheMiss, using: prepared.cache) }
 
             // TODO: Find a way to cache structs as well
             prepared.structs.map { $0.withFormatting(format: useFormatting) }
