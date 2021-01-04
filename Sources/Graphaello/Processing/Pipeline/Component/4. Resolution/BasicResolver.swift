@@ -16,7 +16,9 @@ struct BasicResolver<SubResolver: StructResolver>: Resolver where SubResolver.Re
         
         let missing = finalContext.failedDueToMissingFragment
         
-        guard missing.count < validated.count else { throw GraphQLFragmentResolverError.failedToDecodeAnyOfTheStructsDueToPossibleRecursion(missing) }
+        guard missing.count < validated.count else {
+            throw GraphQLFragmentResolverError.failedToDecodeImportedFragments(missing, resolved: finalContext.resolved)
+        }
         
         return try resolve(validated: missing, using: finalContext.cleared())
     }
