@@ -5,7 +5,7 @@ assetsdir = $(prefix)/graphaello
 xcode_path = $(shell xcode-select -p)
 
 build:
-	swift build -c release --disable-sandbox
+	xcrun swift build -c release --disable-sandbox --arch arm64 --arch x86_64
 
 install: build
 	mkdir $(assetsdir)
