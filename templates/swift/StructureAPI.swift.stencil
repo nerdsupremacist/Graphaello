@@ -554,7 +554,9 @@ struct PagingView<Value: Fragment>: View {
             case let .item(_, index) = data,
             index > paging.values.count - 2 else { return }
 
-        paging.loadMore(pageSize: pageSize)
+        DispatchQueue.main.async {
+            paging.loadMore(pageSize: pageSize)
+        }
     }
 }
 

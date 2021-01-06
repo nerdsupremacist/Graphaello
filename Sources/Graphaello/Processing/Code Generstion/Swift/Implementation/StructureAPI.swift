@@ -2,5 +2,5 @@ import Foundation
 import Stencil
 
 struct StructureAPI: SwiftCodeTransformable, Hashable {
-    let version = 1
+    let version = 2
 }
