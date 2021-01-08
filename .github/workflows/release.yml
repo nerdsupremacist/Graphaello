@@ -45,7 +45,7 @@ jobs:
         uses: mislav/bump-homebrew-formula-action@v1
         with:
           formula-name: graphaello
-          homebrew-tap: nerdsupremacist/homebrew-graphaello
+          homebrew-tap: nerdsupremacist/homebrew-tap
           base-branch: master
           download-url: https://github.com/nerdsupremacist/Graphaello/releases/download/${{ steps.get_version.outputs.VERSION }}/release.tar.gz
         env:
