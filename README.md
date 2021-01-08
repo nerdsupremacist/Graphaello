@@ -97,7 +97,7 @@ Please remember that Graphaello is in its early stages and is therefore not prod
 Graphaello can be installed via Homebrew:
 
 ```
-brew tap nerdsupremacist/graphaello
+brew tap nerdsupremacist/tap
 brew install graphaello
 ```
 
