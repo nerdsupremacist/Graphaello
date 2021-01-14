@@ -28,7 +28,9 @@ Code snippets are cool, but how does this look in a real project? Here are some 
 | [Repo](https://github.com/nerdsupremacist/graphaello-countries-example) | [Repo](https://github.com/nerdsupremacist/graphaello-music-example)      | [Repo](https://github.com/nerdsupremacist/CovidUI)
 
 ## Tutorial
-I wrote a long [tutorial](https://quintero.io/blog/Graphaello/) where I go into the benefits of Graphaello and how to build a simple App to browse movies with it.
+This Readme is intended to document everything about Graphaello, from the CLI and API.
+However, for starting out that's not the best resource. I wrote a [tutorial](https://quintero.io/blog/Graphaello/) where I go into the benefits of Graphaello and how to build a simple App to browse movies with it. This post is intended even for people who are not familiar GraphQL at all. So if you're interested please do check it out [here](https://quintero.io/blog/Graphaello/).
+
 ![](https://quintero.io/images/rest-smoking-data.gif)
 
 ## TLDR?
