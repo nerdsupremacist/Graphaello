@@ -27,6 +27,10 @@ Code snippets are cool, but how does this look in a real project? Here are some 
 | Uses [Countries API](https://countries.trevorblades.com)      | Uses [GraphBrains](https://github.com/exogen/graphbrainz)      | Uses [CovidQL](https://github.com/nerdsupremacist/CovidQL)
 | [Repo](https://github.com/nerdsupremacist/graphaello-countries-example) | [Repo](https://github.com/nerdsupremacist/graphaello-music-example)      | [Repo](https://github.com/nerdsupremacist/CovidUI)
 
+## Tutorial
+I wrote a long [tutorial](https://quintero.io/blog/Graphaello/) where I go into the benefits of Graphaello and how to build a simple App to browse movies with it.
+![](https://quintero.io/images/rest-smoking-data.gif)
+
 ## TLDR?
 
 Let's cut the chase and go directly to our first example of a View using Graphaello:
