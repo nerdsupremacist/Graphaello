@@ -27,10 +27,45 @@ extension Struct where CurrentStage == Stage.Prepared {
         
         return stockArguments + extraAPIArguments + queryArgument + fragmentArguments
     }
+
+    var placeholderInitializerArgumentAssignmentFromQuery: [InitializerArgumentAssignmentFromQueryData] {
+        let stockArguments = properties
+            .filter { $0.graphqlPath?.resolved.isConnection ?? true }
+            .filter { property in
+                guard case .concrete = property.type else { return false }
+                return true
+            }
+            .map { InitializerArgumentAssignmentFromQueryData(name: $0.name,
+                                                              expression: $0.expressionForPlaceholder(in: self)) }
+
+        let extraAPIArguments = additionalReferencedAPIs
+            .filter { $0.property == nil }
+            .map { InitializerArgumentAssignmentFromQueryData(name: $0.api.name.camelized,
+                                                              expression: $0.expression(in: self)) }
+
+        return stockArguments + extraAPIArguments
+    }
     
 }
 
 extension Property where CurrentStage == Stage.Prepared {
+
+    fileprivate func expressionForPlaceholder(in graphQlStruct: Struct<Stage.Prepared>) -> CodeTransformable {
+        guard let path = graphqlPath else {
+            if case .concrete(let type) = type, type == graphQlStruct.query?.api.name {
+                return "self"
+            }
+            return name
+        }
+        guard case .some(.connection) = path.resolved.referencedFragment else {
+            fatalError("Invalid State: should not attempt to get an expression from a regular GraphQL Value. Only from connections.")
+        }
+
+        let query = graphQlStruct.query ?!
+                fatalError("Invalid State: Query containing the connection fragment doesn't exist")
+
+        return PlaceholderPagingFromFragment(path: path, query: query)
+    }
 
     fileprivate func expression(in graphQlStruct: Struct<Stage.Prepared>) -> CodeTransformable {
         guard let path = graphqlPath else {

@@ -2,24 +2,32 @@ import Foundation
 
 extension Stage.Cleaned.Path {
 
+    func placeHolderExpression(queryValueIsOptional: Bool = false) -> String {
+        return expression(queryValueIsOptional: queryValueIsOptional, queryStart: "placeholder")
+    }
+
     func expression(queryValueIsOptional: Bool = false) -> String {
+        return expression(queryValueIsOptional: queryValueIsOptional, queryStart: "data")
+    }
+
+    private func expression(queryValueIsOptional: Bool, queryStart: String) -> String {
         let first: AttributePath
 
         switch resolved.validated.parsed.target {
         case .query, .mutation:
-            first = AttributePath(name: "data", kind: queryValueIsOptional ? .optional(.value) : .value)
+            first = AttributePath(name: queryStart, kind: queryValueIsOptional ? .optional(.value) : .value)
         case .object(let type):
             first = AttributePath(name: type.camelized, kind: .value)
         }
-        
+
         let expression = components
             .reduce(.attributePath([first], on: nil)) { $0 + $1.path(referencedFragment: resolved.referencedFragment?.fragment) }
-        
+
         if resolved.isReferencedFragmentASingleFragmentStruct {
             let completeExpression = expression + .path([
                 AttributePath(name: "referencedSingleFragmentStruct()", kind: .value)
             ])
-            
+
             return completeExpression.expression()
         } else {
             return expression.expression()
@@ -129,9 +137,19 @@ extension Expression {
     func expression() -> String {
         switch self {
         case .operation(.compactMap, let expression):
-            return "(\(expression.expression())).compactMap { $0 }"
+            switch expression.kind {
+            case .optional:
+                return "(\(expression.expression()))?.compactMap { $0 }"
+            default:
+                return "(\(expression.expression())).compactMap { $0 }"
+            }
         case .operation(.flatten, let expression):
-            return "(\(expression.expression())).flatMap { $0 }"
+            switch expression.kind {
+            case .optional:
+                return "(\(expression.expression()))?.flatMap { $0 }"
+            default:
+                return "(\(expression.expression())).flatMap { $0 }"
+            }
         case .operation(.withDefault(let defaultValue), let expression):
             return "\(expression.expression()) ?? \(defaultValue.description)"
         case .operation(.nonNull, let expression):

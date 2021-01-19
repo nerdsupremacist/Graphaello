@@ -18,6 +18,17 @@ extension {{ structPrepared.name }} {
     init({{ initializerArguments|codeArray|join:", " }}) {
         self.init({{ initializerValueAssignments|codeArray|join:", " }})
     }
+
+    {% if isSwiftUIView %}
+    @ViewBuilder
+    static func placeholder({{ placeHolderInitializerArguments|codeArray|join:", " }}) -> some View {
+        if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *) {
+            Self({{ placeholderInitializerValueAssignments|codeArray|join:", " }}).disabled(true).redacted(reason: .placeholder)
+        } else {
+            BasicLoadingView()
+        }
+    }
+    {% endif %}
 }
 {% if singleFragment %}
 extension {{ structPrepared.name }} : Fragment {
@@ -64,7 +75,7 @@ extension {{ query.api.name }} {
         @ViewBuilder error: @escaping (QueryError) -> Error) -> some View {
         return QueryRenderer(client: client,
                              query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
-                             loading: BasicLoadingView(),
+                             loading: {{ structPrepared.name }}.placeholder({{ placeholderInitializerArgumentAssignmentFromQuery|codeArray|join:", " }}),
                              error: error) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
 
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
@@ -74,7 +85,7 @@ extension {{ query.api.name }} {
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
                              query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
-                             loading: BasicLoadingView(),
+                             loading: {{ structPrepared.name }}.placeholder({{ placeholderInitializerArgumentAssignmentFromQuery|codeArray|join:", " }}),
                              error: { BasicErrorView(error: $0) }) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
 
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
@@ -92,6 +103,8 @@ extension {{ query.api.name }} {
 }
 {% endif %}
 
+{{ queryDataPlaceholders|code }}
+{{ fragmentPlaceholders|code }}
 {{ mutationStructs|code }}
 {{ missingFragmentsStructs|code }}
 {{ missingReferencedFragments|code }}

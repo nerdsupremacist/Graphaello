@@ -1,0 +1,7 @@
+extension Apollo{{ fragmentPlaceholder.api.name }}.{{ fragmentPlaceholder.fragmentName|upperCamelized }} {
+    private static let placeholderMap: ResultMap = {{ placeholderCode }}
+
+    static let placeholder = Apollo{{ fragmentPlaceholder.api.name }}.{{ fragmentPlaceholder.fragmentName|upperCamelized }}(
+        unsafeResultMap: Apollo{{ fragmentPlaceholder.api.name }}.{{ fragmentPlaceholder.fragmentName|upperCamelized }}.placeholderMap
+    )
+}

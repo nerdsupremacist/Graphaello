@@ -17,3 +17,19 @@ extension PagingFromFragment: ExtraValuesSwiftCodeTransformable {
     }
 
 }
+
+struct PlaceholderPagingFromFragment {
+    let path: Stage.Cleaned.Path
+    let query: GraphQLQuery
+}
+
+extension PlaceholderPagingFromFragment: ExtraValuesSwiftCodeTransformable {
+
+    func arguments(from context: Stencil.Context, arguments: [Any?]) throws -> [String : Any] {
+        return [
+            "pathExpression": path.placeHolderExpression(),
+            "optionalPathExpression": path.expression(queryValueIsOptional: true),
+        ]
+    }
+
+}

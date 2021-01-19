@@ -1,0 +1,7 @@
+extension Apollo{{ queryDataPlaceholder.api.name }}.{{ queryDataPlaceholder.queryName }}Query.Data  {
+    private static let placeholderMap: ResultMap = {{ placeholderCode }}
+
+    static let placeholder = Apollo{{ queryDataPlaceholder.api.name }}.{{ queryDataPlaceholder.queryName }}Query.Data(
+        unsafeResultMap: Apollo{{ queryDataPlaceholder.api.name }}.{{ queryDataPlaceholder.queryName }}Query.Data.placeholderMap
+    )
+}

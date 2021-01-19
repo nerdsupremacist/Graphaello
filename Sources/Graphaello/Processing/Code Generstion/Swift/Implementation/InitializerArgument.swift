@@ -26,5 +26,21 @@ extension Struct where CurrentStage == Stage.Prepared {
         
         return stockArguments + extraAPIArguments + queryArgument + fragmentArguments
     }
+
+    var placeHolderInitializerArguments: [InitializerArgument] {
+        let stockArguments = properties
+            .compactMap { property -> InitializerArgument? in
+                if let path = property.graphqlPath, !path.resolved.isConnection {
+                    return nil
+                }
+
+                guard case .concrete(let type) = property.type else { return nil }
+                return InitializerArgument(name: property.name,
+                                           type: type.contains("->") ? "@escaping \(type)" : type)
+            }
+
+        let extraAPIArguments = additionalReferencedAPIs.filter { $0.property == nil }.map { InitializerArgument(name: $0.api.name.camelized, type: $0.api.name) }
+        return stockArguments + extraAPIArguments
+    }
     
 }

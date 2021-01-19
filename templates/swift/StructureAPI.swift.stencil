@@ -698,10 +698,14 @@ enum NoOpDecoder<T>: GraphQLValueDecoder {
 
 protocol GraphQLScalar {
     associatedtype Scalar
+    static var placeholder: Self { get }
     init(from scalar: Scalar) throws
 }
 
 extension Array: GraphQLScalar where Element: GraphQLScalar {
+    static var placeholder: [Element] {
+        return Array(repeating: Element.placeholder, count: 5)
+    }
 
     init(from scalar: [Element.Scalar]) throws {
         self = try scalar.map { try Element(from: $0) }
@@ -710,6 +714,9 @@ extension Array: GraphQLScalar where Element: GraphQLScalar {
 }
 
 extension Optional: GraphQLScalar where Wrapped: GraphQLScalar {
+    static var placeholder: Wrapped? {
+        return Wrapped.placeholder
+    }
 
     init(from scalar: Wrapped.Scalar?) throws {
         guard let scalar = scalar else {
@@ -723,6 +730,8 @@ extension Optional: GraphQLScalar where Wrapped: GraphQLScalar {
 
 extension URL: GraphQLScalar {
     typealias Scalar = String
+
+    static let placeholder: URL = URL(string: "https://graphaello.dev/assets/logo.png")!
 
     private struct URLScalarDecodingError: Error {
         let string: String
@@ -741,6 +750,9 @@ enum ScalarDecoder<ScalarType: GraphQLScalar>: GraphQLValueDecoder {
     typealias Decoded = ScalarType
 
     static func decode(encoded: ScalarType.Scalar) throws -> ScalarType {
+        if let encoded = encoded as? String, encoded == "__GRAPHAELLO_PLACEHOLDER__" {
+            return Decoded.placeholder
+        }
         return try ScalarType(from: encoded)
     }
 }

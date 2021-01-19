@@ -1,0 +1,3 @@
+Apollo{{ placeholderPagingFromFragment.query.api.name }}.{{ placeholderPagingFromFragment.query.name|upperCamelized }}Query.Data.{{ pathExpression }}.paging { _, _, _ in
+    // no-op
+}
