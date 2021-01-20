@@ -36,7 +36,7 @@ public class PersistentCache<Key: Hashable> {
     }
 
     deinit {
-        try! store()
+        try? store()
     }
 
     public func clear() throws {
