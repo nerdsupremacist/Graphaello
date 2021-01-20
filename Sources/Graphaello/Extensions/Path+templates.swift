@@ -20,9 +20,19 @@ extension Path {
 }
 
 private func templatePath(file: StaticString = #file) -> Path {
-    #if DEBUG
-    return Path(file.description).parent().parent().parent().parent() + "templates"
-    #else
-    return binaryPath.parent().parent() + "graphaello" + "templates"
-    #endif
+	
+	let templatesPath = Path("templates")
+	
+	var path: Path = {
+		#if DEBUG
+		return Path(file.description)
+		#else
+		return binaryPath
+		#endif
+	}()
+	
+	while (path + templatesPath).exists == false {
+		path = path.parent()
+	}
+	return path + templatesPath
 }

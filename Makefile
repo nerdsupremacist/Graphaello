@@ -1,17 +1,16 @@
 prefix ?= /usr/local
 bindir = $(prefix)/bin
 libdir = $(prefix)/lib
-assetsdir = $(prefix)/graphaello
+assetsdir = $(prefix)/templates
 xcode_path = $(shell xcode-select -p)
 
 build:
 	xcrun swift build -c release --disable-sandbox --arch arm64 --arch x86_64
 
 install: build
-	mkdir $(assetsdir)
 	[ -d $(bindir) ] || mkdir $(bindir)
 	[ -d $(libdir) ] || mkdir $(libdir)
-	cp -R "templates" "$(assetsdir)"
+	cp -R "templates" "$(prefix)"
 	install ".build/apple/Products/Release/graphaello" "$(bindir)"
 	install "$(xcode_path)/../Frameworks/lib_InternalSwiftSyntaxParser.dylib" "$(libdir)"
 	install_name_tool -change \
