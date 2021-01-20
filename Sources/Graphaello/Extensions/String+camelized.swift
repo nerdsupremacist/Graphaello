@@ -2,7 +2,8 @@ import Foundation
 
 // Copied and adapted from https://gist.github.com/reitzig/67b41e75176ddfd432cb09392a270218
 // Modifications made public at: https://gist.github.com/nerdsupremacist/8e620beb2dcf6404f9edcac756ed28dc
-fileprivate let badChars = CharacterSet.alphanumerics.inverted
+private let badChars = CharacterSet.alphanumerics.inverted
+private let allowedPrefixBadChars: CharacterSet = ["_"]
 
 extension String {
     var uppercasingFirst: String {
@@ -20,11 +21,11 @@ extension String {
         
         guard uppercased() != self else { return lowercased() }
 
-        let parts = self.parts
+        let (prefix, parts) = nameParts()
         let first = String(describing: parts.first!).lowercasingFirst
         let rest = parts.dropFirst().map({String($0).uppercasingFirst})
 
-        return ([first] + rest).joined(separator: "")
+        return ([prefix, first] + rest).joined(separator: "")
     }
 
     var upperCamelized: String {
@@ -32,7 +33,8 @@ extension String {
             return ""
         }
 
-        return parts.map { String($0).uppercasingFirst }.joined(separator: "")
+        let (prefix, parts) = nameParts()
+        return prefix + parts.map { String($0).uppercasingFirst }.joined(separator: "")
     }
 
     var snakeCased: String {
@@ -40,7 +42,8 @@ extension String {
             return ""
         }
 
-        return parts.map { String($0).lowercased() }.joined(separator: "_")
+        let (prefix, parts) = nameParts()
+        return prefix + parts.map { String($0).lowercased() }.joined(separator: "_")
     }
     
 
@@ -48,8 +51,10 @@ extension String {
         return snakeCased.uppercased()
     }
     
-    private var parts: [String] {
-        let basics = replacingOccurrences(of: "([a-z])([A-Z])",
+    private func nameParts() -> (prefix: String, parts: [String]) {
+        let (prefix, rest) = splitPrefix(of: allowedPrefixBadChars)
+
+        let basics = rest.replacingOccurrences(of: "([a-z])([A-Z])",
                                           with: "$1 $2",
                                           options: .regularExpression)
 
@@ -57,6 +62,27 @@ extension String {
                                                    with: "$1 $2",
                                                    options: .regularExpression)
 
-        return complete.components(separatedBy: badChars).filter { !$0.isEmpty }
+        return (
+            prefix,
+            complete.components(separatedBy: badChars).filter { !$0.isEmpty }
+        )
     }
+
+    private func splitPrefix(of characterSet: CharacterSet) -> (prefix: String, new: String) {
+        guard !isEmpty else { return (self, self) }
+        let splitIndex = firstIndex { !characterSet.contains($0) } ?? endIndex
+
+        return (
+            String(self[startIndex..<splitIndex]),
+            String(self[splitIndex...])
+        )
+    }
+}
+
+extension CharacterSet {
+
+    fileprivate func contains(_ character: Character) -> Bool {
+        return character.unicodeScalars.allSatisfy { contains($0) }
+    }
+
 }
