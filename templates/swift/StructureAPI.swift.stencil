@@ -41,14 +41,23 @@ protocol Connection: Target {
 
 protocol Fragment {
     associatedtype UnderlyingType
+    static var placeholder: Self { get }
 }
 
 extension Array: Fragment where Element: Fragment {
     typealias UnderlyingType = [Element.UnderlyingType]
+
+    static var placeholder: Array<Element> {
+        return Array(repeating: Element.placeholder, count: 5)
+    }
 }
 
 extension Optional: Fragment where Wrapped: Fragment {
     typealias UnderlyingType = Wrapped.UnderlyingType?
+
+    static var placeholder: Optional<Wrapped> {
+        return Wrapped.placeholder
+    }
 }
 
 protocol Mutation: ObservableObject {
@@ -587,7 +596,7 @@ extension PagingView {
         self.init(paging,
                   mode: mode,
                   pageSize: pageSize,
-                  loading: { Text("Loading") },
+                  loading: { PagingBasicLoadingView(content: itemView) },
                   error: errorView,
                   item: itemView)
     }
@@ -612,9 +621,21 @@ extension PagingView {
         self.init(paging,
                   mode: mode,
                   pageSize: pageSize,
-                  loading: { Text("Loading") },
+                  loading: { PagingBasicLoadingView(content: itemView) },
                   error: { Text("Error: \($0.localizedDescription)") },
                   item: itemView)
+    }
+}
+
+private struct PagingBasicLoadingView<Value : Fragment, Content : View>: View {
+    let content: (Value) -> Content
+
+    var body: some View {
+        if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *) {
+            content(.placeholder).disabled(true).redacted(reason: .placeholder)
+        } else {
+            BasicLoadingView()
+        }
     }
 }
 
