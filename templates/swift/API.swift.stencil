@@ -26,23 +26,19 @@ extension {{ api.name }} {
 
     init(url: URL{% if api.url %} = URL(string: "{{ api.url }}")!{% endif %},
          client: URLSessionClient = URLSessionClient(),
-         sendOperationIdentifiers: Bool = false,
          useGETForQueries: Bool = false,
          enableAutoPersistedQueries: Bool = false,
          useGETForPersistedQueryRetry: Bool = false,
-         requestCreator: RequestCreator = ApolloRequestCreator(),
-         delegate: HTTPNetworkTransportDelegate? = nil,
+         requestBodyCreator: RequestBodyCreator = ApolloRequestBodyCreator(),
          store: ApolloStore = ApolloStore(cache: InMemoryNormalizedCache())) {
 
-        let networkTransport = HTTPNetworkTransport(url: url,
-                                                     client: client,
-                                                     sendOperationIdentifiers: sendOperationIdentifiers,
-                                                     useGETForQueries: useGETForQueries,
-                                                     enableAutoPersistedQueries: enableAutoPersistedQueries,
-                                                     useGETForPersistedQueryRetry: useGETForPersistedQueryRetry,
-                                                     requestCreator: requestCreator)
-
-        networkTransport.delegate = delegate
+		let provider = LegacyInterceptorProvider(client: client, store: store)
+		let networkTransport = RequestChainNetworkTransport(interceptorProvider: provider,
+															endpointURL: url,
+															autoPersistQueries: enableAutoPersistedQueries,
+															requestBodyCreator: requestBodyCreator,
+															useGETForQueries: useGETForQueries,
+															useGETForPersistedQueryRetry: useGETForPersistedQueryRetry)
         self.init(client: ApolloClient(networkTransport: networkTransport, store: store))
     }
 
