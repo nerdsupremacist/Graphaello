@@ -33,6 +33,7 @@ class InitCommand : Command {
     }
 
     func run() throws {
+        checkVersion()
         Console.print(title: "🚀 Initializing Project")
         let project = try self.project.open()
         try project.addGraphaelloMacrosToEachTarget()

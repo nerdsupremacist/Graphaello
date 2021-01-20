@@ -28,6 +28,7 @@ class CodegenCommand : Command {
     }
 
     func run() throws {
+        checkVersion()
         Console.print(title: "🧪 Starting Codegen:")
         let project = try self.project.open()
         // In case there's a new target add the necessary macros
@@ -101,6 +102,11 @@ extension Console {
         Console.print("\(indentation)\(green: title)")
     }
 
+    static func print(warning: String, indentation: Int = 0) {
+        let indentation = String(Array(repeating: " ", count: indentation * 4))
+        Console.print("\(indentation)\(yellow: warning)")
+    }
+
     static func print(result: TerminalString, indentation: Int = 1) {
         let indentation = String(Array(repeating: " ", count: indentation * 4))
         Console.print("\(indentation)\(result)")
@@ -112,6 +118,12 @@ extension TerminalString.StringInterpolation {
 
     public mutating func appendInterpolation(red value: CustomStringConvertible) {
         appendInterpolation(.red)
+        appendInterpolation(value.description)
+        appendInterpolation(.reset)
+    }
+
+    public mutating func appendInterpolation(yellow value: CustomStringConvertible) {
+        appendInterpolation(.yellow)
         appendInterpolation(value.description)
         appendInterpolation(.reset)
     }

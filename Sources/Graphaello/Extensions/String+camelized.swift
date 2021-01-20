@@ -57,6 +57,6 @@ extension String {
                                                    with: "$1 $2",
                                                    options: .regularExpression)
 
-        return complete.components(separatedBy: badChars)
+        return complete.components(separatedBy: badChars).filter { !$0.isEmpty }
     }
 }

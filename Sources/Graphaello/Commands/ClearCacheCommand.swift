@@ -13,6 +13,7 @@ class ClearCacheCommand : Command {
     }
 
     func run() throws {
+        checkVersion()
         let cache = try PersistentCache<AnyHashable>(project: try project.open(), capacity: 1)
         try cache.clear()
     }
