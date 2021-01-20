@@ -200,7 +200,7 @@ extension Schema.GraphQLType.Field.TypeReference {
                 return type.placeholder(with: component, in: api)
             }
         case .concrete(let definition):
-            if case .object = definition.kind, case .object(let object) = component, let typeName = definition.name {
+            if definition.kind.isFragment, case .object(let object) = component, let typeName = definition.name {
                 return .dictionary(object.placeHolderArguments(typeName: typeName, in: api))
             }
 
