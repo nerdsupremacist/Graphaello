@@ -11,6 +11,15 @@ extension CodeTransformable where Self: Hashable {
         return AdditionalHashedCode(code: self, other: other).cached(using: cache)
     }
 
+    func cached<C0 : Hashable, C1: Hashable>(
+        alongWith c0: C0,
+        _ c1: C1,
+        using cache: PersistentCache<AnyHashable>?
+    ) -> CachedCodeTransformable<AdditionalHashedCode<Self, ComposedHashable<C0, C1>>> {
+
+        return AdditionalHashedCode(code: self, other: ComposedHashable(c0: c0, c1: c1)).cached(using: cache)
+    }
+
 }
 
 struct CachedCodeTransformable<Code : CodeTransformable & Hashable> : CodeTransformable {
@@ -31,4 +40,10 @@ struct AdditionalHashedCode<Code : CodeTransformable & Hashable, Other: Hashable
     func code(using context: Stencil.Context, arguments: [Any?]) throws -> String {
         return try code.code(using: context, arguments: arguments)
     }
+}
+
+
+struct ComposedHashable<C0 : Hashable, C1 : Hashable>: Hashable {
+    let c0: C0
+    let c1: C1
 }

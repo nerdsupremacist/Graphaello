@@ -1,6 +1,10 @@
 import Foundation
 
 struct BasicGenerator: Generator {
+
+    private let structureAPIVersion = 11
+    private let apiCodeGenVersion = 2
+    private let connectionFragmentCodeGenVersion = 2
     
     func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String {
         let usedTypesThatTriggerCacheMiss = prepared
@@ -10,13 +14,31 @@ struct BasicGenerator: Generator {
             .sorted()
 
         return try code(context: ["usedTypes" : prepared.usedTypes]) {
-            StructureAPI().withFormatting(format: useFormatting).cached(using: prepared.cache)
-            prepared.apis.map { $0.withFormatting(format: useFormatting).cached(alongWith: usedTypesThatTriggerCacheMiss, using: prepared.cache) }
+            StructureAPI().withFormatting(format: useFormatting).cached(alongWith: structureAPIVersion, using: prepared.cache)
+            prepared.apis.map { api in
+                return api
+                    .withFormatting(format: useFormatting)
+                    .cached(
+                        alongWith: usedTypesThatTriggerCacheMiss, apiCodeGenVersion,
+                        using: prepared.cache
+                    )
+            }
 
             // TODO: Find a way to cache structs as well
-            prepared.structs.map { $0.withFormatting(format: useFormatting) }
+            prepared.structs.map { prepared in
+                return prepared
+                    .withFormatting(format: useFormatting)
+            }
 
-            prepared.allConnectionFragments.map { $0.withFormatting(format: useFormatting).cached(using: prepared.cache) }
+            prepared.allConnectionFragments.map { connectionFragment in
+                return connectionFragment
+                    .withFormatting(format: useFormatting)
+                    .cached(
+                        alongWith: connectionFragmentCodeGenVersion,
+                        using: prepared.cache
+                    )
+            }
+
             prepared.responses.map { $0.code }
         }
     }
