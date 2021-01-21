@@ -33,6 +33,7 @@ class CodegenCommand : Command {
         let project = try self.project.open()
         // In case there's a new target add the necessary macros
         try project.addGraphaelloMacrosToEachTarget()
+        try project.updateDependencyIfOutOfDate(name: "apollo-ios", version: .upToNextMinorVersion("0.40.0"))
         
         Console.print(result: "Using \(inverse: project.fileName)")
         let cache = skipCache ? nil : try PersistentCache<AnyHashable>(project: project, capacity: cacheSize)

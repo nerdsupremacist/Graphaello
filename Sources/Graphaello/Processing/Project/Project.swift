@@ -178,5 +178,18 @@ extension Project {
             return Set(["GRAPHAELLO_\(target.name.snakeUpperCased)_TARGET"]).union(previous)
         }
     }
+
+    func updateDependencyIfOutOfDate(
+        name: String,
+        version: XCRemoteSwiftPackageReference.VersionRequirement
+    ) throws {
+        guard let project = try xcodeProject.pbxproj.rootProject() else { return }
+        guard let package = project.packages.first(where: { $0.name == name }) else { return }
+
+        if package.versionRequirement != version {
+            package.versionRequirement = version
+            try save()
+        }
+    }
     
 }
