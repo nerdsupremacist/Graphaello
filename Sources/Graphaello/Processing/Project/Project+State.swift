@@ -29,6 +29,66 @@ extension Project {
     
 }
 
+extension Project.State where CurrentStage == Stage.Parsed {
+
+    private struct HashableState: Hashable {
+        struct HashableProperty: Hashable {
+            let name: String
+            let apiName: String
+            let target: Target
+            let components: [Stage.Parsed.Component]
+        }
+
+        struct HashableStruct: Hashable {
+            let name: String
+            let macroFlag: String
+            let properties: [HashableProperty]
+        }
+
+        let apis: [API]
+        let structs: [HashableStruct]
+    }
+
+    func hashable() -> AnyHashable {
+        return AnyHashable(
+            HashableState(
+                apis: apis,
+                structs: structs.map { parsed in
+                    HashableState.HashableStruct(
+                        name: parsed.name,
+                        macroFlag: parsed.unifiedMacroFlag,
+                        properties: parsed.properties.compactMap { property in
+                            guard let path = property.graphqlPath else { return nil }
+                            return HashableState.HashableProperty(
+                                name: property.name,
+                                apiName: path.apiName,
+                                target: path.target,
+                                components: path.components
+                            )
+                        }
+                    )
+                }
+            )
+        )
+    }
+
+}
+
+extension Target {
+
+    fileprivate var description: String {
+        switch self {
+        case .mutation:
+            return "mutation"
+        case .query:
+            return "query"
+        case .object(let object):
+            return object
+        }
+    }
+
+}
+
 extension Project.State {
 
     func with(cache: PersistentCache<AnyHashable>) -> Project.State<CurrentStage> {

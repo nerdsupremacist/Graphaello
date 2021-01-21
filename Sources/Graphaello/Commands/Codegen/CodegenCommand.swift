@@ -52,6 +52,22 @@ class CodegenCommand : Command {
             Console.print(result: "\(inverse: parsed.name)", indentation: 2)
         }
 
+        // Skip code generation if the code is querying the same data as before
+        if let settings = cache?.settings {
+            let hashable = parsed.hashable()
+            var hasher = Hasher.constantAccrossExecutions()
+            hashable.hash(into: &hasher)
+            let hashValue = hasher.finalize()
+            if settings.integer(forKey: "last_run_hash") == hashValue {
+                Console.print("")
+                Console.print(title: "🏃‍♂️ Detected no change since last run. Skipping code generation.")
+                Console.print(title: "✅ Done")
+                return
+            }
+
+            settings.set(hashValue, forKey: "last_run_hash")
+        }
+
         Console.print(title: "🔎 Validating Paths against API definitions:")
         let validated = try pipeline.validate(parsed: parsed)
         Console.print(result: "Checked \(validated.graphQLPaths.count) fields")

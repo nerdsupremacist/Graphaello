@@ -8,6 +8,8 @@ public class PersistentCache<Key: Hashable> {
     private let hasher: Hasher = Hasher.constantAccrossExecutions()
     private var hashStore: OrderedSet<Int>
 
+    public let settings: UserDefaults?
+
     convenience init(project: Project, capacity: Int) throws {
         let parentFolder = Path(NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!)
 
@@ -33,6 +35,8 @@ public class PersistentCache<Key: Hashable> {
         } else {
             hashStore = []
         }
+
+        settings = UserDefaults(suiteName: folder.string.camelized)
     }
 
     deinit {

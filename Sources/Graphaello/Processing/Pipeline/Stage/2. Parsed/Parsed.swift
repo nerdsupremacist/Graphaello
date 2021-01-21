@@ -7,7 +7,7 @@ extension Stage {
     enum Parsed: GraphQLStage {
         typealias Information = Path?
 
-        enum Component: Equatable {
+        enum Component: Equatable, Hashable {
             case property(String)
             case fragment
             case call(String, [Field.Argument])

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-enum Operation: Equatable {
+enum Operation: Equatable, Hashable {
     case flatten
     case compactMap
     case nonNull
