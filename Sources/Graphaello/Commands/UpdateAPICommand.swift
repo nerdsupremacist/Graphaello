@@ -28,7 +28,6 @@ class UpdateAPICommand : Command {
     }
 
     func run() throws {
-        checkVersion()
         Console.print(title: "✍️ Updating Schema for \(apiName)")
         guard let api = try project.open().scanAPIs().first(where: { $0.name.lowercased() == apiName.lowercased() }) else {
             throw APIUpdateError.noAPIFound(name: apiName)

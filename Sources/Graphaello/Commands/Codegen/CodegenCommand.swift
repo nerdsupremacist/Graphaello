@@ -28,7 +28,7 @@ class CodegenCommand : Command {
     }
 
     func run() throws {
-        checkVersion()
+        Graphaello.checkVersion()
         Console.print(title: "🧪 Starting Codegen:")
         let project = try self.project.open()
         // In case there's a new target add the necessary macros

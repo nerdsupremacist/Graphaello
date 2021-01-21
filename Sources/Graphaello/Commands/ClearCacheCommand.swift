@@ -13,7 +13,7 @@ class ClearCacheCommand : Command {
     }
 
     func run() throws {
-        checkVersion()
+        Graphaello.checkVersion()
         let cache = try PersistentCache<AnyHashable>(project: try project.open(), capacity: 1)
         try cache.clear()
     }

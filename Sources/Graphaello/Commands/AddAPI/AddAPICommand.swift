@@ -117,7 +117,6 @@ class AddAPICommand : Command {
     }
 
     func run() throws {
-        checkVersion()
         let apiName = self.apiName ?? url.host?.upperCamelized ?? "API"
         Console.print(title: "🚀 Loading Schema for \(apiName)")
 

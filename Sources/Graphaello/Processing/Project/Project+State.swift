@@ -34,9 +34,9 @@ extension Project.State where CurrentStage == Stage.Parsed {
     private struct HashableState: Hashable {
         struct HashableProperty: Hashable {
             let name: String
-            let apiName: String
-            let target: Target
-            let components: [Stage.Parsed.Component]
+            let apiName: String?
+            let target: Target?
+            let components: [Stage.Parsed.Component]?
         }
 
         struct HashableStruct: Hashable {
@@ -45,6 +45,7 @@ extension Project.State where CurrentStage == Stage.Parsed {
             let properties: [HashableProperty]
         }
 
+        let version: String?
         let apis: [API]
         let structs: [HashableStruct]
     }
@@ -52,18 +53,18 @@ extension Project.State where CurrentStage == Stage.Parsed {
     func hashable() -> AnyHashable {
         return AnyHashable(
             HashableState(
+                version: Graphaello.version,
                 apis: apis,
                 structs: structs.map { parsed in
                     HashableState.HashableStruct(
                         name: parsed.name,
                         macroFlag: parsed.unifiedMacroFlag,
                         properties: parsed.properties.compactMap { property in
-                            guard let path = property.graphqlPath else { return nil }
                             return HashableState.HashableProperty(
                                 name: property.name,
-                                apiName: path.apiName,
-                                target: path.target,
-                                components: path.components
+                                apiName: property.graphqlPath?.apiName,
+                                target: property.graphqlPath?.target,
+                                components: property.graphqlPath?.components
                             )
                         }
                     )

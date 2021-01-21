@@ -2,12 +2,18 @@
 import Foundation
 import CLIKit
 
-func checkVersion() {
-    guard let installed = fetchInstalledVersion(),
-          let latest = fetchLatestVersion(),
-          installed != latest else { return }
+enum Graphaello {
+    static let version: String? = {
+        return fetchInstalledVersion()
+    }()
 
-    Console.print(warning: "warning: ⚠️ There's a Graphaello update available (\(latest)). Please update using: brew upgrade graphaello")
+    static func checkVersion() {
+        guard let installed = version,
+              let latest = fetchLatestVersion(),
+              installed != latest else { return }
+
+        Console.print(warning: "warning: ⚠️ There's a Graphaello update available (\(latest)). Please update using: brew upgrade graphaello")
+    }
 }
 
 private struct HomebrewInfo: Decodable {
