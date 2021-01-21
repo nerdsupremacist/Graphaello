@@ -1,14 +1,39 @@
 import Foundation
 import PathKit
 
+struct SettingsKey<Key> {
+    fileprivate let key: String
+    fileprivate let read: (UserDefaults) -> Key?
+    fileprivate let write: (UserDefaults, Key) -> ()
+}
+
+extension SettingsKey where Key == Int {
+
+    static let lastRunHash = SettingsKey<Int>(key: "last_run_hash")
+
+    fileprivate init(key: String) {
+        self.init(key: key, read: { $0.integer(forKey: key) }, write: { $0.set($1, forKey: key) })
+    }
+
+}
+
+extension SettingsKey where Key == [String] {
+
+    fileprivate static let usedKeys = SettingsKey<[String]>(key: "_used_keys")
+
+    fileprivate init(key: String) {
+        self.init(key: key, read: { $0.stringArray(forKey: key) }, write: { $0.set($1, forKey: key) })
+    }
+
+}
+
 public class PersistentCache<Key: Hashable> {
     private let folder: Path
     private let index: Path
     private let capacity: Int
     private let hasher: Hasher = Hasher.constantAccrossExecutions()
     private var hashStore: OrderedSet<Int>
-
-    public let settings: UserDefaults?
+    private let settings: UserDefaults?
 
     convenience init(project: Project, capacity: Int) throws {
         let parentFolder = Path(NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!)
@@ -44,6 +69,12 @@ public class PersistentCache<Key: Hashable> {
     }
 
     public func clear() throws {
+        if let settings = settings {
+            for key in usedKeys {
+                settings.removeObject(forKey: key)
+            }
+            usedKeys = []
+        }
         try folder.delete()
     }
 
@@ -69,6 +100,41 @@ public class PersistentCache<Key: Hashable> {
         use(hash: hash)
         try file(for: hash).write(data)
     }
+}
+
+extension PersistentCache {
+
+    private var usedKeys: Set<String> {
+        get {
+            self[.usedKeys].map(Set.init) ?? []
+        }
+        set {
+            guard let settings = settings else { return }
+            if !newValue.isEmpty {
+                SettingsKey.usedKeys.write(settings, Array(newValue))
+            } else {
+                settings.removeObject(forKey: SettingsKey.usedKeys.key)
+            }
+        }
+    }
+
+    subscript<T>(key: SettingsKey<T>) -> T? {
+        get {
+            guard let settings = settings else { return nil }
+            return key.read(settings)
+        }
+        set {
+            guard let settings = settings else { return }
+            if let newValue = newValue {
+                key.write(settings, newValue)
+                usedKeys.formUnion([key.key])
+            } else {
+                settings.removeObject(forKey: key.key)
+                usedKeys.subtract([key.key])
+            }
+        }
+    }
+
 }
 
 extension PersistentCache {

@@ -53,19 +53,20 @@ class CodegenCommand : Command {
         }
 
         // Skip code generation if the code is querying the same data as before
-        if let settings = cache?.settings {
+        if let cache = cache {
             let hashable = parsed.hashable()
             var hasher = Hasher.constantAccrossExecutions()
             hashable.hash(into: &hasher)
             let hashValue = hasher.finalize()
-            if settings.integer(forKey: "last_run_hash") == hashValue {
+            if cache[.lastRunHash] == hashValue {
                 Console.print("")
                 Console.print(title: "🏃‍♂️ Detected no change since last run. Skipping code generation.")
                 Console.print(title: "✅ Done")
+                cache[.lastRunHash] = hashValue
                 return
             }
 
-            settings.set(hashValue, forKey: "last_run_hash")
+            cache[.lastRunHash] = hashValue
         }
 
         Console.print(title: "🔎 Validating Paths against API definitions:")
