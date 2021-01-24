@@ -10,6 +10,7 @@ struct BasicPipeline: Pipeline {
     let assembler: Assembler
     let preparator: Preparator
     let generator: Generator
+    var diagnoser: WarningDiagnoser? = nil
     
     func extract(from file: WithTargets<File>) throws -> [Struct<Stage.Extracted>] {
         return try extractor.extract(from: file)
@@ -43,5 +44,9 @@ struct BasicPipeline: Pipeline {
     
     func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String {
         return try generator.generate(prepared: prepared, useFormatting: useFormatting)
+    }
+
+    func diagnose(parsed: Struct<Stage.Parsed>) throws -> [Warning] {
+        return try diagnoser?.diagnose(parsed: parsed) ?? []
     }
 }

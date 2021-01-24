@@ -75,6 +75,10 @@ extension SourceCode {
         return SwiftDeclarationAttributeKind(rawValue: try decode(key: "key.attribute")) ?? ._custom
     }
 
+    func usr() throws -> String {
+        return try decode(key: .usr)
+    }
+
 }
 
 extension SourceCode {
