@@ -21,8 +21,7 @@ struct BasicPropertyExtractor: PropertyExtractor {
 
         return Property(code: code,
                         name: try code.name(),
-                        type: finalType.map { .concrete($0) } ?? .inferred,
-                        usr: try code.usr()) {
+                        type: finalType.map { .concrete($0) } ?? .inferred) {
             
             .attributes ~> attributes
         }

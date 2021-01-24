@@ -32,13 +32,11 @@ extension SourceCode {
 extension SourceCode {
 
     init(file: WithTargets<File>, index: LineColumnIndex, location: Location) throws {
-        let arguments = ["-sdk", sdkPath(), "-j4", location.file.absoluteURL.path]
-        let docs = SwiftDocs(file: file.value, arguments: arguments)
         self.init(file: file.value,
                   index: index,
                   location: location,
                   targets: file.targets,
-                  dictionary: docs?.docsDictionary ?? [:])
+                  dictionary: try Structure(file: file.value).dictionary)
     }
 
     init(content: String, parent: SourceCode, location: Location) throws {

@@ -15,8 +15,8 @@ extension Property where CurrentStage: GraphQLStage {
 
 extension Property where CurrentStage: GraphQLStage {
     
-    init(code: SourceCode, name: String, type: PropertyType, usr: String, graphqlPath: CurrentStage.Path?) {
-        self.init(code: code, name: name, type: type, usr: usr) { CurrentStage.pathKey ~> graphqlPath }
+    init(code: SourceCode, name: String, type: PropertyType, graphqlPath: CurrentStage.Path?) {
+        self.init(code: code, name: name, type: type) { CurrentStage.pathKey ~> graphqlPath }
     }
     
 }
