@@ -24,8 +24,12 @@ struct UnusedWarningDiagnoser: WarningDiagnoser {
         verifier.walk(syntax)
 
         guard !verifier.isUsed else { return [] }
-        return [Warning(location: property.code.location,
-                        descriptionText: "Unused Property `\(property.name)` belongs to a View and is fetching data from GraphQL. This can be wasteful. Consider using it or removing the property.")]
+        return [
+            Warning(
+                location: property.code.location,
+                descriptionText: "Unused Property `\(property.name)` belongs to a View and is fetching data from GraphQL. This can be wasteful. Consider using it or removing the property."
+            )
+        ]
     }
 }
 
@@ -42,6 +46,15 @@ class UsageVerifier: SyntaxVisitor {
 
     override func visitPost(_ node: IdentifierExprSyntax) {
         if node.identifier.text == property.name {
+            isUsed = true
+        }
+    }
+
+    override func visitPost(_ node: MemberAccessExprSyntax) {
+        if node.name.text == property.name,
+           let parent = node.base?.as(IdentifierExprSyntax.self),
+           parent.identifier.tokenKind == .selfKeyword {
+
             isUsed = true
         }
     }
