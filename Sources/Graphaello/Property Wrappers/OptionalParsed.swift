@@ -1,14 +1,18 @@
 import Foundation
-import Ogma
+import Syntax
+
+protocol InstantiableParser: Syntax.Parser {
+    init()
+}
 
 @propertyWrapper
-struct OptionalParsed<Lexer: LexerProtocol, Value: Parsable & Hashable>: Codable, Hashable where Lexer.Token == Value.Token {
+struct OptionalParsed<Parser : InstantiableParser>: Codable, Hashable where Parser.Output: Hashable {
     private let stringRepresentation: String?
-    var wrappedValue: Value?
+    var wrappedValue: Parser.Output?
 
     private init(stringRepresentation: String?) throws {
         self.stringRepresentation = stringRepresentation
-        self.wrappedValue = try stringRepresentation.map { try Value.parse($0, using: Lexer.self) }
+        self.wrappedValue = try stringRepresentation.map { try Parser().parse($0) }
     }
 
     init(from decoder: Decoder) throws {

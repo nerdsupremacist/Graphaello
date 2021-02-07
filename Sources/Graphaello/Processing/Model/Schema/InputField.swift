@@ -1,4 +1,5 @@
 import Foundation
+import GraphQLSyntax
 
 extension Schema.GraphQLType {
 
@@ -6,8 +7,8 @@ extension Schema.GraphQLType {
         let name: String
         let type: Field.TypeReference
 
-        @OptionalParsed<GraphQLValue.Lexer, GraphQLValue>
-        var defaultValue: GraphQLValue?
+        @OptionalParsed<GraphQL.Value.Parser>
+        var defaultValue: GraphQL.Value?
     }
 
 }

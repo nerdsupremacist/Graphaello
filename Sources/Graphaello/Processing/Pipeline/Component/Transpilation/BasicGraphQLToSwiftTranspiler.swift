@@ -1,9 +1,10 @@
 import Foundation
 import SwiftSyntax
+import GraphQLSyntax
 
 struct BasicGraphQLToSwiftTranspiler: GraphQLToSwiftTranspiler {
 
-    func expression(from value: GraphQLValue?,
+    func expression(from value: GraphQL.Value?,
                     for type: Schema.GraphQLType.Field.TypeReference,
                     using api: API) throws -> ExprSyntaxProtocol? {
 
@@ -19,7 +20,7 @@ struct BasicGraphQLToSwiftTranspiler: GraphQLToSwiftTranspiler {
         return try expression(from: value, for: type, using: api) as ExprSyntaxProtocol
     }
 
-    func expression(from value: GraphQLValue,
+    func expression(from value: GraphQL.Value,
                     for type: Schema.GraphQLType.Field.TypeReference,
                     using api: API) throws -> ExprSyntaxProtocol {
 

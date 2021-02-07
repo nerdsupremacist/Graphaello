@@ -47,21 +47,21 @@
         }
       },
       {
+        "package": "graphql-syntax",
+        "repositoryURL": "https://github.com/nerdsupremacist/graphql-syntax.git",
+        "state": {
+          "branch": null,
+          "revision": "f4af46a5b11c33f917a4c827745cf5bf3862eb8f",
+          "version": "0.1.1"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
           "branch": null,
           "revision": "6abeb3f5c03beba2b9e4dbe20886e773b5b629b6",
           "version": "8.0.4"
-        }
-      },
-      {
-        "package": "Ogma",
-        "repositoryURL": "https://github.com/nerdsupremacist/Ogma.git",
-        "state": {
-          "branch": null,
-          "revision": "541e3c43d68d64296533d28b0b32bfb9fe189a4f",
-          "version": "0.1.2"
         }
       },
       {
@@ -134,6 +134,24 @@
           "branch": null,
           "revision": "a4931e5c3bafbedeb1601d3bb76bbe835c6d475a",
           "version": "5.0.1"
+        }
+      },
+      {
+        "package": "Syntax",
+        "repositoryURL": "https://github.com/nerdsupremacist/Syntax.git",
+        "state": {
+          "branch": null,
+          "revision": "d22c15727dda6e7150523cfc47cf5d0f81c85f7c",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "SyntaxTree",
+        "repositoryURL": "https://github.com/nerdsupremacist/SyntaxTree.git",
+        "state": {
+          "branch": null,
+          "revision": "e05df57b9482e8122b99c59d6285c3e14ccb5b2b",
+          "version": "0.1.0"
         }
       },
       {
