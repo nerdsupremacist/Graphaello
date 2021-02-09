@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/graphql-syntax.git",
         "state": {
           "branch": null,
-          "revision": "f4af46a5b11c33f917a4c827745cf5bf3862eb8f",
-          "version": "0.1.1"
+          "revision": "c5a5fee955569cdb799b15b0c8c07318a52cea55",
+          "version": "0.1.2"
         }
       },
       {
@@ -141,8 +141,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/Syntax.git",
         "state": {
           "branch": null,
-          "revision": "d22c15727dda6e7150523cfc47cf5d0f81c85f7c",
-          "version": "1.0.2"
+          "revision": "86b8a0890c6179afd6300c47851c7ac0f8101ccf",
+          "version": "1.0.3"
         }
       },
       {
