@@ -8,7 +8,8 @@ private let keywords: Set<String> = [
     "private",
     "extension",
     "internal",
-    "default"
+    "default",
+    "repeat",
 ]
 
 extension Environment {
