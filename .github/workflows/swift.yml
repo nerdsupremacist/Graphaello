@@ -17,6 +17,9 @@ jobs:
         path: .build
         key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
         restore-keys: |
-          ${{ runner.os }}-spm-
+          ${{ runner.os }}-spm-5.4-
+    - uses: maxim-lobanov/setup-xcode@v1.2.3
+      with:
+        xcode-version: '12.5.1'
     - name: Build
       run: swift build -v
