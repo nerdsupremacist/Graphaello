@@ -3,7 +3,7 @@ extension Apollo{{ graphQlConnectionFragment.fragment.api.name }}.{{ graphQlConn
     typealias Loader = (String, Int?, @escaping Completion) -> Void
 
     private var response: Paging<Apollo{{ graphQlConnectionFragment.fragment.api.name }}.{{ graphQlConnectionFragment.nodeFragment.name|upperCamelized }}>.Response {
-        return Paging.Response(values: edges?.compactMap { $0?.node?.fragments.{{ graphQlConnectionFragment.nodeFragment.name|camelized }} } ?? [],
+        return Paging.Response(values: edges{% if graphQlConnectionFragment.isEdgesArrayNullable %}?{% endif %}.compactMap { $0{% if graphQlConnectionFragment.areEdgesNullable %}?{% endif %}.node{% if graphQlConnectionFragment.areNodesNullable %}?{% endif %}.fragments.{{ graphQlConnectionFragment.nodeFragment.name|camelized }} }{% if graphQlConnectionFragment.isEdgesArrayNullable %} ?? []{% endif %},
                                cursor: pageInfo.endCursor,
                                hasMore: pageInfo.hasNextPage)
     }

@@ -52,14 +52,14 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "add --project /Users/mathiasquintero/Desktop/Test --skipCache --apiName GAPI https://api-eu-central-1.graphcms.com/v2/ckqxy4gw1m2gb01z6gj25c7nf/master"
+            argument = "codegen --project /Users/mathiasquintero/Desktop/Test --skipCache --apollo derivedData"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "BUILD_ROOT"
-            value = "/Users/mathiasquintero/Library/Developer/Xcode/DerivedData/Movies-apxlimunewwqyhdzxrrdiuocwyez/Build/Products"
+            value = "/Users/mathiasquintero/Library/Developer/Xcode/DerivedData/Test-brgxklwwduplncbeupzxsilmfndj/Build/Products"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

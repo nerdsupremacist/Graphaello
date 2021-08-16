@@ -5,6 +5,10 @@ struct GraphQLConnectionFragment: Hashable {
     let edgeType: Schema.GraphQLType
     let nodeFragment: GraphQLFragment
     let fragment: GraphQLFragment
+
+    let isEdgesArrayNullable: Bool
+    let areEdgesNullable: Bool
+    let areNodesNullable: Bool
 }
 
 extension GraphQLConnectionFragment {
@@ -37,6 +41,48 @@ extension GraphQLConnectionFragment {
                                         api: nodeFragment.api,
                                         target: connection,
                                         object: connectionObject)
+
+        self.isEdgesArrayNullable = connectionEdge.isEdgesArrayNullable
+        self.areEdgesNullable = connectionEdge.areEdgesNullable
+        self.areNodesNullable = connectionEdge.areNodesNullable
+    }
+
+}
+
+extension Schema.GraphQLType.ConnectionEdgeType {
+
+    fileprivate var isEdgesArrayNullable: Bool {
+        switch edgeField.type {
+        case .complex(let definition, _):
+            return definition.kind != .nonNull
+        default:
+            return false
+        }
+    }
+
+    fileprivate var areEdgesNullable: Bool {
+        switch edgeField.type.optional {
+        case .complex(let definition, let ofType) where definition.kind == .list:
+            switch ofType {
+            case .complex(let edgeDefinition, _):
+                return edgeDefinition.kind != .nonNull
+            default:
+                return false
+            }
+        default:
+            return false
+        }
+    }
+
+    fileprivate var areNodesNullable: Bool {
+        switch edgeType.fields?["node"]?.type {
+        case .none:
+            return false
+        case .complex(let definition, _):
+            return definition.kind != .nonNull
+        case .concrete:
+            return true
+        }
     }
 
 }

@@ -24,7 +24,10 @@ struct BasicFieldNameCleaner: FieldNameCleaner {
                                           fragment: GraphQLConnectionFragment(connection: connectionQuery.fragment.connection,
                                                                               edgeType: connectionQuery.fragment.edgeType,
                                                                               nodeFragment: nodeFragment,
-                                                                              fragment: fragment),
+                                                                              fragment: fragment,
+                                                                              isEdgesArrayNullable: connectionQuery.fragment.isEdgesArrayNullable,
+                                                                              areEdgesNullable: connectionQuery.fragment.areEdgesNullable,
+                                                                              areNodesNullable: connectionQuery.fragment.areNodesNullable),
                                           propertyName: connectionQuery.propertyName)
         } as [GraphQLConnectionQuery]
         

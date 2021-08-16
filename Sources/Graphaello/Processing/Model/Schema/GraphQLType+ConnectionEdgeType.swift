@@ -14,7 +14,7 @@ extension Schema.GraphQLType {
 
     func connectionEdgeType(using api: API) throws -> Schema.GraphQLType.ConnectionEdgeType? {
         guard let edgeField = fields?["edges"], let pageInfoField = fields?["pageInfo"] else { return nil }
-        guard case .complex(let definition, let ofType) = edgeField.type,
+        guard case .complex(let definition, let ofType) = edgeField.type.optional,
             case .list = definition.kind else {
 
             return nil
