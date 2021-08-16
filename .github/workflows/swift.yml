@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-11.0
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2   
@@ -17,9 +17,6 @@ jobs:
         path: .build
         key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
         restore-keys: |
-          ${{ runner.os }}-spm-5.4-
-    - uses: maxim-lobanov/setup-xcode@v1.2.3
-      with:
-        xcode-version: '12.5'
+          ${{ runner.os }}-spm
     - name: Build
       run: swift build -v
