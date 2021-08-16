@@ -1,7 +1,7 @@
 import Foundation
 import Stencil
 
-@resultBuilder
+@_functionBuilder
 struct CodeBuilder {
     
     static func buildBlock(_ transformable: CodeTransformable) -> CodeTransformable {

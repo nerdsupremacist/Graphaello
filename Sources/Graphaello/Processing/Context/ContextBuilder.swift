@@ -1,6 +1,6 @@
 import Foundation
 
-@resultBuilder
+@_functionBuilder
 struct ContextBuilder {
 
     static func buildBlock() -> ContextProtocol {
