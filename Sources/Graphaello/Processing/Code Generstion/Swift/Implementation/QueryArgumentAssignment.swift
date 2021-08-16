@@ -79,7 +79,7 @@ extension GraphQLArgument {
             return expression
         }
         
-        return IdentifierExprSyntax(identifier: name.camelized).erased()
+        return IdentifierExprSyntax(identifier: name.camelized.keywordProtected).erased()
     }
 
 }

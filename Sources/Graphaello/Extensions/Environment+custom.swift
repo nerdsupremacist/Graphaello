@@ -2,19 +2,6 @@ import Foundation
 import Stencil
 import PathKit
 
-// TODO: finish this list
-private let keywords: Set<String> = [
-    "public",
-    "private",
-    "extension",
-    "internal",
-    "default",
-    "repeat",
-    "where",
-    "in",
-    "enum",
-]
-
 extension Environment {
 
     static let custom: Environment = {
@@ -60,11 +47,7 @@ extension Environment {
 
         ext.registerFilter("keywordProtected") { value in
             guard let value = value as? String else { return nil }
-            if keywords.contains(value) {
-                return "`\(value)`"
-            } else {
-                return value
-            }
+            return value.keywordProtected
         }
 
         return Environment(loader: loader, extensions: [ext])
