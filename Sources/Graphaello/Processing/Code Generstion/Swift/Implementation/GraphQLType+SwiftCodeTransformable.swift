@@ -9,7 +9,7 @@ extension Schema.GraphQLType: ExtraValuesSwiftCodeTransformable {
         let api = context["api"] as? API ?! fatalError("API Not found")
         return [
             "shouldBeTypealias": !kind.isFragment && usedTypes.contains(self),
-            "needsInitializer": inputFields?.contains { $0.defaultValue != nil } ?? false,
+            "needsInitializer": inputFields.map { !$0.isEmpty } ?? false,
             "hasEnumValues": enumValues.map { !$0.isEmpty } ?? false,
             "inputFieldInitializerArguments": try inputFieldInitializerArguments(using: transpiler, in: api),
             "connectionNodeType": try connectionEdgeType(using: api)?.nodeField.type.nonNull.swiftType(api: api.name) ?? false,

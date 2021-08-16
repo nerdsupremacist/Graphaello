@@ -7,13 +7,9 @@ typealias {{ graphQlType.name|upperCamelized }} = Apollo{{ api.name }}.{{ graphQ
     typealias Path<V> = GraphQLPath<{{ graphQlType.name|upperCamelized }}, V>
     typealias FragmentPath<V> = GraphQLFragmentPath<{{ graphQlType.name|upperCamelized }}, V>
 
-    {{ graphQlType.inputFields|code }}
-
     {% if needsInitializer %}
     init({{ inputFieldInitializerArguments|codeArray|join:", " }}) {
-        {% for inputField in graphQlType.inputFields %}
-        self.{{ inputField.name|camelized|keywordProtected }} = {{ inputField.name|camelized|keywordProtected }}
-        {% endfor %}
+        // no-op
     }
     {% endif %}
 
