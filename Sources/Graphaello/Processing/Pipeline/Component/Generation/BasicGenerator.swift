@@ -3,7 +3,7 @@ import Foundation
 struct BasicGenerator: Generator {
 
     private let structureAPIVersion = 12
-    private let apiCodeGenVersion = 3
+    private let apiCodeGenVersion = 4
     private let connectionFragmentCodeGenVersion = 2
     
     func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String {
