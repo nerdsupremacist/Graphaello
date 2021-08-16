@@ -10,6 +10,9 @@ private let keywords: Set<String> = [
     "internal",
     "default",
     "repeat",
+    "where",
+    "in",
+    "enum",
 ]
 
 extension Environment {
