@@ -9,7 +9,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/jpsim/SourceKitten.git", .upToNextMajor(from: "0.27.0")),
-        .package(url: "https://github.com/nerdsupremacist/CLIKit.git", .upToNextMajor(from: "0.3.6")),
+        .package(url: "https://github.com/nerdsupremacist/CLIKit.git", .upToNextMajor(from: "0.3.7")),
         .package(url: "https://github.com/nerdsupremacist/graphql-syntax.git", .upToNextMajor(from: "0.1.2")),
         .package(url: "https://github.com/nerdsupremacist/Stencil.git", .upToNextMajor(from: "0.13.2")),
         .package(name: "XcodeProj", url: "https://github.com/tuist/xcodeproj.git", .upToNextMajor(from: "7.5.0")),
