@@ -42,14 +42,18 @@ struct BasicGraphQLToSwiftTranspiler: GraphQLToSwiftTranspiler {
                     return (field.name, try expression(from: value, for: field.type, using: api))
                 } ?? []
 
-            return FunctionCallExprSyntax(target: MemberAccessExprSyntax(base: IdentifierExprSyntax(identifier: api.name),
-                                                                         name: name),
+            let target = MemberAccessExprSyntax(base: IdentifierExprSyntax(identifier: api.name),
+                                                name: name)
+
+            return FunctionCallExprSyntax(target: target,
                                           arguments: expressions)
 
         case (.identifier(let identifier), .concrete(let type)) where type.kind == .enum:
             guard let name = type.name?.upperCamelized else { break }
-            return MemberAccessExprSyntax(base: MemberAccessExprSyntax(base: IdentifierExprSyntax(identifier: api.name),
-                                                                       name: name),
+            let base = MemberAccessExprSyntax(base: IdentifierExprSyntax(identifier: api.name),
+                                              name: name)
+            
+            return MemberAccessExprSyntax(base: base,
                                           name: identifier.camelized)
 
         case (.int(let int), .concrete(let type)) where type.kind == .scalar:

@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "add --project /Users/mathiasquintero/CovidUI --apollo derivedData --apiName GAPI https://api-eu-central-1.graphcms.com/v2/ckqxy4gw1m2gb01z6gj25c7nf/master"
+            argument = "add --project /Users/mathiasquintero/Desktop/Test --skipCache --apiName GAPI https://api-eu-central-1.graphcms.com/v2/ckqxy4gw1m2gb01z6gj25c7nf/master"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
