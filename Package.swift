@@ -14,7 +14,7 @@ let package = Package(
         .package(url: "https://github.com/nerdsupremacist/Stencil.git", .upToNextMajor(from: "0.13.2")),
         .package(name: "XcodeProj", url: "https://github.com/tuist/xcodeproj.git", .upToNextMajor(from: "7.5.0")),
         .package(url: "https://github.com/nicklockwood/SwiftFormat.git", .upToNextMajor(from: "0.42.0")),
-        .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax.git", .exact("0.50300.0")),
+        .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax.git", .exact("0.50500.0")),
         .package(url: "https://github.com/kylef/PathKit.git", .upToNextMajor(from: "1.0.0")),
     ],
     targets: [
