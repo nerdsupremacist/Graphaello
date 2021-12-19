@@ -18,8 +18,6 @@ extension String {
         guard !isEmpty else {
             return ""
         }
-        
-        guard uppercased() != self else { return lowercased() }
 
         let (prefix, parts) = nameParts()
         let first = String(describing: parts.first!).lowercasingFirst
