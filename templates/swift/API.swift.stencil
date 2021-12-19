@@ -1,18 +1,18 @@
-// MARK: - {{ api.name }}
+// MARK: - {{ api.name|upperCamelized }}
 
 #if {{ unifiedMacroFlag }}
 
-struct {{ api.name }}: API {
+struct {{ api.name|upperCamelized }}: API {
     let client: ApolloClient
 
-    typealias Query = {{ api.name }}
-    typealias Path<V> = GraphQLPath<{{ api.name }}, V>
-    typealias FragmentPath<V> = GraphQLFragmentPath<{{ api.name }}, V>
+    typealias Query = {{ api.name|upperCamelized }}
+    typealias Path<V> = GraphQLPath<{{ api.name|upperCamelized }}, V>
+    typealias FragmentPath<V> = GraphQLFragmentPath<{{ api.name|upperCamelized }}, V>
 
     {% if api.mutation %}
     enum Mutation: MutationTarget {
-        typealias Path<V> = GraphQLPath<{{ api.name }}.Mutation, V>
-        typealias FragmentPath<V> = GraphQLFragmentPath<{{ api.name }}.Mutation, V>
+        typealias Path<V> = GraphQLPath<{{ api.name|upperCamelized }}.Mutation, V>
+        typealias FragmentPath<V> = GraphQLFragmentPath<{{ api.name|upperCamelized }}.Mutation, V>
 
         {{ api.mutation.fields|code:"static" }}
     }
@@ -22,7 +22,7 @@ struct {{ api.name }}: API {
     {{ api.types|code }}
 }
 
-extension {{ api.name }} {
+extension {{ api.name|upperCamelized }} {
 
     init(url: URL{% if api.url %} = URL(string: "{{ api.url }}")!{% endif %},
          client: URLSessionClient = URLSessionClient(),
@@ -45,27 +45,27 @@ extension {{ api.name }} {
 }
 
 {% for type in api.types %}
-extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name|upperCamelized }} {
+extension GraphQLFragmentPath where UnderlyingType == {{ api.name|upperCamelized }}.{{ type.name|upperCamelized }} {
     {{ type.fields|code }}
 
     {% for interface in type.interfaces %}
-    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{ interface.name|upperCamelized }}> { .init() }
+    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name|upperCamelized }}.{{ interface.name|upperCamelized }}> { .init() }
     {% endfor %}
 
     {% for possibleType in type.possibleTypes %}
-    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{ possibleType.name|upperCamelized }}?> { .init() }
+    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name|upperCamelized }}.{{ possibleType.name|upperCamelized }}?> { .init() }
     {% endfor %}
 }
 
-extension GraphQLFragmentPath where UnderlyingType == {{ api.name }}.{{ type.name|upperCamelized }}? {
+extension GraphQLFragmentPath where UnderlyingType == {{ api.name|upperCamelized }}.{{ type.name|upperCamelized }}? {
     {{ type.fields|code:"optional" }}
 
     {% for interface in type.interfaces %}
-    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{ interface.name|upperCamelized }}?> { .init() }
+    var {{ interface.name|camelized|keywordProtected }}: FragmentPath<{{ api.name|upperCamelized }}.{{ interface.name|upperCamelized }}?> { .init() }
     {% endfor %}
 
     {% for possibleType in type.possibleTypes %}
-    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name }}.{{ possibleType.name|upperCamelized }}?> { .init() }
+    var {{ possibleType.name|camelized|keywordProtected }}: FragmentPath<{{ api.name|upperCamelized }}.{{ possibleType.name|upperCamelized }}?> { .init() }
     {% endfor %}
 }
 {% endfor %}

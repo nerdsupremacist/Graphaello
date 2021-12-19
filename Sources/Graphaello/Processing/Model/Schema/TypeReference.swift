@@ -70,7 +70,7 @@ extension Schema.GraphQLType.Field.TypeReference {
                 return "Apollo\(api.upperCamelized).\(fragment.name.upperCamelized)?"
             }
 
-            return "\(api).\(name.upperCamelized)?"
+            return "\(api.upperCamelized).\(name.upperCamelized)?"
 
         case .complex(let definition, let ofType):
             switch definition.kind {

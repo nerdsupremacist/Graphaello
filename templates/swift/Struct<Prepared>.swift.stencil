@@ -2,17 +2,17 @@
 
 #if {{ unifiedMacroFlag }}
 {% for fragment in fragments %}
-extension Apollo{{ fragment.api.name }}.{{ fragment.name|upperCamelized }} : Fragment {
-    typealias UnderlyingType = {{ fragment.api.name }}.{{ fragment.target.name|upperCamelized }}
+extension Apollo{{ fragment.api.name|upperCamelized }}.{{ fragment.name|upperCamelized }} : Fragment {
+    typealias UnderlyingType = {{ fragment.api.name|upperCamelized }}.{{ fragment.target.name|upperCamelized }}
 }
 {% endfor %}
 
 extension {{ structPrepared.name }} {
     {% for fragment in fragments %}
-    typealias {{ fragment.target.name|upperCamelized }} = Apollo{{ fragment.api.name }}.{{ fragment.name|upperCamelized }}
+    typealias {{ fragment.target.name|upperCamelized }} = Apollo{{ fragment.api.name|upperCamelized }}.{{ fragment.name|upperCamelized }}
     {% endfor %}
     {% if query %}
-    typealias Data = Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data
+    typealias Data = Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query.Data
     {% endif %}
     
     init({{ initializerArguments|codeArray|join:", " }}) {
@@ -32,12 +32,12 @@ extension {{ structPrepared.name }} {
 }
 {% if singleFragment %}
 extension {{ structPrepared.name }} : Fragment {
-    typealias UnderlyingType = {{ singleFragment.api.name }}.{{ singleFragment.target.name|upperCamelized }}
+    typealias UnderlyingType = {{ singleFragment.api.name|upperCamelized }}.{{ singleFragment.target.name|upperCamelized }}
 
     static let placeholder = Self({{ placeholderInitializerValueAssignments|codeArray|join:", " }})
 }
 
-extension Apollo{{ singleFragment.api.name }}.{{ singleFragment.name|upperCamelized }} {
+extension Apollo{{ singleFragment.api.name|upperCamelized }}.{{ singleFragment.name|upperCamelized }} {
     
     func referencedSingleFragmentStruct() -> {{ structPrepared.name }} {
         return {{ structPrepared.name }}({{ singleFragment.target.name|camelized }}: self)
@@ -47,16 +47,16 @@ extension Apollo{{ singleFragment.api.name }}.{{ singleFragment.name|upperCameli
 {% endif %}
 
 {% if query %}
-extension {{ query.api.name }} {
+extension {{ query.api.name|upperCamelized }} {
     
     {% if isSwiftUIView %}
     func {{ functionName }}<Loading : View, Error: View>({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %},{% endif %}
         @ViewBuilder loading: () -> Loading,
         @ViewBuilder error: @escaping (QueryError) -> Error) -> some View {
         return QueryRenderer(client: client,
-                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
+                             query: Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
                              loading: loading(),
-                             error: error) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+                             error: error) { (data: Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
         
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
@@ -65,9 +65,9 @@ extension {{ query.api.name }} {
     func {{ functionName }}<Loading : View>({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %},{% endif %}
         @ViewBuilder loading: () -> Loading) -> some View {
         return QueryRenderer(client: client,
-                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
+                             query: Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
                              loading: loading(),
-                             error: { BasicErrorView(error: $0) }) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+                             error: { BasicErrorView(error: $0) }) { (data: Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
 
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
@@ -76,9 +76,9 @@ extension {{ query.api.name }} {
     func {{ functionName }}<Error : View>({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %},{% endif %}
         @ViewBuilder error: @escaping (QueryError) -> Error) -> some View {
         return QueryRenderer(client: client,
-                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
+                             query: Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
                              loading: {{ structPrepared.name }}.placeholderView({{ placeholderInitializerArgumentAssignmentFromQuery|codeArray|join:", " }}),
-                             error: error) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+                             error: error) { (data: Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
 
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
@@ -86,16 +86,16 @@ extension {{ query.api.name }} {
 
     func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}) -> some View {
         return QueryRenderer(client: client,
-                             query: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
+                             query: Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }}),
                              loading: {{ structPrepared.name }}.placeholderView({{ placeholderInitializerArgumentAssignmentFromQuery|codeArray|join:", " }}),
-                             error: { BasicErrorView(error: $0) }) { (data: Apollo{{ query.api.name }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
+                             error: { BasicErrorView(error: $0) }) { (data: Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query.Data) -> {{ structPrepared.name }} in
 
             {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }})
         }
     }
     {% else %}
-    func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %}, {% endif %}completion: @escaping (Result<{{ structPrepared.name }}, GraphQLLoadingError<{{ query.api.name }}>>) -> Void) {
-        let query = Apollo{{ query.api.name }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})
+    func {{ functionName }}({{ queryRendererArguments|codeArray|join:", " }}{% if queryRendererArguments %}, {% endif %}completion: @escaping (Result<{{ structPrepared.name }}, GraphQLLoadingError<{{ query.api.name|upperCamelized }}>>) -> Void) {
+        let query = Apollo{{ query.api.name|upperCamelized }}.{{ structPrepared.name }}Query({{ queryArgumentAssignments|codeArray|join:", " }})
         fetch(query: query) { result in
             completion(result.map { data in {{ structPrepared.name }}({{ initializerArgumentAssignmentFromQueryData|codeArray|join:", " }}) })
         }

@@ -1,4 +1,4 @@
-extension Apollo{{ missingFragmentsStruct.api.name }}.{{ missingFragmentsStruct.path|join:"." }} {
+extension Apollo{{ missingFragmentsStruct.api.name|upperCamelized }}.{{ missingFragmentsStruct.path|join:"." }} {
     public struct Fragments {
         public private(set) var resultMap: ResultMap
 

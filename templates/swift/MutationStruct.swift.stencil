@@ -9,13 +9,13 @@ extension {{ structPrepared.name }} {
 
         @Published private var mutationCounter = 0
 
-        private let api: {{ mutationStruct.mutation.api.name }}
+        private let api: {{ mutationStruct.mutation.api.name|upperCamelized }}
 
         var isLoading: Bool {
             return mutationCounter > 0
         }
         
-        init(api: {{ mutationStruct.mutation.api.name }}) {
+        init(api: {{ mutationStruct.mutation.api.name|upperCamelized }}) {
             self.api = api
         }
     }
@@ -30,7 +30,7 @@ extension {{ structPrepared.name }}.{{ mutationStruct.mutation.name }} {
     @discardableResult
     func commit({{ queryRendererArguments|codeArray|join:", " }}, completion: ((Result<Value, Error>) -> Void)? = nil) -> Self {
         mutationCounter += 1
-        api.client.perform(mutation: Apollo{{ mutationStruct.mutation.api.name }}.{{ mutationStruct.mutation.parentName }}{{ mutationStruct.mutation.name }}Mutation({{ queryArgumentAssignments|codeArray|join:", " }})) { result in
+        api.client.perform(mutation: Apollo{{ mutationStruct.mutation.api.name|upperCamelized }}.{{ mutationStruct.mutation.parentName }}{{ mutationStruct.mutation.name }}Mutation({{ queryArgumentAssignments|codeArray|join:", " }})) { result in
             self.mutationCounter -= 1
             switch result {
             case let .success(response):

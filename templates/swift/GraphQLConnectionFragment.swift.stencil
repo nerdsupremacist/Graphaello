@@ -1,14 +1,14 @@
-extension Apollo{{ graphQlConnectionFragment.fragment.api.name }}.{{ graphQlConnectionFragment.fragment.name|upperCamelized }} {
-    typealias Completion = (Result<Apollo{{ graphQlConnectionFragment.fragment.api.name }}.{{ graphQlConnectionFragment.fragment.name|upperCamelized }}?, Error>) -> Void
+extension Apollo{{ graphQlConnectionFragment.fragment.api.name|upperCamelized }}.{{ graphQlConnectionFragment.fragment.name|upperCamelized }} {
+    typealias Completion = (Result<Apollo{{ graphQlConnectionFragment.fragment.api.name|upperCamelized }}.{{ graphQlConnectionFragment.fragment.name|upperCamelized }}?, Error>) -> Void
     typealias Loader = (String, Int?, @escaping Completion) -> Void
 
-    private var response: Paging<Apollo{{ graphQlConnectionFragment.fragment.api.name }}.{{ graphQlConnectionFragment.nodeFragment.name|upperCamelized }}>.Response {
+    private var response: Paging<Apollo{{ graphQlConnectionFragment.fragment.api.name|upperCamelized }}.{{ graphQlConnectionFragment.nodeFragment.name|upperCamelized }}>.Response {
         return Paging.Response(values: edges{% if graphQlConnectionFragment.isEdgesArrayNullable %}?{% endif %}.compactMap { $0{% if graphQlConnectionFragment.areEdgesNullable %}?{% endif %}.node{% if graphQlConnectionFragment.areNodesNullable %}?{% endif %}.fragments.{{ graphQlConnectionFragment.nodeFragment.name|camelized }} }{% if graphQlConnectionFragment.isEdgesArrayNullable %} ?? []{% endif %},
                                cursor: pageInfo.endCursor,
                                hasMore: pageInfo.hasNextPage)
     }
 
-    fileprivate func paging(loader: @escaping Loader) -> Paging<Apollo{{ graphQlConnectionFragment.fragment.api.name }}.{{ graphQlConnectionFragment.nodeFragment.name|upperCamelized }}> {
+    fileprivate func paging(loader: @escaping Loader) -> Paging<Apollo{{ graphQlConnectionFragment.fragment.api.name|upperCamelized }}.{{ graphQlConnectionFragment.nodeFragment.name|upperCamelized }}> {
         return Paging(response) { cursor, pageSize, completion in
             loader(cursor, pageSize) { result in
                 completion(result.map { $0?.response ?? .empty })

@@ -2,13 +2,16 @@ import Foundation
 import CLIKit
 
 struct BasicApolloCodegenRequestProcessor: ApolloCodegenRequestProcessor {
+    private let version = 2
+
     let instantiator: ApolloProcessInstantiator
 
     func process(request: ApolloCodeGenRequest,
                  using apollo: ApolloReference,
                  cache: PersistentCache<AnyHashable>?) throws -> ApolloCodeGenResponse {
 
-        let code = try cache.tryCache(key: request) {
+        let key = ComposedHashable(c0: request, c1: version)
+        let code = try cache.tryCache(key: key) {
             try process(request: request, using: apollo)
         }
         

@@ -28,7 +28,7 @@ extension ApolloReference {
     fileprivate func arguments(api: API, graphql: Path, outputFile: Path) -> [String] {
         return [
             command,
-            "--namespace=Apollo\(api.name)",
+            "--namespace=Apollo\(api.name.upperCamelized)",
             "--target=swift",
             "--includes=\(graphql)",
             "--localSchemaFile=\(api.path)",

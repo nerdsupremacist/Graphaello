@@ -3,8 +3,8 @@ import Foundation
 struct BasicGenerator: Generator {
 
     private let structureAPIVersion = 12
-    private let apiCodeGenVersion = 5
-    private let connectionFragmentCodeGenVersion = 2
+    private let apiCodeGenVersion = 6
+    private let connectionFragmentCodeGenVersion = 3
     
     func generate(prepared: Project.State<Stage.Prepared>, useFormatting: Bool) throws -> String {
         let usedTypesThatTriggerCacheMiss = prepared
