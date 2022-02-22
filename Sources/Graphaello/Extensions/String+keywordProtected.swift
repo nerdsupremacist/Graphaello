@@ -12,6 +12,10 @@ private let keywords: Set<String> = [
     "where",
     "in",
     "enum",
+    "self",
+    "do",
+    "as",
+    "is",
 ]
 
 extension String {
