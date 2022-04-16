@@ -26,7 +26,7 @@ private struct HomebrewInfo: Decodable {
 
 private func fetchInstalledVersion() -> String? {
     let task = Process()
-    task.launchPath = "/usr/local/bin/brew"
+    task.launchPath = ExecutableFinder.find("brew")?.url.path
     task.arguments = ["info", "graphaello", "--json"]
 
     let outputPipe = Pipe()
